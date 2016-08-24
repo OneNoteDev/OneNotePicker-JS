@@ -1,0 +1,8 @@
+.vs
+.vscode
+build
+bundles
+node_modules
+target
+typings
+*.user
