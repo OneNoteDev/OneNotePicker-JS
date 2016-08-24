@@ -1,8 +1,8 @@
 ﻿/// <reference path="../../../../node_modules/onenoteapi/target/oneNoteApi.d.ts" />
+
 import {OneNotePickerComponent, OneNotePickerProps} from "./oneNotePickerComponent";
 import {SectionProps} from "./sectionComponent";
 import {ComponentBase} from "../componentBase";
-import * as OneNoteApi from "oneNoteApi";
 
 interface OneNotePickerDefaultWrapperState {
 	curSection?: SectionProps;

@@ -4,7 +4,6 @@ import {NotebookComponent} from "./notebookComponent";
 import {SectionProps} from "./sectionComponent";
 import {ComponentBase} from "../componentBase";
 import {Constants} from "../../constants";
-import * as OneNoteApi from "oneNoteApi";
 
 export interface NotebookListProps {
 	curSectionId: string;

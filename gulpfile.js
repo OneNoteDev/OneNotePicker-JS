@@ -42,14 +42,6 @@ function printGlobResults(glob) {
 ////////////////////////////////////////
 // SETUP
 ////////////////////////////////////////
-gulp.task("unlink", shell.task([
-	"npm unlink ../OneNoteApi"
-]));
-
-gulp.task("link", shell.task([
-	"npm link ../OneNoteApi"
-]));
-
 gulp.task("cleanDefinitions", function (callback) {
 	return del([
 		PATHS.DEFINITIONS
@@ -63,10 +55,8 @@ gulp.task("definitions", function () {
 
 gulp.task("setup", function (callback) {
 	runSequence(
-		"unlink",
 		"cleanDefinitions",
 		"definitions",
-		"link",
 		callback);
 });
 
@@ -206,6 +196,7 @@ function exportTestLibFiles() {
 	return gulp.src([
 		PATHS.NODE_MODULES + "qunitjs/qunit/qunit.+(css|js)",
 		PATHS.NODE_MODULES + "mithril/mithril.js",
+		PATHS.NODE_MODULES + "onenoteapi/target/oneNoteApi.js",
 		PATHS.LIBROOT + "tests/bind_polyfill.js"
 	]).pipe(gulp.dest(targetDir + "libs"));
 }
