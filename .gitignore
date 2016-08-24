@@ -2,6 +2,7 @@
 build
 bundles
 node_modules
-target
+target/modules
+target/tests
 typings
 *.user
