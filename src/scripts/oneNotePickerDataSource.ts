@@ -1,5 +1,4 @@
 /// <reference path="../../node_modules/onenoteapi/target/oneNoteApi.d.ts" />
-import * as OneNoteApi from "oneNoteApi";
 
 export class OneNotePickerDataSource {
 	authToken: string;
