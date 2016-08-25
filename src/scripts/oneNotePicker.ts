@@ -1,2 +1,2 @@
-export * from "./UI/components/oneNotePickerComponent";
-export * from "./oneNotePickerDataSource";
+export {OneNotePickerComponent} from "./UI/components/oneNotePickerComponent";
+export {OneNotePickerDataSource} from "./oneNotePickerDataSource";

@@ -132,7 +132,7 @@ gulp.task("tslint", function () {
 // BUNDLE
 ////////////////////////////////////////
 gulp.task("bundlePicker", function() {
-	return browserify(PATHS.BUILDROOT + "scripts/oneNotePicker.js")
+	return browserify(PATHS.BUILDROOT + "scripts/oneNotePicker.js", { standalone: "OneNotePicker" })
 		.bundle()
 		.pipe(source("oneNotePicker.js"))
 		.pipe(gulp.dest(PATHS.BUNDLEROOT));
