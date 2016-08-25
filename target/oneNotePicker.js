@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.OneNotePicker = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /// <reference path="../../../typings/main/ambient/mithril/mithril.d.ts"/>
 "use strict";
 var KeyCode;
@@ -665,11 +665,10 @@ var Constants;
 
 },{}],13:[function(require,module,exports){
 "use strict";
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-__export(require("./UI/components/oneNotePickerComponent"));
-__export(require("./oneNotePickerDataSource"));
+var oneNotePickerComponent_1 = require("./UI/components/oneNotePickerComponent");
+exports.OneNotePickerComponent = oneNotePickerComponent_1.OneNotePickerComponent;
+var oneNotePickerDataSource_1 = require("./oneNotePickerDataSource");
+exports.OneNotePickerDataSource = oneNotePickerDataSource_1.OneNotePickerDataSource;
 
 },{"./UI/components/oneNotePickerComponent":7,"./oneNotePickerDataSource":14}],14:[function(require,module,exports){
 /// <reference path="../../node_modules/onenoteapi/target/oneNoteApi.d.ts" />
@@ -721,4 +720,5 @@ var Utils;
     Utils.getImageResourceUrl = getImageResourceUrl;
 })(Utils = exports.Utils || (exports.Utils = {}));
 
-},{}]},{},[13]);
+},{}]},{},[13])(13)
+});

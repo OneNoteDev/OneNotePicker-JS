@@ -1,12 +1,10 @@
-declare module "oneNotePicker" {
+declare namespace OneNotePicker {
 	export class OneNotePickerComponent {
 		view();
-
 		controller();
 	}
 
-	export class OneNotePickerDataSource
-	{
+	export class OneNotePickerDataSource {
 		public data;
 		public authToken;
 		constructor(authToken: string);
