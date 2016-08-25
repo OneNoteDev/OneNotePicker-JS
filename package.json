@@ -1,5 +1,5 @@
 {
-  "version": "1.0.1",
+  "version": "1.0.2",
   "name": "onenotepicker",
   "description": "A JavaScript UI component that allows a user to choose one of their Notebook Sections",
   "main": "target/modules/oneNotePicker.js",
@@ -35,5 +35,5 @@
     "typings": "~0.6.8",
     "vinyl-source-stream": "^1.1.0"
   },
-  "files": ["README.*", "target/oneNotePicker.d.ts", "target/oneNotePicker.js"]
+  "files": ["README.*", "target/oneNotePicker.d.ts", "target/oneNotePicker.js", "target/css/*", "target/images/*"]
 }
