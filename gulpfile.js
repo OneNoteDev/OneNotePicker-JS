@@ -4,8 +4,10 @@ var require;
 
 var browserify = require("browserify");
 var del = require("del");
+var fs = require("file-system");
 var globby = require("globby");
 var gulp = require("gulp");
+var header = require("gulp-header");
 var less = require("gulp-less");
 var merge = require("merge-stream");
 var minifyCSS = require("gulp-cssnano");
@@ -14,11 +16,11 @@ var plumber = require("gulp-plumber");
 var qunit = require("node-qunit-phantomjs");
 var rename = require("gulp-rename");
 var runSequence = require("run-sequence");
-var shell = require("gulp-shell");
 var source = require("vinyl-source-stream");
 var ts = require("gulp-typescript");
 var tslint = require("gulp-tslint");
 var typings = require("gulp-typings");
+var uglify = require("gulp-uglify");
 
 var PATHS = {
 	SRCROOT: "src/",
@@ -112,7 +114,6 @@ gulp.task("compile", function (callback) {
 ////////////////////////////////////////
 // TSLINT
 ////////////////////////////////////////
-//The actual task to run
 gulp.task("tslint", function () {
 	var tsErrorReport = tslint.report("prose", {
 		emitError: false,
@@ -131,10 +132,19 @@ gulp.task("tslint", function () {
 ////////////////////////////////////////
 // BUNDLE
 ////////////////////////////////////////
+function getLicense() {
+	return [
+		"/*",
+		fs.readFileSync("LICENSE", "utf8"),
+		"*/"
+	].join("\n");
+}
+
 gulp.task("bundlePicker", function() {
 	return browserify(PATHS.BUILDROOT + "scripts/oneNotePicker.js", { standalone: "OneNotePicker" })
 		.bundle()
 		.pipe(source("oneNotePicker.js"))
+		.pipe(header(getLicense()))
 		.pipe(gulp.dest(PATHS.BUNDLEROOT));
 });
 
@@ -154,6 +164,22 @@ gulp.task("bundle", function(callback) {
 		"bundlePicker",
 		"bundleTests",
 		callback);
+});
+
+////////////////////////////////////////
+// MINIFY BUNDLED
+////////////////////////////////////////
+gulp.task("minifyBundled", function (callback) {
+	var targetDir = PATHS.BUNDLEROOT;
+
+	var minifyTask = gulp.src(PATHS.BUNDLEROOT + "oneNotePicker.js")
+		.pipe(uglify({
+			preserveComments: "license"
+		}))
+		.pipe(rename({ suffix: ".min" }))
+		.pipe(gulp.dest(targetDir));
+
+	return merge(minifyTask);
 });
 
 ////////////////////////////////////////
@@ -204,17 +230,16 @@ function exportTestLibFiles() {
 ////////////////////////////////////////
 // EXPORT - TASKS
 ////////////////////////////////////////
-
 gulp.task("exportPicker", function() {
 	var modulesTask = gulp.src(PATHS.BUILDROOT + "scripts/**/*.js", { base: PATHS.BUILDROOT + "/scripts" })
 		.pipe(gulp.dest(PATHS.TARGET.ROOT + "modules/"));
 
 	var commonTask = exportCommonFiles(PATHS.TARGET.ROOT);
 	var copyTask = gulp.src([
-			PATHS.BUNDLEROOT + "oneNotePicker.js",
-			PATHS.SRCROOT + "oneNotePicker.d.ts"
-		])
-		.pipe(gulp.dest(PATHS.TARGET.ROOT));
+		PATHS.BUNDLEROOT + "oneNotePicker.js",
+		PATHS.BUNDLEROOT + "oneNotePicker.min.js",
+		PATHS.SRCROOT + "oneNotePicker.d.ts"
+	]).pipe(gulp.dest(PATHS.TARGET.ROOT));
 
 	return merge(modulesTask, copyTask, commonTask);
 });
@@ -249,6 +274,7 @@ gulp.task("build", function (callback) {
 		"less",
 		"compile",
 		"bundle",
+		"minifyBundled",
 		"export",
 		"tslint",
 		"runTests",
