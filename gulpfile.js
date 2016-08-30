@@ -222,7 +222,7 @@ function exportTestLibFiles() {
 	return gulp.src([
 		PATHS.NODE_MODULES + "qunitjs/qunit/qunit.+(css|js)",
 		PATHS.NODE_MODULES + "mithril/mithril.js",
-		PATHS.NODE_MODULES + "onenoteapi/target/oneNoteApi.js",
+		PATHS.NODE_MODULES + "onenoteapi/target/oneNoteApi.min.js",
 		PATHS.LIBROOT + "tests/bind_polyfill.js"
 	]).pipe(gulp.dest(targetDir + "libs"));
 }
