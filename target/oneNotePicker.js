@@ -656,7 +656,7 @@ var SectionPickerPopupMessageComponentClass = (function (_super) {
     SectionPickerPopupMessageComponentClass.prototype.render = function () {
         // Labels don't display two consecutive spaces so we only need to trim
         var messageToShow = this.props.message ? this.props.message.trim() : "";
-        return ({tag: "label", attrs: {id:constants_1.Constants.Ids.sectionPickerPopupMessage, className:"SectionPickerState SectionPickerPopupMessage"}, children: [messageToShow]});
+        return ({tag: "label", attrs: {id:constants_1.Constants.Ids.sectionPickerPopupMessage, className:"SectionPickerState SectionPickerPopupMessage"}, children: [m.trust(messageToShow)]});
     };
     ;
     return SectionPickerPopupMessageComponentClass;

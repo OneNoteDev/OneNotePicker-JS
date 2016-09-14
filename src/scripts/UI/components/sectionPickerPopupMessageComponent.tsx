@@ -9,9 +9,11 @@ class SectionPickerPopupMessageComponentClass extends ComponentBase<{}, MessageP
 	render() {
 		// Labels don't display two consecutive spaces so we only need to trim
 		let messageToShow = this.props.message ? this.props.message.trim() : "";
+
+		// We trust embedded html so we are able to embed links for actionable messages
 		return (
 			<label id={Constants.Ids.sectionPickerPopupMessage}
-				className="SectionPickerState SectionPickerPopupMessage">{messageToShow}</label>
+				className="SectionPickerState SectionPickerPopupMessage">{m.trust(messageToShow)}</label>
 		);
 	};
 };
