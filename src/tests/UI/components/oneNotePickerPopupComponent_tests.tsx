@@ -99,3 +99,23 @@ test("The notebookLoadFailureMessage message should be displayed when status is 
 	strictEqual(message, mockPopupProps.notebookLoadFailureMessage,
 		"Message displayed should be the notebookLoadFailureMessage message");
 });
+
+test("The notebookLoadFailureMessage message should correctly display HTML elements within it", () => {
+	let errorMessage = "hello world";
+	let errorHTML = "<p>" + errorMessage + "</p>";
+	let controllerInstance = HelperFunctions.mountToFixture(
+		<OneNotePickerPopupComponent
+			notebooks={mockPopupProps.notebooks}
+			status={Status.Failed}
+			onSectionClicked={mockPopupProps.onSectionClicked}
+			curSectionId={ mockPopupProps.curSectionId }
+			noNotebooksFound={ mockPopupProps.noNotebooksFound}
+			notebookLoadFailureMessage={ errorHTML }
+		/>);
+
+	ok(!document.getElementById(Constants.Ids.notebookList), "The notebooks list should not be rendered");
+	ok(!document.getElementById(Constants.Ids.loadingImage), "The loading image should not be rendered");
+	let popupElement = document.getElementById(Constants.Ids.sectionPickerPopupMessage);
+	strictEqual(popupElement.innerText, errorMessage, "Message displayed should be the notebookLoadFailureMessage message");
+	strictEqual(popupElement.innerHTML, errorHTML, "Message displayed should preserve the HTML element as part of the message");
+});
