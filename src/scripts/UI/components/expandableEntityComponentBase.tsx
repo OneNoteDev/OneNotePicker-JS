@@ -1,4 +1,5 @@
 /// <reference path="../../../../node_modules/onenoteapi/target/oneNoteApi.d.ts" />
+
 import {ComponentBase} from "../componentBase";
 import {Utils} from "../../utils";
 

@@ -19,7 +19,6 @@ var runSequence = require("run-sequence");
 var source = require("vinyl-source-stream");
 var ts = require("gulp-typescript");
 var tslint = require("gulp-tslint");
-var typings = require("gulp-typings");
 var uglify = require("gulp-uglify");
 
 var PATHS = {
@@ -27,7 +26,6 @@ var PATHS = {
 	BUILDROOT: "build/",
 	BUNDLEROOT: "build/bundles/",
 	LIBROOT: "lib/",
-	DEFINITIONS: "typings/",
 	TARGET: {
 		ROOT: "target/"
 	},
@@ -40,27 +38,6 @@ function printGlobResults(glob) {
 		console.log(filePath);
 	});
 }
-
-////////////////////////////////////////
-// SETUP
-////////////////////////////////////////
-gulp.task("cleanDefinitions", function (callback) {
-	return del([
-		PATHS.DEFINITIONS
-	], callback);
-});
-
-gulp.task("definitions", function () {
-	return gulp.src("./typings.json")
-		.pipe(typings());
-});
-
-gulp.task("setup", function (callback) {
-	runSequence(
-		"cleanDefinitions",
-		"definitions",
-		callback);
-});
 
 ////////////////////////////////////////
 // CLEAN
@@ -89,11 +66,13 @@ gulp.task("less", function () {
 // COMPILE
 ////////////////////////////////////////
 gulp.task("compileTypeScript", function () {
-	return gulp.src([PATHS.SRCROOT + "**/*.+(ts|tsx)", PATHS.DEFINITIONS + "main/**/*.d.ts"])
-		.pipe(ts({
-			jsx: "preserve",
-			module: "commonjs"
-		}))
+	var tsProject = ts.createProject("./tsconfig.json", {
+		typescript: require('typescript'),
+		noEmitOnError: true
+	})
+
+	return gulp.src([PATHS.SRCROOT + "**/*.+(ts|tsx)", "!**/*.d.ts"])
+		.pipe(tsProject())
 		.pipe(gulp.dest(PATHS.BUILDROOT));
 });
 
@@ -114,18 +93,22 @@ gulp.task("compile", function (callback) {
 ////////////////////////////////////////
 // TSLINT
 ////////////////////////////////////////
-gulp.task("tslint", function () {
-	var tsErrorReport = tslint.report("prose", {
-		emitError: false,
-		reportLimit: 50
-	});
-
-	var tsFiles = [PATHS.SRCROOT + "**/*.ts", PATHS.SRCROOT + "**/*.tsx", "!" + PATHS.SRCROOT + "**/*.d.ts"];
+gulp.task("tslint", function() {
+	var tsFiles = [
+		PATHS.SRCROOT + "**/*.ts",
+		PATHS.SRCROOT + "**/*.tsx",
+		"!" + PATHS.SRCROOT + "**/*.d.ts"
+	];
 
 	return gulp.src(tsFiles)
 		.pipe(plumber())
-		.pipe(tslint())
-		.pipe(tsErrorReport);
+		.pipe(tslint({
+			formatter: "verbose"
+		}))
+		.pipe(tslint.report({
+			emitError: false,
+			summarizeFailureOutput: true
+		}))
 });
 
 
