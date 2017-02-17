@@ -15,5 +15,11 @@ export module Constants {
 
 		// sectionPickerPopupMessageComponent
 		export var sectionPickerPopupMessage = "sectionPickerPopupMessage";
+
+		export var oneNotePickerComponent = "oneNotePickerComponent";
+	}
+
+	export module KeyCodes {
+		export var esc = 27;
 	}
 }

@@ -4,6 +4,7 @@ import {OneNotePickerPopupComponent} from "./oneNotePickerPopupComponent";
 import {SectionProps} from "./sectionComponent";
 import {ComponentBase} from "../componentBase";
 import {Status} from "../../status";
+import {Constants} from "../../constants";
 
 interface OneNotePickerState {
 	popupVisible?: boolean;
@@ -20,6 +21,8 @@ export interface OneNotePickerProps {
 }
 
 class OneNotePickerComponentClass extends ComponentBase<OneNotePickerState, OneNotePickerProps> {
+	private static escapeListenerAttached = false;
+
 	getInitialState(): OneNotePickerState {
 		return {
 			popupVisible: false
@@ -79,12 +82,37 @@ class OneNotePickerComponentClass extends ComponentBase<OneNotePickerState, OneN
 		return textToDisplay;
 	}
 
+	attachEscapeListener(element, isInitialized, context) {
+		if (!isInitialized) {
+			// Attach listener at initialization
+			let oldOnKeyDown = document.onkeydown;
+			document.onkeydown = (ev: KeyboardEvent) => {
+				if (ev.keyCode === Constants.KeyCodes.esc && this.state.popupVisible) {
+					this.setState({ popupVisible: false });
+					return;
+				}
+				if (oldOnKeyDown) {
+					oldOnKeyDown.call(document, event);
+				}
+			};
+
+			// Remove listener when this element is unmounted
+			context.onunload = () => {
+				document.onkeydown = oldOnKeyDown ? oldOnKeyDown.bind(document) : undefined;
+			};
+		}
+	}
+
 	render() {
 		let status = this.getStatusEnumFromString(this.props.status);
 		let textToDisplay = this.getTextToDisplayFromStatus(status);
+		// if (!OneNotePickerComponentClass.escapeListenerAttached) {
+		// 	this.attachEscapeListener();
+		// 	OneNotePickerComponentClass.escapeListenerAttached = true;
+		// }
 
 		return (
-			<div>
+			<div id={Constants.Ids.oneNotePickerComponent} config={this.attachEscapeListener.bind(this)}>
 				<CurrentlySelectedSectionComponent
 					textToDisplay={textToDisplay}
 					onSectionLocationContainerClicked={this.onSectionLocationContainerClicked.bind(this)} />
