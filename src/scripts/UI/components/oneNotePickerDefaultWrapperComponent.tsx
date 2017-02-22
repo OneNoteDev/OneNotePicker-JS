@@ -2,10 +2,11 @@
 
 import {OneNotePickerComponent, OneNotePickerProps} from "./oneNotePickerComponent";
 import {SectionProps} from "./sectionComponent";
+import {SectionInfo} from "./oneNotePickerComponent";
 import {ComponentBase} from "../componentBase";
 
 interface OneNotePickerDefaultWrapperState {
-	curSection?: SectionProps;
+	curSection?: SectionInfo;
 }
 
 export interface OneNotePickerDefaultWrapperProps extends OneNotePickerProps {
@@ -24,11 +25,11 @@ class OneNotePickerDefaultWrapperComponentClass extends ComponentBase<OneNotePic
 		};
 	}
 
-	onSectionClicked(section: SectionProps) {
+	onSectionClicked(sectionInfo: SectionInfo) {
 		this.setState({
-			curSection: section
+			curSection: sectionInfo
 		});
-		this.props.onSectionClicked(section);
+		this.props.onSectionClicked(sectionInfo);
 	}
 
 	render() {

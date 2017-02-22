@@ -3,11 +3,12 @@
 import {ExpandableEntityComponentBase, ExpandableEntityState, ExpandableEntityProps} from "./expandableEntityComponentBase";
 import {SectionComponent} from "./sectionComponent";
 import {SectionGroupComponent} from "./sectionGroupComponent";
+import {SectionInfo} from "./oneNotePickerComponent";
 import {Utils} from "../../utils";
 
 export interface SectionGroupProps extends ExpandableEntityProps {
 	sectionGroup: OneNoteApi.SectionGroup;
-	onSectionClicked: Function;
+	onSectionClicked: (sectionInfo: SectionInfo) => void;
 }
 
 class SectionGroupComponentClass extends ExpandableEntityComponentBase<ExpandableEntityState, SectionGroupProps> {
@@ -36,7 +37,7 @@ class SectionGroupComponentClass extends ExpandableEntityComponentBase<Expandabl
 				sectionGroupRows.push(
 					<SectionGroupComponent curSectionId={this.props.curSectionId}
 						path={path} sectionGroup={sectionGroup} onSectionClicked={this.props.onSectionClicked}
-						curSectionIdPath={curSectionIdPath} />);
+						curSectionIdPath={curSectionIdPath} tabIndex={this.props.tabIndex}/>);
 			});
 		}
 
@@ -59,7 +60,7 @@ class SectionGroupComponentClass extends ExpandableEntityComponentBase<Expandabl
 				sectionRows.push(
 					<SectionComponent section={section} curSectionId={this.props.curSectionId}
 						onSectionClicked={this.props.onSectionClicked} path={path}
-						parentId={this.props.sectionGroup.id} curSectionIdPath={curSectionIdPath} />);
+						parentId={this.props.sectionGroup.id} curSectionIdPath={curSectionIdPath} tabIndex={this.props.tabIndex} />);
 			});
 		}
 

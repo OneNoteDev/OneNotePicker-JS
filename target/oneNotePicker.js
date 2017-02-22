@@ -153,7 +153,7 @@ var CurrentlySelectedSectionClass = (function (_super) {
     }
     CurrentlySelectedSectionClass.prototype.render = function () {
         return ({tag: "div", attrs: {id:constants_1.Constants.Ids.saveToLocationContainer, className:"SaveToLocationContainer"}, children: [
-				{tag: "a", attrs: Object.assign({id:constants_1.Constants.Ids.sectionLocationContainer, role:"button", style:"outline-style: none;"},  this.enableInvoke(this.props.onSectionLocationContainerClicked, 50)), children: [
+				{tag: "a", attrs: Object.assign({id:constants_1.Constants.Ids.sectionLocationContainer, role:"button", style:"outline-style: none;"},  this.enableInvoke(this.props.onSectionLocationContainerClicked, this.props.tabIndex)), children: [
 					{tag: "div", attrs: {className:"OpenSectionPickerArrow"}, children: [
 						{tag: "img", attrs: {className:"arrowDown", src:utils_1.Utils.getImageResourceUrl("dropdown_arrow.png")}}
 					]}, 
@@ -212,7 +212,7 @@ var ExpandableEntityComponentBase = (function (_super) {
         var className = this.getEntityClassName() + " " + openedClassName;
         var labelText = this.getLabel();
         return ({tag: "li", attrs: {className:className}, children: [
-				{tag: "div", attrs: Object.assign({},  this.enableInvoke(this.onClicked.bind(this), 51, this.getId()),{className:"EntityImageAndNameContainer"}), children: [
+				{tag: "div", attrs: Object.assign({},  this.enableInvoke(this.onClicked.bind(this), this.props.tabIndex, this.getId()),{className:"EntityImageAndNameContainer"}), children: [
 					{tag: "div", attrs: {className:"ExpandCollapseContainer"}, children: [
 						{tag: "div", attrs: {className:"Expand"}, children: [
 							{tag: "img", attrs: {className:"ExpandImage", src:utils_1.Utils.getImageResourceUrl("arrow_right.png")}}
@@ -298,7 +298,7 @@ var NotebookComponentClass = (function (_super) {
                 if (_this.isPartOfCurSectionIdPath()) {
                     curSectionIdPath = _this.props.curSectionIdPath.splice(1);
                 }
-                sectionGroupRows.push(m.component(sectionGroupComponent_1.SectionGroupComponent, {curSectionId:_this.props.curSectionId, path:path, sectionGroup:sectionGroup, onSectionClicked:_this.props.onSectionClicked, curSectionIdPath:curSectionIdPath}));
+                sectionGroupRows.push(m.component(sectionGroupComponent_1.SectionGroupComponent, {curSectionId:_this.props.curSectionId, path:path, sectionGroup:sectionGroup, onSectionClicked:_this.props.onSectionClicked, curSectionIdPath:curSectionIdPath, tabIndex:_this.props.tabIndex}));
             });
         }
         return sectionGroupRows;
@@ -310,7 +310,7 @@ var NotebookComponentClass = (function (_super) {
         if (sections) {
             sections.forEach(function (section) {
                 var path = _this.props.path + " > " + section.name;
-                sectionRows.push(m.component(sectionComponent_1.SectionComponent, {section:section, curSectionId:_this.props.curSectionId, onSectionClicked:_this.props.onSectionClicked, path:path, parentId:_this.props.notebook.id}));
+                sectionRows.push(m.component(sectionComponent_1.SectionComponent, {section:section, curSectionId:_this.props.curSectionId, onSectionClicked:_this.props.onSectionClicked, path:path, parentId:_this.props.notebook.id, tabIndex:_this.props.tabIndex}));
             });
         }
         return sectionRows;
@@ -351,7 +351,9 @@ var constants_1 = require("../../constants");
 var NotebookListComponentClass = (function (_super) {
     __extends(NotebookListComponentClass, _super);
     function NotebookListComponentClass() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.hasScrolledIntoView = false;
+        return _this;
     }
     NotebookListComponentClass.prototype.onSectionClicked = function (section) {
         this.props.onSectionClicked(section);
@@ -365,14 +367,24 @@ var NotebookListComponentClass = (function (_super) {
         var path = OneNoteApi.NotebookUtils.getPathFromNotebooksToSection(this.props.notebooks, function (s) { return s.id === _this.props.curSectionId; });
         return path ? path.map(function (elem) { return elem.id; }) : undefined;
     };
+    NotebookListComponentClass.prototype.scrollToCurrentSection = function () {
+        // We only want to call this the first time it is rendered into the view, not on state change
+        if (this.props.curSectionId && !this.hasScrolledIntoView) {
+            var currentSection = document.getElementById(this.props.curSectionId);
+            if (currentSection && currentSection.scrollIntoView) {
+                currentSection.scrollIntoView();
+            }
+            this.hasScrolledIntoView = true;
+        }
+    };
     NotebookListComponentClass.prototype.render = function () {
         var _this = this;
         var notebookRows = [];
         var curSectionIdPath = this.generateCurSectionIdPath();
         this.props.notebooks.forEach(function (notebook) {
-            notebookRows.push(m.component(notebookComponent_1.NotebookComponent, {notebook:notebook, curSectionId:_this.props.curSectionId, path:notebook.name, onSectionClicked:_this.onSectionClicked.bind(_this), curSectionIdPath:curSectionIdPath}));
+            notebookRows.push(m.component(notebookComponent_1.NotebookComponent, {notebook:notebook, curSectionId:_this.props.curSectionId, path:notebook.name, onSectionClicked:_this.onSectionClicked.bind(_this), curSectionIdPath:curSectionIdPath, tabIndex:_this.props.rowTabIndex}));
         });
-        return ({tag: "ul", attrs: {id:constants_1.Constants.Ids.notebookList, className:"SectionPickerState SectionPicker", style:"display: block;"}, children: [
+        return ({tag: "ul", attrs: {id:constants_1.Constants.Ids.notebookList, className:"SectionPickerState SectionPicker", style:"display: block;", config:this.scrollToCurrentSection.bind(this)}, children: [
 				notebookRows
 			]});
     };
@@ -410,11 +422,11 @@ var OneNotePickerComponentClass = (function (_super) {
         });
         this.props.onPopupToggle(newState);
     };
-    OneNotePickerComponentClass.prototype.onSectionClicked = function (section) {
+    OneNotePickerComponentClass.prototype.onSectionClicked = function (sectionInfo) {
         this.setState({
             popupVisible: false
         });
-        this.props.onSectionClicked(section);
+        this.props.onSectionClicked(sectionInfo);
         this.props.onPopupToggle(false);
     };
     OneNotePickerComponentClass.prototype.getStatusEnumFromString = function (statusAsString) {
@@ -457,9 +469,9 @@ var OneNotePickerComponentClass = (function (_super) {
         var status = this.getStatusEnumFromString(this.props.status);
         var textToDisplay = this.getTextToDisplayFromStatus(status);
         return ({tag: "div", attrs: {}, children: [
-				m.component(currentlySelectedSectionComponent_1.CurrentlySelectedSectionComponent, {textToDisplay:textToDisplay, onSectionLocationContainerClicked:this.onSectionLocationContainerClicked.bind(this)}), 
+				m.component(currentlySelectedSectionComponent_1.CurrentlySelectedSectionComponent, {textToDisplay:textToDisplay, onSectionLocationContainerClicked:this.onSectionLocationContainerClicked.bind(this), tabIndex:this.props.tabIndex}), 
 				this.state.popupVisible
-            ? (m.component(oneNotePickerPopupComponent_1.OneNotePickerPopupComponent, {notebooks:this.props.notebooks, status:status, onSectionClicked:this.onSectionClicked.bind(this), curSectionId:this.props.curSectionId, noNotebooksFound:this.props.localizedStrings.noNotebooksFound, notebookLoadFailureMessage:this.props.localizedStrings.notebookLoadFailureMessage}))
+            ? (m.component(oneNotePickerPopupComponent_1.OneNotePickerPopupComponent, {notebooks:this.props.notebooks, status:status, onSectionClicked:this.onSectionClicked.bind(this), curSectionId:this.props.curSectionId, noNotebooksFound:this.props.localizedStrings.noNotebooksFound, notebookLoadFailureMessage:this.props.localizedStrings.notebookLoadFailureMessage, rowTabIndex:this.props.tabIndex}))
             : undefined
 			]});
     };
@@ -507,7 +519,7 @@ var OneNotePickerPopupComponentClass = (function (_super) {
             componentToRender = m.component(sectionPickerPopupMessageComponent_1.SectionPickerPopupMessageComponent, {message:this.props.noNotebooksFound});
         }
         else {
-            componentToRender = m.component(notebookListComponent_1.NotebookListComponent, {curSectionId:this.props.curSectionId, onSectionClicked:this.props.onSectionClicked, notebooks:this.props.notebooks});
+            componentToRender = m.component(notebookListComponent_1.NotebookListComponent, {curSectionId:this.props.curSectionId, onSectionClicked:this.props.onSectionClicked, notebooks:this.props.notebooks, rowTabIndex:this.props.rowTabIndex});
         }
         return ({tag: "div", attrs: Object.assign({className:"SectionPickerPopup"},  this.onElementDraw(this.handlePopoverInsertion)), children: [
 				{tag: "div", attrs: {id:constants_1.Constants.Ids.sectionPickerContainer, className:"SectionPickerContainer"}, children: [
@@ -531,14 +543,24 @@ var componentBase_1 = require("../componentBase");
 var utils_1 = require("../../utils");
 var SectionComponentClass = (function (_super) {
     __extends(SectionComponentClass, _super);
-    function SectionComponentClass() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function SectionComponentClass(props) {
+        var _this = _super.call(this, props) || this;
+        // We don't simply pass up the entire props so we can validate easier with our tests
+        _this.sectionInfo = {
+            section: props.section,
+            path: props.path,
+            parentId: props.parentId
+        };
+        if (props.curSectionId) {
+            _this.sectionInfo.curSectionId = props.curSectionId;
+        }
+        return _this;
     }
     SectionComponentClass.prototype.render = function () {
         var isSelected = this.props.curSectionId === this.props.section.id;
         var className = "EntityImageAndNameContainer" + (isSelected ? " SelectedSection" : "");
         return ({tag: "li", attrs: {id:this.props.section.id, className:"Section"}, children: [
-				{tag: "div", attrs: Object.assign({},  this.enableInvoke(this.props.onSectionClicked, 51, this.props),{className:className}), children: [
+				{tag: "div", attrs: Object.assign({},  this.enableInvoke(this.props.onSectionClicked, this.props.tabIndex, this.sectionInfo),{className:className}), children: [
 					{tag: "div", attrs: {className:"ExpandCollapseContainer"}, children: [
 						{tag: "div", attrs: {className:"Expand"}, children: [
 							{tag: "img", attrs: {className:"ExpandImage", src:utils_1.Utils.getImageResourceUrl("arrow_right.png")}}
@@ -596,7 +618,7 @@ var SectionGroupComponentClass = (function (_super) {
                 if (_this.isPartOfCurSectionIdPath()) {
                     curSectionIdPath = _this.props.curSectionIdPath.splice(1);
                 }
-                sectionGroupRows.push(m.component(sectionGroupComponent_1.SectionGroupComponent, {curSectionId:_this.props.curSectionId, path:path, sectionGroup:sectionGroup, onSectionClicked:_this.props.onSectionClicked, curSectionIdPath:curSectionIdPath}));
+                sectionGroupRows.push(m.component(sectionGroupComponent_1.SectionGroupComponent, {curSectionId:_this.props.curSectionId, path:path, sectionGroup:sectionGroup, onSectionClicked:_this.props.onSectionClicked, curSectionIdPath:curSectionIdPath, tabIndex:_this.props.tabIndex}));
             });
         }
         return sectionGroupRows;
@@ -612,7 +634,7 @@ var SectionGroupComponentClass = (function (_super) {
                 if (_this.isPartOfCurSectionIdPath()) {
                     curSectionIdPath = _this.props.curSectionIdPath.splice(1);
                 }
-                sectionRows.push(m.component(sectionComponent_1.SectionComponent, {section:section, curSectionId:_this.props.curSectionId, onSectionClicked:_this.props.onSectionClicked, path:path, parentId:_this.props.sectionGroup.id, curSectionIdPath:curSectionIdPath}));
+                sectionRows.push(m.component(sectionComponent_1.SectionComponent, {section:section, curSectionId:_this.props.curSectionId, onSectionClicked:_this.props.onSectionClicked, path:path, parentId:_this.props.sectionGroup.id, curSectionIdPath:curSectionIdPath, tabIndex:_this.props.tabIndex}));
             });
         }
         return sectionRows;
