@@ -353,6 +353,7 @@ var NotebookListComponentClass = (function (_super) {
     __extends(NotebookListComponentClass, _super);
     function NotebookListComponentClass() {
         _super.apply(this, arguments);
+        this.hasScrolledIntoView = false;
     }
     NotebookListComponentClass.prototype.onSectionClicked = function (section) {
         this.props.onSectionClicked(section);
@@ -366,6 +367,16 @@ var NotebookListComponentClass = (function (_super) {
         var path = OneNoteApi.NotebookUtils.getPathFromNotebooksToSection(this.props.notebooks, function (s) { return s.id === _this.props.curSectionId; });
         return path ? path.map(function (elem) { return elem.id; }) : undefined;
     };
+    NotebookListComponentClass.prototype.scrollToCurrentSection = function () {
+        // We only want to call this the first time it is rendered into the view, not on state change
+        if (this.props.curSectionId && !this.hasScrolledIntoView) {
+            var currentSection = document.getElementById(this.props.curSectionId);
+            if (currentSection && currentSection.scrollIntoView) {
+                currentSection.scrollIntoView();
+            }
+            this.hasScrolledIntoView = true;
+        }
+    };
     NotebookListComponentClass.prototype.render = function () {
         var _this = this;
         var notebookRows = [];
@@ -373,7 +384,7 @@ var NotebookListComponentClass = (function (_super) {
         this.props.notebooks.forEach(function (notebook) {
             notebookRows.push(m.component(notebookComponent_1.NotebookComponent, {notebook:notebook, curSectionId:_this.props.curSectionId, path:notebook.name, onSectionClicked:_this.onSectionClicked.bind(_this), curSectionIdPath:curSectionIdPath, tabIndex:_this.props.rowTabIndex}));
         });
-        return ({tag: "ul", attrs: {id:constants_1.Constants.Ids.notebookList, className:"SectionPickerState SectionPicker", style:"display: block;"}, children: [
+        return ({tag: "ul", attrs: {id:constants_1.Constants.Ids.notebookList, className:"SectionPickerState SectionPicker", style:"display: block;", config:this.scrollToCurrentSection.bind(this)}, children: [
 				notebookRows
 			]});
     };

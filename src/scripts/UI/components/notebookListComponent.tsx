@@ -14,6 +14,8 @@ export interface NotebookListProps {
 };
 
 class NotebookListComponentClass extends ComponentBase<{}, NotebookListProps> {
+	private hasScrolledIntoView = false;
+
 	onSectionClicked(section: SectionProps) {
 		this.props.onSectionClicked(section);
 	}
@@ -27,6 +29,17 @@ class NotebookListComponentClass extends ComponentBase<{}, NotebookListProps> {
 		return path ? path.map((elem) => elem.id) : undefined;
 	}
 
+	scrollToCurrentSection() {
+		// We only want to call this the first time it is rendered into the view, not on state change
+		if (this.props.curSectionId && !this.hasScrolledIntoView) {
+			let currentSection = document.getElementById(this.props.curSectionId);
+			if (currentSection && currentSection.scrollIntoView) {
+				currentSection.scrollIntoView();
+			}
+			this.hasScrolledIntoView = true;
+		}
+	}
+
 	render() {
 		let notebookRows = [];
 
@@ -38,7 +51,7 @@ class NotebookListComponentClass extends ComponentBase<{}, NotebookListProps> {
 					onSectionClicked={this.onSectionClicked.bind(this)} curSectionIdPath={curSectionIdPath} tabIndex={this.props.rowTabIndex} />);
 		});
 		return (
-			<ul id={Constants.Ids.notebookList} className="SectionPickerState SectionPicker" style="display: block;">
+			<ul id={Constants.Ids.notebookList} className="SectionPickerState SectionPicker" style="display: block;" config={this.scrollToCurrentSection.bind(this)}>
 				{notebookRows}
 			</ul>
 		);
