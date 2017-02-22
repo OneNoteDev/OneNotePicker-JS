@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/main/ambient/mithril/mithril.d.ts"/>
-
 module KeyCode {
 	export var tab = 9;
 	export var enter = 13;

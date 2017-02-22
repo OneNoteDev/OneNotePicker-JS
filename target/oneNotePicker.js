@@ -21,7 +21,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.OneNotePicker = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-/// <reference path="../../../typings/main/ambient/mithril/mithril.d.ts"/>
 "use strict";
 var KeyCode;
 (function (KeyCode) {
@@ -150,7 +149,7 @@ var utils_1 = require("../../utils");
 var CurrentlySelectedSectionClass = (function (_super) {
     __extends(CurrentlySelectedSectionClass, _super);
     function CurrentlySelectedSectionClass() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     CurrentlySelectedSectionClass.prototype.render = function () {
         return ({tag: "div", attrs: {id:constants_1.Constants.Ids.saveToLocationContainer, className:"SaveToLocationContainer"}, children: [
@@ -170,13 +169,13 @@ var component = CurrentlySelectedSectionClass.componentize();
 exports.CurrentlySelectedSectionComponent = component;
 
 },{"../../constants":12,"../../utils":16,"../componentBase":1}],3:[function(require,module,exports){
+/// <reference path="../../../../node_modules/onenoteapi/target/oneNoteApi.d.ts" />
 "use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-/// <reference path="../../../../node_modules/onenoteapi/target/oneNoteApi.d.ts" />
 var componentBase_1 = require("../componentBase");
 var utils_1 = require("../../utils");
 /**
@@ -187,7 +186,7 @@ var utils_1 = require("../../utils");
 var ExpandableEntityComponentBase = (function (_super) {
     __extends(ExpandableEntityComponentBase, _super);
     function ExpandableEntityComponentBase() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     ExpandableEntityComponentBase.prototype.getInitialState = function () {
         return {
@@ -251,7 +250,7 @@ var utils_1 = require("../../utils");
 var LoadingElementComponentClass = (function (_super) {
     __extends(LoadingElementComponentClass, _super);
     function LoadingElementComponentClass() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     LoadingElementComponentClass.prototype.render = function () {
         return ({tag: "img", attrs: {id:constants_1.Constants.Ids.loadingImage, src:utils_1.Utils.getImageResourceUrl("loading_circle.gif"), className:"SectionPickerState SectionPickerLoading"}});
@@ -278,7 +277,7 @@ var utils_1 = require("../../utils");
 var NotebookComponentClass = (function (_super) {
     __extends(NotebookComponentClass, _super);
     function NotebookComponentClass() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     NotebookComponentClass.prototype.getDirectChildren = function () {
         var directChildren = this.getChildSectionGroups();
@@ -352,8 +351,9 @@ var constants_1 = require("../../constants");
 var NotebookListComponentClass = (function (_super) {
     __extends(NotebookListComponentClass, _super);
     function NotebookListComponentClass() {
-        _super.apply(this, arguments);
-        this.hasScrolledIntoView = false;
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.hasScrolledIntoView = false;
+        return _this;
     }
     NotebookListComponentClass.prototype.onSectionClicked = function (section) {
         this.props.onSectionClicked(section);
@@ -408,7 +408,7 @@ var status_1 = require("../../status");
 var OneNotePickerComponentClass = (function (_super) {
     __extends(OneNotePickerComponentClass, _super);
     function OneNotePickerComponentClass() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     OneNotePickerComponentClass.prototype.getInitialState = function () {
         return {
@@ -496,7 +496,7 @@ var status_1 = require("../../status");
 var OneNotePickerPopupComponentClass = (function (_super) {
     __extends(OneNotePickerPopupComponentClass, _super);
     function OneNotePickerPopupComponentClass() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     // Retrieves the styling information from the CurrentlySelectedSection in order to anchor
     // the popup component in the correct place
@@ -544,16 +544,17 @@ var utils_1 = require("../../utils");
 var SectionComponentClass = (function (_super) {
     __extends(SectionComponentClass, _super);
     function SectionComponentClass(props) {
-        _super.call(this, props);
+        var _this = _super.call(this, props) || this;
         // We don't simply pass up the entire props so we can validate easier with our tests
-        this.sectionInfo = {
+        _this.sectionInfo = {
             section: props.section,
             path: props.path,
             parentId: props.parentId
         };
         if (props.curSectionId) {
-            this.sectionInfo.curSectionId = props.curSectionId;
+            _this.sectionInfo.curSectionId = props.curSectionId;
         }
+        return _this;
     }
     SectionComponentClass.prototype.render = function () {
         var isSelected = this.props.curSectionId === this.props.section.id;
@@ -596,7 +597,7 @@ var utils_1 = require("../../utils");
 var SectionGroupComponentClass = (function (_super) {
     __extends(SectionGroupComponentClass, _super);
     function SectionGroupComponentClass() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     SectionGroupComponentClass.prototype.getDirectChildren = function () {
         var directChildren = this.getChildSectionGroups();
@@ -671,7 +672,7 @@ var constants_1 = require("../../constants");
 var SectionPickerPopupMessageComponentClass = (function (_super) {
     __extends(SectionPickerPopupMessageComponentClass, _super);
     function SectionPickerPopupMessageComponentClass() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     SectionPickerPopupMessageComponentClass.prototype.render = function () {
         // Labels don't display two consecutive spaces so we only need to trim
@@ -714,7 +715,6 @@ var oneNotePickerDataSource_1 = require("./oneNotePickerDataSource");
 exports.OneNotePickerDataSource = oneNotePickerDataSource_1.OneNotePickerDataSource;
 
 },{"./UI/components/oneNotePickerComponent":7,"./oneNotePickerDataSource":14}],14:[function(require,module,exports){
-/// <reference path="../../node_modules/onenoteapi/target/oneNoteApi.d.ts" />
 "use strict";
 var OneNotePickerDataSource = (function () {
     function OneNotePickerDataSource(authToken) {
@@ -740,13 +740,13 @@ exports.OneNotePickerDataSource = OneNotePickerDataSource;
 
 },{}],15:[function(require,module,exports){
 "use strict";
+var Status;
 (function (Status) {
     Status[Status["NotStarted"] = 0] = "NotStarted";
     Status[Status["InProgress"] = 1] = "InProgress";
     Status[Status["Succeeded"] = 2] = "Succeeded";
     Status[Status["Failed"] = 3] = "Failed";
-})(exports.Status || (exports.Status = {}));
-var Status = exports.Status;
+})(Status = exports.Status || (exports.Status = {}));
 
 },{}],16:[function(require,module,exports){
 "use strict";
