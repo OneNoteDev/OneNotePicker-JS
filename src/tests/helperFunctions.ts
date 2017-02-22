@@ -6,6 +6,7 @@ import {OneNotePickerDefaultWrapperProps} from "../scripts/UI/components/oneNote
 import {OneNotePickerProps} from "../scripts/UI/components/oneNotePickerComponent";
 import {NotebookListProps} from "../scripts/UI/components/notebookListComponent";
 import {PopupProps} from "../scripts/UI/components/oneNotePickerPopupComponent";
+import {SectionInfo} from "../scripts/UI/components/oneNotePickerComponent";
 import {SectionProps} from "../scripts/UI/components/sectionComponent";
 
 Polyfills.init();
@@ -129,8 +130,9 @@ export module HelperFunctions {
 		return {
 			curSectionId: "0-EB15C30446636CBE!18742", // matches first section of the first notebook
 			notebooks: getMockNotebooks(),
-			onSectionClicked: (section: SectionProps) => {
-			}
+			onSectionClicked: (section: SectionInfo) => {
+			},
+			rowTabIndex: 51
 		};
 	}
 
@@ -175,7 +177,8 @@ export module HelperFunctions {
 			curSectionId: "0-EB15C30446636CBE!18745", // matches first section of the first section group of the second notebook
 			notebooks: notebooks,
 			onSectionClicked: (section: SectionProps) => {
-			}
+			},
+			rowTabIndex: 51
 		};
 	}
 
@@ -220,11 +223,12 @@ export module HelperFunctions {
 		return {
 			notebooks: getMockNotebooks(),
 			status: Status.Succeeded,
-			onSectionClicked: (section) => {
+			onSectionClicked: (sectionInfo: SectionInfo) => {
 			},
 			curSectionId: "0-EB15C30446636CBE!18742",
 			noNotebooksFound: "You do not have any notebooks yet. We will create a default notebook for you when you clip this page.",
-			notebookLoadFailureMessage: "OneNote was unable to load your notebooks. Please try again later."
+			notebookLoadFailureMessage: "OneNote was unable to load your notebooks. Please try again later.",
+			rowTabIndex: 51
 		};
 	}
 
@@ -254,7 +258,8 @@ export module HelperFunctions {
 				loadingNotebooks: "Loading notebooks...",
 				noNotebooksFound: "You do not have any notebooks yet. We will create a default notebook for you when you clip this page.",
 				notebookLoadFailureMessage: "OneNote was unable to load your notebooks. Please try again later."
-			}
+			},
+			tabIndex: 50
 		};
 	}
 

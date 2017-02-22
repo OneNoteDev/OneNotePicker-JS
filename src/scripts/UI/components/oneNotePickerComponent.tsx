@@ -5,6 +5,13 @@ import {SectionProps} from "./sectionComponent";
 import {ComponentBase} from "../componentBase";
 import {Status} from "../../status";
 
+export interface SectionInfo {
+	section: OneNoteApi.Section;
+	path: string;
+	parentId: string;
+	curSectionId?: string;
+}
+
 interface OneNotePickerState {
 	popupVisible?: boolean;
 }
@@ -13,10 +20,11 @@ export interface OneNotePickerProps {
 	notebooks: OneNoteApi.Notebook[];
 	status: string;
 	onPopupToggle: Function;
-	onSectionClicked: Function;
+	onSectionClicked: (sectionInfo: SectionInfo) => void;
 	textToDisplay: string;
 	curSectionId: string;
 	localizedStrings: any;
+	tabIndex: number;
 }
 
 class OneNotePickerComponentClass extends ComponentBase<OneNotePickerState, OneNotePickerProps> {
@@ -34,11 +42,11 @@ class OneNotePickerComponentClass extends ComponentBase<OneNotePickerState, OneN
 		this.props.onPopupToggle(newState);
 	}
 
-	onSectionClicked(section: SectionProps) {
+	onSectionClicked(sectionInfo: SectionInfo) {
 		this.setState({
 			popupVisible: false
 		});
-		this.props.onSectionClicked(section);
+		this.props.onSectionClicked(sectionInfo);
 		this.props.onPopupToggle(false);
 	}
 
@@ -87,7 +95,8 @@ class OneNotePickerComponentClass extends ComponentBase<OneNotePickerState, OneN
 			<div>
 				<CurrentlySelectedSectionComponent
 					textToDisplay={textToDisplay}
-					onSectionLocationContainerClicked={this.onSectionLocationContainerClicked.bind(this)} />
+					onSectionLocationContainerClicked={this.onSectionLocationContainerClicked.bind(this)}
+					tabIndex={this.props.tabIndex}/>
 				{ this.state.popupVisible
 					? (<OneNotePickerPopupComponent
 						notebooks={this.props.notebooks}
@@ -95,7 +104,8 @@ class OneNotePickerComponentClass extends ComponentBase<OneNotePickerState, OneN
 						onSectionClicked={this.onSectionClicked.bind(this) }
 						curSectionId={this.props.curSectionId}
 						noNotebooksFound={this.props.localizedStrings.noNotebooksFound}
-						notebookLoadFailureMessage={this.props.localizedStrings.notebookLoadFailureMessage}/>)
+						notebookLoadFailureMessage={this.props.localizedStrings.notebookLoadFailureMessage}
+						rowTabIndex={this.props.tabIndex}/>)
 					: undefined
 				}
 			</div>
