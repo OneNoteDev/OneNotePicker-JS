@@ -2,13 +2,15 @@
 
 import {NotebookComponent} from "./notebookComponent";
 import {SectionProps} from "./sectionComponent";
+import {SectionInfo} from "./oneNotePickerComponent";
 import {ComponentBase} from "../componentBase";
 import {Constants} from "../../constants";
 
 export interface NotebookListProps {
 	curSectionId: string;
 	notebooks: OneNoteApi.Notebook[];
-	onSectionClicked: Function;
+	onSectionClicked: (sectionInfo: SectionInfo) => void;
+	rowTabIndex: number;
 };
 
 class NotebookListComponentClass extends ComponentBase<{}, NotebookListProps> {
@@ -33,7 +35,7 @@ class NotebookListComponentClass extends ComponentBase<{}, NotebookListProps> {
 		this.props.notebooks.forEach((notebook) => {
 			notebookRows.push(
 				<NotebookComponent notebook={notebook} curSectionId={this.props.curSectionId} path={notebook.name}
-					onSectionClicked={this.onSectionClicked.bind(this)} curSectionIdPath={curSectionIdPath} />);
+					onSectionClicked={this.onSectionClicked.bind(this)} curSectionIdPath={curSectionIdPath} tabIndex={this.props.rowTabIndex} />);
 		});
 		return (
 			<ul id={Constants.Ids.notebookList} className="SectionPickerState SectionPicker" style="display: block;">

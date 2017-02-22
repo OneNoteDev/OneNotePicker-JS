@@ -10,6 +10,7 @@ export interface ExpandableEntityProps {
 	curSectionId: string;
 	curSectionIdPath?: string[];
 	path: string;
+	tabIndex: number;
 }
 
 /**
@@ -58,7 +59,7 @@ export abstract class ExpandableEntityComponentBase
 
 		return (
 			<li className={className}>
-				<div {...this.enableInvoke(this.onClicked.bind(this), 51, this.getId())}
+				<div {...this.enableInvoke(this.onClicked.bind(this), this.props.tabIndex, this.getId())}
 					className="EntityImageAndNameContainer">
 					<div className="ExpandCollapseContainer">
 						<div className="Expand">

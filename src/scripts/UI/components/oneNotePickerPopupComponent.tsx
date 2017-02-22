@@ -2,6 +2,7 @@
 import {NotebookComponent} from "./notebookComponent";
 import {NotebookListComponent} from "./notebookListComponent";
 import {LoadingElementComponent} from "./loadingElementComponent";
+import {SectionInfo} from "./oneNotePickerComponent";
 import {SectionPickerPopupMessageComponent} from "./sectionPickerPopupMessageComponent";
 import {ComponentBase} from "../componentBase";
 import {Constants} from "../../constants";
@@ -10,10 +11,11 @@ import {Status} from "../../status";
 export interface PopupProps {
 	notebooks: OneNoteApi.Notebook[];
 	status: Status;
-	onSectionClicked: Function;
+	onSectionClicked: (sectionInfo: SectionInfo) => void;
 	curSectionId: string;
 	noNotebooksFound: string;
 	notebookLoadFailureMessage: string;
+	rowTabIndex: number;
 }
 
 class OneNotePickerPopupComponentClass extends ComponentBase<{}, PopupProps> {
@@ -36,7 +38,7 @@ class OneNotePickerPopupComponentClass extends ComponentBase<{}, PopupProps> {
 		} else if (!this.props.notebooks || this.props.notebooks.length === 0) {
 			componentToRender = <SectionPickerPopupMessageComponent message={this.props.noNotebooksFound} />;
 		} else {
-			componentToRender = <NotebookListComponent curSectionId={this.props.curSectionId} onSectionClicked={this.props.onSectionClicked} notebooks={this.props.notebooks} />;
+			componentToRender = <NotebookListComponent curSectionId={this.props.curSectionId} onSectionClicked={this.props.onSectionClicked} notebooks={this.props.notebooks} rowTabIndex={this.props.rowTabIndex} />;
 		}
 
 		return (
