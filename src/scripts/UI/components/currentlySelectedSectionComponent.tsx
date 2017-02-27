@@ -5,6 +5,7 @@ import {Utils} from "../../utils";
 interface CurrentlySelectedSectionProps {
 	onSectionLocationContainerClicked: any;
 	textToDisplay: string;
+	tabIndex: number;
 }
 
 class CurrentlySelectedSectionClass extends ComponentBase<{}, CurrentlySelectedSectionProps> {
@@ -12,7 +13,7 @@ class CurrentlySelectedSectionClass extends ComponentBase<{}, CurrentlySelectedS
 		return (
 			<div id={Constants.Ids.saveToLocationContainer} className="SaveToLocationContainer" >
 				<a id={Constants.Ids.sectionLocationContainer} role="button" style="outline-style: none;"
-					{...this.enableInvoke(this.props.onSectionLocationContainerClicked, 50)}>
+					{...this.enableInvoke(this.props.onSectionLocationContainerClicked, this.props.tabIndex)}>
 					<div className="OpenSectionPickerArrow">
 						<img className="arrowDown" src={Utils.getImageResourceUrl("dropdown_arrow.png")} />
 					</div>

@@ -1,5 +1,3 @@
-/// <reference path="../../../../typings/main/ambient/qunit/qunit.d.ts" />
-
 import {HelperFunctions} from "../../helperFunctions";
 import {Constants} from "../../../scripts/constants";
 import {OneNotePickerComponent, OneNotePickerProps} from "../../../scripts/UI/components/oneNotePickerComponent";
@@ -97,7 +95,7 @@ test("After clicking on a new section, the popup should no longer render", () =>
 		"The section picker popup element should not exist after clicking on a section");
 });
 
-test("The section location container's tab index should be less than the first notebook element in the popup", () => {
+test("The section location container's tab index should be less equal the first notebook element in the popup", () => {
 	let controllerInstance = HelperFunctions.mountToFixture(defaultComponent);
 
 	// Engage in steps to click section
@@ -110,8 +108,8 @@ test("The section location container's tab index should be less than the first n
 
 	let sectionLocationContainer = document.getElementById(Constants.Ids.sectionLocationContainer);
 
-	ok(sectionLocationContainer.tabIndex < notebook.tabIndex,
-		"The section location container's tab index should be less than the first notebook element's");
+	ok(sectionLocationContainer.tabIndex === notebook.tabIndex,
+		"The section location container's tab index should be equal to the first notebook element's");
 });
 
 test("Clicking a section should close notebooks that are not a parent of that section", () => {
