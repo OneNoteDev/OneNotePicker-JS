@@ -403,9 +403,9 @@ var __extends = (this && this.__extends) || function (d, b) {
 /// <reference path="../../../../node_modules/onenoteapi/target/oneNoteApi.d.ts" />
 var currentlySelectedSectionComponent_1 = require("./currentlySelectedSectionComponent");
 var oneNotePickerPopupComponent_1 = require("./oneNotePickerPopupComponent");
+var constants_1 = require("../../constants");
 var componentBase_1 = require("../componentBase");
 var status_1 = require("../../status");
-var constants_1 = require("../../constants");
 var OneNotePickerComponentClass = (function (_super) {
     __extends(OneNotePickerComponentClass, _super);
     function OneNotePickerComponentClass() {
@@ -489,10 +489,6 @@ var OneNotePickerComponentClass = (function (_super) {
     OneNotePickerComponentClass.prototype.render = function () {
         var status = this.getStatusEnumFromString(this.props.status);
         var textToDisplay = this.getTextToDisplayFromStatus(status);
-        // if (!OneNotePickerComponentClass.escapeListenerAttached) {
-        // 	this.attachEscapeListener();
-        // 	OneNotePickerComponentClass.escapeListenerAttached = true;
-        // }
         return ({tag: "div", attrs: {id:constants_1.Constants.Ids.oneNotePickerComponent, config:this.attachEscapeListener.bind(this)}, children: [
 				m.component(currentlySelectedSectionComponent_1.CurrentlySelectedSectionComponent, {textToDisplay:textToDisplay, onSectionLocationContainerClicked:this.onSectionLocationContainerClicked.bind(this), tabIndex:this.props.tabIndex}), 
 				this.state.popupVisible
@@ -502,7 +498,6 @@ var OneNotePickerComponentClass = (function (_super) {
     };
     return OneNotePickerComponentClass;
 }(componentBase_1.ComponentBase));
-OneNotePickerComponentClass.escapeListenerAttached = false;
 var myComponent = OneNotePickerComponentClass.componentize();
 exports.OneNotePickerComponent = myComponent;
 
