@@ -489,24 +489,12 @@ var OneNotePickerComponentClass = (function (_super) {
     OneNotePickerComponentClass.prototype.render = function () {
         var status = this.getStatusEnumFromString(this.props.status);
         var textToDisplay = this.getTextToDisplayFromStatus(status);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 40420729dba6b8f7f1b791ee2cf3b97dddc60e8c
         // if (!OneNotePickerComponentClass.escapeListenerAttached) {
         // 	this.attachEscapeListener();
         // 	OneNotePickerComponentClass.escapeListenerAttached = true;
         // }
         return ({tag: "div", attrs: {id:constants_1.Constants.Ids.oneNotePickerComponent, config:this.attachEscapeListener.bind(this)}, children: [
-<<<<<<< HEAD
-				m.component(currentlySelectedSectionComponent_1.CurrentlySelectedSectionComponent, {textToDisplay:textToDisplay, onSectionLocationContainerClicked:this.onSectionLocationContainerClicked.bind(this)}), 
-=======
-        return ({tag: "div", attrs: {}, children: [
 				m.component(currentlySelectedSectionComponent_1.CurrentlySelectedSectionComponent, {textToDisplay:textToDisplay, onSectionLocationContainerClicked:this.onSectionLocationContainerClicked.bind(this), tabIndex:this.props.tabIndex}), 
->>>>>>> master
-=======
-				m.component(currentlySelectedSectionComponent_1.CurrentlySelectedSectionComponent, {textToDisplay:textToDisplay, onSectionLocationContainerClicked:this.onSectionLocationContainerClicked.bind(this), tabIndex:this.props.tabIndex}), 
->>>>>>> 40420729dba6b8f7f1b791ee2cf3b97dddc60e8c
 				this.state.popupVisible
             ? (m.component(oneNotePickerPopupComponent_1.OneNotePickerPopupComponent, {notebooks:this.props.notebooks, status:status, onSectionClicked:this.onSectionClicked.bind(this), curSectionId:this.props.curSectionId, noNotebooksFound:this.props.localizedStrings.noNotebooksFound, notebookLoadFailureMessage:this.props.localizedStrings.notebookLoadFailureMessage, rowTabIndex:this.props.tabIndex}))
             : undefined
