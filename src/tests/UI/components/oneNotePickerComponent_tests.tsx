@@ -95,7 +95,7 @@ test("After clicking on a new section, the popup should no longer render", () =>
 		"The section picker popup element should not exist after clicking on a section");
 });
 
-test("The section location container's tab index should be less equal the first notebook element in the popup", () => {
+test("The section location container's tab index should be equal to the first notebook element in the popup", () => {
 	let controllerInstance = HelperFunctions.mountToFixture(defaultComponent);
 
 	// Engage in steps to click section
@@ -104,11 +104,11 @@ test("The section location container's tab index should be less equal the first 
 	});
 
 	let sectionPicker = document.getElementById(Constants.Ids.sectionPickerContainer).firstElementChild;
-	let notebook = sectionPicker.childNodes[0].childNodes[0] as HTMLElement;
+	let notebookListItem = sectionPicker.childNodes[0] as HTMLElement;
 
 	let sectionLocationContainer = document.getElementById(Constants.Ids.sectionLocationContainer);
 
-	ok(sectionLocationContainer.tabIndex === notebook.tabIndex,
+	ok(sectionLocationContainer.tabIndex === notebookListItem.tabIndex,
 		"The section location container's tab index should be equal to the first notebook element's");
 });
 
