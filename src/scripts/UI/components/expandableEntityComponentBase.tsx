@@ -45,10 +45,11 @@ export abstract class ExpandableEntityComponentBase
 		return false;
 	}
 
-	onClicked() {
+	onClicked(id: string, event: UIEvent) {
 		this.setState({
 			isOpened: !this.state.isOpened
 		} as TState);
+		event.stopPropagation();
 	}
 
 	render() {

@@ -201,10 +201,11 @@ var ExpandableEntityComponentBase = (function (_super) {
         }
         return false;
     };
-    ExpandableEntityComponentBase.prototype.onClicked = function () {
+    ExpandableEntityComponentBase.prototype.onClicked = function (id, event) {
         this.setState({
             isOpened: !this.state.isOpened
         });
+        event.stopPropagation();
     };
     ExpandableEntityComponentBase.prototype.render = function () {
         var childRows = this.getDirectChildren();
