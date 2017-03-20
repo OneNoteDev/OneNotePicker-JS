@@ -45,10 +45,11 @@ export abstract class ExpandableEntityComponentBase
 		return false;
 	}
 
-	onClicked() {
+	onClicked(id: string, event: UIEvent) {
 		this.setState({
 			isOpened: !this.state.isOpened
 		} as TState);
+		event.stopPropagation();
 	}
 
 	render() {
@@ -59,9 +60,9 @@ export abstract class ExpandableEntityComponentBase
 		let labelText = this.getLabel();
 
 		return (
-			<li className={className}>
-				<div {...this.enableInvoke(this.onClicked.bind(this), this.props.tabIndex, this.getId())}
-					className="EntityImageAndNameContainer">
+			<li role="treeitem" className={className} {...this.enableInvoke(this.onClicked.bind(this), this.props.tabIndex, this.getId()) }
+					aria-expanded={this.state.isOpened}>
+				<div className="EntityImageAndNameContainer">
 					<div className="ExpandCollapseContainer">
 						<div className="Expand">
 							<img className="ExpandImage" src={Utils.getImageResourceUrl("arrow_right.png")} />
@@ -71,13 +72,13 @@ export abstract class ExpandableEntityComponentBase
 						</div>
 					</div>
 					<div className="EntityImage">
-						<img className={this.getImageClassName()} src={this.getImagePath()} alt={labelText} title={labelText}/>
+						<img className={this.getImageClassName()} src={this.getImagePath()}/>
 					</div>
 					<div className="EntityNameContainer">
-						<label className="EntityName" alt={labelText} title={labelText}>{labelText}</label>
+						<label className="EntityName">{labelText}</label>
 					</div>
 				</div>
-				<ul>
+				<ul role="group">
 					{childRows}
 				</ul>
 			</li>

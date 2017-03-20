@@ -153,7 +153,7 @@ var CurrentlySelectedSectionClass = (function (_super) {
     }
     CurrentlySelectedSectionClass.prototype.render = function () {
         return ({tag: "div", attrs: {id:constants_1.Constants.Ids.saveToLocationContainer, className:"SaveToLocationContainer"}, children: [
-				{tag: "a", attrs: Object.assign({id:constants_1.Constants.Ids.sectionLocationContainer, role:"button", style:"outline-style: none;"},  this.enableInvoke(this.props.onSectionLocationContainerClicked, this.props.tabIndex)), children: [
+				{tag: "a", attrs: Object.assign({id:constants_1.Constants.Ids.sectionLocationContainer, role:"button", style:"outline-style: none;"},  this.enableInvoke(this.props.onSectionLocationContainerClicked, this.props.tabIndex),{"aria-expanded":this.props.expanded}), children: [
 					{tag: "div", attrs: {className:"OpenSectionPickerArrow"}, children: [
 						{tag: "img", attrs: {className:"arrowDown", src:utils_1.Utils.getImageResourceUrl("dropdown_arrow.png")}}
 					]}, 
@@ -201,18 +201,19 @@ var ExpandableEntityComponentBase = (function (_super) {
         }
         return false;
     };
-    ExpandableEntityComponentBase.prototype.onClicked = function () {
+    ExpandableEntityComponentBase.prototype.onClicked = function (id, event) {
         this.setState({
             isOpened: !this.state.isOpened
         });
+        event.stopPropagation();
     };
     ExpandableEntityComponentBase.prototype.render = function () {
         var childRows = this.getDirectChildren();
         var openedClassName = this.state.isOpened ? "Opened" : "Closed";
         var className = this.getEntityClassName() + " " + openedClassName;
         var labelText = this.getLabel();
-        return ({tag: "li", attrs: {className:className}, children: [
-				{tag: "div", attrs: Object.assign({},  this.enableInvoke(this.onClicked.bind(this), this.props.tabIndex, this.getId()),{className:"EntityImageAndNameContainer"}), children: [
+        return ({tag: "li", attrs: Object.assign({role:"treeitem", className:className},  this.enableInvoke(this.onClicked.bind(this), this.props.tabIndex, this.getId()),{"aria-expanded":this.state.isOpened}), children: [
+				{tag: "div", attrs: {className:"EntityImageAndNameContainer"}, children: [
 					{tag: "div", attrs: {className:"ExpandCollapseContainer"}, children: [
 						{tag: "div", attrs: {className:"Expand"}, children: [
 							{tag: "img", attrs: {className:"ExpandImage", src:utils_1.Utils.getImageResourceUrl("arrow_right.png")}}
@@ -222,13 +223,13 @@ var ExpandableEntityComponentBase = (function (_super) {
 						]}
 					]}, 
 					{tag: "div", attrs: {className:"EntityImage"}, children: [
-						{tag: "img", attrs: {className:this.getImageClassName(), src:this.getImagePath(), alt:labelText, title:labelText}}
+						{tag: "img", attrs: {className:this.getImageClassName(), src:this.getImagePath()}}
 					]}, 
 					{tag: "div", attrs: {className:"EntityNameContainer"}, children: [
-						{tag: "label", attrs: {className:"EntityName", alt:labelText, title:labelText}, children: [labelText]}
+						{tag: "label", attrs: {className:"EntityName"}, children: [labelText]}
 					]}
 				]}, 
-				{tag: "ul", attrs: {}, children: [
+				{tag: "ul", attrs: {role:"group"}, children: [
 					childRows
 				]}
 			]});
@@ -384,7 +385,7 @@ var NotebookListComponentClass = (function (_super) {
         this.props.notebooks.forEach(function (notebook) {
             notebookRows.push(m.component(notebookComponent_1.NotebookComponent, {notebook:notebook, curSectionId:_this.props.curSectionId, path:notebook.name, onSectionClicked:_this.onSectionClicked.bind(_this), curSectionIdPath:curSectionIdPath, tabIndex:_this.props.rowTabIndex}));
         });
-        return ({tag: "ul", attrs: {id:constants_1.Constants.Ids.notebookList, className:"SectionPickerState SectionPicker", style:"display: block;", config:this.scrollToCurrentSection.bind(this)}, children: [
+        return ({tag: "ul", attrs: {id:constants_1.Constants.Ids.notebookList, className:"SectionPickerState SectionPicker", style:"display: block;", config:this.scrollToCurrentSection.bind(this), role:"tree"}, children: [
 				notebookRows
 			]});
     };
@@ -490,7 +491,7 @@ var OneNotePickerComponentClass = (function (_super) {
         var status = this.getStatusEnumFromString(this.props.status);
         var textToDisplay = this.getTextToDisplayFromStatus(status);
         return ({tag: "div", attrs: {id:constants_1.Constants.Ids.oneNotePickerComponent, config:this.attachEscapeListener.bind(this)}, children: [
-				m.component(currentlySelectedSectionComponent_1.CurrentlySelectedSectionComponent, {textToDisplay:textToDisplay, onSectionLocationContainerClicked:this.onSectionLocationContainerClicked.bind(this), tabIndex:this.props.tabIndex}), 
+				m.component(currentlySelectedSectionComponent_1.CurrentlySelectedSectionComponent, {textToDisplay:textToDisplay, onSectionLocationContainerClicked:this.onSectionLocationContainerClicked.bind(this), tabIndex:this.props.tabIndex, expanded:this.state.popupVisible}), 
 				this.state.popupVisible
             ? (m.component(oneNotePickerPopupComponent_1.OneNotePickerPopupComponent, {notebooks:this.props.notebooks, status:status, onSectionClicked:this.onSectionClicked.bind(this), curSectionId:this.props.curSectionId, noNotebooksFound:this.props.localizedStrings.noNotebooksFound, notebookLoadFailureMessage:this.props.localizedStrings.notebookLoadFailureMessage, rowTabIndex:this.props.tabIndex}))
             : undefined
@@ -580,8 +581,8 @@ var SectionComponentClass = (function (_super) {
     SectionComponentClass.prototype.render = function () {
         var isSelected = this.props.curSectionId === this.props.section.id;
         var className = "EntityImageAndNameContainer" + (isSelected ? " SelectedSection" : "");
-        return ({tag: "li", attrs: {id:this.props.section.id, className:"Section"}, children: [
-				{tag: "div", attrs: Object.assign({},  this.enableInvoke(this.props.onSectionClicked, this.props.tabIndex, this.sectionInfo),{className:className}), children: [
+        return ({tag: "li", attrs: Object.assign({role:"treeitem", id:this.props.section.id, className:"Section", "aria-selected":isSelected},  this.enableInvoke(this.props.onSectionClicked, this.props.tabIndex, this.sectionInfo)), children: [
+				{tag: "div", attrs: {className:className}, children: [
 					{tag: "div", attrs: {className:"ExpandCollapseContainer"}, children: [
 						{tag: "div", attrs: {className:"Expand"}, children: [
 							{tag: "img", attrs: {className:"ExpandImage", src:utils_1.Utils.getImageResourceUrl("arrow_right.png")}}
@@ -591,7 +592,7 @@ var SectionComponentClass = (function (_super) {
 						{tag: "img", attrs: {className:"SectionImage", src:utils_1.Utils.getImageResourceUrl("section.png")}}
 						]}, 
 					{tag: "div", attrs: {className:"EntityNameContainer"}, children: [
-						{tag: "label", attrs: {className:"EntityName", alt:this.props.section.name, title:this.props.section.name}, children: [this.props.section.name]}
+						{tag: "label", attrs: {className:"EntityName"}, children: [this.props.section.name]}
 					]}
 				]}
 			]});

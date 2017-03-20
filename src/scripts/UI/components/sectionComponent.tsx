@@ -28,8 +28,8 @@ class SectionComponentClass extends ComponentBase<{}, SectionProps> {
 		let isSelected = this.props.curSectionId === this.props.section.id;
 		let className = "EntityImageAndNameContainer" + (isSelected ? " SelectedSection" : "");
 		return (
-			<li id={this.props.section.id} className="Section">
-				<div {...this.enableInvoke(this.props.onSectionClicked, this.props.tabIndex, this.sectionInfo)} className={className} >
+			<li role="treeitem" id={this.props.section.id} className="Section" aria-selected={isSelected} {...this.enableInvoke(this.props.onSectionClicked, this.props.tabIndex, this.sectionInfo) } >
+				<div className={className}>
 					<div className="ExpandCollapseContainer">
 						<div className="Expand">
 							<img className="ExpandImage" src={Utils.getImageResourceUrl("arrow_right.png")} />
@@ -39,7 +39,7 @@ class SectionComponentClass extends ComponentBase<{}, SectionProps> {
 						<img className="SectionImage" src={Utils.getImageResourceUrl("section.png")} />
 						</div>
 					<div className="EntityNameContainer">
-						<label className="EntityName" alt={this.props.section.name} title={this.props.section.name}>{this.props.section.name}</label>
+						<label className="EntityName">{this.props.section.name}</label>
 					</div>
 				</div>
 			</li>

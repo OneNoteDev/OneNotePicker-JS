@@ -118,7 +118,9 @@ class OneNotePickerComponentClass extends ComponentBase<OneNotePickerState, OneN
 				<CurrentlySelectedSectionComponent
 					textToDisplay={textToDisplay}
 					onSectionLocationContainerClicked={this.onSectionLocationContainerClicked.bind(this)}
-					tabIndex={this.props.tabIndex}/>
+					tabIndex={this.props.tabIndex}
+					expanded={this.state.popupVisible}
+					/>
 				{ this.state.popupVisible
 					? (<OneNotePickerPopupComponent
 						notebooks={this.props.notebooks}

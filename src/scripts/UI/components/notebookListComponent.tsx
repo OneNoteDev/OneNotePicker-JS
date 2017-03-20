@@ -51,7 +51,11 @@ class NotebookListComponentClass extends ComponentBase<{}, NotebookListProps> {
 					onSectionClicked={this.onSectionClicked.bind(this)} curSectionIdPath={curSectionIdPath} tabIndex={this.props.rowTabIndex} />);
 		});
 		return (
-			<ul id={Constants.Ids.notebookList} className="SectionPickerState SectionPicker" style="display: block;" config={this.scrollToCurrentSection.bind(this)}>
+			<ul id={Constants.Ids.notebookList}
+				className="SectionPickerState SectionPicker"
+				style="display: block;"
+				config={this.scrollToCurrentSection.bind(this)}
+				role="tree">
 				{notebookRows}
 			</ul>
 		);
