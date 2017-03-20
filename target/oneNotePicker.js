@@ -157,7 +157,7 @@ var CurrentlySelectedSectionClass = (function (_super) {
 					{tag: "div", attrs: {className:"OpenSectionPickerArrow"}, children: [
 						{tag: "img", attrs: {className:"arrowDown", src:utils_1.Utils.getImageResourceUrl("dropdown_arrow.png")}}
 					]}, 
-					{tag: "div", attrs: {className:"SectionLocation"}, children: [this.props.textToDisplay]}
+					{tag: "div", attrs: {className:"SectionLocation", title:this.props.textToDisplay}, children: [this.props.textToDisplay]}
 				]}
 			]});
     };

@@ -18,7 +18,7 @@ class CurrentlySelectedSectionClass extends ComponentBase<{}, CurrentlySelectedS
 					<div className="OpenSectionPickerArrow">
 						<img className="arrowDown" src={Utils.getImageResourceUrl("dropdown_arrow.png")} />
 					</div>
-					<div className="SectionLocation">{this.props.textToDisplay}</div>
+					<div className="SectionLocation" title={this.props.textToDisplay}>{this.props.textToDisplay}</div>
 				</a>
 			</div>
 		);
