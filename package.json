@@ -1,5 +1,5 @@
 {
-  "version": "1.0.8",
+  "version": "1.0.9",
   "name": "onenotepicker",
   "description": "A JavaScript UI component that allows a user to choose one of their Notebook Sections",
   "main": "target/modules/oneNotePicker.js",
