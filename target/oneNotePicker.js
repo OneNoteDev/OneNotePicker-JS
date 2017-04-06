@@ -478,7 +478,7 @@ var OneNotePickerComponentClass = (function (_super) {
                     return;
                 }
                 if (oldOnKeyDown_1) {
-                    oldOnKeyDown_1.call(document, event);
+                    oldOnKeyDown_1.call(document, ev);
                 }
             };
             // Remove listener when this element is unmounted

@@ -98,7 +98,7 @@ class OneNotePickerComponentClass extends ComponentBase<OneNotePickerState, OneN
 					return;
 				}
 				if (oldOnKeyDown) {
-					oldOnKeyDown.call(document, event);
+					oldOnKeyDown.call(document, ev);
 				}
 			};
 
