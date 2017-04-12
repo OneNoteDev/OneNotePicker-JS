@@ -7,3 +7,4 @@ target/tests
 typings
 debug.log
 *.user
+.idea
