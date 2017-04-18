@@ -1,8 +1,9 @@
 import path from 'path'
 import webpack from 'webpack'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 let webpackConfiguration = {
-    entry: './src/main.ts',
+    entry: './sampleApp/main.ts',
     output: {
         path: path.resolve(__dirname, './dist'),
         publicPath: '/dist/',
@@ -41,7 +42,8 @@ let webpackConfiguration = {
     },
     devServer: {
         historyApiFallback: true,
-        noInfo: true
+        noInfo: true,
+        open: true
     },
     performance: {
         hints: false
@@ -50,6 +52,9 @@ let webpackConfiguration = {
     plugins: [
         new webpack.ProvidePlugin({
             OneNoteApi: 'onenoteapi/target/oneNoteApi.js'
+        }),
+        new HtmlWebpackPlugin({
+            template: "sampleApp/index.html"
         })
     ]
 };

@@ -10,5 +10,5 @@ import Component from "vue-class-component";
 	`
 })
 
-export default class MyComponent extends Vue {
+export default class OneNoteSectionPicker extends Vue {
 }
