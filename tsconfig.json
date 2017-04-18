@@ -1,12 +1,19 @@
 {
-	"compilerOptions": {
-		"jsx": "preserve",
-		"module": "commonjs",
-		"types": [
-			"es6-promise",
-			"mithril",
-			"qunit"
-		],
-		"outDir": "./build"
-	}
+  "compilerOptions": {
+    "target": "es2015",
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "lib": [
+      "dom",
+      "es2015"
+    ],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "removeComments": true,
+    "suppressImplicitAnyIndexErrors": true
+  },
+  "compileOnSave": false
 }
