@@ -46,8 +46,12 @@ let webpackConfiguration = {
     performance: {
         hints: false
     },
-    devtool: '#eval-source-map'
-
+    devtool: '#cheap-module-source-map',
+    plugins: [
+        new webpack.ProvidePlugin({
+            OneNoteApi: 'onenoteapi/target/oneNoteApi.js'
+        })
+    ]
 };
 
 if (process.env.NODE_ENV === 'production') {
