@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2015",
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "lib": [
       "dom",
-      "es5"
+      "es2015"
     ],
-    "module": "es2015",
+    "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitAny": false,
     "noImplicitThis": true,
