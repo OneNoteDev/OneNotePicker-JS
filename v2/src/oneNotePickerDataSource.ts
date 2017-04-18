@@ -1,4 +1,4 @@
-import "../node_modules/onenoteapi/target/oneNoteApi"
+import "../node_modules/onenoteapi/target/oneNoteApi";
 
 export class OneNotePickerDataSource {
 	authToken: string;

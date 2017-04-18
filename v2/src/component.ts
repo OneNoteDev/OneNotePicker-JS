@@ -1,13 +1,14 @@
-import Vue from 'vue'
-import Component from 'vue-class-component'
+import Vue from "vue";
+import Component from "vue-class-component";
 
 @Component({
-	props: ['notebooks'],
+	props: ["notebooks"],
 	template: `
 		<div>
 			<p v-for="notebook in notebooks">{{ notebook.name }}</p>
 		</div>
 	`
 })
+
 export default class MyComponent extends Vue {
 }

@@ -1,8 +1,8 @@
-import Vue from 'vue';
-import MyComponent from './component';
-import {OneNotePickerDataSource} from './oneNotePickerDataSource'
+import Vue from "vue";
+import MyComponent from "./component";
+import {OneNotePickerDataSource} from "./oneNotePickerDataSource";
 
-Vue.component('my-component', MyComponent);
+Vue.component("my-component", MyComponent);
 
 let data = {
 	notebooks: []
@@ -19,5 +19,5 @@ dataSource.getNotebooks({"MS-Int-AppId": "OneNote Test"}).then((value) => {
 	console.log(value);
 	data.notebooks = value;
 }).catch((value) => {
-	console.error(value)
+	console.error(value);
 });
