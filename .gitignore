@@ -1,10 +1,5 @@
-.vs
-/build
-bundles
+dist
 node_modules
-target/modules
-target/tests
-typings
-debug.log
 *.user
 .idea
+.vs
