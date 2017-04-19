@@ -1,5 +1,5 @@
 import OneNoteSectionPicker from "../src/oneNoteSectionPicker";
-import {expect} from 'chai';
+import {expect} from "chai";
 
 describe("TopLevel", () => {
 	it("should work", () => {
