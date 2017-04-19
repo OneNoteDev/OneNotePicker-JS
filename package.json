@@ -12,7 +12,8 @@
   "scripts": {
     "test": "webpack",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --content-base sampleApp/",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "production": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "analyze": "cross-env NODE_ENV=analyze ANALYZE=true webpack --progress --hide-modules"
   },
   "dependencies": {
     "onenoteapi": "^1.1.0",
@@ -37,6 +38,7 @@
     "vue-loader": "^11.1.4",
     "vue-template-compiler": "^2.2.1",
     "webpack": "^2.2.0",
+    "webpack-bundle-analyzer": "^2.4.0",
     "webpack-dev-server": "^2.2.0"
   }
 }

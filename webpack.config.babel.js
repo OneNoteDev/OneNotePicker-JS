@@ -1,6 +1,7 @@
 import path from 'path'
 import webpack from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 
 let webpackConfiguration = {
     entry: './sampleApp/main.ts',
@@ -79,6 +80,20 @@ if (process.env.NODE_ENV === 'production') {
         //   minimize: true
         // })
     ])
+}
+
+if (process.env.NODE_ENV === 'analyze') {
+    webpackConfiguration.plugins = (webpackConfiguration.plugins || []).concat([
+        new BundleAnalyzerPlugin({
+            analyzerMode: "server",
+            analyzerPort: 8888,
+            openAnalyzer: true,
+            generateStatsFile: true,
+            statsFilename: "build.stats.json",
+            statsOptions: null,
+            logLevel: "info"
+        })
+    ]);
 }
 
 export default webpackConfiguration;
