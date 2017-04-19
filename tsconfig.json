@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
-    "target": "es2015",
+    "target": "es5",
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "lib": [
       "dom",
+      "es5",
       "es2015"
     ],
     "module": "commonjs",
@@ -15,5 +16,8 @@
     "removeComments": true,
     "suppressImplicitAnyIndexErrors": true
   },
-  "compileOnSave": false
+  "compileOnSave": false,
+  "exclude": [
+    "node_modules"
+  ]
 }

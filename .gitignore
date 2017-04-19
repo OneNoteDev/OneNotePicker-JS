@@ -3,3 +3,4 @@ node_modules
 *.user
 .idea
 .vs
+/coverage/

@@ -86,7 +86,7 @@ if (process.env.NODE_ENV === 'analyze') {
     webpackConfiguration.plugins = (webpackConfiguration.plugins || []).concat([
         new BundleAnalyzerPlugin({
             analyzerMode: "server",
-            analyzerPort: 8888,
+            analyzerPort: 8989,
             openAnalyzer: true,
             generateStatsFile: true,
             statsFilename: "build.stats.json",
@@ -94,6 +94,11 @@ if (process.env.NODE_ENV === 'analyze') {
             logLevel: "info"
         })
     ]);
+}
+
+if (process.env.NODE_ENV === 'test') {
+	webpackConfiguration.devtool = "#inline-source-map";
+	delete webpackConfiguration.entry;
 }
 
 export default webpackConfiguration;
