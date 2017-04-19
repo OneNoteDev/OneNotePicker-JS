@@ -10,7 +10,6 @@
     "url": "git+https://github.com/OneNoteDev/OneNotePicker-JS.git"
   },
   "scripts": {
-    "test": "webpack",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --content-base sampleApp/",
     "production": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "analyze": "cross-env NODE_ENV=analyze ANALYZE=true webpack --progress --hide-modules"
