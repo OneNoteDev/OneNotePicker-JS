@@ -7,9 +7,11 @@ Vue.component("menu-item", MenuItem);
 @Component({
 	props: ["notebooks"],
 	template: `
-		<div>
-			<menu-item v-for="notebook in notebooks" v-bind:key="notebook" :itemName="notebook.name"></menu-item>
-		</div>
+		<aside class="menu">
+			<ul class="menu-list">
+				<menu-item v-for="notebook in notebooks" :key="notebook" :itemName="notebook.name"></menu-item>
+			</ul>
+		</aside>
 	`
 })
 

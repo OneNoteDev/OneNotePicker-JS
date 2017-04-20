@@ -3,12 +3,11 @@ import Component from "vue-class-component";
 
 @Component({
 	props: ["itemName"],
-	template: `
-		<a class="test" href="#" v-text="itemName"></a>`
+	template: '<li><a v-text="itemName" @click="onClick"></a></li>'
 })
 
 export default class MenuItem extends Vue {
-	onclick(): void {
+	onClick(): void {
 		window.alert("hello");
 	}
 }
