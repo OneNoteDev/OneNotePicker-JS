@@ -5,3 +5,4 @@ node_modules
 .vs
 /coverage/
 /.DS_Store
+/npm-debug.log

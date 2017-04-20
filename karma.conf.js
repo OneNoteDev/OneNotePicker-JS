@@ -1,23 +1,60 @@
-require('babel-core/register');
+// Read more about code coverage here : https://github.com/mattlewis92/karma-coverage-istanbul-reporter,
+// and https://github.com/webpack-contrib/istanbul-instrumenter-loader
 
+require('babel-core/register');
+const path = require("path");
+
+/// Start Webpack Configuration
 let webpackConfig = require('./webpack.config.babel').default;
+
+// inline source map is needed for instrumentation to work properly
+webpackConfig.devtool = '#inline-source-map';
+
+// Entry file is not needed anymore
 delete webpackConfig.entry;
 
-let karmaConfig = function(config) {
+// Add instrumentation for JS / TS under /src
+webpackConfig.module.rules.unshift(
+	{
+		test: /\.ts$/,
+		include: path.resolve('src/'),
+		loader: 'istanbul-instrumenter-loader'
+	});
+
+webpackConfig.module.rules.unshift(
+	{
+		test: /\.js$/,
+		include: path.resolve('src/'),
+		loader: 'istanbul-instrumenter-loader'
+	});
+
+
+/// End Webpack Configuration
+
+let karmaConfig = function (config) {
 	config.set({
 		browsers: ['PhantomJS'],
 		frameworks: ['mocha', 'sinon-chai', 'phantomjs-shim'],
 		webpack: webpackConfig,
-		files: [
-			{pattern: 'test/**/*.spec.ts'}
-		],
+		files: ['./test/index.ts'],
 		preprocessors: {
-			'**/*.spec.ts': ['webpack', 'sourcemap']
+			'./test/index.ts': ['webpack', 'sourcemap']
 		},
 		webpackMiddleware: {
 			noInfo: true
 		},
-		reporters: ['spec'],
+		reporters: ['spec', 'coverage-istanbul'],
+		coverageIstanbulReporter: {
+			reports: ['html', 'lcovonly', 'text-summary'],
+			dir: path.join(__dirname, 'coverage'),
+			fixWebpackSourcePaths: true,
+			skipFilesWithNoCoverage: true,
+			'report-config': {
+				html: {
+					subdir: 'html'
+				}
+			}
+		},
 		port: 9876,
 		colors: true,
 		logLevel: config.LOG_INFO,
