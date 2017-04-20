@@ -1,10 +1,20 @@
 import path from 'path'
 import webpack from 'webpack'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
+
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+
+const extractSass = new ExtractTextPlugin({
+    filename: "[name].css",
+    allChunks: true
+});
 
 let webpackConfiguration = {
-    entry: './sampleApp/main.ts',
+    entry: {
+        main: './sampleApp/main.ts',
+        oneNoteSectionPicker: './src/oneNoteSectionPicker.sass'
+    },
     output: {
         path: path.resolve(__dirname, './dist'),
         publicPath: '/dist/',
@@ -20,7 +30,6 @@ let webpackConfiguration = {
                     appendTsSuffixTo: [/\.vue$/]
                 }
             },
-
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
@@ -32,7 +41,43 @@ let webpackConfiguration = {
                 options: {
                     name: '[name].[ext]?[hash]'
                 }
-            }
+            },
+            {
+                test: /\.scss$/,
+                use: extractSass.extract({
+                    use: [
+                        {
+                            loader: 'css-loader?sourceMap'
+                        },
+                        {
+                            loader: 'sass-loader',
+                            options: {
+                                includePaths: [path.join(__dirname, 'node-modules')],
+                                sourceMap: true
+                            }
+                        }
+                    ],
+                    fallback: 'style-loader'
+                })
+            },
+            {
+                test: /\.sass$/,
+                use: extractSass.extract({
+                    use: [
+                        {
+                            loader: 'css-loader?sourceMap'
+                        },
+                        {
+                            loader: 'sass-loader?indentedSyntax',
+                            options: {
+                                includePaths: [path.join(__dirname, 'node-modules')],
+                                sourceMap: true
+                            }
+                        }
+                    ],
+                    fallback: 'style-loader'
+                })
+            },
         ]
     },
     resolve: {
@@ -56,7 +101,8 @@ let webpackConfiguration = {
         }),
         new HtmlWebpackPlugin({
             template: "sampleApp/index.html"
-        })
+        }),
+        extractSass
     ]
 };
 
@@ -97,8 +143,8 @@ if (process.env.NODE_ENV === 'analyze') {
 }
 
 if (process.env.NODE_ENV === 'test') {
-	webpackConfiguration.devtool = "#inline-source-map";
-	delete webpackConfiguration.entry;
+    webpackConfiguration.devtool = "#inline-source-map";
+    delete webpackConfiguration.entry;
 }
 
 export default webpackConfiguration;
