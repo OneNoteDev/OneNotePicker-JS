@@ -13,7 +13,7 @@ const extractSass = new ExtractTextPlugin({
 let webpackConfiguration = {
     entry: {
         main: './sampleApp/main.ts',
-        oneNoteSectionPicker: './src/oneNoteSectionPicker.sass'
+        oneNotePicker: './src/oneNotePicker.sass'
     },
     output: {
         path: path.resolve(__dirname, './dist'),
