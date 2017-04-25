@@ -25,7 +25,7 @@ export default class NotebookItem extends Vue {
 	itemName: string;
 
 	selectNotebook(notebookName: string): void {
-		this.$emit("selected", notebookName);
+		this.$store.dispatch('selectNotebook', notebookName);
 	}
 
 	mounted() {

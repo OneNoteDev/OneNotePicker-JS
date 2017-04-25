@@ -1,6 +1,6 @@
 <template>
 	<nav class="panel">
-		<onenote-notebook-item v-for="item in collection" :key="item" :name="item.name" v-on:selected="itemSelected">
+		<onenote-notebook-item v-for="item in collection" :key="item" :name="item.name">
 		</onenote-notebook-item>
 	</nav>
 </template>
@@ -19,14 +19,6 @@ import NotebookItem from "./notebookItem.vue";
 })
 
 export default class OneNotePanel extends Vue {
-	itemSelected(name) {
-		console.log("onenote-panel: Item selected : " + name);
-		this.$emit("selected", name);
-	}
-
-	mounted() {
-		console.log("notebooks: " + this.$children);
-	}
 }
 </script>
 

@@ -1,6 +1,16 @@
 import Vue from "vue";
+import Vuex from "vuex";
 import OneNotePicker from "../src/oneNotePicker.vue";
-import {OneNotePickerDataSource} from "./oneNotePickerDataSource";
+import { OneNotePickerDataSource } from "./oneNotePickerDataSource";
+
+import { State } from "../src/state/state";
+import { PickerState } from "../src/state/index";
+
+Vue.use(Vuex);
+
+const store = new Vuex.Store({
+	modules: { pickerState: new PickerState }
+});
 
 let data = {
 	notebooks: []
@@ -8,6 +18,7 @@ let data = {
 
 let oneNotePicker = new Vue({
 	el: "#oneNotePicker",
+	store,
 	data: data,
 	render: h => h(OneNotePicker, {
 		props: { notebooks: data.notebooks }
