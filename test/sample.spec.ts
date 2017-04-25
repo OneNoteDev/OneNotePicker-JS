@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import OneNoteSectionPicker from "../src/oneNotePicker";
+import OneNoteSectionPicker from "../src/oneNotePicker.vue";
 import Simple from "../src/simple";
 
 describe("TopLevel", () => {

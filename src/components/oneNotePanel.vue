@@ -8,9 +8,11 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
+import NotebookItem from "./notebookItem.vue";
 
 @Component({
 	name: "onenote-panel",
+	components: { "onenote-notebook-item": NotebookItem },
 	props: {
 		collection: { required: true }
 	}

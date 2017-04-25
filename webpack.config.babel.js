@@ -10,6 +10,11 @@ const extractSass = new ExtractTextPlugin({
     allChunks: true
 });
 
+// this is probably not needed.
+function resolve(dir) {
+    return path.join(__dirname, '..', dir);
+}
+
 let webpackConfiguration = {
     entry: {
         main: './sampleApp/main.ts',
@@ -19,6 +24,12 @@ let webpackConfiguration = {
         path: path.resolve(__dirname, './dist'),
         publicPath: '/dist/',
         filename: '[name].js'
+    },
+    resolve: {
+        extensions: ['.js', '.ts'],
+        alias: {
+            'vue$': 'vue/dist/vue.esm.js',
+        }
     },
     module: {
         rules: [
@@ -31,9 +42,11 @@ let webpackConfiguration = {
                 }
             },
             {
-                test: /\.js$/,
-                loader: 'babel-loader',
-                exclude: /node_modules/
+                test: /\.vue$/,
+                loader: 'vue-loader',
+                options: {
+                    esModule: true
+                }
             },
             {
                 test: /\.(png|jpg|gif|svg)$/,
@@ -80,12 +93,6 @@ let webpackConfiguration = {
             },
         ]
     },
-    resolve: {
-        alias: {
-            'vue$': 'vue/dist/vue.esm.js'
-        },
-        extensions: ['.ts', '.js']
-    },
     devServer: {
         historyApiFallback: true,
         noInfo: true,
@@ -97,7 +104,8 @@ let webpackConfiguration = {
     devtool: '#cheap-module-source-map',
     plugins: [
         new webpack.ProvidePlugin({
-            OneNoteApi: 'onenoteapi/target/oneNoteApi.js'
+            OneNoteApi: 'onenoteapi/target/oneNoteApi.js',
+            Promise: 'es6-promise'
         }),
         new HtmlWebpackPlugin({
             template: "sampleApp/index.html"

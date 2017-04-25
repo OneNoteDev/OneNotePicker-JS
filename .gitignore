@@ -3,6 +3,7 @@ node_modules
 *.user
 .idea
 .vs
+debug.log
 /coverage/
 /.DS_Store
 /npm-debug.log

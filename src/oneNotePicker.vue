@@ -12,16 +12,18 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
+import OneNotePanel from "./components/oneNotePanel.vue";
 
 @Component({
 	name: "onenote-picker",
+	components: { "onenote-panel": OneNotePanel },
 	props: {
 		notebooks: { required: true }
 	}
 })
 
 export default class OneNotePicker extends Vue {
-	notebooks: OneNoteApi.Notebook[] = [];
+	notebooks: OneNoteApi.Notebook[];
 
 	itemSelected(name) {
 		console.log("onenote-picker: ItemSelected: " + name);
