@@ -1,8 +1,5 @@
 import Vue from "vue";
-import OneNoteSectionPicker from "../src/oneNotePicker";
 import {OneNotePickerDataSource} from "./oneNotePickerDataSource";
-
-Vue.component("onenote-picker", OneNoteSectionPicker);
 
 let data = {
 	notebooks: []
