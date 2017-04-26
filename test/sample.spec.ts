@@ -1,12 +1,11 @@
 import {expect} from "chai";
-// import OneNoteSectionPicker from "../src/oneNotePicker.vue";
+import OneNoteSectionPicker from "../src/oneNotePicker.vue";
 import Simple from "../src/simple";
 
 describe("TopLevel", () => {
 	it("should work", () => {
-		// let picker = new OneNoteSectionPicker();
-		//noinspection TsLint
-		// expect(picker).to.exist;
+		// noinspection TsLint
+		expect(OneNoteSectionPicker).to.exist;
 	});
 
 	it("should get coverage", () => {
