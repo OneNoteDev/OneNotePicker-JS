@@ -1,32 +1,23 @@
 <template>
-	<div class="columns">
-		<div class="column">
-			<onenote-panel :collection="notebooks"/>
-		</div>
-		<div class="column">
-			<onenote-panel :collection="selectedNotebook" />
-		</div>
-	</div>
+	<ul class="menu-list">
+		<notebook-item v-for="notebook in notebooks" :key="notebook" :notebook="notebook"></notebook-item>
+	</ul>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import OneNotePanel from "./components/oneNotePanel.vue";
+
+import NotebookItem from "./components/notebookItem.vue";
 
 @Component({
 	name: "onenote-picker",
-	components: { "onenote-panel": OneNotePanel },
+	components: { "notebook-item": NotebookItem },
 	props: {
 		notebooks: { required: true }
 	}
 })
 
 export default class OneNotePicker extends Vue {
-	notebooks: OneNoteApi.Notebook[];
-
-	get selectedNotebook() {
-		return this.notebooks[0].sections;
-	}
 }
 </script>
