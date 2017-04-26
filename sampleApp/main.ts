@@ -4,7 +4,7 @@ import OneNotePicker from "../src/oneNotePicker.vue";
 import { OneNotePickerDataSource } from "./oneNotePickerDataSource";
 
 import { State } from "../src/state/state";
-import { PickerState } from "../src/state/index";
+import { PickerState } from "../src/state/pickerState";
 
 Vue.use(Vuex);
 
