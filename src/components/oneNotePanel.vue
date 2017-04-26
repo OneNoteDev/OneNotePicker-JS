@@ -1,6 +1,6 @@
 <template>
 	<nav class="panel">
-		<onenote-notebook-item v-for="item in collection" :key="item" :name="item.name">
+		<onenote-notebook-item v-for="item in collection" :key="item" :name="item.name" :id="item.id">
 		</onenote-notebook-item>
 	</nav>
 </template>
