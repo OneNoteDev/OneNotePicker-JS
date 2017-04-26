@@ -1,9 +1,9 @@
-import path from 'path'
-import webpack from 'webpack'
+const path = require('path');
+const webpack = require('webpack');
 
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const extractSass = new ExtractTextPlugin({
     filename: "[name].css",
@@ -155,4 +155,4 @@ if (process.env.NODE_ENV === 'test') {
     delete webpackConfiguration.entry;
 }
 
-export default webpackConfiguration;
+module.exports = webpackConfiguration;

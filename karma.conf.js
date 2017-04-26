@@ -1,11 +1,7 @@
-// Read more about code coverage here : https://github.com/mattlewis92/karma-coverage-istanbul-reporter,
-// and https://github.com/webpack-contrib/istanbul-instrumenter-loader
-
-require('babel-core/register');
 const path = require("path");
 
 /// Start Webpack Configuration
-let webpackConfig = require('./webpack.config.babel').default;
+let webpackConfig = require('./webpack.config.js');
 
 // inline source map is needed for instrumentation to work properly
 webpackConfig.devtool = '#inline-source-map';
