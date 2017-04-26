@@ -13,6 +13,7 @@
     "noImplicitAny": false,
     "noImplicitThis": true,
     "strictNullChecks": true,
+    "types": ["vue-typescript-import-dts"],
     "removeComments": true,
     "suppressImplicitAnyIndexErrors": true
   },

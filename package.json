@@ -60,6 +60,7 @@
     "typescript": "^2.2.2",
     "vue-loader": "^11.1.4",
     "vue-template-compiler": "^2.2.1",
+    "vue-typescript-import-dts": "^3.0.1",
     "wallaby-webpack": "0.0.38",
     "webpack": "^2.2.0",
     "webpack-bundle-analyzer": "^2.4.0",
