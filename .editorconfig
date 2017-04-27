@@ -1,6 +1,6 @@
 root = true
 
-[*.{ts,js,html,css}]
+[*.{ts,js,html,css,vue}]
 indent_style = tab
 indent_size = 4
 insert_final_newline = true

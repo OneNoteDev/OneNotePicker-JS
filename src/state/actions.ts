@@ -5,6 +5,10 @@ export function selectNotebook(store: ActionContext<State, any>, key: string) {
 	store.commit("SELECT_NOTEBOOK", key);
 }
 
+export function selectSectionGroup(store: ActionContext<State, any>, key: string) {
+	store.commit("SELECT_SECTION_GROUP", key);
+}
+
 export function selectSection(store: ActionContext<State, any>, key: string) {
 	store.commit("SELECT_SECTION", key);
 }
@@ -15,5 +19,5 @@ export function selectPage(store: ActionContext<State, any>, key: string) {
 
 // export everything compliant to the vuex specification for actions
 export default <ActionTree<State, any>> {
-	selectNotebook, selectSection, selectPage
+	selectNotebook, selectSectionGroup, selectSection, selectPage
 };

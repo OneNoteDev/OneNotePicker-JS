@@ -5,6 +5,10 @@ export function SELECT_NOTEBOOK(state: State, id: string) {
 	state.selectedNotebookId = id;
 }
 
+export function SELECT_SECTION_GROUP(state: State, id: string) {
+	state.selectedSectionGroupId = id;
+}
+
 export function SELECT_SECTION(state: State, id: string) {
 	state.selectedSectionId = id;
 }
@@ -15,6 +19,6 @@ export function SELECT_PAGE(state: State, id: string) {
 
 // export everything compliant to the vuex specification for getters
 export default <MutationTree<State>>{
-	SELECT_NOTEBOOK, SELECT_SECTION, SELECT_PAGE
+	SELECT_NOTEBOOK, SELECT_SECTION_GROUP, SELECT_SECTION, SELECT_PAGE
 };
 
