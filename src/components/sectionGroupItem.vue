@@ -30,7 +30,6 @@
 		}
 
 		get isActive() {
-		    console.error(this.$store.state.pickerState.selectedSectionGroupId, this.sectionGroup.id);
 		    return this.$store.state.pickerState.selectedSectionGroupId == this.sectionGroup.id;
 		}
     }

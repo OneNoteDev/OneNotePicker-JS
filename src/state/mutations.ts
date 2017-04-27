@@ -3,19 +3,19 @@ import { Mutation, MutationTree } from "vuex";
 import { State } from "./state";
 
 export function SELECT_NOTEBOOK(state: State, id: string) {
-	Vue.set(state, "selectedNotebookId", id);
+	state.selectedNotebookId = id;
 }
 
 export function SELECT_SECTION_GROUP(state: State, id: string) {
-	Vue.set(state, "selectedSectionGroupId", id);
+	state.selectedSectionGroupId = id;
 }
 
 export function SELECT_SECTION(state: State, id: string) {
-	Vue.set(state, "selectedSectionId", id);
+	state.selectedSectionId = id;
 }
 
 export function SELECT_PAGE(state: State, id: string) {
-	Vue.set(state, "selectedPageId", id);
+	state.selectedPageId = id;
 }
 
 // export everything compliant to the vuex specification for getters
