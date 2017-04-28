@@ -18,12 +18,12 @@
   "dependencies": {
     "bulma": "^0.4.0",
     "onenoteapi": "^1.1.0",
-    "vue": "^2.2.1",
+    "vue": "^2.3.0",
     "vue-class-component": "^5.0.1",
     "vuex": "^2.3.1"
   },
   "devDependencies": {
-    "@types/chai": "^3.5.1",
+    "@types/chai": "^3.5.2",
     "@types/mocha": "^2.2.41",
     "@types/sinon": "^2.1.2",
     "chai": "^3.5.0",
@@ -54,13 +54,13 @@
     "style-loader": "^0.16.1",
     "ts-loader": "^2.0.3",
     "tslint": "^5.1.0",
-    "typescript": "^2.2.2",
+    "typescript": "^2.3.1",
     "vue-loader": "^11.1.4",
-    "vue-template-compiler": "^2.2.1",
+    "vue-template-compiler": "^2.3.0",
     "vue-typescript-import-dts": "^3.0.1",
     "wallaby-webpack": "0.0.38",
     "webpack": "^2.2.0",
     "webpack-bundle-analyzer": "^2.4.0",
-    "webpack-dev-server": "^2.2.0"
+    "webpack-dev-server": "^2.4.5"
   }
 }
