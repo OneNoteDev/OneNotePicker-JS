@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="../dist/oneNotePickerComponent.js"></script>
+	<script src="../dist/data.js"></script>
+</head>
+<body>
+<div id="app">
+	<onenote-picker :notebooks="notebooks"></onenote-picker>
+</div>
+<script>
+	let pickerState = {
+		state: {
+			selectedNotebookId: '',
+			selectedSectionGroupId: '',
+			selectedSectionId: '',
+			selectedPageId: '',
+		},
+		actions: {
+			selectedNotebook(store, key) {
+				store.commit("SELECT_NOTEBOOK", key);
+				console.error(store.state);
+			},
+			selectSectionGroup(store, key) {
+				store.commit("SELECT_SECTION_GROUP", key);
+				console.error(store.state);
+			},
+			selectSection(store, key) {
+				store.commit("SELECT_SECTION", key);
+				console.error(store.state);
+			},
+			selectPage(store, key) {
+				store.commit("SELECT_PAGE", key);
+				console.error(store.state);
+			}
+		},
+		getters: {
+			all(state) {
+				return state;
+			}
+		},
+		mutations: {
+			SELECT_NOTEBOOK(state, id) {
+				state.selectedNotebookId = id;
+			},
+			SELECT_SECTION_GROUP(state, id) {
+				state.selectedSectionGroupId = id;
+			},
+			SELECT_SECTION(state, id) {
+				state.selectedSectionId = id;
+			},
+			SELECT_PAGE(state, id) {
+				state.selectedPageId = id;
+			}
+		}
+	};
+
+	Vue.use(Vuex);
+
+	let store = new Vuex.Store({
+		modules: { pickerState: pickerState }
+	});
+
+	let data = {
+	    notebooks: []
+	};
+
+	let oneNotePicker = new Vue({
+		el: "#app",
+		store: store,
+		data,
+		render: h => h(OneNotePicker, {
+		    props: {
+		        notebooks: data.notebooks
+			}
+		})
+	});
+
+	let dataSource = new OneNotePickerDataSource("Amazing");
+
+	dataSource.getNotebooks({"MS-Int-AppId": "OneNote Test"}).then((value) => {
+		console.log(value);
+		data.notebooks = value;
+	}).catch((value) => {
+		console.error(value);
+	});
+
+
+</script>
+</body>
+</html>

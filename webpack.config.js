@@ -18,7 +18,8 @@ function resolve(dir) {
 let webpackConfiguration = {
     entry: {
         main: './sampleApp/main.ts',
-        oneNotePicker: './src/oneNotePicker.sass'
+        oneNotePicker: './src/oneNotePicker.sass',
+		oneNotePickerComponent: './src/oneNotePicker',
     },
     output: {
         path: path.resolve(__dirname, './dist'),
