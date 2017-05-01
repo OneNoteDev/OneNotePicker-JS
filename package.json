@@ -26,6 +26,7 @@
     "@types/chai": "^3.5.2",
     "@types/mocha": "^2.2.41",
     "@types/sinon": "^2.1.2",
+    "@types/vue": "^2.0.0",
     "chai": "^3.5.0",
     "cross-env": "^3.0.0",
     "css-loader": "^0.25.0",

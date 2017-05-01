@@ -8,24 +8,36 @@
 	</li>
 </template>
 
-<script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
+<script>
+//import Vue from "vue";
+//import Component from "vue-class-component";
+//
+//import SectionItem from "./sectionItem.vue";
+//import SectionGroupItem from "./sectionGroupItem.vue";
+//
+//@Component({
+//	name: "notebook-item",
+//	components: { SectionItem, SectionGroupItem },
+//	props: {
+//		notebook: { required: true },
+//	}
+//})
+//
+//export default class NotebookItem extends Vue {
+//	selectNotebook(notebookId: string): void {
+//		this.$store.dispatch('selectNotebook', notebookId);
+//	}
+//}
 
-import SectionItem from "./sectionItem.vue";
-import SectionGroupItem from "./sectionGroupItem.vue";
-
-@Component({
-	name: "notebook-item",
-	components: { SectionItem, SectionGroupItem },
+export default {
+    name: "notebook-item",
 	props: {
-		notebook: { required: true },
-	}
-})
-
-export default class NotebookItem extends Vue {
-	selectNotebook(notebookId: string): void {
-		this.$store.dispatch('selectNotebook', notebookId);
+        notebook: {required: true }
+	},
+	methods: {
+		selectNotebook(notebookId) {
+			this.$store.dispatch('selectNotebook', notebookId);
+		}
 	}
 }
 </script>

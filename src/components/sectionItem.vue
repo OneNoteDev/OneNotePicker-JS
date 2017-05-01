@@ -2,20 +2,32 @@
 	<li><a @click="selectSection(section.id)">{{ section.name }}</a></li>
 </template>
 
-<script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
+<script>
+//import Vue from "vue";
+//import Component from "vue-class-component";
+//
+//@Component({
+//	name: "section-item",
+//	props: {
+//		section: { required: true },
+//	}
+//})
+//
+//export default class NotebookItem extends Vue {
+//	selectSection(sectionId: string): void {
+//		this.$store.dispatch('selectSection', sectionId);
+//	}
+//}
 
-@Component({
+export default {
 	name: "section-item",
 	props: {
 		section: { required: true },
-	}
-})
-
-export default class NotebookItem extends Vue {
-	selectSection(sectionId: string): void {
-		this.$store.dispatch('selectSection', sectionId);
+	},
+	method: {
+		selectSection(sectionId) {
+			this.$store.dispatch('selectSection', sectionId);
+		}
 	}
 }
 </script>

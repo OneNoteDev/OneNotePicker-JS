@@ -3,8 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Title</title>
-	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.0/vue.js"></script>-->
-	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/vuex/2.3.1/vuex.js"></script>-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.0/vue.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vuex/2.3.1/vuex.js"></script>
 	<link href="../dist/oneNotePicker.css" rel="stylesheet">
 	<script src="../dist/oneNotePickerComponent.js"></script>
 	<script src="../dist/data.js"></script>
@@ -14,71 +14,18 @@
 	<onenote-picker :notebooks="notebooks"></onenote-picker>
 </div>
 <script>
-	let pickerState = {
-		state: {
-			selectedNotebookId: '',
-			selectedSectionGroupId: '',
-			selectedSectionId: '',
-			selectedPageId: '',
-		},
-		actions: {
-			selectedNotebook(store, key) {
-				store.commit("SELECT_NOTEBOOK", key);
-				console.error(store.state);
-			},
-			selectSectionGroup(store, key) {
-				store.commit("SELECT_SECTION_GROUP", key);
-				console.error(store.state);
-			},
-			selectSection(store, key) {
-				store.commit("SELECT_SECTION", key);
-				console.error(store.state);
-			},
-			selectPage(store, key) {
-				store.commit("SELECT_PAGE", key);
-				console.error(store.state);
-			}
-		},
-		getters: {
-			all(state) {
-				return state;
-			}
-		},
-		mutations: {
-			SELECT_NOTEBOOK(state, id) {
-				state.selectedNotebookId = id;
-			},
-			SELECT_SECTION_GROUP(state, id) {
-				state.selectedSectionGroupId = id;
-			},
-			SELECT_SECTION(state, id) {
-				state.selectedSectionId = id;
-			},
-			SELECT_PAGE(state, id) {
-				state.selectedPageId = id;
-			}
-		}
-	};
-
-	Vue.use(Vuex);
-
-	let store = new Vuex.Store({
-		modules: { pickerState: pickerState }
-	});
-
 	let data = {
 	    notebooks: []
 	};
+
+	let store = new Vuex.Store();
+
+	Vue.use(OneNotePickerPlugin, store);
 
 	let oneNotePicker = new Vue({
 		el: "#oneNotePicker",
 		store: store,
 		data,
-		render: h => h(OneNotePicker, {
-		    props: {
-		        notebooks: data.notebooks
-			}
-		})
 	});
 
 	let dataSource = new OneNotePickerDataSource("Amazing");
@@ -86,6 +33,8 @@
 	dataSource.getNotebooks({"MS-Int-AppId": "OneNote Test"}).then((value) => {
 		console.log(value);
 		data.notebooks = value;
+
+		Vue.set(data, 'notebooks', value);
 	}).catch((value) => {
 		console.error(value);
 	});

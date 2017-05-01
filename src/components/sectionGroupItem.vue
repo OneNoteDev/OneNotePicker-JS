@@ -8,29 +8,47 @@
     </li>
 </template>
 
-<script lang="ts">
-    import Vue from "vue";
-    import Component from "vue-class-component";
+<script>
+//    import Vue from "vue";
+//    import Component from "vue-class-component";
+//
+//    import SectionItem from "./sectionItem.vue";
+//
+//    @Component({
+//        name: "section-group-item",
+//        components: { SectionItem },
+//        props: {
+//            sectionGroup: { required: true },
+//        }
+//    })
+//    export default class SectionGroupItem extends Vue {
+//        sectionGroup;
+//		active = false;
+//
+//		selectSectionGroup(sectionGroupId: string): void {
+//			this.$store.dispatch('selectSectionGroup', sectionGroupId);
+//		}
+//
+//		get isActive() {
+//		    return this.$store.state.pickerState.selectedSectionGroupId == this.sectionGroup.id;
+//		}
+//    }
 
-    import SectionItem from "./sectionItem.vue";
-
-    @Component({
-        name: "section-group-item",
-        components: { SectionItem },
-        props: {
-            sectionGroup: { required: true },
-        }
-    })
-    export default class SectionGroupItem extends Vue {
-        sectionGroup;
-		active = false;
-
-		selectSectionGroup(sectionGroupId: string): void {
-			this.$store.dispatch('selectSectionGroup', sectionGroupId);
+    export default {
+		name: "section-group-item",
+		props: {
+			sectionGroup: { required: true },
+		},
+		methods: {
+			selectSectionGroup(sectionGroupId) {
+				this.$store.dispatch('selectSectionGroup', sectionGroupId);
+			}
+		},
+		computed: {
+		    isActive() {
+				return this.$store.state.pickerState.selectedSectionGroupId == this.sectionGroup.id;
+			}
 		}
 
-		get isActive() {
-		    return this.$store.state.pickerState.selectedSectionGroupId == this.sectionGroup.id;
-		}
-    }
+	}
 </script>
