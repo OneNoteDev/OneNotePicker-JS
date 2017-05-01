@@ -1,9 +1,2 @@
-.vs
-build
-bundles
 node_modules
-target/modules
-target/tests
-typings
-debug.log
 *.user
