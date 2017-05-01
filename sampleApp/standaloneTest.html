@@ -3,11 +3,14 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Title</title>
+	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.0/vue.js"></script>-->
+	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/vuex/2.3.1/vuex.js"></script>-->
+	<link href="../dist/oneNotePicker.css" rel="stylesheet">
 	<script src="../dist/oneNotePickerComponent.js"></script>
 	<script src="../dist/data.js"></script>
 </head>
 <body>
-<div id="app">
+<div id="oneNotePicker">
 	<onenote-picker :notebooks="notebooks"></onenote-picker>
 </div>
 <script>
@@ -68,7 +71,7 @@
 	};
 
 	let oneNotePicker = new Vue({
-		el: "#app",
+		el: "#oneNotePicker",
 		store: store,
 		data,
 		render: h => h(OneNotePicker, {
