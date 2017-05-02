@@ -11,14 +11,14 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const extractSass = new ExtractTextPlugin({
-    filename: "[name].css",
-    allChunks: true
+  filename: "[name].css",
+  allChunks: true
 });
 
 module.exports = {
   entry: {
     sample: './sampleApp/sample.tsx',
-    style: './src/oneNotePicker.sass',
+    pickerStyles: './src/oneNotePicker.scss',
     oneNotePicker: './src/oneNotePicker.tsx',
   },
   output: {
@@ -31,7 +31,7 @@ module.exports = {
     extensions: ['.js', '.ts', '.tsx'],
     // Fix webpack's default behavior to not load packages with jsnext:main module
     // https://github.com/Microsoft/TypeScript/issues/11677
-   // mainFields: ['main']
+    // mainFields: ['main']
   },
   module: {
     loaders: [
@@ -66,24 +66,42 @@ module.exports = {
           ]
         })
       },
-	{
-		test: /\.sass$/,
-		use: extractSass.extract({
-			use: [
-				{
-					loader: 'css-loader?sourceMap'
-				},
-				{
-					loader: 'sass-loader?indentedSyntax',
-					options: {
-						includePaths: [path.join(__dirname, 'node-modules')],
-						sourceMap: true
-					}
-				}
-			],
-			fallback: 'style-loader'
-		})
-	},
+      {
+        test: /\.sass$/,
+        use: extractSass.extract({
+          use: [
+            {
+              loader: 'css-loader?sourceMap'
+            },
+            {
+              loader: 'sass-loader?indentedSyntax',
+              options: {
+                includePaths: [path.join(__dirname, 'node-modules')],
+                sourceMap: true
+              }
+            }
+          ],
+          fallback: 'style-loader'
+        })
+      },
+      {
+        test: /\.scss$/,
+        use: extractSass.extract({
+          use: [
+            {
+              loader: 'css-loader?sourceMap'
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                includePaths: [path.join(__dirname, 'node-modules')],
+                sourceMap: true
+              }
+            }
+          ],
+          fallback: 'style-loader'
+        })
+      },
       // static assets
       { test: /\.html$/, use: 'html-loader' },
       { test: /\.png$/, use: 'url-loader?limit=10000' },
