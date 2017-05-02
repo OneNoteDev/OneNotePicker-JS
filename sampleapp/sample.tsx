@@ -6,18 +6,13 @@ import { SampleDataSource } from "./sampleDataSource";
 
 let dataSource: SampleDataSource = new SampleDataSource();
 
-let data = {
-	notebooks: []
-};
-
 dataSource.getNotebooks().then((value) => {
-	data.notebooks = value;
+	ReactDOM.render(
+		<OneNotePicker notebooks={value}/>,
+		document.getElementById('oneNotePicker') as HTMLElement
+	);
 }).catch((value) => {
 	console.error(value);
 });
 
-ReactDOM.render(
-	<OneNotePicker />,
-	document.getElementById('oneNotePicker') as HTMLElement
-);
 
