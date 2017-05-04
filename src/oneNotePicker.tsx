@@ -2,9 +2,10 @@ import * as React from 'react';
 
 import NotebookItem from './components/notebookItem';
 import GlobalProps from './props/globalProps';
+import Notebook from './oneNoteDataStructures/notebook';
 
 interface OneNotePickerProps extends GlobalProps {
-	notebooks: OneNoteApi.Notebook[];
+	notebooks: Notebook[];
 }
 
 class OneNotePicker extends React.Component<OneNotePickerProps, null> {

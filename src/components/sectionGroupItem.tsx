@@ -2,9 +2,10 @@ import * as React from 'react';
 
 import SectionItem from './sectionItem';
 import GlobalProps from '../props/globalProps';
+import SectionGroup from '../oneNoteDataStructures/sectionGroup';
 
 interface SectionGroupItemProps extends GlobalProps {
-	sectionGroup: OneNoteApi.SectionGroup
+	sectionGroup: SectionGroup;
 }
 
 interface SectionGroupItemState {
@@ -14,7 +15,7 @@ interface SectionGroupItemState {
 class SectionGroupItem extends React.Component<SectionGroupItemProps, SectionGroupItemState> {
 	constructor(props) {
 		super(props);
-		this.state = { expanded: false };
+		this.state = { expanded: props.expanded };
 	}
 
 	render() {
