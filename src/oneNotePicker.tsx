@@ -4,9 +4,11 @@ import NotebookItem from './components/notebookItem';
 class OneNotePicker extends React.Component<{ notebooks: OneNoteApi.Notebook[] }, null> {
 	render() {
 		return (
-			<ul className={'menu-list'}>
-				{this.props.notebooks.map(notebook => <NotebookItem notebook={notebook} key={notebook.name}></NotebookItem>)}
-			</ul>
+			<div className='ms-fontColor-themePrimary'>
+				<ul className='menu-list picker-list-header'>
+					{this.props.notebooks.map(notebook => <NotebookItem notebook={notebook} key={notebook.name}></NotebookItem>)}
+				</ul>
+			</div>
 		);
 	}
 }
