@@ -3,17 +3,15 @@ import * as ReactDOM from 'react-dom';
 
 import OneNotePicker from '../src/oneNotePicker';
 import GlobalProps from "../src/props/globalProps";
-import OneNoteApiDataProvider from "../src/providers/oneNoteApiDataProvider";
+import OneNoteDataProvider from "../src/providers/oneNoteDataProvider";
+import SampleOneNoteDataProvider from "./sampleOneNoteDataProvider";
 
-import SampleDataSource from "./sampleDataSource";
+let oneNoteDataProvider: OneNoteDataProvider = new SampleOneNoteDataProvider();
 
-// TODO replace this data source with the new provider
-let dataSource: SampleDataSource = new SampleDataSource();
-
-dataSource.getNotebooks().then((value) => {
+oneNoteDataProvider.getNotebooks().then((value) => {
 	let globalProps: GlobalProps = {
 		globals: {
-			oneNoteDataProvider: new OneNoteApiDataProvider()
+			oneNoteDataProvider: oneNoteDataProvider
 		}
 	};
 	ReactDOM.render(
