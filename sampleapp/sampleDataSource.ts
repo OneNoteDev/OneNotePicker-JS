@@ -207,10 +207,12 @@ let mockResponse: OneNoteApi.ResponsePackage<any> = {
 	request: new XMLHttpRequest()
 };
 
-export class SampleDataSource {
+class SampleDataSource {
 	getNotebooks(): Promise<any> {
 		return new Promise<any>((resolve, reject) => {
 			resolve(mockResponse.parsedResponse.value);
 		});
 	}
 }
+
+export default SampleDataSource;

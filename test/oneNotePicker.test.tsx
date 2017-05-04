@@ -1,5 +1,6 @@
 // import * as React from 'react';
 // import * as ReactDOM from 'react-dom';
+
 // import OneNotePicker from '../src/oneNotePicker';
 
 // it('renders without crashing', () => {
