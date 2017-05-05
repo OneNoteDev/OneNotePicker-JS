@@ -1,5 +1,22 @@
 @import "~bulma/bulma.sass";
 
-body {
-  background: beige
+#oneNotePicker {
+  background: white;
+}
+
+.menu-list li ul {
+  margin-right: 0px;
+}
+
+.picker-list-header {
+  margin-right: 0px;
+}
+
+.picker-icon-left {
+  margin-right: 5px;
+}
+
+.picker-icon-right {
+  float: right;
+  margin-right: 5px;
 }
