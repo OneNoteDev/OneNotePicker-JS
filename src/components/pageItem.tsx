@@ -8,10 +8,16 @@ interface PageItemProps extends GlobalProps {
 }
 
 class PageItem extends React.Component<PageItemProps, null> {
+	private onClick() {
+		this.props.globals.callbacks.onPageSelected(this.props.page);
+	}
+
 	render() {
+		let selected = this.props.globals.selectedId === this.props.page.id;
+
 		return (
 			<li>
-				<a>
+				<a className={selected ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)}>
 					<span className='ms-font-m ms-fontWeight-regular ms-fontColor-themePrimary'>
 						<i className='picker-icon-left ms-Icon ms-Icon--Page'></i>
 						{this.props.page.title}

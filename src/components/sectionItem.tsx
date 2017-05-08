@@ -21,16 +21,15 @@ class SectionItem extends React.Component<SectionItemProps, SectionItemState> {
 	private onClick() {
 		let section = this.props.section;
 		let globals = this.props.globals;
-		let onNotebookHierarchyUpdated = globals.callbacks.onNotebookHierarchyUpdated;
-		
-		if (!section.pages && !!onNotebookHierarchyUpdated) {
+
+		globals.callbacks.onSectionSelected(section);
+
+		if (!section.pages) {
 			// Trigger external call to fetch pages for this section
 			globals.oneNoteDataProvider.getPages(section.id).then((pages) => {
 				globals.notebookListUpdater.updatePages(section.id, pages);
 				let newNotebookHierarchy = globals.notebookListUpdater.get();
-				if (!!newNotebookHierarchy) {
-					onNotebookHierarchyUpdated(newNotebookHierarchy);
-				}
+				globals.callbacks.onNotebookHierarchyUpdated(newNotebookHierarchy);
 			});
 		}
 
@@ -41,9 +40,11 @@ class SectionItem extends React.Component<SectionItemProps, SectionItemState> {
 		let { expanded } = this.state;
 		let pages = this.props.section.pages;
 
+		let selected = this.props.globals.selectedId === this.props.section.id;
+
 		return (
 			<li>
-				<a onClick={this.onClick.bind(this)}>
+				<a className={selected ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)}>
 					<span className='ms-font-m ms-fontWeight-regular ms-fontColor-themePrimary'>
 						<i className='picker-icon-left ms-Icon ms-Icon--Section'></i>
 						{this.props.section.name}

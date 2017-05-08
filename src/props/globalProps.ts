@@ -14,6 +14,8 @@ interface GlobalProps {
 		oneNoteDataProvider: OneNoteDataProvider;
 		notebookListUpdater: NotebookListUpdater;
 		callbacks: OneNotePickerCallbacks;
+
+		// TODO we need a way to distinguish between section and page
 		selectedId?: string;
 	}
 }
