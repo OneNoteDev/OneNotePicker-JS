@@ -1,4 +1,3 @@
-import OneNoteApiResponseTransformer from './oneNoteApiResponseTransformer';
 import Notebook from './notebook';
 import SectionGroup from './sectionGroup';
 import Section from './section';
@@ -13,11 +12,9 @@ type SectionParent = Notebook | SectionGroup;
  * on this class should use the getter as the most recent source of truth.
  */
 class NotebookListUpdater {
-	private notebooks?: Notebook[];
-	private transformer: OneNoteApiResponseTransformer;
+	private notebooks: Notebook[];
 
-	constructor(transformer: OneNoteApiResponseTransformer, initialNotebooks?: Notebook[]) {
-		this.transformer = transformer;
+	constructor(initialNotebooks: Notebook[]) {
 		this.notebooks = initialNotebooks;
 	}
 
@@ -34,14 +31,16 @@ class NotebookListUpdater {
 	 * @param apiNotebooks The API notebooks to update the internal notebooks with.
 	 */
 	updateNotebookList(newNotebooks: Notebook[]) {
-		if (!this.notebooks) {
-			this.notebooks = newNotebooks;
+		let oldNotebooks = this.notebooks;
+		this.notebooks = newNotebooks;
+
+		if (oldNotebooks.length === 0) {
 			return;
 		}
 
 		// TODO cut down on repeat code after we have UTs
 		for (let newNotebook of newNotebooks) {
-			let originalNotebook = NotebookListUpdater.find(this.notebooks, notebook => notebook.id === newNotebook.id);
+			let originalNotebook = NotebookListUpdater.find(oldNotebooks, notebook => notebook.id === newNotebook.id);
 			if (!!originalNotebook) {
 				this.preserveSectionParent(originalNotebook, newNotebook);
 			}

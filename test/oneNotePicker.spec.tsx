@@ -6,7 +6,7 @@ import * as React from 'react';
 
 import OneNotePicker from '../src/oneNotePicker';
 
-describe('OneNotePickerComponent', () => {
+describe('OneNotePicker', () => {
 	it('should compile', () => {
 		let notebooks = [];
 		let globalProps: GlobalProps = MockProps.getGlobalProps(notebooks);
