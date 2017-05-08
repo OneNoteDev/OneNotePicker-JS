@@ -27,7 +27,7 @@ module.exports = function (config) {
                 include: [
                 	"src/**/*.ts",
                 	"src/**/*.tsx",
-				],
+                ],
                 reports:
                     {
                         "html": "coverage",

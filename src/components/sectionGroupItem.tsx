@@ -1,10 +1,21 @@
 import * as React from 'react';
-import SectionItem from './sectionItem';
 
-class SectionGroupItem extends React.Component<{ sectionGroup: OneNoteApi.SectionGroup }, any> {
+import SectionItem from './sectionItem';
+import GlobalProps from '../props/globalProps';
+import SectionGroup from '../oneNoteDataStructures/sectionGroup';
+
+interface SectionGroupItemProps extends GlobalProps {
+	sectionGroup: SectionGroup;
+}
+
+interface SectionGroupItemState {
+	expanded: boolean;
+}
+
+class SectionGroupItem extends React.Component<SectionGroupItemProps, SectionGroupItemState> {
 	constructor(props) {
 		super(props);
-		this.state = { expanded: false };
+		this.state = { expanded: props.expanded };
 	}
 
 	render() {
@@ -20,8 +31,8 @@ class SectionGroupItem extends React.Component<{ sectionGroup: OneNoteApi.Sectio
 					</span>
 				</a>
 				<ul className='picker-list-header' style={this.state.expanded ? { display: 'block' } : { display: 'none' }}>
-					{this.props.sectionGroup.sectionGroups.map(sectionGroup => <SectionGroupItem sectionGroup={sectionGroup} key={sectionGroup.name}></SectionGroupItem>)}
-					{this.props.sectionGroup.sections.map(section => <SectionItem section={section} key={section.name}></SectionItem>)}
+					{this.props.sectionGroup.sectionGroups.map(sectionGroup => <SectionGroupItem globals={this.props.globals} sectionGroup={sectionGroup} key={sectionGroup.name}></SectionGroupItem>)}
+					{this.props.sectionGroup.sections.map(section => <SectionItem globals={this.props.globals} section={section} key={section.name}></SectionItem>)}
 				</ul>
 			</li>
 		);

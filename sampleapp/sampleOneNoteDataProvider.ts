@@ -1,5 +1,10 @@
 import "../node_modules/onenoteapi/target/oneNoteApi";
 
+import OneNoteDataProvider from "../src/providers/oneNoteDataProvider";
+import Notebook from '../src/oneNoteDataStructures/notebook';
+import Page from '../src/oneNoteDataStructures/page';
+import OneNoteApiResponseTransformer from '../src/oneNoteDataStructures/oneNoteApiResponseTransformer';
+
 let mockResponse: OneNoteApi.ResponsePackage<any> = {
 	parsedResponse: JSON.parse(`{
   "@odata.context":"https://www.onenote.com/api/v1.0/$metadata#me/notes/notebooks","value":[
@@ -207,10 +212,17 @@ let mockResponse: OneNoteApi.ResponsePackage<any> = {
 	request: new XMLHttpRequest()
 };
 
-export class SampleDataSource {
-	getNotebooks(): Promise<any> {
-		return new Promise<any>((resolve, reject) => {
-			resolve(mockResponse.parsedResponse.value);
-		});
+class SampleOneNoteDataProvider implements OneNoteDataProvider {
+	getNotebooks(): Promise<Notebook[]> {
+		let responseTransformer = new OneNoteApiResponseTransformer();
+		let notebooks = responseTransformer.transformNotebooks(mockResponse.parsedResponse.value);
+		return Promise.resolve(notebooks);
+	}
+
+	getPages(sectionId: string): Promise<Page[]> {
+		let pages = [{ id: 'id', title: 'Page!' }];
+		return Promise.resolve(pages);
 	}
 }
+
+export default SampleOneNoteDataProvider;
