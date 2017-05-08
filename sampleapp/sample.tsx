@@ -2,11 +2,11 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import OneNotePicker from '../src/oneNotePicker';
-import GlobalProps from "../src/props/globalProps";
-import OneNoteDataProvider from "../src/providers/oneNoteDataProvider";
-import NotebookListUpdater from "../src/oneNoteDataStructures/notebookListUpdater";
-import OneNoteApiResponseTransformer from "../src/oneNoteDataStructures/oneNoteApiResponseTransformer";
-import SampleOneNoteDataProvider from "./sampleOneNoteDataProvider";
+import GlobalProps from '../src/props/globalProps';
+import OneNoteDataProvider from '../src/providers/oneNoteDataProvider';
+import NotebookListUpdater from '../src/oneNoteDataStructures/notebookListUpdater';
+import OneNoteApiResponseTransformer from '../src/oneNoteDataStructures/oneNoteApiResponseTransformer';
+import SampleOneNoteDataProvider from './sampleOneNoteDataProvider';
 
 let oneNoteDataProvider: OneNoteDataProvider = new SampleOneNoteDataProvider();
 
