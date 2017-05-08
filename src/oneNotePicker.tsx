@@ -11,9 +11,11 @@ interface OneNotePickerProps extends GlobalProps {
 class OneNotePicker extends React.Component<OneNotePickerProps, null> {
 	render() {
 		return (
-			<ul className={'menu-list'}>
-				{this.props.notebooks.map(notebook => <NotebookItem globals={this.props.globals} notebook={notebook} key={notebook.name}></NotebookItem>)}
-			</ul>
+			<div className='ms-fontColor-themePrimary'>
+				<ul className='menu-list picker-list-header'>
+					{this.props.notebooks.map(notebook => <NotebookItem globals={this.props.globals} notebook={notebook} key={notebook.name}></NotebookItem>)}
+				</ul>
+			</div>
 		);
 	}
 }

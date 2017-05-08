@@ -23,8 +23,14 @@ class SectionGroupItem extends React.Component<SectionGroupItemProps, SectionGro
 
 		return (
 			<li>
-				<a onClick={() => this.setState({ expanded: !expanded })}>{this.props.sectionGroup.name}</a>
-				<ul style={this.state.expanded ? { display: 'block' } : { display: 'none' }}>
+				<a onClick={() => this.setState({ expanded: !expanded })}>
+					<span className='ms-font-m-plus ms-fontWeight-semibold ms-fontColor-themePrimary'>
+						<i className='picker-icon-left ms-Icon ms-Icon--Sections'></i>
+						{this.props.sectionGroup.name}
+						<i className='picker-icon-right ms-Icon ms-Icon--ChevronDownMed'></i>
+					</span>
+				</a>
+				<ul className='picker-list-header' style={this.state.expanded ? { display: 'block' } : { display: 'none' }}>
 					{this.props.sectionGroup.sectionGroups.map(sectionGroup => <SectionGroupItem globals={this.props.globals} sectionGroup={sectionGroup} key={sectionGroup.name}></SectionGroupItem>)}
 					{this.props.sectionGroup.sections.map(section => <SectionItem globals={this.props.globals} section={section} key={section.name}></SectionItem>)}
 				</ul>

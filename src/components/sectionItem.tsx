@@ -43,7 +43,12 @@ class SectionItem extends React.Component<SectionItemProps, SectionItemState> {
 
 		return (
 			<li>
-				<a onClick={this.onClick.bind(this)}>{ this.props.section.name }</a>
+				<a onClick={this.onClick.bind(this)}>
+					<span className='ms-font-m ms-fontWeight-regular ms-fontColor-themePrimary'>
+						<i className='picker-icon-left ms-Icon ms-Icon--Section'></i>
+						{this.props.section.name}
+					</span>
+				</a>
 				{!!pages
 					? <ul style={expanded ? { display: 'block' } : { display: 'none' }}>
 						{pages.map(page => <PageItem globals={this.props.globals} page={page} key={page.id}></PageItem>)}
