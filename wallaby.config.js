@@ -17,8 +17,8 @@ module.exports = function (wallaby) {
 			{pattern: 'src/**/*.tsx', load: false},
 		],
 		tests: [
-			{pattern: 'spec/**/*.ts', load: false},
-			{pattern: 'spec/**/*.tsx', load: false}
+			{pattern: 'test/**/*.ts', load: false},
+			{pattern: 'test/**/*.tsx', load: false}
 		],
 
 		postprocessor: wallabyPostprocessor,
