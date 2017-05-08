@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import OneNotePicker from '../src/oneNotePicker';
 
-import { SampleDataSource } from "./sampleDataSource";
+import { SampleDataSource } from './sampleDataSource';
 
 let dataSource: SampleDataSource = new SampleDataSource();
 
