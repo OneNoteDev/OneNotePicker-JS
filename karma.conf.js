@@ -6,6 +6,7 @@ module.exports = function (config) {
             { pattern: "spec/**/*.tsx" }, // *.tsx for React Jsx
         ],
         preprocessors: {
+            "**/*.ts": ["karma-typescript"], // *.tsx for React Jsx
             "**/*.tsx": ["karma-typescript"], // *.tsx for React Jsx
         },
         reporters: ["spec", "karma-typescript"],
@@ -13,7 +14,7 @@ module.exports = function (config) {
         karmaTypescriptConfig: {
             bundlerOptions: {
                 exclude: ["react/addons", "react/lib/ExecutionEnvironment", "react/lib/ReactContext"],
-                entrypoints: /\.spec\.tsx$/,
+                entrypoints: /\.spec\.tsx?$/,
                 compilerOptions: {
                     jsx: "react",
                     module: "commonjs",
@@ -21,7 +22,10 @@ module.exports = function (config) {
                     target: "ES5",
                     lib: ["DOM", "ES2015"]
                 },
-                include: ["src/**/*.tsx"],
+                include: [
+                	"src/**/*.ts",
+                	"src/**/*.tsx",
+				],
                 reports:
                     {
                         "html": "coverage",
