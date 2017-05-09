@@ -44,6 +44,10 @@ class OneNoteApiResponseTransformer {
 		}
 	}
 
+	transformPages(pageList: OneNoteApi.Page[]): Page[] {
+		return pageList.map(page => this.transformPage(page));
+	}
+
 	transformPage(page: OneNoteApi.Page): Page {
 		return {
 			id: page.id,
