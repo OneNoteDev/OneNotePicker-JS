@@ -1,6 +1,6 @@
-import "../node_modules/onenoteapi/target/oneNoteApi";
+import '../node_modules/onenoteapi/target/oneNoteApi';
 
-import OneNoteDataProvider from "../src/providers/oneNoteDataProvider";
+import OneNoteDataProvider from '../src/providers/oneNoteDataProvider';
 import Notebook from '../src/oneNoteDataStructures/notebook';
 import Page from '../src/oneNoteDataStructures/page';
 import OneNoteApiResponseTransformer from '../src/oneNoteDataStructures/oneNoteApiResponseTransformer';

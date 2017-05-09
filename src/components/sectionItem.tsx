@@ -35,6 +35,7 @@ class SectionItem extends React.Component<SectionItemProps, SectionItemState> {
 		}
 
 		this.setState({ expanded: !this.state.expanded });
+		this.props.globals.callbacks.onSectionSelected(this.props.section);
 	}
 
 	render() {

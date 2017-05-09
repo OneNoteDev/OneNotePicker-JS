@@ -10,6 +10,7 @@ import Page from '../oneNoteDataStructures/page';
  */
 interface OneNotePickerCallbacks {
 	onNotebookHierarchyUpdated: (notebooks: Notebook[]) => void;
+	onNotebookSelected: (notebook: Notebook) => void;
 	onSectionSelected: (section: Section) => void;
 	onPageSelected: (page: Page) => void;
 }

@@ -16,6 +16,7 @@ class MockProps {
 				notebookListUpdater: updater,
 				callbacks: {
 					onNotebookHierarchyUpdated: () => {},
+					onNotebookSelected: () => {},
 					onSectionSelected: () => {},
 					onPageSelected: () => {}
 				},

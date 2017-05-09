@@ -21,7 +21,7 @@ class OneNoteApiResponseTransformer {
 			expanded: this.defaultExpanded,
 			sectionGroups: notebook.sectionGroups.map(sg => this.transformSectionGroup(sg)),
 			sections: notebook.sections.map(section => this.transformSection(section))
-		}
+		};
 	}
 
 	transformSectionGroup(sectionGroup: OneNoteApi.SectionGroup): SectionGroup {
@@ -31,7 +31,7 @@ class OneNoteApiResponseTransformer {
 			expanded: this.defaultExpanded,
 			sectionGroups: sectionGroup.sectionGroups.map(sg => this.transformSectionGroup(sg)),
 			sections: sectionGroup.sections.map(section => this.transformSection(section))
-		}
+		};
 	}
 
 	transformSection(section: OneNoteApi.Section): Section {
@@ -41,7 +41,7 @@ class OneNoteApiResponseTransformer {
 			name: section.name,
 			expanded: this.defaultExpanded,
 			pages: !!section.pages ? section.pages.map(page => this.transformPage(page)) : undefined
-		}
+		};
 	}
 
 	transformPage(page: OneNoteApi.Page): Page {

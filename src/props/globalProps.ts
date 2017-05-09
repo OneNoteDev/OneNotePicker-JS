@@ -15,7 +15,7 @@ interface GlobalProps {
 		notebookListUpdater: NotebookListUpdater;
 		callbacks: OneNotePickerCallbacks;
 		selectedId?: string;
-	}
+	};
 }
 
 export default GlobalProps;

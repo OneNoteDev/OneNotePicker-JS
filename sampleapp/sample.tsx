@@ -23,8 +23,9 @@ oneNoteDataProvider.getNotebooks().then((notebooks) => {
 						document.getElementById('oneNotePicker') as HTMLElement
 					);
 				},
-				onSectionSelected: () => {},
-				onPageSelected: () => {}
+				onNotebookSelected: (notebook) => { console.log(notebook.id); },
+				onSectionSelected: (section) => { console.log(section.id); },
+				onPageSelected: (page) => { console.log(page.id); }
 			},
 			selectedId: undefined
 		}

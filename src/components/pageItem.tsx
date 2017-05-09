@@ -11,7 +11,7 @@ class PageItem extends React.Component<PageItemProps, null> {
 	render() {
 		return (
 			<li>
-				<a>
+				<a onClick={() => this.props.globals.callbacks.onPageSelected(this.props.page) }>
 					<span className='ms-font-m ms-fontWeight-regular ms-fontColor-themePrimary'>
 						<i className='picker-icon-left ms-Icon ms-Icon--Page'></i>
 						{this.props.page.title}
