@@ -23,7 +23,7 @@ class PageItem extends React.Component<PageItemProps, null> {
 		return (
 			<li>
 				<a className={this.isSelected() ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)}>
-					<span className='ms-font-m ms-fontWeight-regular ms-fontColor-themePrimary'>
+					<span className='ms-fontSize-sPlus ms-fontColor-themePrimary'>
 						<i className='picker-icon-left ms-Icon ms-Icon--Page'></i>
 						{this.props.page.title}
 					</span>
