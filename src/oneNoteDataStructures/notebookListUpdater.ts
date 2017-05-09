@@ -21,7 +21,7 @@ class NotebookListUpdater {
 	/**
 	 * Gets the notebook list
 	 */
-	get(): Notebook[] | void {
+	get(): Notebook[] {
 		return this.notebooks;
 	}
 
