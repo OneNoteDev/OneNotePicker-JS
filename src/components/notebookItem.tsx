@@ -47,7 +47,7 @@ class NotebookItem extends React.Component<NotebookItemProps, NotebookItemState>
 					<span className='ms-font-l ms-fontWeight-regular ms-fontColor-themePrimary'>
 						<i className='picker-icon-left ms-Icon ms-Icon--OneNoteLogo'></i>
 						{this.props.notebook.name}
-						<i className='picker-icon-right ms-Icon ms-Icon--ChevronDownMed'></i>
+						{this.isExpandable() ? <i className='picker-icon-right ms-Icon ms-Icon--ChevronDownMed'></i> : undefined}
 					</span>
 				</a>
 				<ul className="picker-list-header" style={this.state.expanded ? { display: 'block' } : { display: 'none' }}>

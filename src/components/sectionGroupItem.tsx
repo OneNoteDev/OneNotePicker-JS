@@ -37,7 +37,7 @@ class SectionGroupItem extends React.Component<SectionGroupItemProps, SectionGro
 					<span className='ms-font-m-plus ms-fontWeight-semibold ms-fontColor-themePrimary'>
 						<i className='picker-icon-left ms-Icon ms-Icon--Sections'></i>
 						{this.props.sectionGroup.name}
-						<i className='picker-icon-right ms-Icon ms-Icon--ChevronDownMed'></i>
+						{this.isExpandable() ? <i className='picker-icon-right ms-Icon ms-Icon--ChevronDownMed'></i> : undefined}
 					</span>
 				</a>
 				<ul className='picker-list-header' style={this.state.expanded ? { display: 'block' } : { display: 'none' }}>
