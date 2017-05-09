@@ -66,6 +66,7 @@ class SectionItem extends React.Component<SectionItemProps, SectionItemState> {
 					<span className='ms-font-m ms-fontWeight-regular ms-fontColor-themePrimary'>
 						<i className='picker-icon-left ms-Icon ms-Icon--Section'></i>
 						{this.props.section.name}
+						{this.isExpandable() ? <i className='picker-icon-right ms-Icon ms-Icon--ChevronDownMed'></i> : undefined}
 					</span>
 				</a>
 				{!!pages
