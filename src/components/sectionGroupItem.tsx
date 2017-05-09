@@ -18,12 +18,22 @@ class SectionGroupItem extends React.Component<SectionGroupItemProps, SectionGro
 		this.state = { expanded: props.expanded };
 	}
 
-	render() {
-		let { expanded } = this.state;
+	private onClick() {
+		// We are only interested in expanding if either sections/pages are deemed selectable
+		if (this.isExpandable()) {
+			this.setState({ expanded: !this.state.expanded });
+		}
+	}
 
+	private isExpandable(): boolean {
+		let callbacks = this.props.globals.callbacks;
+		return !!callbacks.onSectionSelected || !!callbacks.onPageSelected;
+	}
+
+	render() {
 		return (
 			<li>
-				<a onClick={() => this.setState({ expanded: !expanded })}>
+				<a onClick={this.onClick.bind(this)}>
 					<span className='ms-font-m-plus ms-fontWeight-semibold ms-fontColor-themePrimary'>
 						<i className='picker-icon-left ms-Icon ms-Icon--Sections'></i>
 						{this.props.sectionGroup.name}

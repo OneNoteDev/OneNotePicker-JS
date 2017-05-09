@@ -20,38 +20,56 @@ class SectionItem extends React.Component<SectionItemProps, SectionItemState> {
 
 	private onClick() {
 		let section = this.props.section;
-		let globals = this.props.globals;
 
-		globals.callbacks.onSectionSelected(section);
-
-		if (!section.pages) {
-			// Trigger external call to fetch pages for this section
-			globals.oneNoteDataProvider.getPages(section.id).then((pages) => {
-				globals.notebookListUpdater.updatePages(section.id, pages);
-				let newNotebookHierarchy = globals.notebookListUpdater.get();
-				globals.callbacks.onNotebookHierarchyUpdated(newNotebookHierarchy);
-			});
+		// If selection callback exists, assume this item is selectable, and notify the callback
+		let onSectionSelected = this.props.globals.callbacks.onSectionSelected;
+		if (!!onSectionSelected) {
+			onSectionSelected(section);
 		}
 
-		this.setState({ expanded: !this.state.expanded });
+		// We are only interested in expanding if pages are deemed selectable
+		if (this.isExpandable()) {
+			if (!section.pages) {
+				this.getPagesAndNotify();
+			}
+			this.setState({ expanded: !this.state.expanded });
+		}
+	}
+
+	private isExpandable(): boolean {
+		return !!this.props.globals.callbacks.onPageSelected;
+	}
+
+	private getPagesAndNotify() {
+		let globals = this.props.globals;
+		let section = this.props.section;
+
+		// Trigger external call to fetch pages for this section
+		globals.oneNoteDataProvider.getPages(section.id).then((pages) => {
+			globals.notebookListUpdater.updatePages(section.id, pages);
+			let newNotebookHierarchy = globals.notebookListUpdater.get();
+			globals.callbacks.onNotebookHierarchyUpdated(newNotebookHierarchy);
+		});
+	}
+
+	private isSelected(): boolean {
+		return this.props.globals.selectedId === this.props.section.id;
 	}
 
 	render() {
-		let { expanded } = this.state;
 		let pages = this.props.section.pages;
 
-		let selected = this.props.globals.selectedId === this.props.section.id;
-
+		// TODO we will need to design some sort of 'spinner' experience, likely when (expanded && !pages)
 		return (
 			<li>
-				<a className={selected ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)}>
+				<a className={this.isSelected() ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)}>
 					<span className='ms-font-m ms-fontWeight-regular ms-fontColor-themePrimary'>
 						<i className='picker-icon-left ms-Icon ms-Icon--Section'></i>
 						{this.props.section.name}
 					</span>
 				</a>
 				{!!pages
-					? <ul style={expanded ? { display: 'block' } : { display: 'none' }}>
+					? <ul style={this.state.expanded ? { display: 'block' } : { display: 'none' }}>
 						{pages.map(page => <PageItem globals={this.props.globals} page={page} key={page.id}></PageItem>)}
 					</ul>
 					: undefined}

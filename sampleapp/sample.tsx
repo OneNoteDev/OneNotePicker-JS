@@ -25,14 +25,22 @@ oneNoteDataProvider.getNotebooks().then((notebooks) => {
 			oneNoteDataProvider: oneNoteDataProvider,
 			notebookListUpdater: updater,
 			callbacks: {
+				// TODO we should be able to clean up this boilerplate
 				onNotebookHierarchyUpdated: (newNotebookHierarchy) => {
 					render(globalProps, newNotebookHierarchy);
 				},
+				// onNotebookSelected: (notebook) => {
+				// 	globalProps.globals.selectedId = notebook.id;
+				// 	render(globalProps, globalProps.globals.notebookListUpdater.get());
+				// },
 				onSectionSelected: (section) => {
 					globalProps.globals.selectedId = section.id;
 					render(globalProps, globalProps.globals.notebookListUpdater.get());
 				},
-				onPageSelected: (page) => { }
+				onPageSelected: (page) => {
+					globalProps.globals.selectedId = page.id;
+					render(globalProps, globalProps.globals.notebookListUpdater.get());
+				}
 			},
 			selectedId: undefined
 		}
