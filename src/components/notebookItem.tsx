@@ -19,12 +19,31 @@ class NotebookItem extends React.Component<NotebookItemProps, NotebookItemState>
 		this.state = { expanded: props.expanded };
 	}
 
-	render() {
-		let { expanded } = this.state;
+	private onClick() {
+		let onNotebookSelected = this.props.globals.callbacks.onNotebookSelected;
+		if (!!onNotebookSelected) {
+			onNotebookSelected(this.props.notebook);
+		}
 
+		// We are only interested in expanding if either sections/pages are deemed selectable
+		if (this.isExpandable()) {
+			this.setState({ expanded: !this.state.expanded });
+		}
+	}
+
+	private isExpandable(): boolean {
+		let callbacks = this.props.globals.callbacks;
+		return !!callbacks.onSectionSelected || !!callbacks.onPageSelected;
+	}
+
+	private isSelected(): boolean {
+		return this.props.globals.selectedId === this.props.notebook.id;
+	}
+
+	render() {
 		return (
 			<li>
-				<a onClick={() => this.setState({ expanded: !expanded })}>
+				<a className={this.isSelected() ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)}>
 					<span className='ms-font-l ms-fontWeight-regular ms-fontColor-themePrimary'>
 						<i className='picker-icon-left ms-Icon ms-Icon--OneNoteLogo'></i>
 						{this.props.notebook.name}

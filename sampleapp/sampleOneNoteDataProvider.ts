@@ -219,8 +219,9 @@ class SampleOneNoteDataProvider implements OneNoteDataProvider {
 		return Promise.resolve(notebooks);
 	}
 
-	getPages(sectionId: string): Promise<Page[]> {
-		let pages = [{ id: 'id', title: 'Page!' }];
+  getPages(sectionId: string): Promise<Page[]> {
+    let id = '' + (Math.floor(Math.random() * 500000));
+		let pages = [{ id: id, title: 'Page:' + id }];
 		return Promise.resolve(pages);
 	}
 }

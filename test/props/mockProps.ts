@@ -15,9 +15,10 @@ class MockProps {
 				oneNoteDataProvider: oneNoteDataProvider,
 				notebookListUpdater: updater,
 				callbacks: {
-					onNotebookHierarchyUpdated: () => {},
-					onSectionSelected: () => {},
-					onPageSelected: () => {}
+					onNotebookHierarchyUpdated: () => { },
+					onNotebookSelected: () => { },
+					onSectionSelected: () => { },
+					onPageSelected: () => { }
 				},
 				selectedId: undefined
 			}
