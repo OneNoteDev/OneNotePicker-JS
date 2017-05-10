@@ -87,7 +87,7 @@ class NotebookListUpdater {
 		sectionRef.pages = newPages;
 	}
 
-	private getSectionRefFromNotebooks(sectionId: string, notebooks: Notebook[]): Section | void {
+	private getSectionRefFromNotebooks(sectionId: string, notebooks: Notebook[]): Section | undefined {
 		for (let notebook of notebooks) {
 			let sectionRef = this.getSectionRefFromSectionParent(sectionId, notebook);
 			if (!!sectionRef) {
@@ -99,7 +99,7 @@ class NotebookListUpdater {
 		return undefined;
 	}
 
-	private getSectionRefFromSectionParent(sectionId: string, sectionParent: SectionParent): Section | void {
+	private getSectionRefFromSectionParent(sectionId: string, sectionParent: SectionParent): Section | undefined {
 		// Search this parent's sections for the matching id ...
 		for (let childSection of sectionParent.sections) {
 			if (childSection.id === sectionId) {

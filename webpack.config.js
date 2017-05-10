@@ -20,7 +20,6 @@ module.exports = {
     sample: './sampleApp/sample.tsx',
     pickerStyles: './src/oneNotePicker.scss',
     oneNotePicker: './src/oneNotePicker.tsx',
-    polyfills: './src/polyfills.ts',
   },
   output: {
     path: outPath,
@@ -110,6 +109,9 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      Promise: 'es6-promise'
+    }),
     // new webpack.LoaderOptionsPlugin({
     //   options: {
     //     context: sourcePath,
