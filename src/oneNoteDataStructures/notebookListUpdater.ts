@@ -40,22 +40,11 @@ class NotebookListUpdater {
 
 		// TODO cut down on repeat code after we have UTs
 		for (let newNotebook of newNotebooks) {
-			let originalNotebook = NotebookListUpdater.find(oldNotebooks, notebook => notebook.id === newNotebook.id);
+			let originalNotebook = oldNotebooks.find(notebook => notebook.id === newNotebook.id);
 			if (!!originalNotebook) {
 				this.preserveSectionParent(originalNotebook, newNotebook);
 			}
 		}
-	}
-
-	// TODO use polyfill or move this to some sort of util class
-	private static find<T>(list: T[], predicate: (item: T) => boolean): T | void
-	{
-		for (let item of list)
-		{
-			if (predicate(item))
-				return item;
-		}
-		return undefined;
 	}
 
 	private preserveSectionParent(original: SectionParent, next: SectionParent) {
@@ -64,7 +53,7 @@ class NotebookListUpdater {
 
 		// ... then recurse through the children
 		for (let newSectionGroup of next.sectionGroups) {
-			let originalSectionGroup = NotebookListUpdater.find(original.sectionGroups, sg => sg.id === newSectionGroup.id);
+			let originalSectionGroup = original.sectionGroups.find(sg => sg.id === newSectionGroup.id);
 			if (!!originalSectionGroup) {
 				this.preserveSectionParent(originalSectionGroup, newSectionGroup);
 			}
@@ -72,7 +61,7 @@ class NotebookListUpdater {
 		
 		// TODO cut down on repeat code after we have UTs
 		for (let newSection of next.sections) {
-			let originalSection = NotebookListUpdater.find(original.sections, section => section.id === newSection.id);
+			let originalSection = original.sections.find(section => section.id === newSection.id);
 			if (!!originalSection) {
 				newSection.expanded = originalSection.expanded;
 			}
@@ -98,7 +87,7 @@ class NotebookListUpdater {
 		sectionRef.pages = newPages;
 	}
 
-	private getSectionRefFromNotebooks(sectionId: string, notebooks: Notebook[]): Section | void {
+	private getSectionRefFromNotebooks(sectionId: string, notebooks: Notebook[]): Section | undefined {
 		for (let notebook of notebooks) {
 			let sectionRef = this.getSectionRefFromSectionParent(sectionId, notebook);
 			if (!!sectionRef) {
@@ -110,7 +99,7 @@ class NotebookListUpdater {
 		return undefined;
 	}
 
-	private getSectionRefFromSectionParent(sectionId: string, sectionParent: SectionParent): Section | void {
+	private getSectionRefFromSectionParent(sectionId: string, sectionParent: SectionParent): Section | undefined {
 		// Search this parent's sections for the matching id ...
 		for (let childSection of sectionParent.sections) {
 			if (childSection.id === sectionId) {

@@ -11,6 +11,7 @@
   "devDependencies": {
     "@types/classnames": "^0.0.32",
     "@types/enzyme": "^2.8.0",
+    "@types/es6-shim": "^0.31.33",
     "@types/history": "^4.5.1",
     "@types/jasmine": "^2.5.47",
     "@types/node": "^7.0.18",
@@ -23,6 +24,7 @@
     "cross-env": "^4.0.0",
     "css-loader": "^0.28.1",
     "enzyme": "^2.8.2",
+    "es6-promise": "^4.1.0",
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.11.1",
     "html-loader": "^0.4.5",
@@ -36,6 +38,7 @@
     "karma-typescript": "^3.0.1",
     "node-sass": "^4.5.2",
     "path": "^0.12.7",
+    "phantomjs-polyfill-find": "^0.0.1",
     "postcss-browser-reporter": "^0.5.0",
     "postcss-cssnext": "^2.10.0",
     "postcss-import": "^9.1.0",

@@ -109,6 +109,9 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      Promise: 'es6-promise'
+    }),
     // new webpack.LoaderOptionsPlugin({
     //   options: {
     //     context: sourcePath,
