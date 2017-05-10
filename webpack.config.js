@@ -20,6 +20,7 @@ module.exports = {
     sample: './sampleApp/sample.tsx',
     pickerStyles: './src/oneNotePicker.scss',
     oneNotePicker: './src/oneNotePicker.tsx',
+    polyfills: './src/polyfills.ts',
   },
   output: {
     path: outPath,
