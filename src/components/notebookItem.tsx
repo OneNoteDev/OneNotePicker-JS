@@ -50,7 +50,7 @@ class NotebookItem extends React.Component<NotebookItemProps, NotebookItemState>
 						{this.isExpandable() ? <i className='picker-icon-right ms-Icon ms-Icon--ChevronDownMed'></i> : undefined}
 					</span>
 				</a>
-				<ul className="picker-list-header" style={this.state.expanded ? { display: 'block' } : { display: 'none' }}>
+				<ul className='picker-list-header' style={this.state.expanded ? { display: 'block' } : { display: 'none' }}>
 					{this.props.notebook.sectionGroups.map(sectionGroup => <SectionGroupItem globals={this.props.globals} sectionGroup={sectionGroup} key={sectionGroup.name}></SectionGroupItem>)}
 					{this.props.notebook.sections.map(section => <SectionItem globals={this.props.globals} section={section} key={section.name}></SectionItem>)}
 				</ul>
