@@ -20,10 +20,12 @@ class PageItem extends React.Component<PageItemProps, null> {
 	}
 
 	render() {
+		let isSelected = this.isSelected();
+
 		// TODO image is a placeholder as we don't support pages yet
 		return (
-			<li>
-				<a className={this.isSelected() ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)}>
+			<li aria-selected={isSelected} role='treeitem'>
+				<a className={isSelected ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)}>
 					<div className='picker-icon-left'>
 						<img src={require('../images/section_icon.png')}/>
 					</div>
