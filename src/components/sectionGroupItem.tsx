@@ -33,7 +33,7 @@ class SectionGroupItem extends React.Component<SectionGroupItemProps, SectionGro
 	render() {
 		return (
 			<li aria-expanded={this.state.expanded} role='treeitem'>
-				<a onClick={this.onClick.bind(this)}>
+				<a onClick={this.onClick.bind(this)} tabIndex={0} href='#'>
 					<div className='picker-icon-left'>
 						<img src={require('../images/sectiongroup_icon.png')}/>
 					</div>

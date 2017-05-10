@@ -45,7 +45,7 @@ class NotebookItem extends React.Component<NotebookItemProps, NotebookItemState>
 
 		return (
 			<li aria-selected={isSelected} aria-expanded={this.state.expanded} role='treeitem'>
-				<a className={isSelected ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)}>
+				<a className={isSelected ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)} tabIndex={0} href='#'>
 					<div className='picker-icon-left'>
 						<img src={require('../images/notebook_icon.png')}/>
 					</div>

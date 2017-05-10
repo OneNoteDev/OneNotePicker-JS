@@ -25,7 +25,7 @@ class PageItem extends React.Component<PageItemProps, null> {
 		// TODO image is a placeholder as we don't support pages yet
 		return (
 			<li aria-selected={isSelected} role='treeitem'>
-				<a className={isSelected ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)}>
+				<a className={isSelected ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)} tabIndex={0} href='#'>
 					<div className='picker-icon-left'>
 						<img src={require('../images/section_icon.png')}/>
 					</div>
