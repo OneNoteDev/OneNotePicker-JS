@@ -58,11 +58,12 @@ class SectionItem extends React.Component<SectionItemProps, SectionItemState> {
 
 	render() {
 		let pages = this.props.section.pages;
+		let isSelected = this.isSelected();
 
 		// TODO we will need to design some sort of 'spinner' experience, likely when (expanded && !pages)
 		return (
-			<li>
-				<a className={this.isSelected() ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)}>
+			<li aria-selected={isSelected} aria-expanded={this.state.expanded} role='treeitem'>
+				<a className={isSelected ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)} tabIndex={0} href='#'>
 					<div className='picker-icon-left'>
 						<img src={require('../images/section_icon.png')}/>
 					</div>
@@ -71,7 +72,7 @@ class SectionItem extends React.Component<SectionItemProps, SectionItemState> {
 					</div>
 				</a>
 				{!!pages
-					? <ul style={this.state.expanded ? { display: 'block' } : { display: 'none' }}>
+					? <ul role='group' style={this.state.expanded ? { display: 'block' } : { display: 'none' }}>
 						{pages.map(page => <PageItem globals={this.props.globals} page={page} key={page.id}></PageItem>)}
 					</ul>
 					: undefined}

@@ -41,9 +41,11 @@ class NotebookItem extends React.Component<NotebookItemProps, NotebookItemState>
 	}
 
 	render() {
+		let isSelected = this.isSelected();
+
 		return (
-			<li>
-				<a className={this.isSelected() ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)}>
+			<li aria-selected={isSelected} aria-expanded={this.state.expanded} role='treeitem'>
+				<a className={isSelected ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)} tabIndex={0} href='#'>
 					<div className='picker-icon-left'>
 						<img src={require('../images/notebook_icon.png')}/>
 					</div>
@@ -51,7 +53,7 @@ class NotebookItem extends React.Component<NotebookItemProps, NotebookItemState>
 						<label className='ms-fontSize-sPlus'>{this.props.notebook.name}</label>
 					</div>
 				</a>
-				<ul className="picker-list-header" style={this.state.expanded ? { display: 'block' } : { display: 'none' }}>
+				<ul role='group' className="picker-list-header" style={this.state.expanded ? { display: 'block' } : { display: 'none' }}>
 					{this.props.notebook.sectionGroups.map(sectionGroup => <SectionGroupItem globals={this.props.globals} sectionGroup={sectionGroup} key={sectionGroup.name}></SectionGroupItem>)}
 					{this.props.notebook.sections.map(section => <SectionItem globals={this.props.globals} section={section} key={section.name}></SectionItem>)}
 				</ul>
