@@ -2,23 +2,45 @@
 
 #oneNotePicker {
   background: white;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .menu-list li ul {
+  margin-top: 0px;
+  margin-bottom: 0px;
   margin-right: 0px;
+  border-left: none;
+}
+
+.menu-list li a {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.menu-list li a div {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.menu-list label {
+  color: black;
 }
 
 .picker-list-header {
+  margin-top: 0px;
+  margin-bottom: 0px;
   margin-right: 0px;
 }
 
 .picker-icon-left {
   margin-right: 5px;
-}
 
-.picker-icon-right {
-  float: right;
-  margin-right: 5px;
+  img {
+    display: block;
+  }
 }
 
 .picker-selectedItem {

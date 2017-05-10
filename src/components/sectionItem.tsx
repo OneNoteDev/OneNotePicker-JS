@@ -58,19 +58,21 @@ class SectionItem extends React.Component<SectionItemProps, SectionItemState> {
 
 	render() {
 		let pages = this.props.section.pages;
+		let isSelected = this.isSelected();
 
 		// TODO we will need to design some sort of 'spinner' experience, likely when (expanded && !pages)
 		return (
-			<li>
-				<a className={this.isSelected() ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)}>
-					<span className='ms-font-m ms-fontWeight-regular ms-fontColor-themePrimary'>
-						<i className='picker-icon-left ms-Icon ms-Icon--Section'></i>
-						{this.props.section.name}
-						{this.isExpandable() ? <i className='picker-icon-right ms-Icon ms-Icon--ChevronDownMed'></i> : undefined}
-					</span>
+			<li aria-selected={isSelected} aria-expanded={this.state.expanded} role='treeitem'>
+				<a className={isSelected ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)} tabIndex={0} href='#'>
+					<div className='picker-icon-left'>
+						<img src={require('../images/section_icon.png')}/>
+					</div>
+					<div>
+						<label className='ms-fontSize-sPlus'>{this.props.section.name}</label>
+					</div>
 				</a>
 				{!!pages
-					? <ul style={this.state.expanded ? { display: 'block' } : { display: 'none' }}>
+					? <ul role='group' style={this.state.expanded ? { display: 'block' } : { display: 'none' }}>
 						{pages.map(page => <PageItem globals={this.props.globals} page={page} key={page.id}></PageItem>)}
 					</ul>
 					: undefined}
