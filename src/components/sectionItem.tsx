@@ -63,10 +63,12 @@ class SectionItem extends React.Component<SectionItemProps, SectionItemState> {
 		return (
 			<li>
 				<a className={this.isSelected() ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)}>
-					<span className='ms-fontSize-sPlus ms-fontColor-themePrimary'>
-						<i className='picker-icon-left ms-Icon ms-Icon--Section'></i>
-						{this.props.section.name}
-					</span>
+					<div className='picker-icon-left'>
+						<img src={require('../images/section_icon.png')}/>
+					</div>
+					<div>
+						<label className='ms-fontSize-sPlus'>{this.props.section.name}</label>
+					</div>
 				</a>
 				{!!pages
 					? <ul style={this.state.expanded ? { display: 'block' } : { display: 'none' }}>

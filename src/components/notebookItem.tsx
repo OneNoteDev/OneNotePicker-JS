@@ -44,10 +44,12 @@ class NotebookItem extends React.Component<NotebookItemProps, NotebookItemState>
 		return (
 			<li>
 				<a className={this.isSelected() ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)}>
-					<span className='ms-fontSize-sPlus ms-fontColor-themePrimary'>
-						<i className='picker-icon-left ms-Icon ms-Icon--OneNoteLogo'></i>
-						{this.props.notebook.name}
-					</span>
+					<div className='picker-icon-left'>
+						<img src={require('../images/notebook_icon.png')}/>
+					</div>
+					<div>
+						<label className='ms-fontSize-sPlus'>{this.props.notebook.name}</label>
+					</div>
 				</a>
 				<ul className="picker-list-header" style={this.state.expanded ? { display: 'block' } : { display: 'none' }}>
 					{this.props.notebook.sectionGroups.map(sectionGroup => <SectionGroupItem globals={this.props.globals} sectionGroup={sectionGroup} key={sectionGroup.name}></SectionGroupItem>)}
