@@ -13,18 +13,15 @@
             "check-space"
         ],
         "curly": true,
-        "eofline": false,
+        "eofline": true,
         "forin": true,
         "indent": [ true, "tabs" ],
         "interface-name": [true, "never-prefix"],
         "jsdoc-format": true,
-        "jsx-no-lambda": false,
-        "jsx-no-multiline-js": false,
         "label-position": true,
-        "max-line-length": [ true, 120 ],
+        "max-line-length": [ false ],
         "member-ordering": [
             true,
-            "public-before-private",
             "static-before-instance",
             "variables-before-functions"
         ],
@@ -41,11 +38,11 @@
             "timeEnd",
             "trace"
         ],
-        "no-consecutive-blank-lines": true,
+        "no-consecutive-blank-lines": [ true ],
         "no-construct": true,
         "no-debugger": true,
         "no-duplicate-variable": true,
-        "no-empty": true,
+        "no-empty": false,
         "no-eval": true,
         "no-shadowed-variable": true,
         "no-string-literal": true,
@@ -60,7 +57,7 @@
             "check-open-brace",
             "check-whitespace"
         ],
-        "quotemark": [true, "single", "jsx-double"],
+        "quotemark": [true, "single", "jsx-single"],
         "radix": true,
         "semicolon": [true, "always"],
         "switch-default": true,
@@ -70,7 +67,6 @@
         "triple-equals": [ true, "allow-null-check" ],
         "typedef": [
             true,
-            "parameter",
             "property-declaration"
         ],
         "typedef-whitespace": [

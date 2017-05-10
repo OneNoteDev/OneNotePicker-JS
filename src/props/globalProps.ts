@@ -17,7 +17,7 @@ interface GlobalProps {
 
 		// TODO we need a way to distinguish between section and page
 		selectedId?: string;
-	}
+	};
 }
 
 export default GlobalProps;
