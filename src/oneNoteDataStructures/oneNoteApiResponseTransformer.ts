@@ -15,39 +15,48 @@ class OneNoteApiResponseTransformer {
 	}
 
 	transformNotebook(notebook: OneNoteApi.Notebook): Notebook {
-		var transformed = {
+		var transformed: Notebook = {
+			parent: undefined,
 			id: notebook.id,
 			name: notebook.name,
 			expanded: this.defaultExpanded,
-			sectionGroups: notebook.sectionGroups.map(sg => this.transformSectionGroup(sg, transformed)),
-			sections: notebook.sections.map(section => this.transformSection(section, transformed))
+			sectionGroups: [],
+			sections: []
 		};
+
+		transformed.sectionGroups = notebook.sectionGroups.map(sg => this.transformSectionGroup(sg, transformed));
+		transformed.sections = notebook.sections.map(section => this.transformSection(section, transformed));
 
 		return transformed;
 	}
 
 	transformSectionGroup(sectionGroup: OneNoteApi.SectionGroup, parent: Notebook | SectionGroup): SectionGroup {
-		var transformed = {
+		var transformed: SectionGroup = {
 			parent: parent,
 			id: sectionGroup.id,
 			name: sectionGroup.name,
 			expanded: this.defaultExpanded,
-			sectionGroups: sectionGroup.sectionGroups.map(sg => this.transformSectionGroup(sg, transformed)),
-			sections: sectionGroup.sections.map(section => this.transformSection(section, transformed))
+			sectionGroups: [],
+			sections: []
 		};
+
+		transformed.sectionGroups = sectionGroup.sectionGroups.map(sg => this.transformSectionGroup(sg, transformed));
+		transformed.sections = sectionGroup.sections.map(section => this.transformSection(section, transformed));
 
 		return transformed;
 	}
 
 	transformSection(section: OneNoteApi.Section, parent: Notebook | SectionGroup): Section {
 		// Pages may be undefined (e.g., in the getNotebooks call)
-		var transformed = {
+		var transformed: Section = {
 			parent: parent,
 			id: section.id,
 			name: section.name,
 			expanded: this.defaultExpanded,
-			pages: !!section.pages ? section.pages.map(page => this.transformPage(page, transformed)) : undefined
+			pages: []
 		};
+
+		transformed.pages = !!section.pages ? section.pages.map(page => this.transformPage(page, transformed)) : undefined;
 
 		return transformed;
 	}

@@ -1,3 +1,4 @@
+import OneNoteItem from '../oneNoteDataStructures/oneNoteItem';
 import Notebook from '../oneNoteDataStructures/notebook';
 import Section from '../oneNoteDataStructures/section';
 import Page from '../oneNoteDataStructures/page';
@@ -17,9 +18,9 @@ interface OneNotePickerCallbacks {
 	onNotebookHierarchyUpdated: (notebooks: Notebook[]) => void;
 
 	// Selection callbacks
-	onNotebookSelected?: (notebook: Notebook) => void;
-	onSectionSelected?: (section: Section) => void;
-	onPageSelected?: (page: Page) => void;
+	onNotebookSelected?: (notebook: Notebook, breadcrumbs: OneNoteItem[]) => void;
+	onSectionSelected?: (section: Section, breadcrumbs: OneNoteItem[]) => void;
+	onPageSelected?: (page: Page, breadcrumbs: OneNoteItem[]) => void;
 }
 
 export default OneNotePickerCallbacks;

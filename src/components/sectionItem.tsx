@@ -3,6 +3,7 @@ import * as React from 'react';
 import PageItem from './pageItem';
 import GlobalProps from '../props/globalProps';
 import Section from '../oneNoteDataStructures/section';
+import OneNoteItemUtils from '../oneNoteDataStructures/oneNoteItemUtils';
 
 interface SectionItemProps extends GlobalProps {
 	section: Section;
@@ -24,7 +25,7 @@ class SectionItem extends React.Component<SectionItemProps, SectionItemState> {
 		// If selection callback exists, assume this item is selectable, and notify the callback
 		let onSectionSelected = this.props.globals.callbacks.onSectionSelected;
 		if (!!onSectionSelected) {
-			onSectionSelected(section);
+			onSectionSelected(section, OneNoteItemUtils.getAncestry(section));
 		}
 
 		// We are only interested in expanding if pages are deemed selectable

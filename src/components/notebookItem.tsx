@@ -4,6 +4,7 @@ import SectionItem from './sectionItem';
 import SectionGroupItem from './sectionGroupItem';
 import GlobalProps from '../props/globalProps';
 import Notebook from '../oneNoteDataStructures/notebook';
+import OneNoteItemUtils from '../oneNoteDataStructures/oneNoteItemUtils';
 
 interface NotebookItemProps extends GlobalProps {
 	notebook: Notebook;
@@ -22,7 +23,7 @@ class NotebookItem extends React.Component<NotebookItemProps, NotebookItemState>
 	private onClick() {
 		let onNotebookSelected = this.props.globals.callbacks.onNotebookSelected;
 		if (!!onNotebookSelected) {
-			onNotebookSelected(this.props.notebook);
+			onNotebookSelected(this.props.notebook, OneNoteItemUtils.getAncestry(this.props.notebook));
 		}
 
 		// We are only interested in expanding if either sections/pages are deemed selectable
