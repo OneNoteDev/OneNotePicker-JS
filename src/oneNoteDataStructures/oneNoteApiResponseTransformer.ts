@@ -15,41 +15,50 @@ class OneNoteApiResponseTransformer {
 	}
 
 	transformNotebook(notebook: OneNoteApi.Notebook): Notebook {
-		return {
+		var transformed = {
 			id: notebook.id,
 			name: notebook.name,
 			expanded: this.defaultExpanded,
-			sectionGroups: notebook.sectionGroups.map(sg => this.transformSectionGroup(sg)),
-			sections: notebook.sections.map(section => this.transformSection(section))
+			sectionGroups: notebook.sectionGroups.map(sg => this.transformSectionGroup(sg, transformed)),
+			sections: notebook.sections.map(section => this.transformSection(section, transformed))
 		};
+
+		return transformed;
 	}
 
-	transformSectionGroup(sectionGroup: OneNoteApi.SectionGroup): SectionGroup {
-		return {
+	transformSectionGroup(sectionGroup: OneNoteApi.SectionGroup, parent: Notebook | SectionGroup): SectionGroup {
+		var transformed = {
+			parent: parent,
 			id: sectionGroup.id,
 			name: sectionGroup.name,
 			expanded: this.defaultExpanded,
-			sectionGroups: sectionGroup.sectionGroups.map(sg => this.transformSectionGroup(sg)),
-			sections: sectionGroup.sections.map(section => this.transformSection(section))
+			sectionGroups: sectionGroup.sectionGroups.map(sg => this.transformSectionGroup(sg, transformed)),
+			sections: sectionGroup.sections.map(section => this.transformSection(section, transformed))
 		};
+
+		return transformed;
 	}
 
-	transformSection(section: OneNoteApi.Section): Section {
+	transformSection(section: OneNoteApi.Section, parent: Notebook | SectionGroup): Section {
 		// Pages may be undefined (e.g., in the getNotebooks call)
-		return {
+		var transformed = {
+			parent: parent,
 			id: section.id,
 			name: section.name,
 			expanded: this.defaultExpanded,
-			pages: !!section.pages ? section.pages.map(page => this.transformPage(page)) : undefined
+			pages: !!section.pages ? section.pages.map(page => this.transformPage(page, transformed)) : undefined
 		};
+
+		return transformed;
 	}
 
-	transformPages(pageList: OneNoteApi.Page[]): Page[] {
-		return pageList.map(page => this.transformPage(page));
+	transformPages(pageList: OneNoteApi.Page[], parent: Section): Page[] {
+		return pageList.map(page => this.transformPage(page, parent));
 	}
 
-	transformPage(page: OneNoteApi.Page): Page {
+	transformPage(page: OneNoteApi.Page, parent: Section): Page {
 		return {
+			parent: parent,
 			id: page.id,
 			title: page.title
 		};

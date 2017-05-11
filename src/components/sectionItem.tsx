@@ -45,7 +45,7 @@ class SectionItem extends React.Component<SectionItemProps, SectionItemState> {
 		let section = this.props.section;
 
 		// Trigger external call to fetch pages for this section
-		globals.oneNoteDataProvider.getPages(section.id).then((pages) => {
+		globals.oneNoteDataProvider.getPages(section).then((pages) => {
 			globals.notebookListUpdater.updatePages(section.id, pages);
 			let newNotebookHierarchy = globals.notebookListUpdater.get();
 			globals.callbacks.onNotebookHierarchyUpdated(newNotebookHierarchy);

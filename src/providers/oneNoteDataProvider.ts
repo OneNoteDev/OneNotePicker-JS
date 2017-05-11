@@ -1,4 +1,5 @@
 import Notebook from '../oneNoteDataStructures/notebook';
+import Section from '../oneNoteDataStructures/section';
 import Page from '../oneNoteDataStructures/page';
 
 /**
@@ -6,7 +7,7 @@ import Page from '../oneNoteDataStructures/page';
  */
 interface OneNoteDataProvider {
 	getNotebooks(): Promise<Notebook[]>;
-	getPages(sectionId: string): Promise<Page[]>;
+	getPages(section: Section): Promise<Page[]>;
 }
 
 export default OneNoteDataProvider;
