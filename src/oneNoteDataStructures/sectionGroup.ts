@@ -1,7 +1,8 @@
+import OneNoteChildItem from './oneNoteChildItem';
 import Notebook from './notebook';
 import Section from './section';
 
-interface SectionGroup {
+interface SectionGroup extends OneNoteChildItem<Notebook | SectionGroup> {
 	parent: Notebook | SectionGroup;
 	id: string;
 	name: string;
