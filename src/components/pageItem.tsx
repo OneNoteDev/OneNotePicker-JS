@@ -30,7 +30,7 @@ class PageItem extends React.Component<PageItemProps, null> {
 						<img src={require('../images/section_icon.png')}/>
 					</div>
 					<div>
-						<label className='ms-fontSize-sPlus'>{this.props.page.title}</label>
+						<label className='ms-fontSize-sPlus'>{this.props.page.name}</label>
 					</div>
 				</a>
 			</li >

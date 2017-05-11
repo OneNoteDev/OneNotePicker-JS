@@ -60,7 +60,7 @@ class OneNoteApiResponseTransformer {
 		return {
 			parent: parent,
 			id: page.id,
-			title: page.title
+			name: page.title
 		};
 	}
 }

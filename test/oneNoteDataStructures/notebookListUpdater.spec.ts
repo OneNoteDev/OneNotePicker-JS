@@ -5,6 +5,7 @@ import NotebookListUpdater from '../../src/oneNoteDataStructures/notebookListUpd
 describe('NotebookListUpdater', () => {
 	it('should return the notebooks in the getter with the notebooks it was initialized with', () => {
 		let notebooks = [{
+			parent: undefined,
 			id: 'id',
 			name: 'Default Notebook',
 			expanded: false,
@@ -23,6 +24,7 @@ describe('NotebookListUpdater', () => {
 
 	it('should not preserve old notebooks that no longer exist', () => {
 		let oldNotebooks = [{
+			parent: undefined,
 			id: 'id1',
 			name: 'Notebook 1',
 			expanded: false,
@@ -32,6 +34,7 @@ describe('NotebookListUpdater', () => {
 		let notebookListUpdater = new NotebookListUpdater(oldNotebooks);
 
 		let newNotebooks = [{
+			parent: undefined,
 			id: 'id2',
 			name: 'Notebook 2',
 			expanded: false,
@@ -48,6 +51,7 @@ describe('NotebookListUpdater', () => {
 		let notebookListUpdater = new NotebookListUpdater(oldNotebooks);
 
 		let newNotebooks = [{
+			parent: undefined,
 			id: 'id2',
 			name: 'Notebook 2',
 			expanded: false,
@@ -61,6 +65,7 @@ describe('NotebookListUpdater', () => {
 
 	it('should return the new notebooks in the getter as an empty list if the update was called with an empty list', () => {
 		let oldNotebooks = [{
+			parent: undefined,
 			id: 'id1',
 			name: 'Notebook 1',
 			expanded: false,
@@ -77,6 +82,7 @@ describe('NotebookListUpdater', () => {
 
 	it('should preserve the notebooks if the new notebooks is the same as the old', () => {
 		let notebooks = [{
+			parent: undefined,
 			id: 'id1',
 			name: 'Notebook 1',
 			expanded: false,
@@ -92,6 +98,7 @@ describe('NotebookListUpdater', () => {
 
 	it('should preserve the old expanded property if a new notebook matches an old one', () => {
 		let oldNotebooks = [{
+			parent: undefined,
 			id: 'id1',
 			name: 'Notebook 1',
 			expanded: true,
@@ -101,6 +108,7 @@ describe('NotebookListUpdater', () => {
 		let notebookListUpdater = new NotebookListUpdater(oldNotebooks);
 
 		let newNotebooks = [{
+			parent: undefined,
 			id: 'id1',
 			name: 'Notebook 1',
 			expanded: false,
@@ -114,6 +122,7 @@ describe('NotebookListUpdater', () => {
 
 	it('should not preserve the old hierarchy if a new notebook matches an old one', () => {
 		let oldNotebooks: Notebook[] = [{
+			parent: undefined,
 			id: 'id1',
 			name: 'Notebook 1',
 			expanded: true,
@@ -133,6 +142,7 @@ describe('NotebookListUpdater', () => {
 		let notebookListUpdater = new NotebookListUpdater(oldNotebooks);
 
 		let newNotebooks = [{
+			parent: undefined,
 			id: 'id1',
 			name: 'Notebook 1',
 			expanded: false,
@@ -146,6 +156,7 @@ describe('NotebookListUpdater', () => {
 
 	it('should not preserve the old hierarchy if a new notebook matches an old one and the new hierarchy is non-empty', () => {
 		let oldNotebooks: Notebook[] = [{
+			parent: undefined,
 			id: 'id1',
 			name: 'Notebook 1',
 			expanded: true,
@@ -165,6 +176,7 @@ describe('NotebookListUpdater', () => {
 		let notebookListUpdater = new NotebookListUpdater(oldNotebooks);
 
 		let newNotebooks: Notebook[] = [{
+			parent: undefined,
 			id: 'id1',
 			name: 'Notebook 1',
 			expanded: false,
@@ -188,6 +200,7 @@ describe('NotebookListUpdater', () => {
 
 	it('should preserve the old expanded property throughout the notebook hierarchy', () => {
 		let oldNotebooks: Notebook[] = [{
+			parent: undefined,
 			id: 'id1',
 			name: 'Notebook 1',
 			expanded: true,
@@ -225,6 +238,7 @@ describe('NotebookListUpdater', () => {
 		let notebookListUpdater = new NotebookListUpdater(oldNotebooks);
 
 		let newNotebooks: Notebook[] = [{
+			parent: undefined,
 			id: 'id1',
 			name: 'Notebook 1',
 			expanded: false,
@@ -266,6 +280,7 @@ describe('NotebookListUpdater', () => {
 
 	it('should update pages correctly if it was previously undefined', () => {
 		let oldHierarchy: Notebook[] = [{
+			parent: undefined,
 			id: 'id1',
 			name: 'Notebook 1',
 			expanded: true,
@@ -286,15 +301,16 @@ describe('NotebookListUpdater', () => {
 		let pages = [{
 			parent: oldHierarchy[0].sections[0],
 			id: 'p1',
-			title: 'Page 1'
+			name: 'Page 1'
 		}, {
 			parent: oldHierarchy[0].sections[0],
 			id: 'p2',
-			title: 'Page 2'
+			name: 'Page 2'
 		}];
 		notebookListUpdater.updatePages('s1', pages);
 
 		let expectedHierarchy: Notebook[] = [{
+			parent: undefined,
 			id: 'id1',
 			name: 'Notebook 1',
 			expanded: true,
@@ -315,6 +331,7 @@ describe('NotebookListUpdater', () => {
 
 	it('should update pages correctly if it was previously undefined and there are no new pages', () => {
 		let oldHierarchy: Notebook[] = [{
+			parent: undefined,
 			id: 'id1',
 			name: 'Notebook 1',
 			expanded: true,
@@ -336,6 +353,7 @@ describe('NotebookListUpdater', () => {
 		notebookListUpdater.updatePages('s1', pages);
 
 		let expectedHierarchy: Notebook[] = [{
+			parent: undefined,
 			id: 'id1',
 			name: 'Notebook 1',
 			expanded: true,
@@ -356,6 +374,7 @@ describe('NotebookListUpdater', () => {
 
 	it('should update pages correctly if if the section is not in the first level of the hierarchy', () => {
 		let oldHierarchy: Notebook[] = [{
+			parent: undefined,
 			id: 'id1',
 			name: 'Notebook 1',
 			expanded: true,
@@ -396,6 +415,7 @@ describe('NotebookListUpdater', () => {
 		notebookListUpdater.updatePages('s1', pages);
 
 		let expectedHierarchy: Notebook[] = [{
+			parent: undefined,
 			id: 'id1',
 			name: 'Notebook 1',
 			expanded: true,
@@ -435,12 +455,14 @@ describe('NotebookListUpdater', () => {
 
 	it('should update pages correctly if the parent section is not in the first notebook', () => {
 		let oldHierarchy: Notebook[] = [{
+			parent: undefined,
 			id: 'id1',
 			name: 'Notebook 1',
 			expanded: true,
 			sectionGroups: [],
 			sections: []
 		}, {
+			parent: undefined,	
 			id: 'id2',
 			name: 'Notebook 2',
 			expanded: true,
@@ -469,21 +491,23 @@ describe('NotebookListUpdater', () => {
 		let pages = [{
 			parent: oldHierarchy[1].sections[0],
 			id: 'p1',
-			title: 'Page 1'
+			name: 'Page 1'
 		}, {
 			parent: oldHierarchy[1].sections[0],
 			id: 'p2',
-			title: 'Page 2'
+			name: 'Page 2'
 		}];
 		notebookListUpdater.updatePages('s2', pages);
 
 		let expectedHierarchy: Notebook[] = [{
+			parent: undefined,
 			id: 'id1',
 			name: 'Notebook 1',
 			expanded: true,
 			sectionGroups: [],
 			sections: []
 		}, {
+			parent: undefined,	
 			id: 'id2',
 			name: 'Notebook 2',
 			expanded: true,

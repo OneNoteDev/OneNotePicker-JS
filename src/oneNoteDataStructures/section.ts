@@ -1,11 +1,7 @@
-import OneNoteChildItem from './oneNoteChildItem';
-import Notebook from './notebook';
-import SectionGroup from './sectionGroup';
+import OneNoteItem from './oneNoteItem';
 import Page from './page';
 
-interface Section extends OneNoteChildItem<Notebook | SectionGroup> {
-	id: string;
-	name: string;
+interface Section extends OneNoteItem {
 	expanded: boolean;
 	pages: Page[] | undefined;
 }
