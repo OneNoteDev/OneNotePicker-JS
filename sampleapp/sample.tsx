@@ -31,14 +31,14 @@ oneNoteDataProvider.getNotebooks().then((notebooks) => {
 				onSectionSelected: (section, breadcrumbs) => {
 					globalProps.globals.selectedId = section.id;
 
-					console.log('Notebook: ' + breadcrumbs[0].name + ', Section: ' + section.name);
+					console.log(breadcrumbs.map(x => x.name).join(' > '));
 
 					render(globalProps, globalProps.globals.notebookListUpdater.get());
 				},
 				onPageSelected: (page, breadcrumbs) => {
 					globalProps.globals.selectedId = page.id;
 
-					console.log('Notebook: ' + breadcrumbs[0].name + ', Page: ' + page.name);
+					console.log(breadcrumbs.map(x => x.name).join(' > '));
 
 					render(globalProps, globalProps.globals.notebookListUpdater.get());
 				}
