@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import GlobalProps from '../props/globalProps';
 import Page from '../oneNoteDataStructures/page';
+import OneNoteItemUtils from '../oneNoteDataStructures/oneNoteItemUtils';
 
 interface PageItemProps extends GlobalProps {
 	page: Page;
@@ -11,7 +12,7 @@ class PageItem extends React.Component<PageItemProps, null> {
 	private onClick() {
 		let onPageSelected = this.props.globals.callbacks.onPageSelected;
 		if (!!onPageSelected) {
-			onPageSelected(this.props.page);
+			onPageSelected(this.props.page, OneNoteItemUtils.getAncestry(this.props.page));
 		}
 	}
 
@@ -30,7 +31,7 @@ class PageItem extends React.Component<PageItemProps, null> {
 						<img src={require('../images/section_icon.png')}/>
 					</div>
 					<div>
-						<label className='ms-fontSize-sPlus'>{this.props.page.title}</label>
+						<label className='ms-fontSize-sPlus'>{this.props.page.name}</label>
 					</div>
 				</a>
 			</li >

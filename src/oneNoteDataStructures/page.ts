@@ -1,6 +1,6 @@
-interface Page {
-	id: string;
-	title: string;
+import OneNoteItem from './oneNoteItem';
+
+interface Page extends OneNoteItem {
 }
 
 export default Page;
