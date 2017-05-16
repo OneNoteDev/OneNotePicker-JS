@@ -40,17 +40,29 @@ const base = {
 				use: IS_PROD ? 'awesome-typescript-loader' : ['react-hot-loader', 'awesome-typescript-loader']
 			},
 			{
+				test: /\.css/,
+				use: extractSass.extract({
+					use: [
+						{
+							loader: 'css-loader?importLoaders=1&minimize=false!postcss-loader'
+						}
+					],
+					fallback: 'style-loader'
+				})
+			},
+			{
 				test: /\.sass$/,
 				use: extractSass.extract({
 					use: [
 						{
-							loader: 'css-loader?sourceMap'
+							loader: 'css-loader?importLoaders=1&minimize=false!postcss-loader'
 						},
 						{
-							loader: 'sass-loader?indentedSyntax',
+							loader: 'sass-loader',
 							options: {
-								includePaths: [path.join(__dirname, 'node-modules')],
-								sourceMap: true
+								outputStyle: 'expanded',
+								indentedSyntax: true,
+								includePaths: [path.join(__dirname, 'node-modules')]
 							}
 						}
 					],
@@ -62,13 +74,13 @@ const base = {
 				use: extractSass.extract({
 					use: [
 						{
-							loader: 'css-loader?sourceMap'
+							loader: 'css-loader?importLoaders=1&minimize=false!postcss-loader'
 						},
 						{
 							loader: 'sass-loader',
 							options: {
-								includePaths: [path.join(__dirname, 'node-modules')],
-								sourceMap: true
+								outputStyle: 'expanded',
+								includePaths: [path.join(__dirname, 'node-modules')]
 							}
 						}
 					],
