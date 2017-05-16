@@ -3,11 +3,14 @@ const path = require('path');
 
 // variables
 const IS_PROD = process.env.NODE_ENV === "production";
+const IS_ANALYZE = process.env.NODE_ENV === "analyze";
 const OUT_DIR = path.join(__dirname, './dist');
 
 // plugins
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const WebpackMerge = require('webpack-merge');
+const UnminifiedWebpackPlugin = require('unminified-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const extractSass = new ExtractTextPlugin({
 	filename: "[name].css",
@@ -101,6 +104,9 @@ const base = {
 };
 
 const prod = {
+	output: {
+		filename: '[name].min.js'
+	},
 	devtool: 'source-map',
 	plugins: [
 		new webpack.LoaderOptionsPlugin({
@@ -111,6 +117,18 @@ const prod = {
 			'process.env': {
 				'NODE_ENV': JSON.stringify('production')
 			}
+		}),
+		new webpack.optimize.UglifyJsPlugin({
+			sourceMap: true
+		}),
+		new UnminifiedWebpackPlugin()
+	]
+};
+
+const analyze = {
+	plugins: [
+		new BundleAnalyzerPlugin({
+			analyzerMode: 'static'
 		})
 	]
 };
@@ -118,7 +136,11 @@ const prod = {
 let webpackConfiguration = base;
 
 if(IS_PROD) {
-	webpackConfiguration = WebpackMerge(base, prod);
+	webpackConfiguration = WebpackMerge(webpackConfiguration, prod);
+}
+
+if(IS_ANALYZE) {
+	webpackConfiguration = WebpackMerge(webpackConfiguration, analyze);
 }
 
 module.exports = webpackConfiguration;

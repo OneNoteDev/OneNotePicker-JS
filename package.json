@@ -55,16 +55,19 @@
     "style-loader": "^0.17.0",
     "tslint": "^5.2.0",
     "typescript": "^2.3.2",
+    "unminified-webpack-plugin": "^1.2.0",
     "url-loader": "^0.5.8",
     "wallaby-webpack": "0.0.38",
     "webpack": "^2.5.1",
+    "webpack-bundle-analyzer": "^2.8.1",
     "webpack-dev-server": "^2.4.5",
     "webpack-merge": "^4.1.0"
   },
   "scripts": {
     "test": "cross-env NODE_ENV=test karma start",
     "clean": "rimraf dist",
-    "start": "webpack-dev-server --debug --devtool cheap-module-source-map --output-pathinfo --history-api-fallback --hot --inline --progress --colors --port 3000 --open",
-    "build": "rimraf dist && cross-env NODE_ENV=production webpack --progress --colors"
+    "start": "webpack-dev-server --debug --output-pathinfo --history-api-fallback --hot --inline --progress --colors --port 3000 --open",
+    "build": "rimraf dist && cross-env NODE_ENV=production webpack --progress --colors",
+    "analyze": "cross-env NODE_ENV=analyze webpack --progress --colors"
   }
 }
