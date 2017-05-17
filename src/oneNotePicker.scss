@@ -1,49 +1,63 @@
-@import "~bulma/bulma.sass";
-
-#oneNotePicker {
-  background: white;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.menu-list li ul {
-  margin-top: 0px;
-  margin-bottom: 0px;
-  margin-right: 0px;
-  border-left: none;
-}
-
-.menu-list li a {
-  padding-top: 6px;
-  padding-bottom: 6px;
-}
-
-.menu-list li a div {
-  display: inline-block;
-  vertical-align: top;
-}
-
-.menu-list label {
-  color: black;
-}
-
-.picker-list-header {
-  margin-top: 0px;
-  margin-bottom: 0px;
-  margin-right: 0px;
-}
-
-.picker-icon-left {
-  margin-right: 5px;
-
-  img {
-    display: block;
+  #oneNotePicker {
+    background: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
-}
 
-.picker-selectedItem {
-  // Office UI Fabric specifies a hover which has more priority this, hence the !important
-  background-color: #D0D0D0 !important;
+.onenote-picker {
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .menu-list a {
+    border-radius: 2px;
+    color: #4a4a4a;
+    display: block;
+    padding: 0.5em 0.75em;
+  }
+
+  .menu-list li ul {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-right: 0px;
+    border-left: none;
+    margin: 0.75em;
+    padding-left: 0.75em;
+  }
+
+  .menu-list li a {
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  .menu-list li a div {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .menu-list label {
+    color: black;
+  }
+
+  .picker-list-header {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-right: 0px;
+  }
+
+  .picker-icon-left {
+    margin-right: 5px;
+
+    img {
+      display: block;
+    }
+  }
+
+  .picker-selectedItem {
+    // Office UI Fabric specifies a hover which has more priority this, hence the !important
+    background-color: #D0D0D0 !important;
+  }
 }

@@ -1,6 +1,7 @@
 import OneNoteDataProvider from './oneNoteDataProvider';
 import Notebook from '../oneNoteDataStructures/notebook';
 import OneNoteApiResponseTransformer from '../oneNoteDataStructures/oneNoteApiResponseTransformer';
+import Section from '../oneNoteDataStructures/section';
 import Page from '../oneNoteDataStructures/page';
 
 /**
@@ -21,9 +22,9 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 		});
 	}
 
-	getPages(sectionId: string): Promise<Page[]> {
-		return this.api.getPages({ sectionId: sectionId }).then((responsePackage) => {
-			return Promise.resolve(this.responseTransformer.transformPages(responsePackage.parsedResponse));
+	getPages(section: Section): Promise<Page[]> {
+		return this.api.getPages({ sectionId: section.id }).then((responsePackage) => {
+			return Promise.resolve(this.responseTransformer.transformPages(responsePackage.parsedResponse, section));
 		});
 	}
 }

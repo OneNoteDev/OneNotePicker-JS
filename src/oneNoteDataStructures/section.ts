@@ -1,8 +1,7 @@
+import OneNoteItem from './oneNoteItem';
 import Page from './page';
 
-interface Section {
-	id: string;
-	name: string;
+interface Section extends OneNoteItem {
 	expanded: boolean;
 	pages: Page[] | undefined;
 }
