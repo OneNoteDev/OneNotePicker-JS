@@ -1,12 +1,33 @@
 {
-	"compilerOptions": {
-		"jsx": "preserve",
-		"module": "commonjs",
-		"types": [
-			"es6-promise",
-			"mithril",
-			"qunit"
-		],
-		"outDir": "./build"
-	}
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "lib": ["es5", "dom"],
+    "sourceMap": true,
+    "allowJs": true,
+    "jsx": "react",
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true
+  },
+  "exclude": [
+    "node_modules",
+    "build",
+    "scripts",
+    "acceptance-tests",
+    "webpack",
+    "jest",
+    "src/setupTests.ts",
+    "dist"
+  ],
+  "types": [
+    "typePatches"
+  ]
 }
