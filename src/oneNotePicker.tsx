@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import './oneNotePicker.scss';
+
 import NotebookItem from './components/notebookItem';
 import GlobalProps from './props/globalProps';
 import Notebook from './oneNoteDataStructures/notebook';
