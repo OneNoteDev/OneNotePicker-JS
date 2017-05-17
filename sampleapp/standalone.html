@@ -1,0 +1,35 @@
+<html>
+<head>
+    <title></title>
+    <link href="../dist/onenotepicker.css" rel="stylesheet" type="text/css" />
+    <script src="https://unpkg.com/react@15/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+    <script src="../dist/onenotepicker.js"></script>
+</head>
+<body>
+<div id="oneNotePicker"></div>
+<script>
+    var mockGlobals  = {
+        callbacks: {
+            onNotebookSelected: function(value) {
+                console.error(value)
+            }
+        }
+    };
+
+    var mockNotebooks = [
+        {
+            name: "NAME",
+            id: "ID",
+            expanded: true,
+            sectionGroups: [],
+            sections: []
+        }
+    ];
+
+    ReactDOM.render(
+        React.createElement(OneNotePicker.default, { globals: mockGlobals, notebooks:  mockNotebooks}, null),
+        document.getElementById('oneNotePicker'));
+</script>
+</body>
+</html>

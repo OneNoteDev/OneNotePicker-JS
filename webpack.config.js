@@ -29,6 +29,7 @@ const base = {
 		path: OUT_DIR,
 		publicPath: '/dist/',
 		filename: '[name].js',
+		library: ['OneNotePicker']
 	},
 	target: 'web',
 	resolve: {
@@ -130,7 +131,11 @@ const prod = {
 				'NODE_ENV': JSON.stringify('production')
 			}
 		})
-	]
+	],
+	externals: {
+		'react': 'React',
+		'react-dom': 'ReactDOM',
+	}
 };
 
 const prodMinified = {
@@ -139,7 +144,7 @@ const prodMinified = {
 	},
 	plugins: [
 		new webpack.optimize.UglifyJsPlugin({
-			sourceMap: true
+			sourceMap: true,
 		}),
 	]
 };
@@ -163,6 +168,7 @@ if (IS_PROD_MIN) {
 }
 
 if (IS_ANALYZE) {
+	webpackConfiguration = WebpackMerge(webpackConfiguration, prod);
 	webpackConfiguration = WebpackMerge(webpackConfiguration, analyze);
 }
 
