@@ -2,18 +2,21 @@ const webpack = require('webpack');
 const path = require('path');
 
 // variables
-const IS_PROD = process.env.NODE_ENV === "production";
+const IS_PROD_MIN = process.env.NODE_ENV === "minify";
+const IS_PROD = process.env.NODE_ENV === "production" || IS_PROD_MIN;
+
 const IS_ANALYZE = process.env.NODE_ENV === "analyze";
 const OUT_DIR = path.join(__dirname, './dist');
 
 // plugins
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const WebpackMerge = require('webpack-merge');
-const UnminifiedWebpackPlugin = require('unminified-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
+let cssFileName = IS_PROD_MIN ? "[name].css" : "[name].min.css";
+
 const extractSass = new ExtractTextPlugin({
-	filename: "[name].css",
+	filename: cssFileName,
 	allChunks: true
 });
 
@@ -44,7 +47,7 @@ const base = {
 				use: extractSass.extract({
 					use: [
 						{
-							loader: 'css-loader?importLoaders=1&minimize=false!postcss-loader'
+							loader: `css-loader?importLoaders=1&minimize=${IS_PROD_MIN}!postcss-loader`
 						}
 					],
 					fallback: 'style-loader'
@@ -55,7 +58,7 @@ const base = {
 				use: extractSass.extract({
 					use: [
 						{
-							loader: 'css-loader?importLoaders=1&minimize=false!postcss-loader'
+							loader: `css-loader?importLoaders=1&minimize=${IS_PROD_MIN}!postcss-loader`
 						},
 						{
 							loader: 'sass-loader',
@@ -74,7 +77,7 @@ const base = {
 				use: extractSass.extract({
 					use: [
 						{
-							loader: 'css-loader?importLoaders=1&minimize=false!postcss-loader'
+							loader: `css-loader?importLoaders=1&minimize=${IS_PROD_MIN}!postcss-loader`
 						},
 						{
 							loader: 'sass-loader',
@@ -116,9 +119,6 @@ const base = {
 };
 
 const prod = {
-	output: {
-		filename: '[name].min.js'
-	},
 	devtool: 'source-map',
 	plugins: [
 		new webpack.LoaderOptionsPlugin({
@@ -129,11 +129,18 @@ const prod = {
 			'process.env': {
 				'NODE_ENV': JSON.stringify('production')
 			}
-		}),
+		})
+	]
+};
+
+const prodMinified = {
+	output: {
+		filename: '[name].min.js'
+	},
+	plugins: [
 		new webpack.optimize.UglifyJsPlugin({
 			sourceMap: true
 		}),
-		new UnminifiedWebpackPlugin()
 	]
 };
 
@@ -147,11 +154,15 @@ const analyze = {
 
 let webpackConfiguration = base;
 
-if(IS_PROD) {
+if (IS_PROD) {
 	webpackConfiguration = WebpackMerge(webpackConfiguration, prod);
 }
 
-if(IS_ANALYZE) {
+if (IS_PROD_MIN) {
+	webpackConfiguration = WebpackMerge(webpackConfiguration, prodMinified);
+}
+
+if (IS_ANALYZE) {
 	webpackConfiguration = WebpackMerge(webpackConfiguration, analyze);
 }
 
