@@ -13,7 +13,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const WebpackMerge = require('webpack-merge');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-let cssFileName = IS_PROD_MIN ? "[name].css" : "[name].min.css";
+let cssFileName = IS_PROD_MIN ? "[name].min.css" : "[name].css";
 
 const extractSass = new ExtractTextPlugin({
 	filename: cssFileName,
