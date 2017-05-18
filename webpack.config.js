@@ -22,8 +22,9 @@ const extractSass = new ExtractTextPlugin({
 
 const base = {
 	entry: {
-		sample: './sampleApp/sample.tsx',
-		onenotepicker: './src/oneNotePicker.tsx'
+		sample: './sampleApp/sample',
+		onenotepicker: './src/oneNotePicker',
+		oneNoteApiDataProvider: './src/providers/oneNoteApiDataProvider'
 	},
 	output: {
 		path: OUT_DIR,
