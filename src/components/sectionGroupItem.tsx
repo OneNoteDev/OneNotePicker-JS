@@ -4,15 +4,15 @@ import SectionItem from './sectionItem';
 import GlobalProps from '../props/globalProps';
 import SectionGroup from '../oneNoteDataStructures/sectionGroup';
 
-interface SectionGroupItemProps extends GlobalProps {
+export interface SectionGroupItemProps extends GlobalProps {
 	sectionGroup: SectionGroup;
 }
 
-interface SectionGroupItemState {
+export interface SectionGroupItemState {
 	expanded: boolean;
 }
 
-class SectionGroupItem extends React.Component<SectionGroupItemProps, SectionGroupItemState> {
+export class SectionGroupItem extends React.Component<SectionGroupItemProps, SectionGroupItemState> {
 	constructor(props) {
 		super(props);
 		this.state = { expanded: props.expanded };

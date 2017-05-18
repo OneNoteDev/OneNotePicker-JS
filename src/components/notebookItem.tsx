@@ -6,15 +6,15 @@ import GlobalProps from '../props/globalProps';
 import Notebook from '../oneNoteDataStructures/notebook';
 import OneNoteItemUtils from '../oneNoteDataStructures/oneNoteItemUtils';
 
-interface NotebookItemProps extends GlobalProps {
+export interface NotebookItemProps extends GlobalProps {
 	notebook: Notebook;
 }
 
-interface NotebookItemState {
+export interface NotebookItemState {
 	expanded: boolean;
 }
 
-class NotebookItem extends React.Component<NotebookItemProps, NotebookItemState> {
+export class NotebookItem extends React.Component<NotebookItemProps, NotebookItemState> {
 	constructor(props) {
 		super(props);
 		this.state = { expanded: props.expanded };

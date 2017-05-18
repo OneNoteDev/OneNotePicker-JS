@@ -4,11 +4,11 @@ import GlobalProps from '../props/globalProps';
 import Page from '../oneNoteDataStructures/page';
 import OneNoteItemUtils from '../oneNoteDataStructures/oneNoteItemUtils';
 
-interface PageItemProps extends GlobalProps {
+export interface PageItemProps extends GlobalProps {
 	page: Page;
 }
 
-class PageItem extends React.Component<PageItemProps, null> {
+export class PageItem extends React.Component<PageItemProps, null> {
 	private onClick() {
 		let onPageSelected = this.props.globals.callbacks.onPageSelected;
 		if (!!onPageSelected) {

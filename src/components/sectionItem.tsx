@@ -5,15 +5,15 @@ import GlobalProps from '../props/globalProps';
 import Section from '../oneNoteDataStructures/section';
 import OneNoteItemUtils from '../oneNoteDataStructures/oneNoteItemUtils';
 
-interface SectionItemProps extends GlobalProps {
+export interface SectionItemProps extends GlobalProps {
 	section: Section;
 }
 
-interface SectionItemState {
+export interface SectionItemState {
 	expanded: boolean;
 }
 
-class SectionItem extends React.Component<SectionItemProps, SectionItemState> {
+export class SectionItem extends React.Component<SectionItemProps, SectionItemState> {
 	constructor(props) {
 		super(props);
 		this.state = { expanded: props.expanded };
