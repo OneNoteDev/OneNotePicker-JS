@@ -12,6 +12,7 @@ const OUT_DIR = path.join(__dirname, './dist');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const WebpackMerge = require('webpack-merge');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const DtsBundlePlugin = require('./dtsBundlePlugin');
 
 let cssFileName = IS_PROD_MIN ? "[name].min.css" : "[name].css";
 
@@ -120,22 +121,6 @@ const base = {
 	}
 };
 
-function DtsBundlePlugin() {}
-
-DtsBundlePlugin.prototype.apply = function (compiler) {
-	compiler.plugin('done', function () {
-		const dts = require('dts-bundle');
-
-		dts.bundle({
-			name: 'onenotepicker',
-			main: path.resolve(__dirname) + '/dist/types/src/oneNotePicker.d.ts',
-			out:  path.resolve(__dirname) + '/dist/oneNotePicker.d.ts',
-			removeSource: true,
-			outputAsModuleFolder: true
-		});
-	});
-};
-
 const prod = {
 	devtool: 'source-map',
 	plugins: [
@@ -148,7 +133,22 @@ const prod = {
 				'NODE_ENV': JSON.stringify('production')
 			}
 		}),
-		new DtsBundlePlugin()
+		new DtsBundlePlugin({
+			name: 'OneNote',
+			main: `${path.resolve(__dirname)}/dist/types/src/oneNotePicker.d.ts`,
+			out: `${path.resolve(__dirname)}/dist/oneNotePicker.d.ts`,
+			removeSource: false,
+			outputAsModuleFolder: true,
+			headerText: "TypeScript Definition for OneNotePicker"
+		}),
+		new DtsBundlePlugin({
+			name: 'OneNote',
+			main: `${path.resolve(__dirname)}/dist/types/src/providers/oneNoteApiDataProvider.d.ts`,
+			out: `${path.resolve(__dirname)}/dist/oneNoteApiDataProvider.d.ts`,
+			removeSource: false,
+			outputAsModuleFolder: true,
+			headerText: "TypeScript Definition for OneNoteApiDataProvider"
+		})
 	],
 	externals: {
 		'react': 'React',
