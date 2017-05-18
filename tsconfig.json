@@ -4,7 +4,6 @@
     "target": "es5",
     "lib": ["es5", "dom"],
     "sourceMap": true,
-    "allowJs": true,
     "jsx": "react",
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
@@ -15,7 +14,9 @@
     "noImplicitAny": false,
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "declaration": true,
+    "declarationDir": "types"
   },
   "exclude": [
     "node_modules",

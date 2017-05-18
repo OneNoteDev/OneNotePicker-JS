@@ -1,17 +1,17 @@
-import GlobalProps from '../src/props/globalProps';
-import MockProps from './props/mockProps';
+import {GlobalProps} from '../src/props/globalProps';
+import {MockProps} from './props/mockProps';
 
-import { render } from 'enzyme';
+import {render} from 'enzyme';
 import * as React from 'react';
 
-import OneNotePicker from '../src/oneNotePicker';
+import {OneNotePicker} from '../src/oneNotePicker';
 
 describe('OneNotePicker', () => {
 	it('should compile', () => {
 		let notebooks = [];
 		let globalProps: GlobalProps = MockProps.getGlobalProps(notebooks);
 
-		let app = render(<OneNotePicker globals={globalProps.globals} notebooks={notebooks} />);
+		let app = render(<OneNotePicker globals={globalProps.globals} notebooks={notebooks}/>);
 		expect(app.find('.menu-list').length).toBe(1);
 	});
 });

@@ -1,22 +1,22 @@
 import * as React from 'react';
 
-import PageItem from './pageItem';
-import GlobalProps from '../props/globalProps';
-import Section from '../oneNoteDataStructures/section';
-import OneNoteItemUtils from '../oneNoteDataStructures/oneNoteItemUtils';
+import {PageItem} from './pageItem';
+import {GlobalProps} from '../props/globalProps';
+import {Section} from '../oneNoteDataStructures/section';
+import {OneNoteItemUtils} from '../oneNoteDataStructures/oneNoteItemUtils';
 
-interface SectionItemProps extends GlobalProps {
+export interface SectionItemProps extends GlobalProps {
 	section: Section;
 }
 
-interface SectionItemState {
+export interface SectionItemState {
 	expanded: boolean;
 }
 
-class SectionItem extends React.Component<SectionItemProps, SectionItemState> {
+export class SectionItem extends React.Component<SectionItemProps, SectionItemState> {
 	constructor(props) {
 		super(props);
-		this.state = { expanded: props.expanded };
+		this.state = {expanded: props.expanded};
 	}
 
 	private onClick() {
@@ -33,7 +33,7 @@ class SectionItem extends React.Component<SectionItemProps, SectionItemState> {
 			if (!section.pages) {
 				this.getPagesAndNotify();
 			}
-			this.setState({ expanded: !this.state.expanded });
+			this.setState({expanded: !this.state.expanded});
 		}
 	}
 
@@ -64,7 +64,8 @@ class SectionItem extends React.Component<SectionItemProps, SectionItemState> {
 		// TODO we will need to design some sort of 'spinner' experience, likely when (expanded && !pages)
 		return (
 			<li aria-selected={isSelected} aria-expanded={this.state.expanded} role='treeitem'>
-				<a className={isSelected ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)} tabIndex={0} href='#'>
+				<a className={isSelected ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)} tabIndex={0}
+				   href='#'>
 					<div className='picker-icon-left'>
 						<img src={require('../images/section_icon.png')}/>
 					</div>
@@ -73,13 +74,12 @@ class SectionItem extends React.Component<SectionItemProps, SectionItemState> {
 					</div>
 				</a>
 				{!!pages
-					? <ul role='group' style={this.state.expanded ? { display: 'block' } : { display: 'none' }}>
-						{pages.map(page => <PageItem globals={this.props.globals} page={page} key={page.id}></PageItem>)}
+					? <ul role='group' style={this.state.expanded ? {display: 'block'} : {display: 'none'}}>
+						{pages.map(page => <PageItem globals={this.props.globals} page={page}
+													 key={page.id}></PageItem>)}
 					</ul>
 					: undefined}
 			</li >
 		);
 	}
 }
-
-export default SectionItem;

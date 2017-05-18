@@ -1,6 +1,6 @@
-import OneNoteItem from './oneNoteItem';
+import {OneNoteItem} from './oneNoteItem';
 
-class OneNoteItemUtils {
+export class OneNoteItemUtils {
 	/**
 	 * Given a OneNote item, returns a list representing the item's
 	 * ancestry, starting from the root notebook.
@@ -17,5 +17,3 @@ class OneNoteItemUtils {
 		return ancestry;
 	}
 }
-
-export default OneNoteItemUtils;

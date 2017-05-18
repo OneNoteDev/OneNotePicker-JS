@@ -1,13 +1,13 @@
-import Notebook from './notebook';
-import SectionGroup from './sectionGroup';
-import Section from './section';
-import Page from './page';
+import {Notebook} from './notebook';
+import {SectionGroup} from './sectionGroup';
+import {Section} from './section';
+import {Page} from './page';
 
 /**
  * Provides methods to transform data structures to equivalent data
  * structures used by the OneNotePicker.
  */
-class OneNoteApiResponseTransformer {
+export class OneNoteApiResponseTransformer {
 	private defaultExpanded: boolean = false;
 
 	transformNotebooks(notebookList: OneNoteApi.Notebook[]): Notebook[] {
@@ -74,4 +74,3 @@ class OneNoteApiResponseTransformer {
 	}
 }
 
-export default OneNoteApiResponseTransformer;

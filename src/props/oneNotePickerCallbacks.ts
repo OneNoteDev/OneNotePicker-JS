@@ -1,7 +1,7 @@
-import OneNoteItem from '../oneNoteDataStructures/oneNoteItem';
-import Notebook from '../oneNoteDataStructures/notebook';
-import Section from '../oneNoteDataStructures/section';
-import Page from '../oneNoteDataStructures/page';
+import {OneNoteItem} from '../oneNoteDataStructures/oneNoteItem';
+import {Notebook} from '../oneNoteDataStructures/notebook';
+import {Section} from '../oneNoteDataStructures/section';
+import {Page} from '../oneNoteDataStructures/page';
 
 /**
  * Represents a set of callbacks that the application can register to be
@@ -14,7 +14,7 @@ import Page from '../oneNoteDataStructures/page';
  * the deepest selectable object. There should be at least one selection callback
  * specified.
  */
-interface OneNotePickerCallbacks {
+export interface OneNotePickerCallbacks {
 	onNotebookHierarchyUpdated: (notebooks: Notebook[]) => void;
 
 	// Selection callbacks
@@ -22,5 +22,3 @@ interface OneNotePickerCallbacks {
 	onSectionSelected?: (section: Section, breadcrumbs: OneNoteItem[]) => void;
 	onPageSelected?: (page: Page, breadcrumbs: OneNoteItem[]) => void;
 }
-
-export default OneNotePickerCallbacks;

@@ -1,10 +1,10 @@
 import '../node_modules/onenoteapi/target/oneNoteApi';
 
-import OneNoteDataProvider from '../src/providers/oneNoteDataProvider';
-import Notebook from '../src/oneNoteDataStructures/notebook';
-import Section from '../src/oneNoteDataStructures/section';
-import Page from '../src/oneNoteDataStructures/page';
-import OneNoteApiResponseTransformer from '../src/oneNoteDataStructures/oneNoteApiResponseTransformer';
+import {OneNoteDataProvider} from '../src/providers/oneNoteDataProvider';
+import {Notebook} from '../src/oneNoteDataStructures/notebook';
+import {Section} from '../src/oneNoteDataStructures/section';
+import {Page} from '../src/oneNoteDataStructures/page';
+import {OneNoteApiResponseTransformer} from '../src/oneNoteDataStructures/oneNoteApiResponseTransformer';
 
 let mockResponse: OneNoteApi.ResponsePackage<any> = {
 	parsedResponse: JSON.parse(`{
@@ -213,7 +213,7 @@ let mockResponse: OneNoteApi.ResponsePackage<any> = {
 	request: new XMLHttpRequest()
 };
 
-class SampleOneNoteDataProvider implements OneNoteDataProvider {
+export class SampleOneNoteDataProvider implements OneNoteDataProvider {
 	getNotebooks(): Promise<Notebook[]> {
 		let responseTransformer = new OneNoteApiResponseTransformer();
 		let notebooks = responseTransformer.transformNotebooks(mockResponse.parsedResponse.value);
@@ -222,9 +222,7 @@ class SampleOneNoteDataProvider implements OneNoteDataProvider {
 
 	getPages(section: Section): Promise<Page[]> {
 		let id = '' + (Math.floor(Math.random() * 500000));
-		let pages = [{ parent: section, id: id, name: 'Page:' + id }];
+		let pages = [{parent: section, id: id, name: 'Page:' + id}];
 		return Promise.resolve(pages);
 	}
 }
-
-export default SampleOneNoteDataProvider;

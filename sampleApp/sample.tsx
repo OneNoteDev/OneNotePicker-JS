@@ -1,18 +1,18 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import OneNotePicker from '../src/oneNotePicker';
-import GlobalProps from '../src/props/globalProps';
-import OneNoteDataProvider from '../src/providers/oneNoteDataProvider';
-import Notebook from '../src/oneNoteDataStructures/notebook';
-import NotebookListUpdater from '../src/oneNoteDataStructures/notebookListUpdater';
-import SampleOneNoteDataProvider from './sampleOneNoteDataProvider';
+import {OneNotePicker} from '../src/oneNotePicker';
+import {GlobalProps} from '../src/props/globalProps';
+import {OneNoteDataProvider} from '../src/providers/oneNoteDataProvider';
+import {Notebook} from '../src/oneNoteDataStructures/notebook';
+import {NotebookListUpdater} from '../src/oneNoteDataStructures/notebookListUpdater';
+import {SampleOneNoteDataProvider} from './sampleOneNoteDataProvider';
 
 let oneNoteDataProvider: OneNoteDataProvider = new SampleOneNoteDataProvider();
 
 let render = (globalProps: GlobalProps, notebooks: Notebook[]) => {
 	ReactDOM.render(
-		<OneNotePicker globals={globalProps.globals} notebooks={notebooks} />,
+		<OneNotePicker globals={globalProps.globals} notebooks={notebooks}/>,
 		document.getElementById('oneNotePicker') as HTMLElement
 	);
 };

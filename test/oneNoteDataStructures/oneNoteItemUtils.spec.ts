@@ -1,5 +1,5 @@
-import OneNoteItem from '../../src/oneNoteDataStructures/oneNoteItem';
-import OneNoteItemUtils from '../../src/oneNoteDataStructures/oneNoteItemUtils';
+import {OneNoteItem} from '../../src/oneNoteDataStructures/oneNoteItem';
+import {OneNoteItemUtils} from '../../src/oneNoteDataStructures/oneNoteItemUtils';
 
 describe('OneNoteItemUtils', () => {
 	it('should return a list of itself if the parent is undefined', () => {
@@ -19,7 +19,7 @@ describe('OneNoteItemUtils', () => {
 			id: 'parent',
 			name: 'Parent'
 		};
-		
+
 		let item: OneNoteItem = {
 			parent: parent,
 			id: 'child',
@@ -36,13 +36,13 @@ describe('OneNoteItemUtils', () => {
 			id: 'grandparent',
 			name: 'Grandparent'
 		};
-		
+
 		let parent: OneNoteItem = {
 			parent: grandparent,
 			id: 'parent',
 			name: 'Parent'
 		};
-		
+
 		let item: OneNoteItem = {
 			parent: parent,
 			id: 'child',
