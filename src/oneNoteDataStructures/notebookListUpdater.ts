@@ -1,7 +1,7 @@
-import Notebook from './notebook';
-import SectionGroup from './sectionGroup';
-import Section from './section';
-import Page from './page';
+import {Notebook} from './notebook';
+import {SectionGroup} from './sectionGroup';
+import {Section} from './section';
+import {Page} from './page';
 
 type SectionParent = Notebook | SectionGroup;
 
@@ -11,7 +11,7 @@ type SectionParent = Notebook | SectionGroup;
  * internal notebook list object * will be modified or replaced. Logic relying
  * on this class should use the getter as the most recent source of truth.
  */
-class NotebookListUpdater {
+export class NotebookListUpdater {
 	private notebooks: Notebook[];
 
 	constructor(initialNotebooks: Notebook[]) {
@@ -58,7 +58,7 @@ class NotebookListUpdater {
 				this.preserveSectionParent(originalSectionGroup, newSectionGroup);
 			}
 		}
-		
+
 		// TODO cut down on repeat code after we have UTs
 		for (let newSection of next.sections) {
 			let originalSection = original.sections.find(section => section.id === newSection.id);
@@ -119,5 +119,3 @@ class NotebookListUpdater {
 		return undefined;
 	}
 }
-
-export default NotebookListUpdater;

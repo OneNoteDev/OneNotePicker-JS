@@ -1,8 +1,8 @@
-import OneNoteDataProvider from './oneNoteDataProvider';
-import Notebook from '../oneNoteDataStructures/notebook';
-import OneNoteApiResponseTransformer from '../oneNoteDataStructures/oneNoteApiResponseTransformer';
-import Section from '../oneNoteDataStructures/section';
-import Page from '../oneNoteDataStructures/page';
+import {OneNoteDataProvider} from './oneNoteDataProvider';
+import {Notebook} from '../oneNoteDataStructures/notebook';
+import {OneNoteApiResponseTransformer} from '../oneNoteDataStructures/oneNoteApiResponseTransformer';
+import {Section} from '../oneNoteDataStructures/section';
+import {Page} from '../oneNoteDataStructures/page';
 
 /**
  * Implements OneNoteDataProvider with external calls to OneNote's API.
@@ -23,10 +23,8 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 	}
 
 	getPages(section: Section): Promise<Page[]> {
-		return this.api.getPages({ sectionId: section.id }).then((responsePackage) => {
+		return this.api.getPages({sectionId: section.id}).then((responsePackage) => {
 			return Promise.resolve(this.responseTransformer.transformPages(responsePackage.parsedResponse, section));
 		});
 	}
 }
-
-export default OneNoteApiDataProvider;

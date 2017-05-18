@@ -1,6 +1,6 @@
-import OneNotePickerCallbacks from './oneNotePickerCallbacks';
-import OneNoteDataProvider from '../providers/oneNoteDataProvider';
-import NotebookListUpdater from '../oneNoteDataStructures/notebookListUpdater';
+import {OneNotePickerCallbacks} from './oneNotePickerCallbacks';
+import {OneNoteDataProvider} from '../providers/oneNoteDataProvider';
+import {NotebookListUpdater} from '../oneNoteDataStructures/notebookListUpdater';
 
 /**
  * Props accessible by all components in the project. We expose a single
@@ -9,7 +9,7 @@ import NotebookListUpdater from '../oneNoteDataStructures/notebookListUpdater';
  * be modified as sparingly as possible and should only consist of things that
  * truly need to be accessed on a global scale.
  */
-interface GlobalProps {
+export interface GlobalProps {
 	globals: {
 		oneNoteDataProvider: OneNoteDataProvider;
 		notebookListUpdater: NotebookListUpdater;
@@ -19,5 +19,3 @@ interface GlobalProps {
 		selectedId?: string;
 	};
 }
-
-export default GlobalProps;

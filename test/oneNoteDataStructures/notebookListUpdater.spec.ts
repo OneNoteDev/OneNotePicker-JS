@@ -1,6 +1,6 @@
-import Notebook from '../../src/oneNoteDataStructures/notebook';
-import SectionGroup from '../../src/oneNoteDataStructures/sectionGroup';
-import NotebookListUpdater from '../../src/oneNoteDataStructures/notebookListUpdater';
+import {Notebook} from '../../src/oneNoteDataStructures/notebook';
+import {SectionGroup} from '../../src/oneNoteDataStructures/sectionGroup';
+import {NotebookListUpdater} from '../../src/oneNoteDataStructures/notebookListUpdater';
 
 describe('NotebookListUpdater', () => {
 	it('should return the notebooks in the getter with the notebooks it was initialized with', () => {
@@ -462,7 +462,7 @@ describe('NotebookListUpdater', () => {
 			sectionGroups: [],
 			sections: []
 		}, {
-			parent: undefined,	
+			parent: undefined,
 			id: 'id2',
 			name: 'Notebook 2',
 			expanded: true,
@@ -507,7 +507,7 @@ describe('NotebookListUpdater', () => {
 			sectionGroups: [],
 			sections: []
 		}, {
-			parent: undefined,	
+			parent: undefined,
 			id: 'id2',
 			name: 'Notebook 2',
 			expanded: true,

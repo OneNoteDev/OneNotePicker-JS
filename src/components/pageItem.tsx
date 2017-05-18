@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import GlobalProps from '../props/globalProps';
-import Page from '../oneNoteDataStructures/page';
-import OneNoteItemUtils from '../oneNoteDataStructures/oneNoteItemUtils';
+import {GlobalProps} from '../props/globalProps';
+import {Page} from '../oneNoteDataStructures/page';
+import {OneNoteItemUtils} from '../oneNoteDataStructures/oneNoteItemUtils';
 
 export interface PageItemProps extends GlobalProps {
 	page: Page;
@@ -26,7 +26,8 @@ export class PageItem extends React.Component<PageItemProps, null> {
 		// TODO image is a placeholder as we don't support pages yet
 		return (
 			<li aria-selected={isSelected} role='treeitem'>
-				<a className={isSelected ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)} tabIndex={0} href='#'>
+				<a className={isSelected ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)} tabIndex={0}
+				   href='#'>
 					<div className='picker-icon-left'>
 						<img src={require('../images/section_icon.png')}/>
 					</div>
@@ -38,5 +39,3 @@ export class PageItem extends React.Component<PageItemProps, null> {
 		);
 	}
 }
-
-export default PageItem;

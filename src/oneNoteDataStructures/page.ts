@@ -1,6 +1,4 @@
-import OneNoteItem from './oneNoteItem';
+import {OneNoteItem} from './oneNoteItem';
 
-interface Page extends OneNoteItem {
+export interface Page extends OneNoteItem {
 }
-
-export default Page;
