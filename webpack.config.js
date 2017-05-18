@@ -41,7 +41,7 @@ const base = {
 			// .ts, .tsx
 			{
 				test: /\.tsx?$/,
-				use: IS_PROD ? 'awesome-typescript-loader' : ['react-hot-loader', 'awesome-typescript-loader']
+				use: IS_PROD ? 'ts-loader' : ['react-hot-loader', 'ts-loader']
 			},
 			{
 				test: /\.css/,
@@ -119,6 +119,22 @@ const base = {
 	}
 };
 
+function DtsBundlePlugin() {}
+
+DtsBundlePlugin.prototype.apply = function (compiler) {
+	compiler.plugin('done', function () {
+		const dts = require('dts-bundle');
+
+		dts.bundle({
+			name: 'onenotepicker',
+			main: path.resolve(__dirname) + '/dist/types/src/oneNotePicker.d.ts',
+			out:  path.resolve(__dirname) + '/dist/oneNotePicker.d.ts',
+			removeSource: true,
+			outputAsModuleFolder: true
+		});
+	});
+};
+
 const prod = {
 	devtool: 'source-map',
 	plugins: [
@@ -130,7 +146,8 @@ const prod = {
 			'process.env': {
 				'NODE_ENV': JSON.stringify('production')
 			}
-		})
+		}),
+		new DtsBundlePlugin()
 	],
 	externals: {
 		'react': 'React',
@@ -173,3 +190,4 @@ if (IS_ANALYZE) {
 }
 
 module.exports = webpackConfiguration;
+
