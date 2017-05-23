@@ -24,14 +24,14 @@ const extractSass = new ExtractTextPlugin({
 const base = {
 	entry: {
 		sample: './sampleApp/sample',
-		onenotepicker: './src/oneNotePicker',
-		oneNoteApiDataProvider: './src/providers/oneNoteApiDataProvider'
+		OneNotePicker: './src/oneNotePicker',
+		OneNoteApiDataProvider: './src/providers/oneNoteApiDataProvider'
 	},
 	output: {
 		path: OUT_DIR,
 		publicPath: '/dist/',
 		filename: '[name].js',
-		library: ['OneNotePicker']
+		library: ["[name]"]
 	},
 	target: 'web',
 	resolve: {
@@ -134,17 +134,17 @@ const prod = {
 			}
 		}),
 		new DtsBundlePlugin({
-			name: 'OneNote',
-			main: `${path.resolve(__dirname)}/dist/types/src/oneNotePicker.d.ts`,
-			out: `${path.resolve(__dirname)}/dist/oneNotePicker.d.ts`,
+			name: 'OneNotePicker',
+			main: `${path.resolve(__dirname)}/dist/types/src/OneNotePicker.d.ts`,
+			out: `${path.resolve(__dirname)}/dist/OneNotePicker.d.ts`,
 			removeSource: false,
 			outputAsModuleFolder: true,
 			headerText: "TypeScript Definition for OneNotePicker"
 		}),
 		new DtsBundlePlugin({
-			name: 'OneNote',
-			main: `${path.resolve(__dirname)}/dist/types/src/providers/oneNoteApiDataProvider.d.ts`,
-			out: `${path.resolve(__dirname)}/dist/oneNoteApiDataProvider.d.ts`,
+			name: 'OneNotePickerApiDataProvider',
+			main: `${path.resolve(__dirname)}/dist/types/src/providers/OneNoteApiDataProvider.d.ts`,
+			out: `${path.resolve(__dirname)}/dist/OneNoteApiDataProvider.d.ts`,
 			removeSource: false,
 			outputAsModuleFolder: true,
 			headerText: "TypeScript Definition for OneNoteApiDataProvider"
