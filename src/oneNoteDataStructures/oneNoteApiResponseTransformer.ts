@@ -24,8 +24,8 @@ export class OneNoteApiResponseTransformer {
 			sections: []
 		};
 
-		transformed.sectionGroups = notebook.sectionGroups.map(sg => this.transformSectionGroup(sg, transformed));
-		transformed.sections = notebook.sections.map(section => this.transformSection(section, transformed));
+		transformed.sectionGroups = notebook.sectionGroups ? notebook.sectionGroups.map(sg => this.transformSectionGroup(sg, transformed)) : [];
+		transformed.sections = notebook.sections ? notebook.sections.map(section => this.transformSection(section, transformed)) : [];
 
 		return transformed;
 	}
@@ -40,8 +40,8 @@ export class OneNoteApiResponseTransformer {
 			sections: []
 		};
 
-		transformed.sectionGroups = sectionGroup.sectionGroups.map(sg => this.transformSectionGroup(sg, transformed));
-		transformed.sections = sectionGroup.sections.map(section => this.transformSection(section, transformed));
+		transformed.sectionGroups = sectionGroup.sectionGroups ? sectionGroup.sectionGroups.map(sg => this.transformSectionGroup(sg, transformed)) : [];
+		transformed.sections = sectionGroup.sections ? sectionGroup.sections.map(section => this.transformSection(section, transformed)) : [];
 
 		return transformed;
 	}
