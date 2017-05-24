@@ -16,8 +16,8 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 		this.responseTransformer = new OneNoteApiResponseTransformer();
 	}
 
-	getNotebooks(): Promise<Notebook[]> {
-		return this.api.getNotebooks().then((responsePackage) => {
+	getNotebooks(expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<Notebook[]> {
+		return this.api.getNotebooksWithExpandedSections(expands, excludeReadOnlyNotebooks).then((responsePackage) => {
 			return Promise.resolve(this.responseTransformer.transformNotebooks(responsePackage.parsedResponse.value));
 		});
 	}

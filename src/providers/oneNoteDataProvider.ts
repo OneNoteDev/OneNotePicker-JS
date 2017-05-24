@@ -6,6 +6,6 @@ import {Page} from '../oneNoteDataStructures/page';
  * Exposes calls to fetch OneNote data structures.
  */
 export interface OneNoteDataProvider {
-	getNotebooks(): Promise<Notebook[]>;
+	getNotebooks(expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<Notebook[]>;
 	getPages(section: Section): Promise<Page[]>;
 }
