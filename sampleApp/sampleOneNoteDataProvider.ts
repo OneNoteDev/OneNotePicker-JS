@@ -214,7 +214,7 @@ let mockResponse: OneNoteApi.ResponsePackage<any> = {
 };
 
 export class SampleOneNoteDataProvider implements OneNoteDataProvider {
-	getNotebooks(): Promise<Notebook[]> {
+	getNotebooks(expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<Notebook[]> {
 		let responseTransformer = new OneNoteApiResponseTransformer();
 		let notebooks = responseTransformer.transformNotebooks(mockResponse.parsedResponse.value);
 		return Promise.resolve(notebooks);
