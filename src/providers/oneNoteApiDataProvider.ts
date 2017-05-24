@@ -18,13 +18,13 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 
 	getNotebooks(): Promise<Notebook[]> {
 		return this.api.getNotebooks().then((responsePackage) => {
-			return Promise.resolve(this.responseTransformer.transformNotebooks(responsePackage.parsedResponse));
+			return Promise.resolve(this.responseTransformer.transformNotebooks(responsePackage.parsedResponse.value));
 		});
 	}
 
 	getPages(section: Section): Promise<Page[]> {
 		return this.api.getPages({sectionId: section.id}).then((responsePackage) => {
-			return Promise.resolve(this.responseTransformer.transformPages(responsePackage.parsedResponse, section));
+			return Promise.resolve(this.responseTransformer.transformPages(responsePackage.parsedResponse.value, section));
 		});
 	}
 }
