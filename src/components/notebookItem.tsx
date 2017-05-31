@@ -15,9 +15,9 @@ export interface NotebookItemState {
 }
 
 export class NotebookItem extends React.Component<NotebookItemProps, NotebookItemState> {
-	constructor(props) {
+	constructor(props: NotebookItemProps) {
 		super(props);
-		this.state = {expanded: props.expanded};
+		this.state = { expanded: props.notebook.expanded };
 	}
 
 	private onClick() {
