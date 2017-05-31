@@ -11,8 +11,8 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 	private api: OneNoteApi.IOneNoteApi;
 	private responseTransformer: OneNoteApiResponseTransformer;
 
-	constructor(authToken: string) {
-		this.api = new OneNoteApi.OneNoteApi(authToken);
+	constructor(authToken: string, timeout?: number, headers?: { [key: string]: string }) {
+		this.api = new OneNoteApi.OneNoteApi(authToken, timeout, headers);
 		this.responseTransformer = new OneNoteApiResponseTransformer();
 	}
 
