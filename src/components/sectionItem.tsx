@@ -14,9 +14,9 @@ export interface SectionItemState {
 }
 
 export class SectionItem extends React.Component<SectionItemProps, SectionItemState> {
-	constructor(props) {
+	constructor(props: SectionItemProps) {
 		super(props);
-		this.state = {expanded: props.expanded};
+		this.state = { expanded: props.section.expanded };
 	}
 
 	private onClick() {
