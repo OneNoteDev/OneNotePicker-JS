@@ -47,7 +47,7 @@ export class NotebookItem extends React.Component<NotebookItemProps, NotebookIte
 		return (
 			<li aria-selected={isSelected} aria-expanded={this.state.expanded} role='treeitem'>
 				<a className={isSelected ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)} tabIndex={0}
-				   href='#'>
+					href='#'>
 					<div className='picker-icon-left'>
 						<img src={require('../images/notebook_icon.png')}/>
 					</div>
@@ -61,8 +61,8 @@ export class NotebookItem extends React.Component<NotebookItemProps, NotebookIte
 						globals={this.props.globals} sectionGroup={sectionGroup}
 						key={sectionGroup.name}></SectionGroupItem>)}
 					{this.props.notebook.sections.map(section => <SectionItem globals={this.props.globals}
-																			  section={section}
-																			  key={section.name}></SectionItem>)}
+																	section={section}
+																	key={section.name}></SectionItem>)}
 				</ul>
 			</li>
 		);

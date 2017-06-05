@@ -27,7 +27,7 @@ export class PageItem extends React.Component<PageItemProps, null> {
 		return (
 			<li aria-selected={isSelected} role='treeitem'>
 				<a className={isSelected ? 'picker-selectedItem' : ''} onClick={this.onClick.bind(this)} tabIndex={0}
-				   href='#'>
+					href='#'>
 					<div className='picker-icon-left'>
 						<img src={require('../images/section_icon.png')}/>
 					</div>
