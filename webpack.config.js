@@ -25,8 +25,7 @@ const base = {
 	entry: {
 		sample: './sampleApp/sample',
 		OneNotePicker: './src/oneNotePicker',
-		OneNoteApiDataProvider: './src/providers/oneNoteApiDataProvider',
-		OneNoteItemUtils: './src/oneNoteDataStructures/oneNoteItemUtils'
+		OneNoteApiDataProvider: './src/providers/oneNoteApiDataProvider'
 	},
 	output: {
 		path: OUT_DIR,
@@ -138,7 +137,6 @@ const prod = {
 			name: 'OneNotePicker',
 			main: `${path.resolve(__dirname)}/dist/types/src/OneNotePicker.d.ts`,
 			out: `${path.resolve(__dirname)}/dist/OneNotePicker.d.ts`,
-			removeSource: false,
 			outputAsModuleFolder: true,
 			headerText: "TypeScript Definition for OneNotePicker"
 		}),
@@ -146,17 +144,8 @@ const prod = {
 			name: 'OneNotePickerApiDataProvider',
 			main: `${path.resolve(__dirname)}/dist/types/src/providers/OneNoteApiDataProvider.d.ts`,
 			out: `${path.resolve(__dirname)}/dist/OneNoteApiDataProvider.d.ts`,
-			removeSource: false,
 			outputAsModuleFolder: true,
 			headerText: "TypeScript Definition for OneNoteApiDataProvider"
-		}),
-		new DtsBundlePlugin({
-			name: 'OneNoteItemUtils',
-			main: `${path.resolve(__dirname)}/dist/types/src/oneNoteDataStructures/OneNoteItemUtils.d.ts`,
-			out: `${path.resolve(__dirname)}/dist/OneNoteItemUtils.d.ts`,
-			removeSource: false,
-			outputAsModuleFolder: true,
-			headerText: "TypeScript Definition for OneNoteItemUtils"
 		})
 	],
 	externals: {
