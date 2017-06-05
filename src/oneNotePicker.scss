@@ -17,10 +17,8 @@
 	}
 
 	.menu-list a {
-		border-radius: 2px;
 		color: #4a4a4a;
 		display: block;
-		padding: 0.5em 0.75em;
 	}
 
 	.menu-list li ul {
@@ -31,7 +29,8 @@
 		padding-left: 0.75em;
 	}
 
-	.menu-list li a {
+	.menu-list li > a > div {
+		width: 100%;
 		padding-top: 6px;
 		padding-bottom: 6px;
 	}
@@ -52,6 +51,7 @@
 	}
 
 	.picker-icon-left {
+		margin-left: 12px;
 		margin-right: 5px;
 
 		img {
