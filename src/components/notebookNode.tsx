@@ -1,9 +1,10 @@
 import * as React from 'react';
 
 import {RenderableExpandableNode} from './treeView/renderableNode';
+import {ExpandableNode} from './treeView/expandableNode';
 import {Notebook} from '../oneNoteDataStructures/notebook';
-import {SectionItem} from './sectionItem';
-import {SectionGroupItem} from './sectionGroupItem';
+import {SectionNode} from './sectionNode';
+import {SectionGroupNode} from './sectionGroupNode';
 import {OneNoteItemUtils} from '../oneNoteDataStructures/oneNoteItemUtils';
 
 export class NotebookNode implements RenderableExpandableNode {
@@ -39,25 +40,23 @@ export class NotebookNode implements RenderableExpandableNode {
 		return this.notebook.id;
 	}
 
-	getName(): string {
-		return this.notebook.name;
+	getChildren(): JSX.Element[] {
+		let sectionGroupNodes: SectionGroupNode[] = this.notebook.sectionGroups.map(sectionGroup => new SectionGroupNode(sectionGroup, this.globals));
+		let sectionGroups = sectionGroupNodes.map(sectionGroup =>
+			<ExpandableNode
+				expanded={sectionGroup.isExpanded()} node={sectionGroup}
+				treeViewId={'oneNotePicker'} key={sectionGroup.getKey()}></ExpandableNode>);
+
+		let sectionNodes: SectionNode[] = this.notebook.sections.map(section => new SectionNode(section, this.globals));
+		let sections = sectionNodes.map(section =>
+			<ExpandableNode
+				expanded={section.isExpanded()} node={section}
+				treeViewId={'oneNotePicker'} key={section.getKey()}></ExpandableNode>);
+
+		return sectionGroups.concat(sections);
 	}
 
 	private isSelected(): boolean {
 		return this.globals.selectedId === this.notebook.id;
-	}
-
-	getChildren(): JSX.Element[] {
-		let sectionGroups = this.notebook.sectionGroups.map(sectionGroup =>
-			<SectionGroupItem
-				globals={this.globals} sectionGroup={sectionGroup}
-				key={sectionGroup.name}></SectionGroupItem>);
-
-		let sections = this.notebook.sections.map(section =>
-			<SectionItem globals={this.globals}
-				section={section}
-				key={section.name}></SectionItem>);
-
-		return sectionGroups.concat(sections);
 	}
 }

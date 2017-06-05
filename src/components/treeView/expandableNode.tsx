@@ -3,8 +3,9 @@ import * as React from 'react';
 import {RenderableExpandableNode} from './renderableNode';
 
 export interface ExpandableNodeProps {
-	expanded: boolean;
+	// This id lets us scope keyboard navigation to elements with the same id
 	treeViewId: string;
+	expanded: boolean;
 	node: RenderableExpandableNode;
 }
 
@@ -32,7 +33,7 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 	render() {
 		// TODO don't use href?
 		return (
-			<li aria-expanded={this.state.expanded} role='treeitem' data-treeViewId={this.props.treeViewId}>
+			<li aria-expanded={this.state.expanded} role='treeitem' data-treeviewid={this.props.treeViewId}>
 				<a href='#' onClick={this.onClick.bind(this)} tabIndex={0}>
 					{this.props.node.element()}
 				</a>

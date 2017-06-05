@@ -14,3 +14,5 @@ export interface RenderableNode {
 export interface RenderableExpandableNode extends RenderableNode {
 	getChildren(): JSX.Element[];
 }
+
+// TODO rename the node classes and this DI object as they are too similarly named
