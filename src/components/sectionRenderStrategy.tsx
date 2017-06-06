@@ -3,10 +3,10 @@ import * as React from 'react';
 import {ExpandableNodeRenderStrategy} from './treeView/expandableNodeRenderStrategy';
 import {LeafNode} from './treeView/leafNode';
 import {Section} from '../oneNoteDataStructures/section';
-import {PageNode} from './pageNode';
+import {PageRenderStrategy} from './pageRenderStrategy';
 import {OneNoteItemUtils} from '../oneNoteDataStructures/oneNoteItemUtils';
 
-export class SectionNode implements ExpandableNodeRenderStrategy {
+export class SectionRenderStrategy implements ExpandableNodeRenderStrategy {
 	// TODO strong typing for globals
 	constructor(private section: Section, private globals) { }
 	
@@ -36,7 +36,8 @@ export class SectionNode implements ExpandableNodeRenderStrategy {
 	}
 
 	getChildren(): JSX.Element[] {
-		let pageRenderStrategies: PageNode[] | undefined = this.section.pages && this.section.pages.map(page => new PageNode(page, this.globals));
+		let pageRenderStrategies: PageRenderStrategy[] | undefined =
+			this.section.pages && this.section.pages.map(page => new PageRenderStrategy(page, this.globals));
 		let pages = pageRenderStrategies && pageRenderStrategies.map(renderStrategy =>
 			<LeafNode treeViewId='oneNotePicker' node={renderStrategy}
 			id={renderStrategy.getId()}></LeafNode>);

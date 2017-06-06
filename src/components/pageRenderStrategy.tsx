@@ -4,7 +4,7 @@ import {NodeRenderStrategy} from './treeView/nodeRenderStrategy';
 import {Page} from '../oneNoteDataStructures/page';
 import {OneNoteItemUtils} from '../oneNoteDataStructures/oneNoteItemUtils';
 
-export class PageNode implements NodeRenderStrategy {
+export class PageRenderStrategy implements NodeRenderStrategy {
 	// TODO strong typing for globals
 	constructor(private page: Page, private globals) { }
 

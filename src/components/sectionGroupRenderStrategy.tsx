@@ -3,9 +3,9 @@ import * as React from 'react';
 import {ExpandableNodeRenderStrategy} from './treeView/expandableNodeRenderStrategy';
 import {ExpandableNode} from './treeView/expandableNode';
 import {SectionGroup} from '../oneNoteDataStructures/sectionGroup';
-import {SectionNode} from './sectionNode';
+import {SectionRenderStrategy} from './sectionRenderStrategy';
 
-export class SectionGroupNode implements ExpandableNodeRenderStrategy {
+export class SectionGroupRenderStrategy implements ExpandableNodeRenderStrategy {
 	// TODO strong typing for globals
 	constructor(private sectionGroup: SectionGroup, private globals) { }
 	
@@ -30,14 +30,16 @@ export class SectionGroupNode implements ExpandableNodeRenderStrategy {
 	}
 
 	getChildren(): JSX.Element[] {
-		let sectionGroupNodes: SectionGroupNode[] = this.sectionGroup.sectionGroups.map(sectionGroup => new SectionGroupNode(sectionGroup, this.globals));
+		let sectionGroupNodes: ExpandableNodeRenderStrategy[] =
+			this.sectionGroup.sectionGroups.map(sectionGroup => new SectionGroupRenderStrategy(sectionGroup, this.globals));
 		let sectionGroups = sectionGroupNodes.map(sectionGroup =>
 			<ExpandableNode
 				expanded={sectionGroup.isExpanded()} node={sectionGroup}
 				treeViewId={'oneNotePicker'} key={sectionGroup.getId()}
 				id={sectionGroup.getId()}></ExpandableNode>);
 
-		let sectionNodes: SectionNode[] = this.sectionGroup.sections.map(section => new SectionNode(section, this.globals));
+		let sectionNodes: ExpandableNodeRenderStrategy[] =
+			this.sectionGroup.sections.map(section => new SectionRenderStrategy(section, this.globals));
 		let sections = sectionNodes.map(section =>
 			<ExpandableNode
 				expanded={section.isExpanded()} node={section}

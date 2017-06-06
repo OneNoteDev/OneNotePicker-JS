@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import './oneNotePicker.scss';
 
-import {NotebookNode} from './components/notebookNode';
+import {NotebookRenderStrategy} from './components/notebookRenderStrategy';
 import {ExpandableNode} from './components/treeView/expandableNode';
 import {ExpandableNodeRenderStrategy} from './components/treeView/expandableNodeRenderStrategy';
 import {GlobalProps} from './props/globalProps';
@@ -14,7 +14,8 @@ export interface OneNotePickerProps extends GlobalProps {
 
 export class OneNotePicker extends React.Component<OneNotePickerProps, null> {
 	render() {
-		let notebookRenderStrategies: ExpandableNodeRenderStrategy[] = this.props.notebooks.map(notebook => new NotebookNode(notebook, this.props.globals));
+		let notebookRenderStrategies: ExpandableNodeRenderStrategy[] =
+			this.props.notebooks.map(notebook => new NotebookRenderStrategy(notebook, this.props.globals));
 		return (
 			<div className='onenote-picker ms-fontColor-themePrimary'>
 				<ul role='tree' className='menu-list picker-list-header'>
