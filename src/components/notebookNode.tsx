@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-import {RenderableExpandableNode} from './treeView/renderableNode';
+import {ExpandableNodeRenderStrategy} from './treeView/expandableNodeRenderStrategy';
 import {ExpandableNode} from './treeView/expandableNode';
 import {Notebook} from '../oneNoteDataStructures/notebook';
 import {SectionNode} from './sectionNode';
 import {SectionGroupNode} from './sectionGroupNode';
 import {OneNoteItemUtils} from '../oneNoteDataStructures/oneNoteItemUtils';
 
-export class NotebookNode implements RenderableExpandableNode {
+export class NotebookNode implements ExpandableNodeRenderStrategy {
 	// TODO strong typing for globals
 	constructor(private notebook: Notebook, private globals) { }
 	
@@ -31,31 +31,31 @@ export class NotebookNode implements RenderableExpandableNode {
 			onNotebookSelected(this.notebook, OneNoteItemUtils.getAncestry(this.notebook));
 		}
 	}
-	
-	isExpanded(): boolean {
-		return this.notebook.expanded;
-	}
 
-	getKey(): string {
+	getId(): string {
 		return this.notebook.id;
 	}
 
 	getChildren(): JSX.Element[] {
-		let sectionGroupNodes: SectionGroupNode[] = this.notebook.sectionGroups.map(sectionGroup => new SectionGroupNode(sectionGroup, this.globals));
-		let sectionGroups = sectionGroupNodes.map(sectionGroup =>
+		let sectionGroupRenderStrategies: ExpandableNodeRenderStrategy[] = this.notebook.sectionGroups.map(sectionGroup => new SectionGroupNode(sectionGroup, this.globals));
+		let sectionGroups = sectionGroupRenderStrategies.map(renderStrategy =>
 			<ExpandableNode
-				expanded={sectionGroup.isExpanded()} node={sectionGroup}
-				treeViewId={'oneNotePicker'} key={sectionGroup.getKey()}
-				id={sectionGroup.getKey()}></ExpandableNode>);
+				expanded={renderStrategy.isExpanded()} node={renderStrategy}
+				treeViewId={'oneNotePicker'} key={renderStrategy.getId()}
+				id={renderStrategy.getId()}></ExpandableNode>);
 
-		let sectionNodes: SectionNode[] = this.notebook.sections.map(section => new SectionNode(section, this.globals));
-		let sections = sectionNodes.map(section =>
+		let sectionRenderStrategies: ExpandableNodeRenderStrategy[] = this.notebook.sections.map(section => new SectionNode(section, this.globals));
+		let sections = sectionRenderStrategies.map(section =>
 			<ExpandableNode
 				expanded={section.isExpanded()} node={section}
-				treeViewId={'oneNotePicker'} key={section.getKey()}
-				id={section.getKey()}></ExpandableNode>);
+				treeViewId={'oneNotePicker'} key={section.getId()}
+				id={section.getId()}></ExpandableNode>);
 
 		return sectionGroups.concat(sections);
+	}
+
+	isExpanded(): boolean {
+		return this.notebook.expanded;
 	}
 
 	private isSelected(): boolean {

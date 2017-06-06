@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-import {RenderableExpandableNode} from './renderableNode';
+import {ExpandableNodeRenderStrategy} from './expandableNodeRenderStrategy';
 
 export interface ExpandableNodeProps {
 	// This id lets us scope keyboard navigation to elements with the same id
 	treeViewId: string;
 	expanded: boolean;
-	node: RenderableExpandableNode;
+	node: ExpandableNodeRenderStrategy;
 	id: string;
 	tabbable?: boolean;
 }
@@ -85,7 +85,6 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 			default:
 				break;
 		}
-		console.log(event.keyCode);
 	}
 
 	private getNavigatableWithOffset(offset: number): HTMLElement | undefined {
@@ -110,10 +109,9 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 	}
 
 	render() {
-		// TODO don't use href?
 		return (
 			<li aria-expanded={this.state.expanded} role='treeitem'>
-				<a href='#' onClick={this.onClick.bind(this)} onKeyDown={this.onKeyDown.bind(this)}
+				<a onClick={this.onClick.bind(this)} onKeyDown={this.onKeyDown.bind(this)}
 					data-treeviewid={this.props.treeViewId} data-id={this.props.id} tabIndex={this.props.tabbable ? 0 : -1}>
 					{this.props.node.element()}
 				</a>

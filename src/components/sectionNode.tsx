@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-import {RenderableExpandableNode} from './treeView/renderableNode';
+import {ExpandableNodeRenderStrategy} from './treeView/expandableNodeRenderStrategy';
 import {LeafNode} from './treeView/leafNode';
 import {Section} from '../oneNoteDataStructures/section';
 import {PageNode} from './pageNode';
 import {OneNoteItemUtils} from '../oneNoteDataStructures/oneNoteItemUtils';
 
-export class SectionNode implements RenderableExpandableNode {
+export class SectionNode implements ExpandableNodeRenderStrategy {
 	// TODO strong typing for globals
 	constructor(private section: Section, private globals) { }
 	
@@ -30,22 +30,22 @@ export class SectionNode implements RenderableExpandableNode {
 			onSectionSelected(this.section, OneNoteItemUtils.getAncestry(this.section));
 		}
 	}
-	
-	isExpanded(): boolean {
-		return this.section.expanded;
-	}
 
-	getKey(): string {
+	getId(): string {
 		return this.section.id;
 	}
 
 	getChildren(): JSX.Element[] {
-		let pageNodes: PageNode[] | undefined = this.section.pages && this.section.pages.map(page => new PageNode(page, this.globals));
-		let pages = pageNodes && pageNodes.map(page => <LeafNode
-			treeViewId='oneNotePicker' node={page}
-			id={page.getKey()}></LeafNode>);
+		let pageRenderStrategies: PageNode[] | undefined = this.section.pages && this.section.pages.map(page => new PageNode(page, this.globals));
+		let pages = pageRenderStrategies && pageRenderStrategies.map(renderStrategy =>
+			<LeafNode treeViewId='oneNotePicker' node={renderStrategy}
+			id={renderStrategy.getId()}></LeafNode>);
 
 		return pages || [] as JSX.Element[];
+	}
+
+	isExpanded(): boolean {
+		return this.section.expanded;
 	}
 
 	private isSelected(): boolean {

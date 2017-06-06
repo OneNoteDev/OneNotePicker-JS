@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import {RenderableNode} from './treeView/renderableNode';
+import {NodeRenderStrategy} from './treeView/nodeRenderStrategy';
 import {Page} from '../oneNoteDataStructures/page';
 import {OneNoteItemUtils} from '../oneNoteDataStructures/oneNoteItemUtils';
 
-export class PageNode implements RenderableNode {
+export class PageNode implements NodeRenderStrategy {
 	// TODO strong typing for globals
 	constructor(private page: Page, private globals) { }
 
@@ -31,7 +31,7 @@ export class PageNode implements RenderableNode {
 		}
 	}
 
-	getKey(): string {
+	getId(): string {
 		return this.page.id;
 	}
 
