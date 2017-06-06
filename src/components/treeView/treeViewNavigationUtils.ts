@@ -55,7 +55,7 @@ export class TreeViewNavigationUtils {
 	}
 
 	/**
-	 * Given an offset, finds the navigatable within the same TreeView that is offsetted from the
+	 * Given a non-zero integer offset, finds the navigatable within the same TreeView that is offsetted from the
 	 * element with the id attribute matching thisId.
 	 */
 	static getNavigatableWithOffset(thisId: string, treeViewId: string, offset: number): HTMLElement | undefined {
