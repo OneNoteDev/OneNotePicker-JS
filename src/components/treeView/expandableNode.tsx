@@ -1,15 +1,12 @@
 import * as React from 'react';
 
+import {CommonNodeProps} from './commonNodeProps';
 import {ExpandableNodeRenderStrategy} from './expandableNodeRenderStrategy';
 import {TreeViewNavigationUtils} from './treeViewNavigationUtils';
 
-export interface ExpandableNodeProps {
-	// This id lets us scope keyboard navigation to elements with the same id
-	treeViewId: string;
+export interface ExpandableNodeProps extends CommonNodeProps {
 	expanded: boolean;
 	node: ExpandableNodeRenderStrategy;
-	id: string;
-	tabbable?: boolean;
 }
 
 export interface ExpandableNodeState {

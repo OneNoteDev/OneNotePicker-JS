@@ -1,13 +1,11 @@
 import * as React from 'react';
 
+import { CommonNodeProps } from './commonNodeProps';
 import {NodeRenderStrategy} from './nodeRenderStrategy';
 import {TreeViewNavigationUtils} from './treeViewNavigationUtils';
 
-export interface LeafNodeProps {
-	treeViewId: string;
+export interface LeafNodeProps extends CommonNodeProps {
 	node: NodeRenderStrategy;
-	id: string;
-	tabbable?: boolean;
 }
 
 export class LeafNode extends React.Component<LeafNodeProps, {}> {
