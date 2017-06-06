@@ -18,8 +18,9 @@ export class OneNotePicker extends React.Component<OneNotePickerProps, null> {
 		return (
 			<div className='onenote-picker ms-fontColor-themePrimary'>
 				<ul role='tree' className='menu-list picker-list-header'>
-					{notebookNodes.map(notebook => <ExpandableNode expanded={notebook.isExpanded()} node={notebook}
-														treeViewId={'oneNotePicker'} key={notebook.getKey()}></ExpandableNode>)}
+					{notebookNodes.map((notebook, i) => <ExpandableNode expanded={notebook.isExpanded()} node={notebook}
+															treeViewId={'oneNotePicker'} key={notebook.getKey()}
+															id={notebook.getKey()} tabbable={i === 0}></ExpandableNode>)}
 				</ul>
 			</div>
 		);

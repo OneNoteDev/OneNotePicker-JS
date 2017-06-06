@@ -38,13 +38,15 @@ export class SectionGroupNode implements RenderableExpandableNode {
 		let sectionGroups = sectionGroupNodes.map(sectionGroup =>
 			<ExpandableNode
 				expanded={sectionGroup.isExpanded()} node={sectionGroup}
-				treeViewId={'oneNotePicker'} key={sectionGroup.getKey()}></ExpandableNode>);
+				treeViewId={'oneNotePicker'} key={sectionGroup.getKey()}
+				id={sectionGroup.getKey()}></ExpandableNode>);
 
 		let sectionNodes: SectionNode[] = this.sectionGroup.sections.map(section => new SectionNode(section, this.globals));
 		let sections = sectionNodes.map(section =>
 			<ExpandableNode
 				expanded={section.isExpanded()} node={section}
-				treeViewId={'oneNotePicker'} key={section.getKey()}></ExpandableNode>);
+				treeViewId={'oneNotePicker'} key={section.getKey()}
+				id={section.getKey()}></ExpandableNode>);
 
 		return sectionGroups.concat(sections);
 	}

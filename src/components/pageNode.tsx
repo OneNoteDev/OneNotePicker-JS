@@ -31,6 +31,10 @@ export class PageNode implements RenderableNode {
 		}
 	}
 
+	getKey(): string {
+		return this.page.id;
+	}
+
 	private isSelected(): boolean {
 		return this.globals.selectedId === this.page.id;
 	}

@@ -42,7 +42,8 @@ export class SectionNode implements RenderableExpandableNode {
 	getChildren(): JSX.Element[] {
 		let pageNodes: PageNode[] | undefined = this.section.pages && this.section.pages.map(page => new PageNode(page, this.globals));
 		let pages = pageNodes && pageNodes.map(page => <LeafNode
-			treeViewId='oneNotePicker' node={page}></LeafNode>);
+			treeViewId='oneNotePicker' node={page}
+			id={page.getKey()}></LeafNode>);
 
 		return pages || [] as JSX.Element[];
 	}
