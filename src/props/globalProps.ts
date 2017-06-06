@@ -10,12 +10,14 @@ import {NotebookListUpdater} from '../oneNoteDataStructures/notebookListUpdater'
  * truly need to be accessed on a global scale.
  */
 export interface GlobalProps {
-	globals: {
-		oneNoteDataProvider: OneNoteDataProvider;
-		notebookListUpdater: NotebookListUpdater;
-		callbacks: OneNotePickerCallbacks;
+	globals: InnerGlobals;
+}
 
-		// TODO we need a way to distinguish between section and page
-		selectedId?: string;
-	};
+export interface InnerGlobals {
+	oneNoteDataProvider: OneNoteDataProvider;
+	notebookListUpdater: NotebookListUpdater;
+	callbacks: OneNotePickerCallbacks;
+
+	// TODO we need a way to distinguish between section and page
+	selectedId?: string;
 }

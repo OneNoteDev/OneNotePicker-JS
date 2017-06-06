@@ -1,15 +1,16 @@
 import * as React from 'react';
 
-import {ExpandableNodeRenderStrategy} from './treeView/expandableNodeRenderStrategy';
-import {ExpandableNode} from './treeView/expandableNode';
-import {Notebook} from '../oneNoteDataStructures/notebook';
 import {SectionRenderStrategy} from './sectionRenderStrategy';
 import {SectionGroupRenderStrategy} from './sectionGroupRenderStrategy';
+import {ExpandableNodeRenderStrategy} from './treeView/expandableNodeRenderStrategy';
+import {ExpandableNode} from './treeView/expandableNode';
+import {Constants} from '../constants';
+import {Notebook} from '../oneNoteDataStructures/notebook';
 import {OneNoteItemUtils} from '../oneNoteDataStructures/oneNoteItemUtils';
+import {InnerGlobals} from '../props/globalProps';
 
 export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
-	// TODO strong typing for globals
-	constructor(private notebook: Notebook, private globals) { }
+	constructor(private notebook: Notebook, private globals: InnerGlobals) { }
 	
 	element(): JSX.Element {
 		let isSelected = this.isSelected();
@@ -42,7 +43,7 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 		let sectionGroups = sectionGroupRenderStrategies.map(renderStrategy =>
 			<ExpandableNode
 				expanded={renderStrategy.isExpanded()} node={renderStrategy}
-				treeViewId={'oneNotePicker'} key={renderStrategy.getId()}
+				treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
 				id={renderStrategy.getId()}></ExpandableNode>);
 
 		let sectionRenderStrategies: ExpandableNodeRenderStrategy[] =
@@ -50,7 +51,7 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 		let sections = sectionRenderStrategies.map(section =>
 			<ExpandableNode
 				expanded={section.isExpanded()} node={section}
-				treeViewId={'oneNotePicker'} key={section.getId()}
+				treeViewId={Constants.TreeView.id} key={section.getId()}
 				id={section.getId()}></ExpandableNode>);
 
 		return sectionGroups.concat(sections);

@@ -1,14 +1,15 @@
 import * as React from 'react';
 
+import {PageRenderStrategy} from './pageRenderStrategy';
 import {ExpandableNodeRenderStrategy} from './treeView/expandableNodeRenderStrategy';
 import {LeafNode} from './treeView/leafNode';
+import {Constants} from '../constants';
 import {Section} from '../oneNoteDataStructures/section';
-import {PageRenderStrategy} from './pageRenderStrategy';
 import {OneNoteItemUtils} from '../oneNoteDataStructures/oneNoteItemUtils';
+import {InnerGlobals} from '../props/globalProps';
 
 export class SectionRenderStrategy implements ExpandableNodeRenderStrategy {
-	// TODO strong typing for globals
-	constructor(private section: Section, private globals) { }
+	constructor(private section: Section, private globals: InnerGlobals) { }
 	
 	element(): JSX.Element {
 		let isSelected = this.isSelected();
@@ -39,7 +40,7 @@ export class SectionRenderStrategy implements ExpandableNodeRenderStrategy {
 		let pageRenderStrategies: PageRenderStrategy[] | undefined =
 			this.section.pages && this.section.pages.map(page => new PageRenderStrategy(page, this.globals));
 		let pages = pageRenderStrategies && pageRenderStrategies.map(renderStrategy =>
-			<LeafNode treeViewId='oneNotePicker' node={renderStrategy}
+			<LeafNode treeViewId={Constants.TreeView.id} node={renderStrategy}
 			id={renderStrategy.getId()}></LeafNode>);
 
 		return pages || [] as JSX.Element[];

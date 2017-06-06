@@ -3,10 +3,10 @@ import * as React from 'react';
 import {NodeRenderStrategy} from './treeView/nodeRenderStrategy';
 import {Page} from '../oneNoteDataStructures/page';
 import {OneNoteItemUtils} from '../oneNoteDataStructures/oneNoteItemUtils';
+import {InnerGlobals} from '../props/globalProps';
 
 export class PageRenderStrategy implements NodeRenderStrategy {
-	// TODO strong typing for globals
-	constructor(private page: Page, private globals) { }
+	constructor(private page: Page, private globals: InnerGlobals) { }
 
 	element(): JSX.Element {
 		let isSelected = this.isSelected();

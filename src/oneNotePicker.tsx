@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import './oneNotePicker.scss';
 
+import {Constants} from './constants';
 import {NotebookRenderStrategy} from './components/notebookRenderStrategy';
 import {ExpandableNode} from './components/treeView/expandableNode';
 import {ExpandableNodeRenderStrategy} from './components/treeView/expandableNodeRenderStrategy';
@@ -21,7 +22,7 @@ export class OneNotePicker extends React.Component<OneNotePickerProps, null> {
 				<ul role='tree' className='menu-list picker-list-header'>
 					{notebookRenderStrategies.map((renderStrategy, i) =>
 						<ExpandableNode expanded={renderStrategy.isExpanded()} node={renderStrategy}
-							treeViewId={'oneNotePicker'} key={renderStrategy.getId()}
+							treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
 							id={renderStrategy.getId()} tabbable={i === 0}></ExpandableNode>)}
 				</ul>
 			</div>
