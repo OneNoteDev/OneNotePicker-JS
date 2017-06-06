@@ -59,6 +59,11 @@ export class TreeViewNavigationUtils {
 	 * element with the id attribute matching thisId.
 	 */
 	static getNavigatableWithOffset(thisId: string, treeViewId: string, offset: number): HTMLElement | undefined {
+		if (offset === 0 || Math.floor(offset) !== 0) {
+			// We expect a non-zero integer offset
+			return undefined;
+		}
+
 		let navigatables = TreeViewNavigationUtils.getAllNavigatables(treeViewId);
 
 		// Depending on the offset, we don't have to check all elements. For example, if we're going
