@@ -2,6 +2,9 @@ import {Notebook} from './notebook';
 import {OneNoteItem} from './oneNoteItem';
 import {Section} from './section';
 import {SectionGroup} from './sectionGroup';
+import {Polyfills} from '../polyfills';
+
+Polyfills.find();
 
 export class OneNoteItemUtils {
 	/**
