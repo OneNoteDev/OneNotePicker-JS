@@ -37,14 +37,21 @@
 
 	.menu-list li a div {
 		display: inline-block;
-		vertical-align: top;
+		vertical-align: middle;
 	}
 
 	.menu-list label {
+		display: inline-block;
+		vertical-align: top;
 		color: black;
+		width: 240px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	.picker-list-header {
+		overflow-x: hidden;
 		margin-top: 0px;
 		margin-bottom: 0px;
 		margin-right: 0px;
