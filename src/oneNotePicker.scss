@@ -26,13 +26,17 @@
 		margin-bottom: 0px;
 		margin-right: 0px;
 		border-left: none;
-		padding-left: 0.75em;
+		padding-left: 25px;
 	}
 
 	.menu-list li > a > div {
 		width: 100%;
 		padding-top: 6px;
 		padding-bottom: 6px;
+
+		&:hover {
+			background-color: #F4F4F4;
+		}
 	}
 
 	.menu-list li a div {
@@ -44,7 +48,7 @@
 		display: inline-block;
 		vertical-align: top;
 		color: black;
-		width: 240px;
+		width: 200px;
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
