@@ -138,31 +138,7 @@ let mockResponse: OneNoteApi.ResponsePackage<any> = {
                 "user":{
                   "id":"752C1AAF7737895C","displayName":"Me User"
                 }
-              },"lastModifiedTime":"2017-04-26T22:49:54.537Z","sectionsUrl":"https://www.onenote.com/api/v1.0/me/notes/sectionGroups/0-752C1AAF7737895C!761/sections","sectionGroupsUrl":"https://www.onenote.com/api/v1.0/me/notes/sectionGroups/0-752C1AAF7737895C!761/sectionGroups","sections@odata.context":"https://www.onenote.com/api/v1.0/$metadata#me/notes/notebooks('0-752C1AAF7737895C%21482')/sectionGroups('0-752C1AAF7737895C%21496')/sectionGroups('0-752C1AAF7737895C%21761')/sections","sections":[
-                {
-                  "id":"0-752C1AAF7737895C!760","self":"https://www.onenote.com/api/v1.0/me/notes/sections/0-752C1AAF7737895C!760","createdTime":"2017-04-26T22:48:38.97Z","name":"Group 1","createdBy":"Me User","createdByIdentity":{
-                    "user":{
-                      "id":"752C1AAF7737895C","displayName":"Me User"
-                    }
-                  },"lastModifiedBy":"Me User","lastModifiedByIdentity":{
-                    "user":{
-                      "id":"752C1AAF7737895C","displayName":"Me User"
-                    }
-                  },"lastModifiedTime":"2017-04-26T22:49:00.253Z","isDefault":false,"pagesUrl":"https://www.onenote.com/api/v1.0/me/notes/sections/0-752C1AAF7737895C!760/pages"
-                },{
-                  "id":"0-752C1AAF7737895C!763","self":"https://www.onenote.com/api/v1.0/me/notes/sections/0-752C1AAF7737895C!763","createdTime":"2017-04-26T22:49:05.173Z","name":"Group 2","createdBy":"Me User","createdByIdentity":{
-                    "user":{
-                      "id":"752C1AAF7737895C","displayName":"Me User"
-                    }
-                  },"lastModifiedBy":"Me User","lastModifiedByIdentity":{
-                    "user":{
-                      "id":"752C1AAF7737895C","displayName":"Me User"
-                    }
-                  },"lastModifiedTime":"2017-04-26T22:49:07.443Z","isDefault":false,"pagesUrl":"https://www.onenote.com/api/v1.0/me/notes/sections/0-752C1AAF7737895C!763/pages"
-                }
-              ],"sectionGroups@odata.context":"https://www.onenote.com/api/v1.0/$metadata#me/notes/notebooks('0-752C1AAF7737895C%21482')/sectionGroups('0-752C1AAF7737895C%21496')/sectionGroups('0-752C1AAF7737895C%21761')/sectionGroups","sectionGroups":[
-                
-              ]
+              },"lastModifiedTime":"2017-04-26T22:49:54.537Z","sectionsUrl":"https://www.onenote.com/api/v1.0/me/notes/sectionGroups/0-752C1AAF7737895C!761/sections","sectionGroupsUrl":"https://www.onenote.com/api/v1.0/me/notes/sectionGroups/0-752C1AAF7737895C!761/sectionGroups","sections@odata.context":"https://www.onenote.com/api/v1.0/$metadata#me/notes/notebooks('0-752C1AAF7737895C%21482')/sectionGroups('0-752C1AAF7737895C%21496')/sectionGroups('0-752C1AAF7737895C%21761')/sections","sections":[],"sectionGroups@odata.context":"https://www.onenote.com/api/v1.0/$metadata#me/notes/notebooks('0-752C1AAF7737895C%21482')/sectionGroups('0-752C1AAF7737895C%21496')/sectionGroups('0-752C1AAF7737895C%21761')/sectionGroups","sectionGroups":[]
             }
           ]
         }

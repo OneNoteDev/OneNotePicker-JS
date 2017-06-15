@@ -34,8 +34,7 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	}
 
 	getChildren(): JSX.Element[] {
-		let sectionGroupRenderStrategies: ExpandableNodeRenderStrategy[] =
-			this.notebook.sectionGroups.map(sectionGroup => new SectionGroupRenderStrategy(sectionGroup, this.globals));
+		let sectionGroupRenderStrategies = this.notebook.sectionGroups.map(sectionGroup => new SectionGroupRenderStrategy(sectionGroup, this.globals));
 		let sectionGroups = sectionGroupRenderStrategies.map(renderStrategy =>
 			!!this.globals.callbacks.onSectionSelected || !!this.globals.callbacks.onPageSelected ?
 				<ExpandableNode	expanded={renderStrategy.isExpanded()} node={renderStrategy}
@@ -43,8 +42,7 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 					id={renderStrategy.getId()}></ExpandableNode> :
 				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} id={renderStrategy.getId()}></LeafNode>);
 
-		let sectionRenderStrategies: ExpandableNodeRenderStrategy[] =
-			this.notebook.sections.map(section => new SectionRenderStrategy(section, this.globals));
+		let sectionRenderStrategies = this.notebook.sections.map(section => new SectionRenderStrategy(section, this.globals));
 		let sections = sectionRenderStrategies.map(renderStrategy =>
 			!!this.globals.callbacks.onPageSelected ?
 				<ExpandableNode
