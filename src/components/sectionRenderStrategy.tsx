@@ -9,6 +9,8 @@ import {OneNoteItemUtils} from '../oneNoteDataStructures/oneNoteItemUtils';
 import {InnerGlobals} from '../props/globalProps';
 
 export class SectionRenderStrategy implements ExpandableNodeRenderStrategy {
+	onClickBinded = this.onClick.bind(this);
+
 	constructor(private section: Section, private globals: InnerGlobals) { }
 	
 	element(): JSX.Element {
@@ -23,13 +25,6 @@ export class SectionRenderStrategy implements ExpandableNodeRenderStrategy {
 					<label className='ms-fontSize-sPlus'>{this.section.name}</label>
 				</div>
 			</div>);
-	}
-
-	onClick() {
-		let onSectionSelected = this.globals.callbacks.onSectionSelected;
-		if (!!onSectionSelected) {
-			onSectionSelected(this.section, OneNoteItemUtils.getAncestry(this.section));
-		}
 	}
 
 	getId(): string {
@@ -52,5 +47,12 @@ export class SectionRenderStrategy implements ExpandableNodeRenderStrategy {
 
 	private isSelected(): boolean {
 		return this.globals.selectedId === this.section.id;
+	}
+
+	private onClick() {
+		let onSectionSelected = this.globals.callbacks.onSectionSelected;
+		if (!!onSectionSelected) {
+			onSectionSelected(this.section, OneNoteItemUtils.getAncestry(this.section));
+		}
 	}
 }
