@@ -6,6 +6,7 @@ import {GlobalProps} from '../src/props/globalProps';
 import {OneNoteDataProvider} from '../src/providers/oneNoteDataProvider';
 import {Notebook} from '../src/oneNoteDataStructures/notebook';
 import {OneNoteItemUtils} from '../src/oneNoteDataStructures/oneNoteItemUtils';
+import {NotebookHierarchyFilter} from '../src/oneNoteDataStructures/notebookHierarchyFilter';
 import {NotebookListUpdater} from '../src/oneNoteDataStructures/notebookListUpdater';
 import {SampleOneNoteDataProvider} from './sampleOneNoteDataProvider';
 
@@ -19,9 +20,13 @@ let render = (globalProps: GlobalProps, notebooks: Notebook[]) => {
 };
 
 oneNoteDataProvider.getNotebooks().then((notebooks) => {
+	for (let i = 0; i < notebooks.length; i++) {
+		NotebookHierarchyFilter.prune(notebooks[i]);
+	}
+
 	let updater = new NotebookListUpdater(notebooks);
 
-	let initialSelectedId = '0-752C1AAF7737895C!760';
+	let initialSelectedId = '0-752C1AAF7737895C!515';
 	OneNoteItemUtils.expandTo(notebooks, item => item.id === initialSelectedId);
 
 	let globalProps: GlobalProps = {
