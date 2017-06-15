@@ -74,6 +74,16 @@ export class OneNoteItemUtils {
 	}
 
 	/**
+	 * Performs a depth-first traversal on the item, pruning any of its child section groups
+	 * if they do not have a descendent section, and returning true if this item has at least
+	 * one descendent section; false otherwise.
+	 */
+	static prune(root: Notebook | SectionGroup): boolean {
+		root.sectionGroups = root.sectionGroups.filter(OneNoteItemUtils.prune);
+		return root.sectionGroups.length > 0 || root.sections.length > 0;
+	}
+
+	/**
 	 * Given a OneNote item, returns a list representing the item's
 	 * ancestry, starting from the root notebook.
 	 */
