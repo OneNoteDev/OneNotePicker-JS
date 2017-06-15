@@ -30,18 +30,16 @@ export class SectionGroupRenderStrategy implements ExpandableNodeRenderStrategy 
 	}
 
 	getChildren(): JSX.Element[] {
-		let sectionGroupNodes: ExpandableNodeRenderStrategy[] =
-			this.sectionGroup.sectionGroups.map(sectionGroup => new SectionGroupRenderStrategy(sectionGroup, this.globals));
-		let sectionGroups = sectionGroupNodes.map(renderStrategy =>
+		let sectionGroupRenderStrategies = this.sectionGroup.sectionGroups.map(sectionGroup => new SectionGroupRenderStrategy(sectionGroup, this.globals));
+		let sectionGroups = sectionGroupRenderStrategies.map(renderStrategy =>
 			!!this.globals.callbacks.onSectionSelected || !!this.globals.callbacks.onPageSelected ?
 				<ExpandableNode expanded={renderStrategy.isExpanded()} node={renderStrategy}
 					treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
 					id={renderStrategy.getId()}></ExpandableNode> :
 				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} id={renderStrategy.getId()}></LeafNode>);
 
-		let sectionNodes: ExpandableNodeRenderStrategy[] =
-			this.sectionGroup.sections.map(section => new SectionRenderStrategy(section, this.globals));
-		let sections = sectionNodes.map(renderStrategy =>
+		let sectionRenderStrategies = this.sectionGroup.sections.map(section => new SectionRenderStrategy(section, this.globals));
+		let sections = sectionRenderStrategies.map(renderStrategy =>
 			!!this.globals.callbacks.onPageSelected ?
 				<ExpandableNode expanded={renderStrategy.isExpanded()} node={renderStrategy}
 					treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
