@@ -17,7 +17,7 @@ export class LeafNode extends React.Component<LeafNodeProps, {}> {
 		switch (event.keyCode) {
 			case 13:
 				// Enter
-				this.props.node.onClick();
+				this.props.node.onClickBinded();
 				break;
 			default:
 				break;
@@ -27,7 +27,7 @@ export class LeafNode extends React.Component<LeafNodeProps, {}> {
 	render() {
 		return (
 			<li role='treeitem'>
-				<a onClick={this.props.node.onClick.bind(this)} data-treeviewid={this.props.treeViewId}
+				<a onClick={this.props.node.onClickBinded} data-treeviewid={this.props.treeViewId}
 					data-id={this.props.id} tabIndex={this.props.tabbable ? 0 : -1}>
 					{this.props.node.element()}
 				</a>

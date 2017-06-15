@@ -5,6 +5,7 @@ import './oneNotePicker.scss';
 import {Constants} from './constants';
 import {NotebookRenderStrategy} from './components/notebookRenderStrategy';
 import {ExpandableNode} from './components/treeView/expandableNode';
+import {LeafNode} from './components/treeView/leafNode';
 import {ExpandableNodeRenderStrategy} from './components/treeView/expandableNodeRenderStrategy';
 import {GlobalProps} from './props/globalProps';
 import {Notebook} from './oneNoteDataStructures/notebook';
@@ -21,9 +22,12 @@ export class OneNotePicker extends React.Component<OneNotePickerProps, null> {
 			<div className='onenote-picker ms-fontColor-themePrimary'>
 				<ul role='tree' className='menu-list picker-list-header'>
 					{notebookRenderStrategies.map((renderStrategy, i) =>
-						<ExpandableNode expanded={renderStrategy.isExpanded()} node={renderStrategy}
-							treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
-							id={renderStrategy.getId()} tabbable={i === 0}></ExpandableNode>)}
+						!!this.props.globals.callbacks.onSectionSelected || !!this.props.globals.callbacks.onPageSelected ?
+							<ExpandableNode expanded={renderStrategy.isExpanded()} node={renderStrategy}
+								treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
+								id={renderStrategy.getId()} tabbable={i === 0}></ExpandableNode> :
+							<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
+								id={renderStrategy.getId()} tabbable={i === 0}></LeafNode>)}
 				</ul>
 			</div>
 		);

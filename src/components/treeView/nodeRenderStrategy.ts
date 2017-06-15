@@ -3,7 +3,7 @@
  * does not have children (i.e., a leaf node).
  */
 export interface NodeRenderStrategy {
+	onClickBinded: () => void;
 	element(): JSX.Element;
-	onClick();
 	getId(): string;
 }

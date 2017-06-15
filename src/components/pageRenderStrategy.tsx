@@ -6,6 +6,8 @@ import {OneNoteItemUtils} from '../oneNoteDataStructures/oneNoteItemUtils';
 import {InnerGlobals} from '../props/globalProps';
 
 export class PageRenderStrategy implements NodeRenderStrategy {
+	onClickBinded = this.onClick.bind(this);
+
 	constructor(private page: Page, private globals: InnerGlobals) { }
 
 	element(): JSX.Element {
@@ -24,18 +26,18 @@ export class PageRenderStrategy implements NodeRenderStrategy {
 		);
 	}
 
-	onClick() {
-		let onPageSelected = this.globals.callbacks.onPageSelected;
-		if (!!onPageSelected) {
-			onPageSelected(this.page, OneNoteItemUtils.getAncestry(this.page));
-		}
-	}
-
 	getId(): string {
 		return this.page.id;
 	}
 
 	private isSelected(): boolean {
 		return this.globals.selectedId === this.page.id;
+	}
+
+	private onClick() {
+		let onPageSelected = this.globals.callbacks.onPageSelected;
+		if (!!onPageSelected) {
+			onPageSelected(this.page, OneNoteItemUtils.getAncestry(this.page));
+		}
 	}
 }

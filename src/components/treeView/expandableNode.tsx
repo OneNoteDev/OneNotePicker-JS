@@ -27,7 +27,7 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 
 	onClick() {
 		this.setState({ expanded: !this.state.expanded });
-		this.props.node.onClick();
+		this.props.node.onClickBinded();
 	}
 
 	onKeyDown(event: KeyboardEvent) {
