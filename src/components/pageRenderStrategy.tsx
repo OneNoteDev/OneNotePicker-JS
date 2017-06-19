@@ -15,7 +15,7 @@ export class PageRenderStrategy implements NodeRenderStrategy {
 
 		// TODO image is a placeholder as we don't support pages yet
 		return (
-			<div aria-selected={isSelected} className={isSelected ? 'picker-selectedItem' : ''}>
+			<div aria-selected={isSelected} className={isSelected ? 'picker-selectedItem' : ''} title={this.page.name}>
 				<div className='picker-icon-left'>
 					<img src={require('../images/section_icon.png')}/>
 				</div>

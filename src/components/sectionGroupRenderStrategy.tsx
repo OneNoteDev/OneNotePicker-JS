@@ -15,7 +15,7 @@ export class SectionGroupRenderStrategy implements ExpandableNodeRenderStrategy 
 	
 	element(): JSX.Element {
 		return (
-			<div>
+			<div title={this.sectionGroup.name}>
 				<div className='picker-icon-left'>
 					<img src={require('../images/sectiongroup_icon.png')}/>
 				</div>

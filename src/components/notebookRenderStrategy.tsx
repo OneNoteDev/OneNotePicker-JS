@@ -19,7 +19,7 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 		let isSelected = this.isSelected();
 
 		return (
-			<div aria-selected={isSelected} className={isSelected ? 'picker-selectedItem' : ''}>
+			<div aria-selected={isSelected} className={isSelected ? 'picker-selectedItem' : ''} title={this.notebook.name}>
 				<div className='picker-icon-left'>
 					<img src={require('../images/notebook_icon.png')}/>
 				</div>
