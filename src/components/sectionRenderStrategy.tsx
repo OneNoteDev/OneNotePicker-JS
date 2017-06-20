@@ -17,7 +17,7 @@ export class SectionRenderStrategy implements ExpandableNodeRenderStrategy {
 		let isSelected = this.isSelected();
 
 		return (
-			<div aria-selected={isSelected} className={isSelected ? 'picker-selectedItem' : ''}>
+			<div aria-selected={isSelected} className={isSelected ? 'picker-selectedItem' : ''} title={this.section.name}>
 				<div className='picker-icon-left'>
 					<img src={require('../images/section_icon.png')}/>
 				</div>
