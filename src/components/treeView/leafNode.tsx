@@ -27,8 +27,8 @@ export class LeafNode extends React.Component<LeafNodeProps, {}> {
 	render() {
 		return (
 			<li role='treeitem'>
-				<a onClick={this.props.node.onClickBinded} data-treeviewid={this.props.treeViewId}
-					data-id={this.props.id} tabIndex={this.props.tabbable ? 0 : -1}>
+				<a onClick={this.props.node.onClickBinded} onKeyDown={this.onKeyDown.bind(this)}
+					data-treeviewid={this.props.treeViewId} data-id={this.props.id} tabIndex={this.props.tabbable ? 0 : -1}>
 					{this.props.node.element()}
 				</a>
 			</li>);
