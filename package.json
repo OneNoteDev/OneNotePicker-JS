@@ -1,10 +1,10 @@
 {
   "name": "onenote-picker",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "bulma": "^0.4.2",
-    "onenoteapi": "^1.1.0",
+    "onenoteapi": "^2.0.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   },
