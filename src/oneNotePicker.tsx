@@ -14,7 +14,7 @@ export interface OneNotePickerProps extends GlobalProps {
 	notebooks: Notebook[];
 }
 
-export class OneNotePicker extends React.Component<OneNotePickerProps, null> {
+export class OneNotePicker extends React.Component<OneNotePickerProps, {}> {
 	render() {
 		let notebookRenderStrategies: ExpandableNodeRenderStrategy[] =
 			this.props.notebooks.map(notebook => new NotebookRenderStrategy(notebook, this.props.globals));
