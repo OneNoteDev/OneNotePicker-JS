@@ -21,7 +21,7 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 		return (
 			<div aria-selected={isSelected} className={isSelected ? 'picker-selectedItem' : ''} title={this.notebook.name}>
 				<div className='picker-icon-left'>
-					<img src={require('../images/notebook_icon.png')}/>
+					<i className="ms-Icon ms-Icon--OneNoteLogo" aria-hidden="true"></i>
 				</div>
 				<div>
 					<label className='ms-fontSize-sPlus'>{this.notebook.name}</label>
