@@ -12,6 +12,7 @@ type SectionParent = Notebook | SectionGroup;
  * on this class should use the getter as the most recent source of truth.
  */
 export class NotebookListUpdater {
+	// TODO (machiam) Currently we don't support updating shared notebooks the react way
 	private notebooks: Notebook[];
 
 	constructor(initialNotebooks: Notebook[]) {

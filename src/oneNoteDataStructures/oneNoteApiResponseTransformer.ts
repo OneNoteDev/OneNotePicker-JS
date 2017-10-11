@@ -1,3 +1,6 @@
+import {SharedNotebook} from './sharedNotebook';
+import {SpSectionGroup} from './spSectionGroup';
+import {SpSection} from './spSection';
 import {Notebook} from './notebook';
 import {SectionGroup} from './sectionGroup';
 import {Section} from './section';
@@ -9,6 +12,24 @@ import {Page} from './page';
  */
 export class OneNoteApiResponseTransformer {
 	private defaultExpanded: boolean = false;
+
+	transformSpSection(section: OneNoteApi.Section, parent: SharedNotebook | SpSectionGroup, siteId: string, siteCollectionId: string): SpSection {
+		var transformed: SpSection = {
+			parent: parent,
+			id: section.id,
+			name: section.name,
+			expanded: this.defaultExpanded,
+			pages: [],
+			siteId: siteId,
+			siteCollectionId: siteCollectionId,
+			selfUrl: section.self
+		};
+
+		// TODO (machiam) We don't support pages for now
+		transformed.pages = undefined;
+
+		return transformed;
+	}
 
 	transformNotebooks(notebookList: OneNoteApi.Notebook[]): Notebook[] {
 		return notebookList.map(notebook => this.transformNotebook(notebook));
