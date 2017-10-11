@@ -42,7 +42,7 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 	}
 
 	getSpNotebookProperties(spNotebook: SharedNotebook, expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<SharedNotebookApiProperties> {
-		return this.getSiteIds(spNotebook.url).then((ids) => {
+		return this.getSiteIds(spNotebook.apiUrl).then((ids) => {
 			let { siteId, siteCollectionId } = ids;
 			return this.getSpNotebookPropertiesUsingSiteIds(spNotebook, siteId, siteCollectionId);
 		}).catch((err) => {

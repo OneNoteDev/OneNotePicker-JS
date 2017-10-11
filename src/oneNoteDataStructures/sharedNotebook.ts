@@ -16,7 +16,6 @@ export interface SharedNotebook extends Notebook {
 
 	// Properties returned from GetRecentNotebooks
 	name: string;
-	url: string;
 	sourceService: 'OneDriveForBusiness' | 'OneDrive' | 'OnPremOneDriveForBusiness' | 'Unknown';
 }
 

@@ -22,7 +22,7 @@ export class OneNoteApiResponseTransformer {
 			pages: [],
 			siteId: siteId,
 			siteCollectionId: siteCollectionId,
-			selfUrl: section.self
+			apiUrl: section.self
 		};
 
 		// TODO (machiam) We don't support pages for now
@@ -42,7 +42,8 @@ export class OneNoteApiResponseTransformer {
 			name: notebook.name,
 			expanded: this.defaultExpanded,
 			sectionGroups: [],
-			sections: []
+			sections: [],
+			apiUrl: notebook.self
 		};
 
 		transformed.sectionGroups = notebook.sectionGroups ? notebook.sectionGroups.map(sg => this.transformSectionGroup(sg, transformed)) : [];
@@ -58,7 +59,8 @@ export class OneNoteApiResponseTransformer {
 			name: sectionGroup.name,
 			expanded: this.defaultExpanded,
 			sectionGroups: [],
-			sections: []
+			sections: [],
+			apiUrl: sectionGroup.self
 		};
 
 		transformed.sectionGroups = sectionGroup.sectionGroups ? sectionGroup.sectionGroups.map(sg => this.transformSectionGroup(sg, transformed)) : [];
@@ -74,7 +76,8 @@ export class OneNoteApiResponseTransformer {
 			id: section.id,
 			name: section.name,
 			expanded: this.defaultExpanded,
-			pages: []
+			pages: [],
+			apiUrl: section.self
 		};
 
 		transformed.pages = !!section.pages ? section.pages.map(page => this.transformPage(page, transformed)) : undefined;
@@ -90,7 +93,8 @@ export class OneNoteApiResponseTransformer {
 		return {
 			parent: parent,
 			id: page.id,
-			name: page.title
+			name: page.title,
+			apiUrl: page.self
 		};
 	}
 }
