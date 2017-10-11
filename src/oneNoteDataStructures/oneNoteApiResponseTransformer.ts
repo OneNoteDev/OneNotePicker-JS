@@ -22,7 +22,8 @@ export class OneNoteApiResponseTransformer {
 			pages: [],
 			siteId: siteId,
 			siteCollectionId: siteCollectionId,
-			apiUrl: section.self
+			apiUrl: section.self,
+			webUrl: ''
 		};
 
 		// TODO (machiam) We don't support pages for now
@@ -43,7 +44,8 @@ export class OneNoteApiResponseTransformer {
 			expanded: this.defaultExpanded,
 			sectionGroups: [],
 			sections: [],
-			apiUrl: notebook.self
+			apiUrl: notebook.self,
+			webUrl: (notebook.links as any).oneNoteWebUrl.href
 		};
 
 		transformed.sectionGroups = notebook.sectionGroups ? notebook.sectionGroups.map(sg => this.transformSectionGroup(sg, transformed)) : [];
@@ -60,7 +62,8 @@ export class OneNoteApiResponseTransformer {
 			expanded: this.defaultExpanded,
 			sectionGroups: [],
 			sections: [],
-			apiUrl: sectionGroup.self
+			apiUrl: sectionGroup.self,
+			webUrl: ''
 		};
 
 		transformed.sectionGroups = sectionGroup.sectionGroups ? sectionGroup.sectionGroups.map(sg => this.transformSectionGroup(sg, transformed)) : [];
@@ -77,7 +80,8 @@ export class OneNoteApiResponseTransformer {
 			name: section.name,
 			expanded: this.defaultExpanded,
 			pages: [],
-			apiUrl: section.self
+			apiUrl: section.self,
+			webUrl: ''
 		};
 
 		transformed.pages = !!section.pages ? section.pages.map(page => this.transformPage(page, transformed)) : undefined;
@@ -94,8 +98,8 @@ export class OneNoteApiResponseTransformer {
 			parent: parent,
 			id: page.id,
 			name: page.title,
-			apiUrl: page.self
+			apiUrl: page.self,
+			webUrl: page.links.oneNoteWebUrl.href
 		};
 	}
 }
-

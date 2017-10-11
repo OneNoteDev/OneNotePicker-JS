@@ -200,8 +200,12 @@ export class SampleOneNoteDataProvider implements OneNoteDataProvider {
 
 	getPages(section: Section): Promise<Page[]> {
 		let id = '' + (Math.floor(Math.random() * 500000));
-		let pages = [{parent: section, id: id, name: 'Page:' + id, apiUrl: ''}];
+		let pages = [{parent: section, id: id, name: 'Page:' + id, webUrl: ''}];
 		return Promise.resolve(pages);
+	}
+
+	getSpNotebooks(): Promise<SharedNotebook[]> {
+		return Promise.resolve([]);
 	}
 
 	getSpNotebookProperties(spNotebook: SharedNotebook, expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<SharedNotebookApiProperties> {

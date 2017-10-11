@@ -23,14 +23,15 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 				<div className='picker-icon-left'>
 					<img src={require('../images/notebook_icon.png')}/>
 				</div>
-				<div>
-					<label className='ms-fontSize-sPlus'>{'Shared ' + this.notebook.name + ' Expanded=' + this.notebook.expanded}</label>
-				</div>
+				<label className='ms-fontSize-sPlus sp-notebook-label'>
+					{this.notebook.name}
+					<span className='sp-notebook-breadcrumbs'>{this.getPath(this.notebook.webUrl)}</span>
+				</label>
 			</div>);
 	}
 
 	getId(): string {
-		return this.notebook.apiUrl;
+		return this.notebook.webUrl;
 	}
 
 	getChildren(): JSX.Element[] {
@@ -59,6 +60,13 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 
 	isExpanded(): boolean {
 		return this.notebook.expanded;
+	}
+
+	private getPath(webUrl: string): string {
+		const segments = decodeURI(webUrl).split('/');
+		const segmentsExcludingProtocolAndDomain = segments.slice(3);
+
+		return segmentsExcludingProtocolAndDomain.join(' > ');
 	}
 
 	private isSelected(): boolean {

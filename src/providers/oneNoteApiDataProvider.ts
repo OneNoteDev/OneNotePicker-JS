@@ -41,8 +41,38 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 		});
 	}
 
+	getSpNotebooks(): Promise<SharedNotebook[]> {
+		// TODO (machiam) move this to OneNoteApi project
+		return this.http('GET', `https://www.onenote.com/api/v1.0/me/notes/notebooks/getrecentnotebooks(includePersonalNotebooks=false)`, this.authHeader, this.headers).then((xhr: XMLHttpRequest) => {
+			// TODO (machiam) check response code
+			let parsedResponse: any = xhr.response && JSON.parse(xhr.response);
+			if (!parsedResponse || !parsedResponse.value) {
+				return Promise.resolve([]);
+			}
+
+			let serviceSharedNotebooks: any[] = parsedResponse.value;
+
+			let sharedNotebooks: SharedNotebook[] = [];
+			for (let i = 0; i < serviceSharedNotebooks.length; i++) {
+				if (serviceSharedNotebooks[i].sourceService === 'OneDriveForBusiness') {
+					sharedNotebooks.push({
+						id: '',
+						parent: undefined,
+						name: serviceSharedNotebooks[i].name,
+						webUrl: serviceSharedNotebooks[i].links.oneNoteWebUrl.href,
+						sourceService: serviceSharedNotebooks[i].sourceService,
+						expanded: false,
+						sections: [],
+						sectionGroups: []
+					});
+				}
+			}
+			return Promise.resolve(sharedNotebooks);
+		});
+	}
+
 	getSpNotebookProperties(spNotebook: SharedNotebook, expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<SharedNotebookApiProperties> {
-		return this.getSiteIds(spNotebook.apiUrl).then((ids) => {
+		return this.getSiteIds(spNotebook.webUrl).then((ids) => {
 			let { siteId, siteCollectionId } = ids;
 			return this.getSpNotebookPropertiesUsingSiteIds(spNotebook, siteId, siteCollectionId);
 		}).catch((err) => {
@@ -142,6 +172,37 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 				for (let key in this.headers) {
 					if (this.headers.hasOwnProperty(key)) {
 						xhr.setRequestHeader(key, this.headers[key]);
+					}
+				}
+			}
+
+			xhr.send();
+		});
+	}
+
+	private http(method: string, url: string, authHeader: string, headers?: { [key: string]: string }): Promise<XMLHttpRequest> {
+		return new Promise<XMLHttpRequest>((resolve, reject) => {
+			let xhr = new XMLHttpRequest();
+			xhr.open(method, url);
+
+			xhr.onload = () => {
+				resolve(xhr);
+			};
+
+			xhr.onerror = () => {
+				reject(xhr);
+			};
+
+			xhr.ontimeout = () => {
+				reject(xhr);
+			};
+
+			xhr.setRequestHeader('Authorization', this.authHeader);
+			
+			if (headers) {
+				for (let key in headers) {
+					if (headers.hasOwnProperty(key)) {
+						xhr.setRequestHeader(key, headers[key]);
 					}
 				}
 			}
