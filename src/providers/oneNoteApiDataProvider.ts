@@ -74,12 +74,13 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 	getSpNotebookProperties(spNotebook: SharedNotebook, expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<SharedNotebookApiProperties> {
 		return this.getSiteIds(spNotebook.webUrl).then((ids) => {
 			let { siteId, siteCollectionId } = ids;
-			return this.getSpNotebookPropertiesUsingSiteIds(spNotebook, siteId, siteCollectionId);
+			return this.getSpNotebookPropertiesUsingSiteIds(spNotebook, siteId, siteCollectionId, expands, excludeReadOnlyNotebooks);
 		}).catch((err) => {
 			console.log(JSON.stringify(err));
 		});
 	}
 
+	// TODO (machiam) use http
 	private getSiteIds(notebookUrl: string): Promise<{ siteId: string, siteCollectionId: string }> {
 		const candidateSiteUrls = this.getCandidateSiteUrls(notebookUrl);
 
@@ -130,9 +131,12 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 		});
 	}
 
-	private getSpNotebookPropertiesUsingSiteIds(spNotebook: SharedNotebook, siteId: string, siteCollectionId: string): Promise<SharedNotebookApiProperties> {
-		const nameFilterQuery = spNotebook.name ? `&$filter=name%20eq%20'${encodeURIComponent(spNotebook.name)}'` : '';
-		const url = `https://www.onenote.com/api/v1.0/myOrganization/siteCollections/${siteCollectionId}/sites/${siteId}/notes/notebooks?$expand=sections,sectionGroups($expand=sections,sectionGroups)` + nameFilterQuery;
+	// TODO (machiam) Use http
+	private getSpNotebookPropertiesUsingSiteIds(spNotebook: SharedNotebook, siteId: string, siteCollectionId: string, expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<SharedNotebookApiProperties> {
+		let url = `https://www.onenote.com/api/v1.0/myOrganization/siteCollections/${siteCollectionId}/sites/${siteId}/notes/notebooks`;
+		url += `?${this.getExpands(expands)}`;
+		url += spNotebook.name ? `&$filter=name%20eq%20'${encodeURIComponent(spNotebook.name)}'` : '';
+		// url += excludeReadOnlyNotebooks ? `&$filter=userRole%20ne%20Microsoft.OneNote.Api.UserRole'Reader'` : '';
 
 		return new Promise<SharedNotebookApiProperties>((resolve, reject) => {
 			let xhr = new XMLHttpRequest();
@@ -148,11 +152,11 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 					// TODO (machiam) Fill in missing values. I think this is already done?
 					spNotebook.id = firstNotebook.id;
 
-					// TODO (machiam) do sectionGroups too
 					let spSections = firstNotebook.sections.map(section => this.responseTransformer.transformSpSection(section, spNotebook, siteId, siteCollectionId));
+					let spSectionGroups = firstNotebook.sectionGroups.map(sectionGroup => this.responseTransformer.transformSpSectionGroup(sectionGroup, spNotebook, siteId, siteCollectionId));
 					resolve({
 						id: firstNotebook.id,
-						spSectionGroups: [],
+						spSectionGroups: spSectionGroups,
 						spSections: spSections
 					});
 				}
@@ -178,6 +182,16 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 
 			xhr.send();
 		});
+	}
+
+	private getExpands(expands?: number): string {
+		if (!expands || expands <= 0) {
+			return '';
+		}
+
+		let s = '$expand=sections,sectionGroups';
+
+		return expands === 1 ? s : `${s}(${this.getExpands(expands - 1)})`;
 	}
 
 	private http(method: string, url: string, authHeader: string, headers?: { [key: string]: string }): Promise<XMLHttpRequest> {

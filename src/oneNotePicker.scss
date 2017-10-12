@@ -54,10 +54,6 @@
 		text-overflow: ellipsis;
 	}
 
-	.menu-list label.sp-notebook-label {
-		width: 300px;
-	}
-
 	.picker-list-header {
 		overflow-x: hidden;
 		margin-top: 0px;
@@ -71,17 +67,24 @@
 
 		img {
 			display: block;
+			width: 24px;
+			height: 24px;
+		}
+	}
+
+	.picker-icon-right {
+		float: right;
+		margin-right: 2vmin;
+
+		img {
+			display: block;
+			width: 24px;
+			height: 24px;
 		}
 	}
 
 	.picker-selectedItem {
 		// Office UI Fabric specifies a hover which has more priority this, hence the !important
 		background-color: #D0D0D0 !important;
-	}
-
-	.sp-notebook-breadcrumbs {
-		color: grey;
-		padding-left: 3vmin;
-		font-size: 2.5vmin
 	}
 }

@@ -32,6 +32,27 @@ export class OneNoteApiResponseTransformer {
 		return transformed;
 	}
 
+	transformSpSectionGroup(sectionGroup: OneNoteApi.SectionGroup, parent: SharedNotebook | SpSectionGroup, siteId: string, siteCollectionId: string): SpSectionGroup {
+		var transformed: SpSectionGroup = {
+			parent: parent,
+			id: sectionGroup.id,
+			name: sectionGroup.name,
+			expanded: this.defaultExpanded,
+			sectionGroups: [],
+			sections: [],
+			siteId: siteId,
+			siteCollectionId: siteCollectionId,
+			apiUrl: sectionGroup.self,
+			webUrl: '',
+			selfUrl: sectionGroup.self,
+		};
+
+		transformed.sectionGroups = sectionGroup.sectionGroups ? sectionGroup.sectionGroups.map(sg => this.transformSpSectionGroup(sg, transformed, siteId, siteCollectionId)) : [];
+		transformed.sections = sectionGroup.sections ? sectionGroup.sections.map(section => this.transformSpSection(section, transformed, siteId, siteCollectionId)) : [];
+
+		return transformed;
+	}
+
 	transformNotebooks(notebookList: OneNoteApi.Notebook[]): Notebook[] {
 		return notebookList.map(notebook => this.transformNotebook(notebook));
 	}

@@ -21,12 +21,12 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 		return (
 			<div aria-selected={isSelected} className={isSelected ? 'picker-selectedItem' : ''} title={this.notebook.name}>
 				<div className='picker-icon-left'>
-					<img src={require('../images/notebook_icon.png')}/>
+					<img src={require('../images/shared_notebook_icon.png')}/>
 				</div>
-				<label className='ms-fontSize-sPlus sp-notebook-label'>
-					{this.notebook.name}
-					<span className='sp-notebook-breadcrumbs'>{this.getPath(this.notebook.webUrl)}</span>
-				</label>
+				<label className='ms-fontSize-sPlus'>{this.notebook.name}</label>
+				<div className='picker-icon-right'>
+					<img src={require('../images/shared_notebook_icon.png')}/>
+				</div>
 			</div>);
 	}
 
@@ -60,13 +60,6 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 
 	isExpanded(): boolean {
 		return this.notebook.expanded;
-	}
-
-	private getPath(webUrl: string): string {
-		const segments = decodeURI(webUrl).split('/');
-		const segmentsExcludingProtocolAndDomain = segments.slice(3);
-
-		return segmentsExcludingProtocolAndDomain.join(' > ');
 	}
 
 	private isSelected(): boolean {
