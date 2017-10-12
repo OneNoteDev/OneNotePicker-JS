@@ -8,7 +8,7 @@ import {LeafNode} from './treeView/leafNode';
 import {Constants} from '../constants';
 import {SharedNotebook} from '../oneNoteDataStructures/sharedNotebook';
 import {InnerGlobals} from '../props/globalProps';
-// import {OneNoteItemUtils} from '../oneNoteDataStructures/oneNoteItemUtils';
+import {OneNoteItemUtils} from '../oneNoteDataStructures/oneNoteItemUtils';
 
 export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	onClickBinded = this.onClick.bind(this);
