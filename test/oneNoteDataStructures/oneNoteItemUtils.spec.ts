@@ -12,6 +12,7 @@ describe('OneNoteItemUtils', () => {
 			expanded: false,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		};
 
@@ -21,7 +22,7 @@ describe('OneNoteItemUtils', () => {
 			name: 'Child',
 			expanded: false,
 			pages: undefined,
-			webUrl: '',
+			apiUrl: '',
 		};
 		notebook.sections.push(section);
 
@@ -37,6 +38,7 @@ describe('OneNoteItemUtils', () => {
 			expanded: false,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		};
 
@@ -46,7 +48,7 @@ describe('OneNoteItemUtils', () => {
 			name: 'Child',
 			expanded: false,
 			pages: undefined,
-			webUrl: '',
+			apiUrl: '',
 		};
 		notebook.sections.push(section);
 
@@ -62,6 +64,7 @@ describe('OneNoteItemUtils', () => {
 			expanded: false,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		};
 
@@ -71,7 +74,7 @@ describe('OneNoteItemUtils', () => {
 			name: 'Child',
 			expanded: false,
 			pages: undefined,
-			webUrl: '',
+			apiUrl: '',
 		};
 		notebook.sections.push(section);
 
@@ -92,6 +95,7 @@ describe('OneNoteItemUtils', () => {
 			expanded: false,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		};
 
@@ -101,7 +105,7 @@ describe('OneNoteItemUtils', () => {
 			name: 'Child',
 			expanded: false,
 			pages: undefined,
-			webUrl: '',
+			apiUrl: '',
 		};
 		notebook.sections.push(section);
 
@@ -118,6 +122,7 @@ describe('OneNoteItemUtils', () => {
 			expanded: false,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		};
 
@@ -127,7 +132,7 @@ describe('OneNoteItemUtils', () => {
 			name: 'Child',
 			expanded: true,
 			pages: undefined,
-			webUrl: '',
+			apiUrl: '',
 		};
 		notebook.sections.push(section);
 
@@ -143,6 +148,7 @@ describe('OneNoteItemUtils', () => {
 			expanded: false,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		};
 
@@ -152,7 +158,7 @@ describe('OneNoteItemUtils', () => {
 			name: 'Child',
 			expanded: false,
 			pages: undefined,
-			webUrl: '',
+			apiUrl: '',
 		};
 		notebook.sections.push(section);
 
@@ -166,7 +172,6 @@ describe('OneNoteItemUtils', () => {
 			parent: undefined,
 			id: 'id',
 			name: 'Item 1',
-			webUrl: '',
 		};
 
 		let ancestry = OneNoteItemUtils.getAncestry(item);
@@ -178,14 +183,12 @@ describe('OneNoteItemUtils', () => {
 			parent: undefined,
 			id: 'parent',
 			name: 'Parent',
-			webUrl: '',
 		};
 
 		let item: OneNoteItem = {
 			parent: parent,
 			id: 'child',
 			name: 'Child',
-			webUrl: '',
 		};
 
 		let ancestry = OneNoteItemUtils.getAncestry(item);
@@ -197,21 +200,18 @@ describe('OneNoteItemUtils', () => {
 			parent: undefined,
 			id: 'grandparent',
 			name: 'Grandparent',
-			webUrl: '',
 		};
 
 		let parent: OneNoteItem = {
 			parent: grandparent,
 			id: 'parent',
 			name: 'Parent',
-			webUrl: '',
 		};
 
 		let item: OneNoteItem = {
 			parent: parent,
 			id: 'child',
 			name: 'Child',
-			webUrl: '',
 		};
 
 		let ancestry = OneNoteItemUtils.getAncestry(item);

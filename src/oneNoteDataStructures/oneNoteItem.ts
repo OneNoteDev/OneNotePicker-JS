@@ -5,6 +5,4 @@ export interface OneNoteItem {
 
 	id: string;
 	name: string;
-	webUrl: string;
-	apiUrl?: string;
 }

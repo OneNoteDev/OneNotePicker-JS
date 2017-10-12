@@ -200,7 +200,7 @@ export class SampleOneNoteDataProvider implements OneNoteDataProvider {
 
 	getPages(section: Section): Promise<Page[]> {
 		let id = '' + (Math.floor(Math.random() * 500000));
-		let pages = [{parent: section, id: id, name: 'Page:' + id, webUrl: ''}];
+		let pages = [{parent: section, id: id, name: 'Page:' + id, apiUrl: '', webUrl: ''}];
 		return Promise.resolve(pages);
 	}
 

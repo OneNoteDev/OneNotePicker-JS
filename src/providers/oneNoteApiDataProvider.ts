@@ -63,7 +63,8 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 						sourceService: serviceSharedNotebooks[i].sourceService,
 						expanded: false,
 						sections: [],
-						sectionGroups: []
+						sectionGroups: [],
+						apiUrl: ''
 					});
 				}
 			}

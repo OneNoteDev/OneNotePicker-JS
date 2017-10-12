@@ -11,6 +11,7 @@ describe('NotebookListUpdater', () => {
 			expanded: false,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		}];
 		let notebookListUpdater = new NotebookListUpdater(notebooks);
@@ -31,6 +32,7 @@ describe('NotebookListUpdater', () => {
 			expanded: false,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		}];
 		let notebookListUpdater = new NotebookListUpdater(oldNotebooks);
@@ -42,6 +44,7 @@ describe('NotebookListUpdater', () => {
 			expanded: false,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		}];
 		notebookListUpdater.updateNotebookList(newNotebooks);
@@ -60,6 +63,7 @@ describe('NotebookListUpdater', () => {
 			expanded: false,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		}];
 		notebookListUpdater.updateNotebookList(newNotebooks);
@@ -75,6 +79,7 @@ describe('NotebookListUpdater', () => {
 			expanded: false,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		}];
 		let notebookListUpdater = new NotebookListUpdater(oldNotebooks);
@@ -93,6 +98,7 @@ describe('NotebookListUpdater', () => {
 			expanded: false,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		}];
 		let notebookListUpdater = new NotebookListUpdater(notebooks);
@@ -110,6 +116,7 @@ describe('NotebookListUpdater', () => {
 			expanded: true,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		}];
 		let notebookListUpdater = new NotebookListUpdater(oldNotebooks);
@@ -121,6 +128,7 @@ describe('NotebookListUpdater', () => {
 			expanded: false,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		}];
 		notebookListUpdater.updateNotebookList(newNotebooks);
@@ -136,6 +144,7 @@ describe('NotebookListUpdater', () => {
 			expanded: true,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		}];
 
@@ -146,7 +155,7 @@ describe('NotebookListUpdater', () => {
 			expanded: true,
 			sectionGroups: [],
 			sections: [],
-			webUrl: '',
+			apiUrl: '',
 		});
 
 		let notebookListUpdater = new NotebookListUpdater(oldNotebooks);
@@ -158,6 +167,7 @@ describe('NotebookListUpdater', () => {
 			expanded: false,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		}];
 		notebookListUpdater.updateNotebookList(newNotebooks);
@@ -173,6 +183,7 @@ describe('NotebookListUpdater', () => {
 			expanded: true,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		}];
 
@@ -183,7 +194,7 @@ describe('NotebookListUpdater', () => {
 			expanded: true,
 			sectionGroups: [],
 			sections: [],
-			webUrl: '',
+			apiUrl: '',
 		});
 
 		let notebookListUpdater = new NotebookListUpdater(oldNotebooks);
@@ -195,6 +206,7 @@ describe('NotebookListUpdater', () => {
 			expanded: false,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		}];
 
@@ -205,7 +217,7 @@ describe('NotebookListUpdater', () => {
 			expanded: true,
 			sectionGroups: [],
 			sections: [],
-			webUrl: '',
+			apiUrl: '',
 		});
 
 		notebookListUpdater.updateNotebookList(newNotebooks);
@@ -221,6 +233,7 @@ describe('NotebookListUpdater', () => {
 			expanded: true,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		}];
 
@@ -230,7 +243,7 @@ describe('NotebookListUpdater', () => {
 			name: 'Section 2',
 			expanded: true,
 			pages: [],
-			webUrl: '',
+			apiUrl: '',
 		});
 
 		let oldSectionGroup: SectionGroup = {
@@ -240,7 +253,7 @@ describe('NotebookListUpdater', () => {
 			expanded: false,
 			sectionGroups: [],
 			sections: [],
-			webUrl: '',
+			apiUrl: '',
 		};
 
 		oldSectionGroup.sections.push({
@@ -249,7 +262,7 @@ describe('NotebookListUpdater', () => {
 			name: 'Section 1',
 			expanded: false,
 			pages: [],
-			webUrl: '',
+			apiUrl: '',
 		});
 
 		oldNotebooks[0].sectionGroups.push(oldSectionGroup);
@@ -263,6 +276,7 @@ describe('NotebookListUpdater', () => {
 			expanded: false,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		}];
 
@@ -272,7 +286,7 @@ describe('NotebookListUpdater', () => {
 			name: 'Section 2',
 			expanded: false,
 			pages: [],
-			webUrl: '',
+			apiUrl: '',
 		});
 
 		let newSectionGroup: SectionGroup = {
@@ -282,7 +296,7 @@ describe('NotebookListUpdater', () => {
 			expanded: true,
 			sectionGroups: [],
 			sections: [],
-			webUrl: '',
+			apiUrl: '',
 		};
 
 		newSectionGroup.sections.push({
@@ -291,7 +305,7 @@ describe('NotebookListUpdater', () => {
 			name: 'Section 1',
 			expanded: false,
 			pages: [],
-			webUrl: '',
+			apiUrl: '',
 		});
 
 		newNotebooks[0].sectionGroups.push(newSectionGroup);
@@ -309,6 +323,7 @@ describe('NotebookListUpdater', () => {
 			expanded: true,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		}];
 
@@ -318,7 +333,7 @@ describe('NotebookListUpdater', () => {
 			name: 'Section 1',
 			expanded: true,
 			pages: undefined,
-			webUrl: '',
+			apiUrl: '',
 		});
 
 		let notebookListUpdater = new NotebookListUpdater(oldHierarchy);
@@ -328,11 +343,13 @@ describe('NotebookListUpdater', () => {
 			id: 'p1',
 			name: 'Page 1',
 			webUrl: '',
+			apiUrl: '',
 		}, {
 			parent: oldHierarchy[0].sections[0],
 			id: 'p2',
 			name: 'Page 2',
 			webUrl: '',
+			apiUrl: '',
 		}];
 		notebookListUpdater.updatePages('s1', pages);
 
@@ -343,6 +360,7 @@ describe('NotebookListUpdater', () => {
 			expanded: true,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		}];
 
@@ -352,7 +370,7 @@ describe('NotebookListUpdater', () => {
 			name: 'Section 1',
 			expanded: true,
 			pages: pages,
-			webUrl: '',
+			apiUrl: '',
 		});
 
 		expect(notebookListUpdater.get()).toEqual(expectedHierarchy);
@@ -366,6 +384,7 @@ describe('NotebookListUpdater', () => {
 			expanded: true,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		}];
 
@@ -375,7 +394,7 @@ describe('NotebookListUpdater', () => {
 			name: 'Section 1',
 			expanded: true,
 			pages: undefined,
-			webUrl: '',
+			apiUrl: '',
 		});
 
 		let notebookListUpdater = new NotebookListUpdater(oldHierarchy);
@@ -390,6 +409,7 @@ describe('NotebookListUpdater', () => {
 			expanded: true,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		}];
 
@@ -399,7 +419,7 @@ describe('NotebookListUpdater', () => {
 			name: 'Section 1',
 			expanded: true,
 			pages: pages,
-			webUrl: '',
+			apiUrl: '',
 		});
 
 		expect(notebookListUpdater.get()).toEqual(expectedHierarchy);
@@ -413,6 +433,7 @@ describe('NotebookListUpdater', () => {
 			expanded: true,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		}];
 
@@ -423,7 +444,7 @@ describe('NotebookListUpdater', () => {
 			expanded: true,
 			sectionGroups: [],
 			sections: [],
-			webUrl: '',
+			apiUrl: '',
 		};
 
 		oldSectionGroup.sections.push({
@@ -432,7 +453,7 @@ describe('NotebookListUpdater', () => {
 			name: 'Section 1',
 			expanded: true,
 			pages: undefined,
-			webUrl: '',
+			apiUrl: '',
 		});
 
 		oldHierarchy[0].sectionGroups.push(oldSectionGroup);
@@ -443,7 +464,7 @@ describe('NotebookListUpdater', () => {
 			name: 'Section 2',
 			expanded: true,
 			pages: undefined,
-			webUrl: '',
+			apiUrl: '',
 		});
 
 		let notebookListUpdater = new NotebookListUpdater(oldHierarchy);
@@ -458,6 +479,7 @@ describe('NotebookListUpdater', () => {
 			expanded: true,
 			sectionGroups: [],
 			sections: [],
+			apiUrl: '',
 			webUrl: '',
 		}];
 
@@ -468,7 +490,7 @@ describe('NotebookListUpdater', () => {
 			expanded: true,
 			sectionGroups: [],
 			sections: [],
-			webUrl: '',
+			apiUrl: '',
 		};
 
 		newSectionGroup.sections.push({
@@ -477,7 +499,7 @@ describe('NotebookListUpdater', () => {
 			name: 'Section 1',
 			expanded: true,
 			pages: pages,
-			webUrl: '',
+			apiUrl: '',
 		});
 
 		expectedHierarchy[0].sectionGroups.push(newSectionGroup);
@@ -488,7 +510,7 @@ describe('NotebookListUpdater', () => {
 			name: 'Section 2',
 			expanded: true,
 			pages: undefined,
-			webUrl: '',
+			apiUrl: '',
 		});
 
 		expect(notebookListUpdater.get()).toEqual(expectedHierarchy);
@@ -503,6 +525,7 @@ describe('NotebookListUpdater', () => {
 			sectionGroups: [],
 			sections: [],
 			webUrl: '',
+			apiUrl: '',
 		}, {
 			parent: undefined,
 			id: 'id2',
@@ -511,6 +534,7 @@ describe('NotebookListUpdater', () => {
 			sectionGroups: [],
 			sections: [],
 			webUrl: '',
+			apiUrl: '',
 		}];
 
 		oldHierarchy[0].sections.push({
@@ -519,7 +543,7 @@ describe('NotebookListUpdater', () => {
 			name: 'Section 1',
 			expanded: true,
 			pages: undefined,
-			webUrl: '',
+			apiUrl: '',
 		});
 
 		oldHierarchy[1].sections.push({
@@ -528,7 +552,7 @@ describe('NotebookListUpdater', () => {
 			name: 'Section 2',
 			expanded: true,
 			pages: undefined,
-			webUrl: '',
+			apiUrl: '',
 		});
 
 		let notebookListUpdater = new NotebookListUpdater(oldHierarchy);
@@ -538,11 +562,13 @@ describe('NotebookListUpdater', () => {
 			id: 'p1',
 			name: 'Page 1',
 			webUrl: '',
+			apiUrl: '',
 		}, {
 			parent: oldHierarchy[1].sections[0],
 			id: 'p2',
 			name: 'Page 2',
 			webUrl: '',
+			apiUrl: '',
 		}];
 		notebookListUpdater.updatePages('s2', pages);
 
@@ -554,6 +580,7 @@ describe('NotebookListUpdater', () => {
 			sectionGroups: [],
 			sections: [],
 			webUrl: '',
+			apiUrl: '',
 		}, {
 			parent: undefined,
 			id: 'id2',
@@ -562,6 +589,7 @@ describe('NotebookListUpdater', () => {
 			sectionGroups: [],
 			sections: [],
 			webUrl: '',
+			apiUrl: '',
 		}];
 
 		expectedHierarchy[0].sections.push({
@@ -570,7 +598,7 @@ describe('NotebookListUpdater', () => {
 			name: 'Section 1',
 			expanded: true,
 			pages: undefined,
-			webUrl: '',
+			apiUrl: '',
 		});
 
 		expectedHierarchy[1].sections.push({
@@ -579,7 +607,7 @@ describe('NotebookListUpdater', () => {
 			name: 'Section 2',
 			expanded: true,
 			pages: pages,
-			webUrl: '',
+			apiUrl: '',
 		});
 		expect(notebookListUpdater.get()).toEqual(expectedHierarchy);
 	});

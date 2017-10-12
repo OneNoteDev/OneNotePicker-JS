@@ -7,7 +7,6 @@ import {SpSectionGroup} from './spSectionGroup';
  * Represents a notebook that has been made known through
  * the API's GetRecentNotebooks endpoint.
  */
-// TODO (machiam) These have some overlaps with the parent
 export interface SharedNotebook extends Notebook {
 	parent: OneNoteItem | undefined;
 
