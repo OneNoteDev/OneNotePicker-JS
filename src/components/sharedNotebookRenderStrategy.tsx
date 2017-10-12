@@ -82,21 +82,21 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 				if (this.notebook.sourceService === 'OneDriveForBusiness') {
 					this.globals.oneNoteDataProvider.getSpNotebookProperties(
 						this.notebook, 5 /* TODO (machiam) not being used */, true /* TODO (machiam) also not being used */).then((apiProperties) => {
-							// this.notebook.apiProperties = apiProperties;
+							this.notebook.apiProperties = apiProperties;
 
-							// if (!!this.globals.notebookListUpdater) {
-							// 	this.globals.notebookListUpdater.updateNotebookList([this.notebook]);
-							// }
+							if (!!this.globals.notebookListUpdater) {
+								this.globals.notebookListUpdater.updateNotebookList([this.notebook]);
+							}
 
-							// let { onNotebookSelected, onSharedNotebookInfoReturned } = this.globals.callbacks;
+							let { onNotebookSelected, onSharedNotebookInfoReturned } = this.globals.callbacks;
 
-							// if (!!onNotebookSelected) {
-							// 	onNotebookSelected(this.notebook, OneNoteItemUtils.getAncestry(this.notebook));
-							// }
+							if (!!onNotebookSelected) {
+								onNotebookSelected(this.notebook, OneNoteItemUtils.getAncestry(this.notebook));
+							}
 
-							// if (!!onSharedNotebookInfoReturned) {
-							// 	onSharedNotebookInfoReturned(this.notebook);
-							// }
+							if (!!onSharedNotebookInfoReturned) {
+								onSharedNotebookInfoReturned(this.notebook);
+							}
 						}).catch((err) => {
 							console.log('bleh');
 						});
