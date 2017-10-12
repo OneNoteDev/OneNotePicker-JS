@@ -87,4 +87,22 @@
 		// Office UI Fabric specifies a hover which has more priority this, hence the !important
 		background-color: #D0D0D0 !important;
 	}
+
+	.progress-row {
+		padding-top: 8px;
+		padding-bottom: 8px;
+		margin-left: 18px;
+
+		.progress-spinner {
+			margin: auto;
+			margin-left: 0px;
+			border: 1.5px solid #c7e0f4;
+			border-top: 1.5px solid #0078d7;
+			border-radius: 50%;
+			width: 20px;
+			height: 20px;
+			-webkit-animation: spin 1.3s infinite cubic-bezier(.53,.21,.29,.67);
+			animation: spin 1.3s infinite cubic-bezier(.53,.21,.29,.67);
+		}
+	}
 }
