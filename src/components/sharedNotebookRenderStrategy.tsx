@@ -21,7 +21,7 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 		return (
 			<div aria-selected={isSelected} className={isSelected ? 'picker-selectedItem' : ''} title={this.notebook.name}>
 				<div className='picker-icon-left'>
-					<img src={require('../images/shared_notebook_icon.png')}/>
+					<img src={require('../images/notebook_icon.png')}/>
 				</div>
 				<label className='ms-fontSize-sPlus'>{this.notebook.name}</label>
 				<div className='picker-icon-right'>
@@ -35,7 +35,6 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 	}
 
 	getChildren(): JSX.Element[] {
-		// TODO (machiam) return a spinny boi if not 'loaded'
 		if (!this.notebook.apiProperties) {
 			return [
 				<li role='treeitem' className='progress-row'>
@@ -44,8 +43,8 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 			];
 		}
 
-		let sectionGroupRenderStrategies = !!this.notebook.apiProperties ?
-			this.notebook.apiProperties.spSectionGroups.map(sectionGroup => new SectionGroupRenderStrategy(sectionGroup, this.globals)) : [];
+		// TODO (machiam) remove check for apiProperties
+		let sectionGroupRenderStrategies = this.notebook.apiProperties.spSectionGroups.map(sectionGroup => new SectionGroupRenderStrategy(sectionGroup, this.globals));
 		let sectionGroups = sectionGroupRenderStrategies.map(renderStrategy =>
 			!!this.globals.callbacks.onSectionSelected || !!this.globals.callbacks.onPageSelected ?
 				<ExpandableNode	expanded={renderStrategy.isExpanded()} node={renderStrategy}
@@ -53,8 +52,7 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 					id={renderStrategy.getId()}></ExpandableNode> :
 				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} id={renderStrategy.getId()}></LeafNode>);
 
-		let sectionRenderStrategies = !!this.notebook.apiProperties ?
-			this.notebook.apiProperties.spSections.map(section => new SectionRenderStrategy(section, this.globals)) : [];
+		let sectionRenderStrategies = this.notebook.apiProperties.spSections.map(section => new SectionRenderStrategy(section, this.globals));
 		let sections = sectionRenderStrategies.map(renderStrategy =>
 			!!this.globals.callbacks.onPageSelected ?
 				<ExpandableNode
