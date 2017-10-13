@@ -18,7 +18,7 @@ export interface InnerGlobals {
 	notebookListUpdater: NotebookListUpdater;
 	callbacks: OneNotePickerCallbacks;
 
-	// stringOverrides: { [key: string]: string };
+	strings?: {};
 
 	// TODO we need a way to distinguish between section and page
 	selectedId?: string;

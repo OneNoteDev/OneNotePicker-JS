@@ -6,6 +6,7 @@ import {ExpandableNodeRenderStrategy} from './treeView/expandableNodeRenderStrat
 import {ExpandableNode} from './treeView/expandableNode';
 import {LeafNode} from './treeView/leafNode';
 import {Constants} from '../constants';
+import {Strings} from '../strings';
 import {SharedNotebook} from '../oneNoteDataStructures/sharedNotebook';
 import {InnerGlobals} from '../props/globalProps';
 import {OneNoteItemUtils} from '../oneNoteDataStructures/oneNoteItemUtils';
@@ -25,7 +26,8 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 				</div>
 				<label className='ms-fontSize-sPlus'>{this.notebook.name}</label>
 				<div className='picker-icon-right'>
-					<img src={require('../images/shared_notebook_icon.png')}/>
+					<span>{Strings.get('Shared', this.globals.strings)}</span>
+					<img src={require('../images/shared_icon.png')}/>
 				</div>
 			</div>);
 	}
@@ -35,6 +37,15 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 	}
 
 	getChildren(): JSX.Element[] {
+		// This may not work as we need to trigger a re-render
+		if (this.notebook.apiHttpErrorCode) {
+			return [
+				<li role='treeitem' className='progress-row'>
+					<div>{Strings.getError(this.notebook.apiHttpErrorCode, this.globals.strings)}</div>
+				</li>
+			];
+		}
+
 		if (!this.notebook.apiProperties) {
 			return [
 				<li role='treeitem' className='progress-row'>
@@ -74,34 +85,33 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 
 	private onClick() {
 		if (this.isExpandable()) {
-			if (!this.notebook.apiProperties) {
+			if (!this.notebook.apiProperties && !this.notebook.startedLoading) {
 				// This notebook was made known to us by GetRecentNotebooks, but we haven't
 				// fetched any metadata or children info
-				if (this.notebook.sourceService === 'OneDriveForBusiness') {
-					this.globals.oneNoteDataProvider.getSpNotebookProperties(
-						this.notebook, 5 /* TODO (machiam) not being used */, true /* TODO (machiam) also not being used */).then((apiProperties) => {
-							this.notebook.apiProperties = apiProperties;
+				this.notebook.startedLoading = true;
+				this.globals.oneNoteDataProvider.getSpNotebookProperties(this.notebook, 5, true).then((apiProperties) => {
+					this.notebook.apiProperties = apiProperties;
 
-							if (!!this.globals.notebookListUpdater) {
-								this.globals.notebookListUpdater.updateNotebookList([this.notebook]);
-							}
+					if (!!this.globals.notebookListUpdater) {
+						this.globals.notebookListUpdater.updateNotebookList([this.notebook]);
+					}
 
-							let { onNotebookSelected, onSharedNotebookInfoReturned } = this.globals.callbacks;
-
-							if (!!onNotebookSelected) {
-								onNotebookSelected(this.notebook, OneNoteItemUtils.getAncestry(this.notebook));
-							}
-
-							if (!!onSharedNotebookInfoReturned) {
-								onSharedNotebookInfoReturned(this.notebook);
-							}
-						}).catch((err) => {
-							console.log('bleh');
-						});
-				} else {
-					// TODO (machiam) we currently only support ODB, so the notebooks passed into the picker
-					// are assumed to have their sourceService set to OneDriveForBusiness
-				}
+					let { onNotebookSelected } = this.globals.callbacks;
+					if (!!onNotebookSelected) {
+						onNotebookSelected(this.notebook, OneNoteItemUtils.getAncestry(this.notebook));
+					}
+				}).catch((xhrs: XMLHttpRequest[]) => {
+					let max = 0;
+					for (let i = 0; i < xhrs.length; i++) {
+						max = Math.max(xhrs[i].status, max);
+					}
+					this.notebook.apiHttpErrorCode = max;
+				}).then(() => {
+					let { onSharedNotebookInfoReturned } = this.globals.callbacks;
+					if (!!onSharedNotebookInfoReturned) {
+						onSharedNotebookInfoReturned(this.notebook);
+					}
+				});
 			}
 		}
 	}
