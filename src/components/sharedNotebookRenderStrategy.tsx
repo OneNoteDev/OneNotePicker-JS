@@ -54,7 +54,6 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 			];
 		}
 
-		// TODO (machiam) remove check for apiProperties
 		let sectionGroupRenderStrategies = this.notebook.apiProperties.spSectionGroups.map(sectionGroup => new SectionGroupRenderStrategy(sectionGroup, this.globals));
 		let sectionGroups = sectionGroupRenderStrategies.map(renderStrategy =>
 			!!this.globals.callbacks.onSectionSelected || !!this.globals.callbacks.onPageSelected ?
