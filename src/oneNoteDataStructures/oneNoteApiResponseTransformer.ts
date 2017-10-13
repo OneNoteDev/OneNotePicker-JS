@@ -1,3 +1,6 @@
+import {SharedNotebook} from './sharedNotebook';
+import {SpSectionGroup} from './spSectionGroup';
+import {SpSection} from './spSection';
 import {Notebook} from './notebook';
 import {SectionGroup} from './sectionGroup';
 import {Section} from './section';
@@ -10,6 +13,44 @@ import {Page} from './page';
 export class OneNoteApiResponseTransformer {
 	private defaultExpanded: boolean = false;
 
+	transformSpSection(section: OneNoteApi.Section, parent: SharedNotebook | SpSectionGroup, siteId: string, siteCollectionId: string): SpSection {
+		var transformed: SpSection = {
+			parent: parent,
+			id: section.id,
+			name: section.name,
+			expanded: this.defaultExpanded,
+			pages: [],
+			siteId: siteId,
+			siteCollectionId: siteCollectionId,
+			apiUrl: section.self,
+		};
+
+		// TODO (machiam) We don't support pages for now
+		transformed.pages = undefined;
+
+		return transformed;
+	}
+
+	transformSpSectionGroup(sectionGroup: OneNoteApi.SectionGroup, parent: SharedNotebook | SpSectionGroup, siteId: string, siteCollectionId: string): SpSectionGroup {
+		var transformed: SpSectionGroup = {
+			parent: parent,
+			id: sectionGroup.id,
+			name: sectionGroup.name,
+			expanded: this.defaultExpanded,
+			sectionGroups: [],
+			sections: [],
+			siteId: siteId,
+			siteCollectionId: siteCollectionId,
+			apiUrl: sectionGroup.self,
+			selfUrl: sectionGroup.self,
+		};
+
+		transformed.sectionGroups = sectionGroup.sectionGroups ? sectionGroup.sectionGroups.map(sg => this.transformSpSectionGroup(sg, transformed, siteId, siteCollectionId)) : [];
+		transformed.sections = sectionGroup.sections ? sectionGroup.sections.map(section => this.transformSpSection(section, transformed, siteId, siteCollectionId)) : [];
+
+		return transformed;
+	}
+
 	transformNotebooks(notebookList: OneNoteApi.Notebook[]): Notebook[] {
 		return notebookList.map(notebook => this.transformNotebook(notebook));
 	}
@@ -21,7 +62,9 @@ export class OneNoteApiResponseTransformer {
 			name: notebook.name,
 			expanded: this.defaultExpanded,
 			sectionGroups: [],
-			sections: []
+			sections: [],
+			apiUrl: notebook.self,
+			webUrl: (notebook.links as any).oneNoteWebUrl.href
 		};
 
 		transformed.sectionGroups = notebook.sectionGroups ? notebook.sectionGroups.map(sg => this.transformSectionGroup(sg, transformed)) : [];
@@ -37,7 +80,8 @@ export class OneNoteApiResponseTransformer {
 			name: sectionGroup.name,
 			expanded: this.defaultExpanded,
 			sectionGroups: [],
-			sections: []
+			sections: [],
+			apiUrl: sectionGroup.self,
 		};
 
 		transformed.sectionGroups = sectionGroup.sectionGroups ? sectionGroup.sectionGroups.map(sg => this.transformSectionGroup(sg, transformed)) : [];
@@ -53,7 +97,8 @@ export class OneNoteApiResponseTransformer {
 			id: section.id,
 			name: section.name,
 			expanded: this.defaultExpanded,
-			pages: []
+			pages: [],
+			apiUrl: section.self,
 		};
 
 		transformed.pages = !!section.pages ? section.pages.map(page => this.transformPage(page, transformed)) : undefined;
@@ -69,8 +114,9 @@ export class OneNoteApiResponseTransformer {
 		return {
 			parent: parent,
 			id: page.id,
-			name: page.title
+			name: page.title,
+			apiUrl: page.self,
+			webUrl: page.links.oneNoteWebUrl.href
 		};
 	}
 }
-

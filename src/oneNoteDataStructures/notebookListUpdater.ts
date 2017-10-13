@@ -12,6 +12,7 @@ type SectionParent = Notebook | SectionGroup;
  * on this class should use the getter as the most recent source of truth.
  */
 export class NotebookListUpdater {
+	// TODO (machiam) Currently we don't support updating shared notebooks the react way
 	private notebooks: Notebook[];
 
 	constructor(initialNotebooks: Notebook[]) {
@@ -38,7 +39,7 @@ export class NotebookListUpdater {
 			return;
 		}
 
-		// TODO cut down on repeat code after we have UTs
+		// TODO (machiam) cut down on repeat code after we have UTs
 		for (let newNotebook of newNotebooks) {
 			let originalNotebook = oldNotebooks.find(notebook => notebook.id === newNotebook.id);
 			if (!!originalNotebook) {
@@ -59,7 +60,7 @@ export class NotebookListUpdater {
 			}
 		}
 
-		// TODO cut down on repeat code after we have UTs
+		// TODO (machiam) cut down on repeat code after we have UTs
 		for (let newSection of next.sections) {
 			let originalSection = original.sections.find(section => section.id === newSection.id);
 			if (!!originalSection) {
