@@ -231,7 +231,8 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 		// We start from 2 instead of 1 as 1 will give us just the tenant url
 		let candidates: string[] = [];
 		for (let i = 2; i < segmentsExcludingProtocol.length; i++) {
-			candidates.push(protocol + segmentsExcludingProtocol.slice(0, i).join('/'));
+			// We order this backwards to maximize precision
+			candidates.unshift(protocol + segmentsExcludingProtocol.slice(0, i).join('/'));
 		}
 		return candidates;
 	}
