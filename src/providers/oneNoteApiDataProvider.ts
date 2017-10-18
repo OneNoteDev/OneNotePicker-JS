@@ -57,7 +57,7 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 					sharedNotebooks.push({
 						id: '',
 						parent: undefined,
-						name: serviceSharedNotebooks[i].name,
+						name: this.getSharedNotebookName(serviceSharedNotebooks[i]),
 						webUrl: serviceSharedNotebooks[i].links.oneNoteWebUrl.href,
 						sourceService: serviceSharedNotebooks[i].sourceService,
 						expanded: false,
@@ -85,6 +85,24 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 			}
 		}
 		return false;
+	}
+
+	private getSharedNotebookName(sharedNotebook): string {
+		let name: string = sharedNotebook.name;
+		let webUrl: string = sharedNotebook.links && sharedNotebook.links.oneNoteWebUrl && sharedNotebook.links.oneNoteWebUrl.href;
+		if (!name && !webUrl) {
+			return '';
+		}
+
+		let trimmedName = name && name.trim();
+		if (trimmedName) {
+			return trimmedName;
+		}
+
+		// We guess that the last url part is the name
+		let splitUrl = webUrl.split('/');
+		let last = splitUrl[splitUrl.length - 1];
+		return decodeURIComponent(last);
 	}
 
 	getSpNotebookProperties(spNotebook: SharedNotebook, expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<SharedNotebookApiProperties> {
