@@ -45,13 +45,18 @@
 	}
 
 	.menu-list label {
-		display: inline-block;
-		vertical-align: top;
+		display: block;
 		color: black;
 		width: 200px;
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
+
+		&.breadcrumbs {
+			color: #9A9A9A;
+			font-size: 11px;
+			width: 250px;
+		}
 	}
 
 	.picker-list-header {
@@ -73,9 +78,10 @@
 	}
 
 	.picker-icon-right {
+		margin-top: 8px;
 		float: right;
 		margin-right: 2vmin;
-		color: grey;
+		color: #9A9A9A;
 
 		span {
 			display: inline-block;

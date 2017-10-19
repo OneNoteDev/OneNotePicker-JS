@@ -20,11 +20,14 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 		let isSelected = this.isSelected();
 
 		return (
-			<div aria-selected={isSelected} className={isSelected ? 'picker-selectedItem' : ''} title={this.notebook.name}>
+			<div aria-selected={isSelected} className={isSelected ? 'picker-selectedItem' : ''} title={this.breadcrumbs() + ' > ' + this.notebook.name}>
 				<div className='picker-icon-left'>
 					<img src={require('../images/notebook_icon.png')}/>
 				</div>
-				<label className='ms-fontSize-sPlus'>{this.notebook.name}</label>
+				<div>
+					<label>{this.notebook.name}</label>
+					<label className='breadcrumbs'>{this.breadcrumbs()}</label>
+				</div>
 				<div className='picker-icon-right'>
 					<span>{Strings.get('Shared', this.globals.strings)}</span>
 					<img src={require('../images/shared_icon.png')}/>
@@ -113,6 +116,12 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 				});
 			}
 		}
+	}
+
+	private breadcrumbs(): string {
+		let url = this.notebook.webUrl;
+		let split = url.split('/');
+		return split.slice(3, -1).map(decodeURIComponent).join(' > ');
 	}
 
 	private isExpandable(): boolean {
