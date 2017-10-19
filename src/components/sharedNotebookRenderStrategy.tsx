@@ -13,6 +13,7 @@ import {OneNoteItemUtils} from '../oneNoteDataStructures/oneNoteItemUtils';
 
 export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	onClickBinded = this.onClick.bind(this);
+	onExpandBinded = this.onExpand.bind(this);
 
 	constructor(private notebook: SharedNotebook, private globals: InnerGlobals) { }
 
@@ -86,6 +87,13 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 	}
 
 	private onClick() {
+		let { onNotebookSelected } = this.globals.callbacks;
+		if (!!onNotebookSelected) {
+			onNotebookSelected(this.notebook, OneNoteItemUtils.getAncestry(this.notebook));
+		}
+	}
+
+	private onExpand() {
 		if (this.isExpandable()) {
 			if (!this.notebook.apiProperties && !this.notebook.startedLoading) {
 				// This notebook was made known to us by GetRecentNotebooks, but we haven't
@@ -94,13 +102,8 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 				this.globals.oneNoteDataProvider.getSpNotebookProperties(this.notebook, 5, true).then((apiProperties) => {
 					this.notebook.apiProperties = apiProperties;
 
-					if (!!this.globals.notebookListUpdater) {
+					if (this.globals.notebookListUpdater) {
 						this.globals.notebookListUpdater.updateNotebookList([this.notebook]);
-					}
-
-					let { onNotebookSelected } = this.globals.callbacks;
-					if (!!onNotebookSelected) {
-						onNotebookSelected(this.notebook, OneNoteItemUtils.getAncestry(this.notebook));
 					}
 				}).catch((xhrs: XMLHttpRequest[]) => {
 					let max = 0;
