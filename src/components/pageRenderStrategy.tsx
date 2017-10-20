@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import {Strings} from '../strings';
 import {NodeRenderStrategy} from './treeView/nodeRenderStrategy';
 import {Page} from '../oneNoteDataStructures/page';
 import {OneNoteItemUtils} from '../oneNoteDataStructures/oneNoteItemUtils';
@@ -17,7 +18,9 @@ export class PageRenderStrategy implements NodeRenderStrategy {
 		return (
 			<div aria-selected={isSelected} className={isSelected ? 'picker-selectedItem' : ''} title={this.page.name}>
 				<div className='picker-icon-left'>
-					<img src={require('../images/section_icon.png')}/>
+					<img
+						src={require('../images/section_icon.png')}
+						alt={Strings.get('Accessibility.PageIcon', this.globals.strings)}/>
 				</div>
 				<div>
 					<label className='ms-fontSize-sPlus'>{this.page.name}</label>

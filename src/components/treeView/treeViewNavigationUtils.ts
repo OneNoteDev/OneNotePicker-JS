@@ -7,7 +7,12 @@ export class TreeViewNavigationUtils {
 	 * the scrolling effect on non-tab key presses.
 	 */
 	static normalizeKeyboardEventBehaviour(event: KeyboardEvent) {
-		event.stopPropagation();
+		if (event.keyCode !== 13) {
+			// The enter key is the only exception, as this is especially
+			// used to submit forms
+			event.stopPropagation();
+		}
+
 		if (event.keyCode !== 9) {
 			// Allow tabbing out
 			event.preventDefault();

@@ -3,7 +3,11 @@ export class Strings {
 		'Shared': 'Shared',
 		'Error.4XX': 'You no longer have access to this notebook.',
 		'Error.5XX': 'Something went wrong on our end.',
-		'Error.Fallback': 'Something went wrong.'
+		'Error.Fallback': 'Something went wrong.',
+		'Accessibility.NotebookIcon': 'Notebook Icon',
+		'Accessibility.SectionGroupIcon': 'Section Group Icon',
+		'Accessibility.SectionIcon': 'Section Icon',
+		'Accessibility.PageIcon': 'Page Icon',
 	};
 
 	static get(key: string, overrides?: {}) {

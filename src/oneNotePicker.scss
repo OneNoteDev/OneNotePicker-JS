@@ -117,4 +117,9 @@
 			animation: spin 1.3s infinite cubic-bezier(.53,.21,.29,.67);
 		}
 	}
+
+	.picker-row {
+		// We need this to ensure there's enough space for a focus border
+		margin: 1px;
+	}
 }

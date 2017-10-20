@@ -67,6 +67,19 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 					});
 				}
 			}
+
+			sharedNotebooks.sort((a, b) => {
+				var nameA = a.name.toUpperCase();
+				var nameB = b.name.toUpperCase();
+				if (nameA < nameB) {
+					return -1;
+				}
+				if (nameA > nameB) {
+					return 1;
+				}
+				return 0;
+			});
+
 			return Promise.resolve(sharedNotebooks);
 		});
 	}
@@ -151,11 +164,9 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 	}
 
 	private getSpNotebookPropertiesUsingSiteIds(spNotebook: SharedNotebook, siteId: string, siteCollectionId: string, expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<SharedNotebookApiProperties> {
+		// Don't add a service-side name filter as the notebook name could have changed
 		let url = `https://www.onenote.com/api/v1.0/myOrganization/siteCollections/${siteCollectionId}/sites/${siteId}/notes/notebooks`;
 		url += `?${this.getExpands(expands)}`;
-
-		// According to OData, single quotes need to be replaced with two of them
-		url += spNotebook.name ? `&$filter=name%20eq%20'${encodeURIComponent(spNotebook.name.replace(/'/g, `''`))}'` : '';
 
 		return new Promise<SharedNotebookApiProperties>((resolve, reject) => {
 			this.http('GET', url, this.authHeader, this.headers).then((xhr) => {

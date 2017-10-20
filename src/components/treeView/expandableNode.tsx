@@ -42,8 +42,8 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 		TreeViewNavigationUtils.handleMovementKeyboardEvent(this.props.id, this.props.treeViewId, event);
 
 		switch (event.keyCode) {
-			case 13:
-				// Enter
+			case 32:
+				// Space
 				this.onClick();
 				break;
 			case 37:
@@ -65,7 +65,7 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 	render() {
 		return (
 			<li aria-expanded={this.state.expanded} role='treeitem'>
-				<a onClick={this.onClick.bind(this)} onKeyDown={this.onKeyDown.bind(this)}
+				<a className='picker-row' onClick={this.onClick.bind(this)} onKeyDown={this.onKeyDown.bind(this)}
 					data-treeviewid={this.props.treeViewId} data-id={this.props.id} tabIndex={this.props.tabbable ? 0 : -1}>
 					{this.props.node.element()}
 				</a>

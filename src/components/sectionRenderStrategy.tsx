@@ -4,6 +4,7 @@ import {PageRenderStrategy} from './pageRenderStrategy';
 import {ExpandableNodeRenderStrategy} from './treeView/expandableNodeRenderStrategy';
 import {LeafNode} from './treeView/leafNode';
 import {Constants} from '../constants';
+import {Strings} from '../strings';
 import {Section} from '../oneNoteDataStructures/section';
 import {OneNoteItemUtils} from '../oneNoteDataStructures/oneNoteItemUtils';
 import {InnerGlobals} from '../props/globalProps';
@@ -19,7 +20,9 @@ export class SectionRenderStrategy implements ExpandableNodeRenderStrategy {
 		return (
 			<div aria-selected={isSelected} className={isSelected ? 'picker-selectedItem' : ''} title={this.section.name}>
 				<div className='picker-icon-left'>
-					<img src={require('../images/section_icon.png')}/>
+					<img
+						src={require('../images/section_icon.png')}
+						alt={Strings.get('Accessibility.SectionIcon', this.globals.strings)}/>
 				</div>
 				<div>
 					<label className='ms-fontSize-sPlus'>{this.section.name}</label>
