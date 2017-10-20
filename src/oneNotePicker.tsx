@@ -24,7 +24,9 @@ export class OneNotePicker extends React.Component<OneNotePickerProps, {}> {
 		
 		let sharedNotebookRenderStrategies: ExpandableNodeRenderStrategy[] = this.props.sharedNotebooks ?
 			this.props.sharedNotebooks.map(sharedNotebook => new SharedNotebookRenderStrategy(sharedNotebook, this.props.globals)) : [];
-		
+
+		const noPersonalNotebooks = notebookRenderStrategies.length === 0;
+
 		return (
 			<div className='onenote-picker ms-fontColor-themePrimary'>
 				<ul role='tree' className='menu-list picker-list-header'>
@@ -39,9 +41,9 @@ export class OneNotePicker extends React.Component<OneNotePickerProps, {}> {
 						!!this.props.globals.callbacks.onSectionSelected || !!this.props.globals.callbacks.onPageSelected ?
 							<ExpandableNode expanded={renderStrategy.isExpanded()} node={renderStrategy}
 								treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
-								id={renderStrategy.getId()} tabbable={i === 0}></ExpandableNode> :
+								id={renderStrategy.getId()} tabbable={noPersonalNotebooks && i === 0}></ExpandableNode> :
 							<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
-								id={renderStrategy.getId()} tabbable={i === 0}></LeafNode>)}
+								id={renderStrategy.getId()} tabbable={noPersonalNotebooks && i === 0}></LeafNode>)}
 				</ul>
 			</div>
 		);

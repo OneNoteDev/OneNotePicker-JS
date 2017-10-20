@@ -5,6 +5,7 @@ import {ExpandableNodeRenderStrategy} from './treeView/expandableNodeRenderStrat
 import {ExpandableNode} from './treeView/expandableNode';
 import {LeafNode} from './treeView/leafNode';
 import {Constants} from '../constants';
+import {Strings} from '../strings';
 import {SectionGroup} from '../oneNoteDataStructures/sectionGroup';
 import {InnerGlobals} from '../props/globalProps';
 
@@ -17,7 +18,9 @@ export class SectionGroupRenderStrategy implements ExpandableNodeRenderStrategy 
 		return (
 			<div title={this.sectionGroup.name}>
 				<div className='picker-icon-left'>
-					<img src={require('../images/sectiongroup_icon.png')}/>
+					<img
+						src={require('../images/sectiongroup_icon.png')}
+						alt={Strings.get('Accessibility.SectionGroupIcon', this.globals.strings)}/>
 				</div>
 				<div>
 					<label className='ms-fontSize-sPlus'>{this.sectionGroup.name}</label>

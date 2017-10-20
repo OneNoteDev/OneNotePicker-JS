@@ -23,7 +23,9 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 		return (
 			<div aria-selected={isSelected} className={isSelected ? 'picker-selectedItem' : ''} title={this.breadcrumbs() + ' > ' + this.notebook.name}>
 				<div className='picker-icon-left'>
-					<img src={require('../images/notebook_icon.png')}/>
+					<img
+						src={require('../images/notebook_icon.png')}
+						alt={Strings.get('Accessibility.NotebookIcon', this.globals.strings)}/>
 				</div>
 				<div>
 					<label>{this.notebook.name}</label>
@@ -31,7 +33,9 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 				</div>
 				<div className='picker-icon-right'>
 					<span>{Strings.get('Shared', this.globals.strings)}</span>
-					<img src={require('../images/shared_icon.png')}/>
+					<img
+						src={require('../images/shared_icon.png')}
+						alt={Strings.get('Shared', this.globals.strings)}/>
 				</div>
 			</div>);
 	}
