@@ -1,3 +1,5 @@
+import {InnerGlobals} from '../../props/globalProps';
+
 export interface CommonNodeProps {
 	// This id lets us scope keyboard navigation to elements with the same id
 	treeViewId: string;
@@ -12,4 +14,6 @@ export interface CommonNodeProps {
 	// navigate into the TreeView control itself
 	tabbable?: boolean;
 	focusOnMount?: boolean;
+
+	globals: InnerGlobals;
 }

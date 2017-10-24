@@ -9,4 +9,5 @@ export interface NodeRenderStrategy {
 	getId(): string;
 	getName(): string;
 	isSelected(): boolean;
+	isAriaSelected(): boolean;
 }

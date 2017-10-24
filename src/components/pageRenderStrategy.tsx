@@ -39,6 +39,10 @@ export class PageRenderStrategy implements NodeRenderStrategy {
 		return this.globals.selectedId === this.page.id;
 	}
 
+	isAriaSelected(): boolean {
+		return this.globals.ariaSelectedId ? this.globals.ariaSelectedId === this.getId() : false;
+	}
+
 	private onClick() {
 		let onPageSelected = this.globals.callbacks.onPageSelected;
 		if (!!onPageSelected) {

@@ -19,7 +19,8 @@ export class MockProps {
 					onNotebookHierarchyUpdated: () => { },
 					onNotebookSelected: () => { },
 					onSectionSelected: () => { },
-					onPageSelected: () => { }
+					onPageSelected: () => { },
+					onAccessibleSelection: () => { }
 				},
 				selectedId: undefined
 			}

@@ -42,21 +42,22 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 		let sectionGroupRenderStrategies = this.notebook.sectionGroups.map(sectionGroup => new SectionGroupRenderStrategy(sectionGroup, this.globals));
 		let sectionGroups = sectionGroupRenderStrategies.map(renderStrategy =>
 			!!this.globals.callbacks.onSectionSelected || !!this.globals.callbacks.onPageSelected ?
-				<ExpandableNode expanded={renderStrategy.isExpanded()} node={renderStrategy}
+				<ExpandableNode
+					expanded={renderStrategy.isExpanded()} node={renderStrategy} globals={this.globals}
 					treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
-					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isSelected()}></ExpandableNode> :
-				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
-					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isSelected()}></LeafNode>);
+					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()}></ExpandableNode> :
+				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} globals={this.globals}
+					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()}></LeafNode>);
 
 		let sectionRenderStrategies = this.notebook.sections.map(section => new SectionRenderStrategy(section, this.globals));
 		let sections = sectionRenderStrategies.map(renderStrategy =>
 			!!this.globals.callbacks.onPageSelected ?
 				<ExpandableNode
-					expanded={renderStrategy.isExpanded()} node={renderStrategy}
+					expanded={renderStrategy.isExpanded()} node={renderStrategy} globals={this.globals}
 					treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
-					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isSelected()}></ExpandableNode> :
-				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
-					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isSelected()}></LeafNode>);
+					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()}></ExpandableNode> :
+				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} globals={this.globals}
+					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()}></LeafNode>);
 
 		return sectionGroups.concat(sections);
 	}
@@ -67,6 +68,10 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 
 	isSelected(): boolean {
 		return this.globals.selectedId === this.notebook.id;
+	}
+
+	isAriaSelected(): boolean {
+		return this.globals.ariaSelectedId ? this.globals.ariaSelectedId === this.getId() : false;
 	}
 
 	private onClick() {

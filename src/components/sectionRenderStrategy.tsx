@@ -40,9 +40,9 @@ export class SectionRenderStrategy implements ExpandableNodeRenderStrategy {
 		let pageRenderStrategies: PageRenderStrategy[] | undefined =
 			this.section.pages && this.section.pages.map(page => new PageRenderStrategy(page, this.globals));
 		let pages = pageRenderStrategies && pageRenderStrategies.map(renderStrategy =>
-			<LeafNode treeViewId={Constants.TreeView.id} node={renderStrategy}
+			<LeafNode treeViewId={Constants.TreeView.id} node={renderStrategy} globals={this.globals}
 				id={renderStrategy.getId()} level={childrenLevel}
-				ariaSelected={renderStrategy.isSelected()}></LeafNode>);
+				ariaSelected={renderStrategy.isAriaSelected()}></LeafNode>);
 
 		return pages || [] as JSX.Element[];
 	}
@@ -53,6 +53,10 @@ export class SectionRenderStrategy implements ExpandableNodeRenderStrategy {
 
 	isSelected(): boolean {
 		return this.globals.selectedId === this.section.id;
+	}
+
+	isAriaSelected(): boolean {
+		return this.globals.ariaSelectedId ? this.globals.ariaSelectedId === this.getId() : false;
 	}
 
 	private onClick() {

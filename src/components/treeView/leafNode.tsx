@@ -12,7 +12,7 @@ export class LeafNode extends React.Component<LeafNodeProps, {}> {
 	onKeyDown(event: KeyboardEvent) {
 		TreeViewNavigationUtils.normalizeKeyboardEventBehaviour(event);
 
-		TreeViewNavigationUtils.handleMovementKeyboardEvent(this.props.id, this.props.treeViewId, event);
+		TreeViewNavigationUtils.handleMovementKeyboardEvent(this.props.id, this.props.treeViewId, event, this.props.globals.callbacks.onAccessibleSelection);
 
 		switch (event.keyCode) {
 			case 32:

@@ -26,20 +26,23 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 	}
 
 	onClick() {
+		let { node } = this.props;
 		let nextExpandState = !this.state.expanded;
 
 		this.setState({ expanded: nextExpandState });
 
-		if (nextExpandState && this.props.node.onExpandBinded) {
-			this.props.node.onExpandBinded();
+		if (nextExpandState && node.onExpandBinded) {
+			node.onExpandBinded();
 		}
-		this.props.node.onClickBinded();
+		node.onClickBinded();
+
+		this.props.globals.callbacks.onAccessibleSelection(node.getId());
 	}
 
 	onKeyDown(event: KeyboardEvent) {
 		TreeViewNavigationUtils.normalizeKeyboardEventBehaviour(event);
 
-		TreeViewNavigationUtils.handleMovementKeyboardEvent(this.props.id, this.props.treeViewId, event);
+		TreeViewNavigationUtils.handleMovementKeyboardEvent(this.props.id, this.props.treeViewId, event, this.props.globals.callbacks.onAccessibleSelection);
 
 		switch (event.keyCode) {
 			case 32:
