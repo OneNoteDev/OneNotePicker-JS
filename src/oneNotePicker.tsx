@@ -24,10 +24,10 @@ export class OneNotePicker extends React.Component<OneNotePickerProps, {}> {
 	}
 
 	private get activeDescendentId() {
-		if (!this.props.globals.selectedId) {
+		if (!this.props.globals.ariaSelectedId) {
 			return '';
 		}
-		return this.treeViewId + this.props.globals.selectedId;
+		return this.treeViewId + this.props.globals.ariaSelectedId;
 	}
 
 	render() {
