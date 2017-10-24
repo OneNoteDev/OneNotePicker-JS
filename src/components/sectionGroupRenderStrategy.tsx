@@ -28,32 +28,42 @@ export class SectionGroupRenderStrategy implements ExpandableNodeRenderStrategy 
 			</div>);
 	}
 
+	getName(): string {
+		return this.sectionGroup.name;
+	}
+
 	getId(): string {
 		return this.sectionGroup.id;
 	}
 
-	getChildren(): JSX.Element[] {
+	getChildren(childrenLevel: number): JSX.Element[] {
 		let sectionGroupRenderStrategies = this.sectionGroup.sectionGroups.map(sectionGroup => new SectionGroupRenderStrategy(sectionGroup, this.globals));
 		let sectionGroups = sectionGroupRenderStrategies.map(renderStrategy =>
 			!!this.globals.callbacks.onSectionSelected || !!this.globals.callbacks.onPageSelected ?
 				<ExpandableNode expanded={renderStrategy.isExpanded()} node={renderStrategy}
 					treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
-					id={renderStrategy.getId()}></ExpandableNode> :
-				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} id={renderStrategy.getId()}></LeafNode>);
+					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isSelected()}></ExpandableNode> :
+				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
+					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isSelected()}></LeafNode>);
 
 		let sectionRenderStrategies = this.sectionGroup.sections.map(section => new SectionRenderStrategy(section, this.globals));
 		let sections = sectionRenderStrategies.map(renderStrategy =>
 			!!this.globals.callbacks.onPageSelected ?
 				<ExpandableNode expanded={renderStrategy.isExpanded()} node={renderStrategy}
 					treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
-					id={renderStrategy.getId()}></ExpandableNode> :
-				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} id={renderStrategy.getId()}></LeafNode>);
+					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isSelected()}></ExpandableNode> :
+				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
+					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isSelected()}></LeafNode>);
 
 		return sectionGroups.concat(sections);
 	}
 
 	isExpanded(): boolean {
 		return this.sectionGroup.expanded;
+	}
+
+	isSelected(): boolean {
+		return false;
 	}
 
 	private onClick() {

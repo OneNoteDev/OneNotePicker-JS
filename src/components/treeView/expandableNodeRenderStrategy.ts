@@ -5,6 +5,6 @@ import {NodeRenderStrategy} from './nodeRenderStrategy';
  * has children (i.e., a parent node).
  */
 export interface ExpandableNodeRenderStrategy extends NodeRenderStrategy {
-	getChildren(): JSX.Element[];
+	getChildren(childrenLevel: number): JSX.Element[];
 	isExpanded(): boolean;
 }

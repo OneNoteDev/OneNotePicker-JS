@@ -18,10 +18,8 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 	constructor(private notebook: SharedNotebook, private globals: InnerGlobals) { }
 
 	element(): JSX.Element {
-		let isSelected = this.isSelected();
-
 		return (
-			<div aria-selected={isSelected} className={isSelected ? 'picker-selectedItem' : ''} title={this.breadcrumbs() + ' > ' + this.notebook.name}>
+			<div className={this.isSelected() ? 'picker-selectedItem' : ''} title={this.breadcrumbs() + '/' + this.notebook.name}>
 				<div className='picker-icon-left'>
 					<img
 						src={require('../images/notebook_icon.png')}
@@ -44,19 +42,24 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 		return this.notebook.webUrl;
 	}
 
-	getChildren(): JSX.Element[] {
+	getName(): string {
+		return this.notebook.name;
+	}
+
+	getChildren(childrenLevel: number): JSX.Element[] {
 		// This may not work as we need to trigger a re-render
 		if (this.notebook.apiHttpErrorCode) {
+			let errorString = Strings.getError(this.notebook.apiHttpErrorCode, this.globals.strings);
 			return [
-				<li role='treeitem' className='progress-row'>
-					<div>{Strings.getError(this.notebook.apiHttpErrorCode, this.globals.strings)}</div>
+				<li aria-label={errorString} className='progress-row'>
+					<div>{errorString}</div>
 				</li>
 			];
 		}
 
 		if (!this.notebook.apiProperties) {
 			return [
-				<li role='treeitem' className='progress-row'>
+				<li className='progress-row'>
 					<div className='progress-spinner'></div>
 				</li>
 			];
@@ -65,19 +68,21 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 		let sectionGroupRenderStrategies = this.notebook.apiProperties.spSectionGroups.map(sectionGroup => new SectionGroupRenderStrategy(sectionGroup, this.globals));
 		let sectionGroups = sectionGroupRenderStrategies.map(renderStrategy =>
 			!!this.globals.callbacks.onSectionSelected || !!this.globals.callbacks.onPageSelected ?
-				<ExpandableNode	expanded={renderStrategy.isExpanded()} node={renderStrategy}
+				<ExpandableNode expanded={renderStrategy.isExpanded()} node={renderStrategy}
 					treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
-					id={renderStrategy.getId()}></ExpandableNode> :
-				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} id={renderStrategy.getId()}></LeafNode>);
+					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isSelected()}></ExpandableNode> :
+				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
+					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isSelected()}></LeafNode>);
 
 		let sectionRenderStrategies = this.notebook.apiProperties.spSections.map(section => new SectionRenderStrategy(section, this.globals));
 		let sections = sectionRenderStrategies.map(renderStrategy =>
 			!!this.globals.callbacks.onPageSelected ?
 				<ExpandableNode
 					expanded={renderStrategy.isExpanded()} node={renderStrategy}
-					treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
-					id={renderStrategy.getId()}></ExpandableNode> :
-				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} id={renderStrategy.getId()}></LeafNode>);
+					treeViewId={Constants.TreeView.id} key={renderStrategy.getId() }
+					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isSelected()}></ExpandableNode> :
+				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
+					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isSelected()}></LeafNode>);
 
 		return sectionGroups.concat(sections);
 	}
@@ -86,7 +91,7 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 		return this.notebook.expanded;
 	}
 
-	private isSelected(): boolean {
+	isSelected(): boolean {
 		return this.notebook.apiProperties ? this.globals.selectedId === this.notebook.apiProperties.id : false;
 	}
 
@@ -128,7 +133,7 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 	private breadcrumbs(): string {
 		let url = this.notebook.webUrl;
 		let split = url.split('/');
-		return split.slice(3, -1).map(decodeURIComponent).join(' > ');
+		return split.slice(3, -1).map(decodeURIComponent).join('/');
 	}
 
 	private isExpandable(): boolean {

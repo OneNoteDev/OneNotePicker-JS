@@ -30,6 +30,7 @@ oneNoteDataProvider.getNotebooks().then((notebooks) => {
 
 	let globalProps: GlobalProps = {
 		globals: {
+			focusOnMount: true,
 			oneNoteDataProvider: oneNoteDataProvider,
 			notebookListUpdater: updater,
 			callbacks: {
@@ -58,5 +59,3 @@ oneNoteDataProvider.getNotebooks().then((notebooks) => {
 }).catch((value) => {
 	console.error(value);
 });
-
-

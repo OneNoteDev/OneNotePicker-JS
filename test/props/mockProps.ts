@@ -12,6 +12,7 @@ export class MockProps {
 
 		return {
 			globals: {
+				focusOnMount: false,
 				oneNoteDataProvider: oneNoteDataProvider,
 				notebookListUpdater: updater,
 				callbacks: {

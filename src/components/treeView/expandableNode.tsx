@@ -62,16 +62,34 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 		}
 	}
 
+	componentDidMount() {
+		let { focusOnMount, id } = this.props;
+		if (focusOnMount) {
+			let self = document.querySelector(`[data-id='${id}']`) as HTMLElement;
+			self.focus();
+		}
+	}
+
+	private get level() {
+		return this.props.level || 1;
+	}
+
+	private get descendentId() {
+		return this.props.treeViewId + this.props.id;
+	}
+
 	render() {
 		return (
-			<li aria-expanded={this.state.expanded} role='treeitem'>
+			<li aria-label={this.props.node.getName()} aria-expanded={this.state.expanded} role='treeitem' aria-level={this.level}
+				id={this.descendentId} aria-selected={this.props.ariaSelected}>
 				<a className='picker-row' onClick={this.onClick.bind(this)} onKeyDown={this.onKeyDown.bind(this)}
-					data-treeviewid={this.props.treeViewId} data-id={this.props.id} tabIndex={this.props.tabbable ? 0 : -1}>
+					data-treeviewid={this.props.treeViewId} data-id={this.props.id} tabIndex={this.props.tabbable ? 0 : -1}
+					role='presentation'>
 					{this.props.node.element()}
 				</a>
 				{this.state.expanded ?
-					<ul role='group'>
-						{this.props.node.getChildren()}
+					<ul role='group' aria-label={this.props.node.getName()}>
+						{this.props.node.getChildren(this.level + 1)}
 					</ul> : undefined}
 			</li>);
 	}
