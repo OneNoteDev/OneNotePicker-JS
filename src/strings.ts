@@ -7,6 +7,7 @@ export class Strings {
 		'Accessibility.NotebookIcon': 'Notebook Icon',
 		'Accessibility.SectionGroupIcon': 'Section Group Icon',
 		'Accessibility.SectionIcon': 'Section Icon',
+		'Accessibility.PickerTableName': 'Save Locations',
 		'Accessibility.PageIcon': 'Page Icon',
 	};
 

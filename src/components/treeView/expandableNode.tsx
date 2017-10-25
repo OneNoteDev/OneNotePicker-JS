@@ -26,20 +26,23 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 	}
 
 	onClick() {
+		let { node } = this.props;
 		let nextExpandState = !this.state.expanded;
 
 		this.setState({ expanded: nextExpandState });
 
-		if (nextExpandState && this.props.node.onExpandBinded) {
-			this.props.node.onExpandBinded();
+		if (nextExpandState && node.onExpandBinded) {
+			node.onExpandBinded();
 		}
-		this.props.node.onClickBinded();
+		node.onClickBinded();
+
+		this.props.globals.callbacks.onAccessibleSelection(node.getId());
 	}
 
 	onKeyDown(event: KeyboardEvent) {
 		TreeViewNavigationUtils.normalizeKeyboardEventBehaviour(event);
 
-		TreeViewNavigationUtils.handleMovementKeyboardEvent(this.props.id, this.props.treeViewId, event);
+		TreeViewNavigationUtils.handleMovementKeyboardEvent(this.props.id, this.props.treeViewId, event, this.props.globals.callbacks.onAccessibleSelection);
 
 		switch (event.keyCode) {
 			case 32:
@@ -62,16 +65,34 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 		}
 	}
 
+	componentDidMount() {
+		let { focusOnMount, id } = this.props;
+		if (focusOnMount) {
+			let self = document.querySelector(`[data-id='${id}']`) as HTMLElement;
+			self.focus();
+		}
+	}
+
+	private get level() {
+		return this.props.level || 1;
+	}
+
+	private get descendentId() {
+		return this.props.treeViewId + this.props.id;
+	}
+
 	render() {
 		return (
-			<li aria-expanded={this.state.expanded} role='treeitem'>
+			<li aria-labelledby={this.descendentId} aria-expanded={this.state.expanded} role='treeitem' aria-level={this.level} aria-checked={this.props.node.isSelected()}
+				id={this.descendentId} aria-selected={this.props.ariaSelected}>
 				<a className='picker-row' onClick={this.onClick.bind(this)} onKeyDown={this.onKeyDown.bind(this)}
-					data-treeviewid={this.props.treeViewId} data-id={this.props.id} tabIndex={this.props.tabbable ? 0 : -1}>
+					data-treeviewid={this.props.treeViewId} data-id={this.props.id} tabIndex={this.props.tabbable ? 0 : -1}
+					role='presentation'>
 					{this.props.node.element()}
 				</a>
 				{this.state.expanded ?
-					<ul role='group'>
-						{this.props.node.getChildren()}
+					<ul role='group' aria-label={this.props.node.getName()}>
+						{this.props.node.getChildren(this.level + 1)}
 					</ul> : undefined}
 			</li>);
 	}

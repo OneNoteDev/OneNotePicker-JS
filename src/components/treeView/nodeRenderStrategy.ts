@@ -7,4 +7,7 @@ export interface NodeRenderStrategy {
 	onExpandBinded?: () => void;
 	element(): JSX.Element;
 	getId(): string;
+	getName(): string;
+	isSelected(): boolean;
+	isAriaSelected(): boolean;
 }

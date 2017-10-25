@@ -12,13 +12,15 @@ export class MockProps {
 
 		return {
 			globals: {
+				focusOnMount: false,
 				oneNoteDataProvider: oneNoteDataProvider,
 				notebookListUpdater: updater,
 				callbacks: {
 					onNotebookHierarchyUpdated: () => { },
 					onNotebookSelected: () => { },
 					onSectionSelected: () => { },
-					onPageSelected: () => { }
+					onPageSelected: () => { },
+					onAccessibleSelection: () => { }
 				},
 				selectedId: undefined
 			}

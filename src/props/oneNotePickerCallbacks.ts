@@ -26,4 +26,7 @@ export interface OneNotePickerCallbacks {
 	onNotebookSelected?: (notebook: Notebook, breadcrumbs: OneNoteItem[]) => void;
 	onSectionSelected?: (section: Section, breadcrumbs: OneNoteItem[]) => void;
 	onPageSelected?: (page: Page, breadcrumbs: OneNoteItem[]) => void;
+	
+	// Accessibility callbacks
+	onAccessibleSelection: (selectedItemId: string) => void;
 }

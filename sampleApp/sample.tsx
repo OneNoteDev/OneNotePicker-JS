@@ -30,6 +30,7 @@ oneNoteDataProvider.getNotebooks().then((notebooks) => {
 
 	let globalProps: GlobalProps = {
 		globals: {
+			focusOnMount: true,
 			oneNoteDataProvider: oneNoteDataProvider,
 			notebookListUpdater: updater,
 			callbacks: {
@@ -49,6 +50,11 @@ oneNoteDataProvider.getNotebooks().then((notebooks) => {
 					console.log(breadcrumbs.map(x => x.name).join(' > '));
 
 					render(globalProps, globalProps.globals.notebookListUpdater.get());
+				},
+				onAccessibleSelection: (selectedItemId: string) => {
+					globalProps.globals.ariaSelectedId = selectedItemId;
+
+					render(globalProps, globalProps.globals.notebookListUpdater.get());
 				}
 			},
 			selectedId: initialSelectedId
@@ -58,5 +64,3 @@ oneNoteDataProvider.getNotebooks().then((notebooks) => {
 }).catch((value) => {
 	console.error(value);
 });
-
-

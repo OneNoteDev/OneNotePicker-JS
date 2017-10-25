@@ -12,11 +12,9 @@ export class PageRenderStrategy implements NodeRenderStrategy {
 	constructor(private page: Page, private globals: InnerGlobals) { }
 
 	element(): JSX.Element {
-		let isSelected = this.isSelected();
-
 		// TODO image is a placeholder as we don't support pages yet
 		return (
-			<div aria-selected={isSelected} className={isSelected ? 'picker-selectedItem' : ''} title={this.page.name}>
+			<div className={this.isSelected() ? 'picker-selectedItem' : ''} title={this.page.name}>
 				<div className='picker-icon-left'>
 					<img
 						src={require('../images/section_icon.png')}
@@ -29,12 +27,20 @@ export class PageRenderStrategy implements NodeRenderStrategy {
 		);
 	}
 
+	getName(): string {
+		return this.page.name;
+	}
+
 	getId(): string {
 		return this.page.id;
 	}
 
-	private isSelected(): boolean {
+	isSelected(): boolean {
 		return this.globals.selectedId === this.page.id;
+	}
+
+	isAriaSelected(): boolean {
+		return this.globals.ariaSelectedId ? this.globals.ariaSelectedId === this.getId() : false;
 	}
 
 	private onClick() {

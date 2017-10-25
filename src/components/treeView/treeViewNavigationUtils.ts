@@ -23,39 +23,48 @@ export class TreeViewNavigationUtils {
 	 * In a TreeView, handles up, down, home, and end key presses to behave according
 	 * to the wai-aria spec defined in https://www.w3.org/TR/wai-aria-practices-1.1/#TreeView
 	 */
-	static handleMovementKeyboardEvent(thisId: string, treeViewId: string, event: KeyboardEvent) {
+	static handleMovementKeyboardEvent(thisId: string, treeViewId: string, event: KeyboardEvent, onAccessibleSelected: (id: string) => void) {
 		let navigatables: NodeListOf<HTMLElement>;
+		let elem: HTMLElement | undefined = undefined;
 		switch (event.keyCode) {
 			case 35:
 				// End
 				navigatables = TreeViewNavigationUtils.getAllNavigatables(treeViewId);
 				if (navigatables.length > 0) {
-					navigatables[navigatables.length - 1].focus();
+					elem = navigatables[navigatables.length - 1];
+					elem.focus();
 				}
 				break;
 			case 36:
 				// Home
 				navigatables = TreeViewNavigationUtils.getAllNavigatables(treeViewId);
 				if (navigatables.length > 0) {
-					navigatables[0].focus();
+					elem = navigatables[0];
+					elem.focus();
 				}
 				break;
 			case 38:
 				// Up arrow
-				let prev = TreeViewNavigationUtils.getNavigatableWithOffset(thisId, treeViewId, -1);
-				if (!!prev) {
-					prev.focus();
+				elem = TreeViewNavigationUtils.getNavigatableWithOffset(thisId, treeViewId, -1);
+				if (!!elem) {
+					elem.focus();
 				}
 				break;
 			case 40:
 				// Down arrow
-				let next = TreeViewNavigationUtils.getNavigatableWithOffset(thisId, treeViewId, 1);
-				if (!!next) {
-					next.focus();
+				elem = TreeViewNavigationUtils.getNavigatableWithOffset(thisId, treeViewId, 1);
+				if (!!elem) {
+					elem.focus();
 				}
 				break;
 			default:
 				break;
+		}
+		if (elem) {
+			let id = elem.getAttribute('data-id');
+			if (id) {
+				onAccessibleSelected(id);
+			}
 		}
 	}
 
