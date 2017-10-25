@@ -30,7 +30,7 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 					<label className='breadcrumbs'>{this.breadcrumbs()}</label>
 				</div>
 				<div className='picker-icon-right'>
-					<span>{Strings.get('Shared', this.globals.strings)}</span>
+					<span aria-hidden='true'>{Strings.get('Shared', this.globals.strings)}</span>
 					<img
 						src={require('../images/shared_icon.png')}
 						alt={Strings.get('Shared', this.globals.strings)}/>
@@ -51,7 +51,7 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 		if (this.notebook.apiHttpErrorCode) {
 			let errorString = Strings.getError(this.notebook.apiHttpErrorCode, this.globals.strings);
 			return [
-				<li aria-label={errorString} className='progress-row'>
+				<li role='status' aria-live='polite' aria-label={errorString} className='progress-row'>
 					<div>{errorString}</div>
 				</li>
 			];

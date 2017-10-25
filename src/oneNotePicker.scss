@@ -26,13 +26,13 @@
 		margin-bottom: 0px;
 		margin-right: 0px;
 		border-left: none;
-		padding-left: 25px;
+		padding-left: 5vmin;
 	}
 
 	.menu-list li > a > div {
 		width: 100%;
-		padding-top: 6px;
-		padding-bottom: 6px;
+		padding-top: 1.2vmin;
+		padding-bottom: 1.2vmin;
 
 		&:hover {
 			background-color: #F4F4F4;
@@ -47,15 +47,16 @@
 	.menu-list label {
 		display: block;
 		color: black;
-		width: 200px;
+		width: 40vmax;
+		font-size: 2.8vmin;
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
 
 		&.breadcrumbs {
-			color: #9A9A9A;
-			font-size: 11px;
-			width: 250px;
+			color: #666666;
+			font-size: 2.2vmin;
+			width: 45vmax;
 		}
 	}
 
@@ -67,13 +68,13 @@
 	}
 
 	.picker-icon-left {
-		margin-left: 12px;
-		margin-right: 5px;
+		margin-left: 2.4vmin;
+		margin-right: 1vmin;
 
 		img {
 			display: block;
-			width: 24px;
-			height: 24px;
+			width: 4.8vmin;
+			height: 4.8vmin;
 		}
 	}
 
@@ -81,16 +82,17 @@
 		margin-top: 8px;
 		float: right;
 		margin-right: 2vmin;
-		color: #9A9A9A;
+		color: #666666;
 
 		span {
 			display: inline-block;
+			font-size: 2.8vmin
 		}
 
 		img {
 			display: inline-block;
-			width: 24px;
-			height: 24px;
+			width: 4.8vmin;
+			height: 4.8vmin;
 		}
 	}
 
@@ -100,19 +102,20 @@
 	}
 
 	.progress-row {
-		padding-top: 8px;
-		padding-bottom: 8px;
-		margin-left: 18px;
+		padding-top: 1.5vmin;
+		padding-bottom: 1.5vmin;
+		margin-left: 3.5vmin;
 		word-wrap: break-word;
+		font-size: 2.8vmin;
 
 		.progress-spinner {
 			margin: auto;
 			margin-left: 0px;
-			border: 1.5px solid #c7e0f4;
-			border-top: 1.5px solid #0078d7;
+			border: 0.4vmin solid #c7e0f4;
+			border-top: 0.4vmin solid #0078d7;
 			border-radius: 50%;
-			width: 20px;
-			height: 20px;
+			width: 4.8vmin;
+			height: 4.8vmin;
 			-webkit-animation: spin 1.3s infinite cubic-bezier(.53,.21,.29,.67);
 			animation: spin 1.3s infinite cubic-bezier(.53,.21,.29,.67);
 		}
