@@ -91,7 +91,7 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 					{this.props.node.element()}
 				</a>
 				{this.state.expanded ?
-					<ul role='group' aria-label={this.props.node.getName()}>
+					<ul role='group'>
 						{this.props.node.getChildren(this.level + 1)}
 					</ul> : undefined}
 			</li>);
