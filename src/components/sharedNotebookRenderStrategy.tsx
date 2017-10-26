@@ -114,6 +114,11 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 				// fetched any metadata or children info
 				this.notebook.startedLoading = true;
 				this.globals.oneNoteDataProvider.getSpNotebookProperties(this.notebook, 5, true).then((apiProperties) => {
+					if (!apiProperties) {
+						this.notebook.apiHttpErrorCode = 404;
+						return;
+					}
+
 					this.notebook.apiProperties = apiProperties;
 
 					if (this.globals.notebookListUpdater) {
