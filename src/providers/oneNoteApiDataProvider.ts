@@ -92,9 +92,9 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 			let webUrl: string = notebook.links.oneNoteWebUrl.href;
 			let segments = webUrl.split('/');
 			if (segments.length > 2) {
-				// TODO (machiam) this is somewhat naive, but we want to filter out ppe
+				// This is somewhat naive, but we want to filter out ppe and live
 				let domain = segments[2];
-				return domain.indexOf('.spoppe.') < 0;
+				return domain.indexOf('.spoppe.') < 0 && domain !== 'd.docs.live.net';
 			}
 		}
 		return false;
