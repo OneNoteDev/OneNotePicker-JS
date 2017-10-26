@@ -208,7 +208,7 @@ export class SampleOneNoteDataProvider implements OneNoteDataProvider {
 		return Promise.resolve([]);
 	}
 
-	getSpNotebookProperties(spNotebook: SharedNotebook, expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<SharedNotebookApiProperties> {
+	getSpNotebookProperties(spNotebook: SharedNotebook, expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<SharedNotebookApiProperties | undefined> {
 		return Promise.resolve({
 			id: '',
 			sectionGroups: [],

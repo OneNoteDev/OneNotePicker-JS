@@ -92,9 +92,9 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 			let webUrl: string = notebook.links.oneNoteWebUrl.href;
 			let segments = webUrl.split('/');
 			if (segments.length > 2) {
-				// TODO (machiam) this is somewhat naive, but we want to filter out ppe
+				// This is somewhat naive, but we want to filter out ppe and live
 				let domain = segments[2];
-				return domain.indexOf('.spoppe.') < 0;
+				return domain.indexOf('.spoppe.') < 0 && domain !== 'd.docs.live.net';
 			}
 		}
 		return false;
@@ -118,7 +118,7 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 		return decodeURIComponent(last);
 	}
 
-	getSpNotebookProperties(spNotebook: SharedNotebook, expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<SharedNotebookApiProperties> {
+	getSpNotebookProperties(spNotebook: SharedNotebook, expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<SharedNotebookApiProperties | undefined> {
 		// These both return an array of XMLHttpRequest on the rejection case. The caller
 		// can then decide which error is most significant.
 		return this.getSiteIds(spNotebook.webUrl).then((ids) => {
@@ -163,7 +163,7 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 		});
 	}
 
-	private getSpNotebookPropertiesUsingSiteIds(spNotebook: SharedNotebook, siteId: string, siteCollectionId: string, expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<SharedNotebookApiProperties> {
+	private getSpNotebookPropertiesUsingSiteIds(spNotebook: SharedNotebook, siteId: string, siteCollectionId: string, expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<SharedNotebookApiProperties | undefined> {
 		// Don't add a service-side name filter as the notebook name could have changed
 		let url = `https://www.onenote.com/api/v1.0/myOrganization/siteCollections/${siteCollectionId}/sites/${siteId}/notes/notebooks`;
 		url += `?${this.getExpands(expands)}`;
@@ -182,7 +182,7 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 					}
 
 					if (!matchingNotebook) {
-						reject(xhr);
+						resolve(undefined);
 						return;
 					}
 
@@ -197,7 +197,7 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 					});
 					return;
 				}
-				reject(xhr);
+				reject([xhr]);
 			}).catch((xhr) => {
 				reject([xhr]);
 			});

@@ -12,5 +12,5 @@ export interface OneNoteDataProvider {
 	getPages(section: Section): Promise<Page[]>;
 
 	getSpNotebooks(): Promise<SharedNotebook[]>;
-	getSpNotebookProperties(spNotebook: SharedNotebook, expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<SharedNotebookApiProperties>;
+	getSpNotebookProperties(spNotebook: SharedNotebook, expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<SharedNotebookApiProperties | undefined>;
 }
