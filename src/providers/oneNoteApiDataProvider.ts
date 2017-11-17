@@ -110,10 +110,13 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 
 		// We infer the name from the URL if name is not provided
 		if (!name && webUrl) {
-			const urlParts = webUrl.match(/([^\/]*)\/*$/);
-			if (urlParts && urlParts.length === 2) {
-				name = urlParts[1];
-				name = decodeURI(name);
+			const urlParts = webUrl.split('/');
+
+			// There might be a trailing slash we would like to account for. We pop twice. pop() returns undefined if array is empty
+			const lastPart = urlParts.pop() || urlParts.pop();
+
+			if (lastPart) {
+				name = decodeURI(lastPart);
 			}
 		}
 
