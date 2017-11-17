@@ -103,8 +103,18 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 	private getSharedNotebookName(sharedNotebook): string {
 		let name: string = sharedNotebook.name;
 		let webUrl: string = sharedNotebook.links && sharedNotebook.links.oneNoteWebUrl && sharedNotebook.links.oneNoteWebUrl.href;
+
 		if (!name && !webUrl) {
 			return '';
+		}
+
+		// We infer the name from the URL if name is not provided
+		if (!name && webUrl) {
+			const urlParts = webUrl.match(/([^\/]*)\/*$/);
+			if (urlParts && urlParts.length === 2) {
+				name = urlParts[1];
+				name = decodeURI(name);
+			}
 		}
 
 		let trimmedName = name && name.trim();
