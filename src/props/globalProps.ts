@@ -28,4 +28,6 @@ export interface InnerGlobals {
 	// This is to not be confused with the current selected item, but rather the
 	// current 'focus' item in the tree for assistive technologies
 	ariaSelectedId?: string;
+
+	notebookExpandDepth?: number;
 }
