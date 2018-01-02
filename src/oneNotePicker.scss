@@ -108,16 +108,10 @@
 		word-wrap: break-word;
 		font-size: 2.8vmin;
 
-		.progress-spinner {
-			margin: auto;
-			margin-left: 0px;
-			border: 0.4vmin solid #c7e0f4;
-			border-top: 0.4vmin solid #0078d7;
-			border-radius: 50%;
+		svg {
+			animation: spin 1.3s infinite cubic-bezier(.53,.21,.29,.67);
 			width: 4.8vmin;
 			height: 4.8vmin;
-			-webkit-animation: spin 1.3s infinite cubic-bezier(.53,.21,.29,.67);
-			animation: spin 1.3s infinite cubic-bezier(.53,.21,.29,.67);
 		}
 	}
 
