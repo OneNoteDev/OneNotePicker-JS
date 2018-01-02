@@ -118,7 +118,8 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 				// This notebook was made known to us by GetRecentNotebooks, but we haven't
 				// fetched any metadata or children info
 				this.notebook.startedLoading = true;
-				this.globals.oneNoteDataProvider.getSpNotebookProperties(this.notebook, 5, true).then((apiProperties) => {
+				const depth = this.globals.notebookExpandDepth || 5;
+				this.globals.oneNoteDataProvider.getSpNotebookProperties(this.notebook, depth, true).then((apiProperties) => {
 					if (!apiProperties) {
 						this.notebook.apiHttpErrorCode = 404;
 						return;
