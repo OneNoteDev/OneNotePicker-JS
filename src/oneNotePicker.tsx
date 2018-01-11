@@ -2,8 +2,7 @@ import * as React from 'react';
 
 import './oneNotePicker.scss';
 
-import {Constants} from './constants';
-import {Strings} from './strings';
+import {OneNotePickerBase} from './oneNotePickerBase';
 import {NotebookRenderStrategy} from './components/notebookRenderStrategy';
 import {SharedNotebookRenderStrategy} from './components/sharedNotebookRenderStrategy';
 import {ExpandableNode} from './components/treeView/expandableNode';
@@ -18,57 +17,43 @@ export interface OneNotePickerProps extends GlobalProps {
 	sharedNotebooks?: SharedNotebook[];
 }
 
-export class OneNotePicker extends React.Component<OneNotePickerProps, {}> {
-	private get treeViewId() {
-		return Constants.TreeView.id;
-	}
+export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, {}> {
+	protected get rootNodes(): JSX.Element[] {
+		const { notebooks, sharedNotebooks, globals } = this.props;
+		const { focusOnMount, ariaSelectedId } = globals;
 
-	private get activeDescendentId() {
-		if (!this.props.globals.ariaSelectedId) {
-			return '';
-		}
-		return this.treeViewId + this.props.globals.ariaSelectedId;
-	}
-
-	render() {
-		let { notebooks, sharedNotebooks, globals } = this.props;
-		let { focusOnMount, ariaSelectedId } = globals;
-
-		let notebookRenderStrategies: ExpandableNodeRenderStrategy[] =
+		const notebookRenderStrategies: ExpandableNodeRenderStrategy[] =
 			notebooks.map(notebook => new NotebookRenderStrategy(notebook, globals));
 		
-		let sharedNotebookRenderStrategies: ExpandableNodeRenderStrategy[] = sharedNotebooks ?
+		const sharedNotebookRenderStrategies: ExpandableNodeRenderStrategy[] = sharedNotebooks ?
 			sharedNotebooks.map(sharedNotebook => new SharedNotebookRenderStrategy(sharedNotebook, globals)) : [];
 
 		const noPersonalNotebooks = notebookRenderStrategies.length === 0;
 
-		return (
-			<div className='onenote-picker ms-fontColor-themePrimary'>
-				<ul role='tree' aria-label={Strings.get('Accessibility.PickerTableName', this.props.globals.strings)}
-					className='menu-list picker-list-header' aria-activedescendent={this.activeDescendentId}>
-					{notebookRenderStrategies.map((renderStrategy, i) =>
-						!!this.props.globals.callbacks.onSectionSelected || !!this.props.globals.callbacks.onPageSelected ?
-							<ExpandableNode globals={this.props.globals} expanded={renderStrategy.isExpanded()} node={renderStrategy}
-								treeViewId={this.treeViewId} key={renderStrategy.getId()}
-								id={renderStrategy.getId()} tabbable={i === 0} focusOnMount={focusOnMount && i === 0}
-								ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : i === 0}></ExpandableNode> :
-							<LeafNode globals={this.props.globals} node={renderStrategy} treeViewId={this.treeViewId} key={renderStrategy.getId()}
-								id={renderStrategy.getId()} tabbable={i === 0} focusOnMount={focusOnMount && i === 0}
-								ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : i === 0}></LeafNode>)}
-
-					{sharedNotebookRenderStrategies.map((renderStrategy, i) =>
-						!!this.props.globals.callbacks.onSectionSelected || !!this.props.globals.callbacks.onPageSelected ?
-							<ExpandableNode globals={this.props.globals} expanded={renderStrategy.isExpanded()} node={renderStrategy}
-								treeViewId={this.treeViewId} key={renderStrategy.getId()}
-								id={renderStrategy.getId()} tabbable={noPersonalNotebooks && i === 0}
-								focusOnMount={focusOnMount && noPersonalNotebooks && i === 0}
-								ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : noPersonalNotebooks && i === 0}></ExpandableNode> :
-							<LeafNode globals={this.props.globals} node={renderStrategy} treeViewId={this.treeViewId} key={renderStrategy.getId()}
-								id={renderStrategy.getId()} tabbable={noPersonalNotebooks && i === 0}
-								focusOnMount={focusOnMount && noPersonalNotebooks && i === 0}
-								ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : noPersonalNotebooks && i === 0}></LeafNode>)}
-				</ul>
-			</div>
-		);
+		const notebookNodes = notebookRenderStrategies.map((renderStrategy, i) =>
+			!!this.props.globals.callbacks.onSectionSelected || !!this.props.globals.callbacks.onPageSelected ?
+				<ExpandableNode globals={this.props.globals} expanded={renderStrategy.isExpanded()} node={renderStrategy}
+					treeViewId={this.treeViewId} key={renderStrategy.getId()}
+					id={renderStrategy.getId()} tabbable={i === 0} focusOnMount={focusOnMount && i === 0}
+					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : i === 0}></ExpandableNode> :
+				<LeafNode globals={this.props.globals} node={renderStrategy} treeViewId={this.treeViewId} key={renderStrategy.getId()}
+					id={renderStrategy.getId()} tabbable={i === 0} focusOnMount={focusOnMount && i === 0}
+					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : i === 0}></LeafNode>);
+		
+		const sharedNotebookNodes = sharedNotebookRenderStrategies.map((renderStrategy, i) =>
+			!!this.props.globals.callbacks.onSectionSelected || !!this.props.globals.callbacks.onPageSelected ?
+				<ExpandableNode globals={this.props.globals} expanded={renderStrategy.isExpanded()} node={renderStrategy}
+					treeViewId={this.treeViewId} key={renderStrategy.getId()}
+					id={renderStrategy.getId()} tabbable={noPersonalNotebooks && i === 0}
+					focusOnMount={focusOnMount && noPersonalNotebooks && i === 0}
+					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : noPersonalNotebooks && i === 0}></ExpandableNode> :
+				<LeafNode globals={this.props.globals} node={renderStrategy} treeViewId={this.treeViewId} key={renderStrategy.getId()}
+					id={renderStrategy.getId()} tabbable={noPersonalNotebooks && i === 0}
+					focusOnMount={focusOnMount && noPersonalNotebooks && i === 0}
+					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : noPersonalNotebooks && i === 0}></LeafNode>);
+		
+		return notebookNodes.concat(sharedNotebookNodes);
 	}
 }
+
+export * from './oneNoteSingleNotebookPicker';
