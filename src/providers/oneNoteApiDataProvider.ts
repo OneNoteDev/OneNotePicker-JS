@@ -164,8 +164,10 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 				if (responseJson && responseJson.value) {
 					let notebooks = responseJson.value;
 					let notebook: OneNoteApi.Notebook = notebooks[0].Notebook;
-					resolve(notebook.self);
-					return;
+					if (notebook && notebook.self) {
+						resolve(notebook.self);
+						return;
+					}
 				}
 				reject(xhr);
 			}).catch((xhr) => {
