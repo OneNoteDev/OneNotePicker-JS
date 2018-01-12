@@ -1,6 +1,6 @@
 import {Notebook} from './notebook';
-import {SpSection} from './spSection';
-import {SpSectionGroup} from './spSectionGroup';
+import {Section} from './section';
+import {SectionGroup} from './sectionGroup';
 
 /**
  * Represents a notebook that has been made known through
@@ -18,6 +18,6 @@ export interface SharedNotebook extends Notebook {
 
 export interface SharedNotebookApiProperties {
 	id: string;
-	spSectionGroups: SpSectionGroup[];
-	spSections: SpSection[];
+	spSectionGroups: SectionGroup[];
+	spSections: Section[];
 }
