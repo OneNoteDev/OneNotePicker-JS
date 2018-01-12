@@ -47,8 +47,7 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 	}
 
 	getChildren(childrenLevel: number): JSX.Element[] {
-		// This may not work as we need to trigger a re-render
-		if (this.notebook.apiHttpErrorCode) {
+		if (typeof(this.notebook.apiHttpErrorCode) === 'number') {
 			let errorString = Strings.getError(this.notebook.apiHttpErrorCode, this.globals.strings);
 			return [
 				<li role='status' aria-live='polite' aria-label={errorString} className='progress-row'>
