@@ -146,7 +146,7 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 	}
 
 	private getNotebookSelfUrlFromSpUrl(spNotebookUrl: string): Promise<string> {
-		let url = `https://www.onenote.com/api/v1.0/me/notes/notebooks/GetNotebooksFromWebUrls()`;
+		let url = `https://www.onenote.com/api/beta/me/notes/notebooks/GetNotebooksFromWebUrls()`;
 		let headers = {};
 
 		if (this.headers) {
