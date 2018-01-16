@@ -4,5 +4,7 @@ import {Page} from './page';
 export interface Section extends OneNoteItem {
 	expanded: boolean;
 	pages: Page[] | undefined;
-	apiUrl: string
+	apiUrl: string;
+	webUrl?: string;
+	clientUrl?: string;
 }
