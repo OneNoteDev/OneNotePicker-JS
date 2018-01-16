@@ -60,7 +60,7 @@ export class OneNoteApiResponseTransformer {
 			pages: [],
 			apiUrl: section.self,
 			webUrl: sectionAsAny && sectionAsAny.links && sectionAsAny.oneNoteWebUrl && sectionAsAny.links.oneNoteWebUrl.href as string || undefined,
-			clientUrl: sectionAsAny && sectionAsAny.links && sectionAsAny.oneNoteWebUrl && sectionAsAny.links.oneNoteClientUrl.href as string || undefined
+			clientUrl: sectionAsAny && sectionAsAny.links && sectionAsAny.oneNoteClientUrl && sectionAsAny.links.oneNoteClientUrl.href as string || undefined
 		};
 
 		transformed.pages = !!section.pages ? section.pages.map(page => this.transformPage(page, transformed)) : undefined;
