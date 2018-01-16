@@ -51,6 +51,7 @@ export class OneNoteApiResponseTransformer {
 
 	transformSection(section: OneNoteApi.Section, parent: Notebook | SectionGroup): Section {
 		// Pages may be undefined (e.g., in the getNotebooks call)
+		var sectionAsAny = section as any;
 		var transformed: Section = {
 			parent: parent,
 			id: section.id,
@@ -58,6 +59,8 @@ export class OneNoteApiResponseTransformer {
 			expanded: this.defaultExpanded,
 			pages: [],
 			apiUrl: section.self,
+			webUrl: sectionAsAny && sectionAsAny.links && sectionAsAny.oneNoteWebUrl && sectionAsAny.links.oneNoteWebUrl.href as string || undefined,
+			clientUrl: sectionAsAny && sectionAsAny.links && sectionAsAny.oneNoteWebUrl && sectionAsAny.links.oneNoteClientUrl.href as string || undefined
 		};
 
 		transformed.pages = !!section.pages ? section.pages.map(page => this.transformPage(page, transformed)) : undefined;
