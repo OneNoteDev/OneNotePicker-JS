@@ -1,6 +1,6 @@
 {
   "name": "onenote-picker",
-  "version": "2.1.4",
+  "version": "2.2.0",
   "private": true,
   "dependencies": {
     "bulma": "^0.4.2",
