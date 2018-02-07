@@ -120,3 +120,51 @@
 		margin: 1px;
 	}
 }
+
+// TODO (machiam) Maybe be a different file?
+.picker-dropdown {
+	position: relative;
+	text-align: left;
+	cursor: pointer;
+	text-decoration: none;
+
+	.picker-dropdown-padding {
+		border: 1px solid rgba(22, 35, 58, 0.26);
+		padding: 5px;
+	}
+
+	.picker-popup {
+		position: absolute;
+		overflow-y: auto;
+		background-color: #FFFFFF;
+		border: 1px solid rgba(22, 35, 58, 0.26);
+		max-height: 140px;
+	}
+
+	.popup-upwards {
+		bottom: 100%;
+	}
+
+	.dropdown-arrow-container {
+		height: 14px;
+		width: 18px;
+		float: right;
+		padding-right: 12px;
+
+		svg {
+			height: auto;
+			width: 18px;
+		}
+	}
+
+	.picker-dropdown-toggle-label {
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		padding: 1px 1px 1px 12px;
+	}
+
+	.dropdown-arrow-container svg polygon {
+		fill: #444545;
+	}
+}

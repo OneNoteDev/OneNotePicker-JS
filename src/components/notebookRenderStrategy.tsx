@@ -6,7 +6,6 @@ import {ExpandableNodeRenderStrategy} from './treeView/expandableNodeRenderStrat
 import {ExpandableNode} from './treeView/expandableNode';
 import {LeafNode} from './treeView/leafNode';
 import {Constants} from '../constants';
-import {Strings} from '../strings';
 import {Notebook} from '../oneNoteDataStructures/notebook';
 import {OneNoteItemUtils} from '../oneNoteDataStructures/oneNoteItemUtils';
 import {InnerGlobals} from '../props/globalProps';
@@ -20,9 +19,7 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 		return (
 			<div className={this.isSelected() ? 'picker-selectedItem' : ''} title={this.notebook.name}>
 				<div className='picker-icon-left'>
-					<img
-						src={require('../images/notebook_icon.png')}
-						alt={Strings.get('Accessibility.NotebookIcon', this.globals.strings)}/>
+					<i className='ms-Icon ms-Icon--OneNoteLogo' aria-hidden='true'></i>
 				</div>
 				<div>
 					<label className='ms-fontSize-sPlus'>{this.notebook.name}</label>

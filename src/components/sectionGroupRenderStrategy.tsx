@@ -5,7 +5,6 @@ import {ExpandableNodeRenderStrategy} from './treeView/expandableNodeRenderStrat
 import {ExpandableNode} from './treeView/expandableNode';
 import {LeafNode} from './treeView/leafNode';
 import {Constants} from '../constants';
-import {Strings} from '../strings';
 import {SectionGroup} from '../oneNoteDataStructures/sectionGroup';
 import {InnerGlobals} from '../props/globalProps';
 
@@ -18,9 +17,19 @@ export class SectionGroupRenderStrategy implements ExpandableNodeRenderStrategy 
 		return (
 			<div title={this.sectionGroup.name}>
 				<div className='picker-icon-left'>
-					<img
-						src={require('../images/sectiongroup_icon.png')}
-						alt={Strings.get('Accessibility.SectionGroupIcon', this.globals.strings)}/>
+				<svg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlnsXlink='http://www.w3.org/1999/xlink' x='0px' y='0px'
+					viewBox='0 0 20 20' style={{enableBackground: 'new 0 0 20 20'}} xmlSpace='preserve'>
+						<style type='text/css'>
+							{'.st0 { fill:none;}'}
+						</style>
+						<g>
+							<g>
+								<rect y='0' className='st0' width='20' height='20'/>
+								<path d='M13,3H7v14h6v2h1V1h-1V3z'/>
+							</g>
+							<polygon points='11,1 5,1 5,15 6,15 6,2 11,2   '/>
+						</g>
+				</svg>
 				</div>
 				<div>
 					<label className='ms-fontSize-sPlus'>{this.sectionGroup.name}</label>

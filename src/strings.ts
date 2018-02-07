@@ -8,7 +8,7 @@ export class Strings {
 		'Accessibility.SectionGroupIcon': 'Section Group Icon',
 		'Accessibility.SectionIcon': 'Section Icon',
 		'Accessibility.PickerTableName': 'Save Locations',
-		'Accessibility.PageIcon': 'Page Icon',
+		'Accessibility.PageIcon': 'Page Icon'
 	};
 
 	static get(key: string, overrides?: {}) {
