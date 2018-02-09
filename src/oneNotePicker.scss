@@ -1,0 +1,170 @@
+#oneNotePicker {
+	background: white;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+[dir=rtl] .picker-icon-left img {
+	transform: scaleX(-1);
+}
+
+.onenote-picker {
+	ul {
+		list-style: none;
+		padding: 0;
+	}
+
+	.menu-list a {
+		color: #4a4a4a;
+		display: block;
+	}
+
+	.menu-list li ul {
+		margin-top: 0px;
+		margin-bottom: 0px;
+		margin-right: 0px;
+		border-left: none;
+		padding-left: 5vmin;
+	}
+
+	.menu-list li > a > div {
+		width: 100%;
+		padding-top: 1.2vmin;
+		padding-bottom: 1.2vmin;
+
+		&:hover {
+			background-color: #F4F4F4;
+		}
+	}
+
+	.menu-list li a div {
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	.menu-list label {
+		display: block;
+		color: black;
+		width: 40vmax;
+		font-size: 2.8vmin;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+
+		&.breadcrumbs {
+			color: #666666;
+			font-size: 2.2vmin;
+			width: 45vmax;
+		}
+	}
+
+	.picker-list-header {
+		overflow-x: hidden;
+		margin-top: 0px;
+		margin-bottom: 0px;
+		margin-right: 0px;
+	}
+
+	.picker-icon-left {
+		margin-left: 2.4vmin;
+		margin-right: 1vmin;
+
+		img {
+			display: block;
+			width: 4.8vmin;
+			height: 4.8vmin;
+		}
+	}
+
+	.picker-icon-right {
+		margin-top: 8px;
+		float: right;
+		margin-right: 2vmin;
+		color: #666666;
+
+		span {
+			display: inline-block;
+			font-size: 2.8vmin
+		}
+
+		img {
+			display: inline-block;
+			width: 4.8vmin;
+			height: 4.8vmin;
+		}
+	}
+
+	.picker-selectedItem {
+		// Office UI Fabric specifies a hover which has more priority this, hence the !important
+		background-color: #D0D0D0 !important;
+	}
+
+	.progress-row {
+		padding-top: 1.5vmin;
+		padding-bottom: 1.5vmin;
+		margin-left: 3.5vmin;
+		word-wrap: break-word;
+		font-size: 2.8vmin;
+
+		svg {
+			animation: spin 1.3s infinite cubic-bezier(.53,.21,.29,.67);
+			width: 4.8vmin;
+			height: 4.8vmin;
+		}
+	}
+
+	.picker-row {
+		// We need this to ensure there's enough space for a focus border
+		margin: 1px;
+	}
+}
+
+// TODO (machiam) Maybe be a different file?
+.picker-dropdown {
+	position: relative;
+	text-align: left;
+	cursor: pointer;
+	text-decoration: none;
+
+	.picker-dropdown-padding {
+		border: 1px solid rgba(22, 35, 58, 0.26);
+		padding: 5px;
+	}
+
+	.picker-popup {
+		position: absolute;
+		overflow-y: auto;
+		background-color: #FFFFFF;
+		border: 1px solid rgba(22, 35, 58, 0.26);
+		max-height: 140px;
+	}
+
+	.popup-upwards {
+		bottom: 100%;
+	}
+
+	.dropdown-arrow-container {
+		height: 14px;
+		width: 18px;
+		float: right;
+		padding-right: 12px;
+
+		svg {
+			height: auto;
+			width: 18px;
+		}
+	}
+
+	.picker-dropdown-toggle-label {
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		padding: 1px 1px 1px 12px;
+	}
+
+	.dropdown-arrow-container svg polygon {
+		fill: #444545;
+	}
+}
