@@ -99,3 +99,5 @@ export class OneNoteItemUtils {
 		return ancestry;
 	}
 }
+
+export * from './oneNoteApiResponseTransformer';
