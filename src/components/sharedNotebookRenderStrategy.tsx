@@ -1,15 +1,18 @@
 import * as React from 'react';
 
-import {SectionRenderStrategy} from './sectionRenderStrategy';
-import {SectionGroupRenderStrategy} from './sectionGroupRenderStrategy';
-import {ExpandableNodeRenderStrategy} from './treeView/expandableNodeRenderStrategy';
-import {ExpandableNode} from './treeView/expandableNode';
-import {LeafNode} from './treeView/leafNode';
-import {Constants} from '../constants';
-import {Strings} from '../strings';
-import {SharedNotebook} from '../oneNoteDataStructures/sharedNotebook';
-import {InnerGlobals} from '../props/globalProps';
-import {OneNoteItemUtils} from '../oneNoteDataStructures/oneNoteItemUtils';
+import { SectionRenderStrategy } from './sectionRenderStrategy';
+import { SectionGroupRenderStrategy } from './sectionGroupRenderStrategy';
+import { ExpandableNodeRenderStrategy } from './treeView/expandableNodeRenderStrategy';
+import { ExpandableNode } from './treeView/expandableNode';
+import { LeafNode } from './treeView/leafNode';
+import { Constants } from '../constants';
+import { Strings } from '../strings';
+import { SharedNotebook } from '../oneNoteDataStructures/sharedNotebook';
+import { InnerGlobals } from '../props/globalProps';
+import { OneNoteItemUtils } from '../oneNoteDataStructures/oneNoteItemUtils';
+import { NotebookOpenedIconSvg } from './icons/notebookOpenedIcon.svg';
+import { NotebookClosedIconSvg } from './icons/notebookClosedIcon.svg';
+import { SpinnerIconSvg} from './icons/spinnerIcon.svg';
 
 export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	onClickBinded = this.onClick.bind(this);
@@ -21,9 +24,7 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 		return (
 			<div className={this.isSelected() ? 'picker-selectedItem' : ''} title={this.breadcrumbs() + '/' + this.notebook.name}>
 				<div className='picker-icon-left'>
-					<img
-						src={require('../images/notebook_icon.png')}
-						alt={Strings.get('Accessibility.NotebookIcon', this.globals.strings)}/>
+					{this.isExpanded() ? <NotebookOpenedIconSvg/> : <NotebookClosedIconSvg/>}
 				</div>
 				<div>
 					<label>{this.notebook.name}</label>
@@ -59,12 +60,7 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 		if (!this.notebook.apiProperties) {
 			return [
 				<li className='progress-row'>
-					<svg viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg' xmlnsXlink='http://www.w3.org/1999/xlink'>
-						<g id='Artboard' stroke='none' strokeWidth='1' fill='none' fillRule='evenodd'>
-							<circle id='Oval' stroke='#C7E0F4' strokeWidth='5' cx='32' cy='32' r='29'></circle>
-							<path d='M52.6861723,11.5097602 C47.418631,6.25144806 40.1470894,3 32.1161315,3 C24.0850974,3 16.8134942,6.25150964 11.545941,11.5099096' id='Oval-Copy' stroke='#0078D7' strokeWidth='5'></path>
-						</g>
-					</svg>
+					<SpinnerIconSvg />
 				</li>
 			];
 		}
@@ -75,9 +71,9 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 				<ExpandableNode
 					expanded={renderStrategy.isExpanded()} node={renderStrategy} globals={this.globals}
 					treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
-					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()}></ExpandableNode> :
+					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} /> :
 				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} globals={this.globals}
-					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()}></LeafNode>);
+					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} />);
 
 		let sectionRenderStrategies = this.notebook.apiProperties.spSections.map(section => new SectionRenderStrategy(section, this.globals));
 		let sections = sectionRenderStrategies.map(renderStrategy =>
@@ -85,9 +81,9 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 				<ExpandableNode
 					expanded={renderStrategy.isExpanded()} node={renderStrategy} globals={this.globals}
 					treeViewId={Constants.TreeView.id} key={renderStrategy.getId() }
-					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()}></ExpandableNode> :
+					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} /> :
 				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} globals={this.globals}
-					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()}></LeafNode>);
+					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} />);
 
 		return sectionGroups.concat(sections);
 	}
@@ -106,9 +102,12 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 
 	private onClick() {
 		let { onNotebookSelected } = this.globals.callbacks;
+
 		if (!!onNotebookSelected) {
 			onNotebookSelected(this.notebook, OneNoteItemUtils.getAncestry(this.notebook));
 		}
+
+		this.notebook.expanded = !this.notebook.expanded;
 	}
 
 	private onExpand() {
