@@ -74,6 +74,6 @@
     "build": "rimraf dist && cross-env NODE_ENV=production webpack --progress --colors && cross-env NODE_ENV=minify webpack --progress --colors && rimraf dist/types",
     "analyze": "cross-env NODE_ENV=analyze webpack --progress --colors",
     "static-content-serve": "node ./static-server.js",
-    "static-content-build": "cross-env NODE_ENV=production webpack --progress --colors && cross-env NODE_ENV=minify webpack --progress --colors --watch"
+    "static-content-build": "cross-env NODE_ENV=production webpack --progress --colors --watch"
   }
 }

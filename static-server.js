@@ -9,6 +9,6 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.use('/dist', express.static(path.join(__dirname, 'dist')));
+app.use('/dist', express.static(path.join(__dirname, 'dist'), {etag: false}));
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'));
