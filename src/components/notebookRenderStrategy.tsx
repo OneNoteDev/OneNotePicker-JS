@@ -1,14 +1,15 @@
 import * as React from 'react';
-
-import {SectionRenderStrategy} from './sectionRenderStrategy';
-import {SectionGroupRenderStrategy} from './sectionGroupRenderStrategy';
-import {ExpandableNodeRenderStrategy} from './treeView/expandableNodeRenderStrategy';
-import {ExpandableNode} from './treeView/expandableNode';
-import {LeafNode} from './treeView/leafNode';
-import {Constants} from '../constants';
-import {Notebook} from '../oneNoteDataStructures/notebook';
-import {OneNoteItemUtils} from '../oneNoteDataStructures/oneNoteItemUtils';
-import {InnerGlobals} from '../props/globalProps';
+import { SectionRenderStrategy } from './sectionRenderStrategy';
+import { SectionGroupRenderStrategy } from './sectionGroupRenderStrategy';
+import { ExpandableNodeRenderStrategy } from './treeView/expandableNodeRenderStrategy';
+import { ExpandableNode } from './treeView/expandableNode';
+import { LeafNode } from './treeView/leafNode';
+import { Constants } from '../constants';
+import { Notebook } from '../oneNoteDataStructures/notebook';
+import { OneNoteItemUtils } from '../oneNoteDataStructures/oneNoteItemUtils';
+import { InnerGlobals } from '../props/globalProps';
+import { NotebookOpenedIconSvg } from './icons/notebookOpenedIcon.svg';
+import { NotebookClosedIconSvg } from './icons/notebookClosedIcon.svg';
 
 export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	onClickBinded = this.onClick.bind(this);
@@ -17,12 +18,12 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	
 	element(): JSX.Element {
 		return (
-			<div className={this.isSelected() ? 'picker-selectedItem' : ''} title={this.notebook.name}>
-				<div className='picker-icon-left'>
-					<i className='ms-Icon ms-Icon--OneNoteLogo' aria-hidden='true'></i>
+			<div className={this.isSelected() ? 'picker-selectedItem notebook' : 'notebook'} title={this.notebook.name}>
+				<div className='picker-icon'>
+					{this.isExpanded() ? <NotebookOpenedIconSvg/> : <NotebookClosedIconSvg />}
 				</div>
-				<div>
-					<label className='ms-fontSize-sPlus'>{this.notebook.name}</label>
+				<div className='picker-label'>
+					<label>{this.notebook.name}</label>
 				</div>
 			</div>);
 	}
@@ -42,9 +43,9 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 				<ExpandableNode
 					expanded={renderStrategy.isExpanded()} node={renderStrategy} globals={this.globals}
 					treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
-					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()}></ExpandableNode> :
+					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()}/> :
 				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} globals={this.globals}
-					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()}></LeafNode>);
+					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} />);
 
 		let sectionRenderStrategies = this.notebook.sections.map(section => new SectionRenderStrategy(section, this.globals));
 		let sections = sectionRenderStrategies.map(renderStrategy =>
@@ -52,11 +53,11 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 				<ExpandableNode
 					expanded={renderStrategy.isExpanded()} node={renderStrategy} globals={this.globals}
 					treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
-					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()}></ExpandableNode> :
+					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} /> :
 				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} globals={this.globals}
-					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()}></LeafNode>);
+					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} />);
 
-		return sectionGroups.concat(sections);
+		return sections.concat(sectionGroups);
 	}
 
 	isExpanded(): boolean {
@@ -76,5 +77,6 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 		if (!!onNotebookSelected) {
 			onNotebookSelected(this.notebook, OneNoteItemUtils.getAncestry(this.notebook));
 		}
+		this.notebook.expanded = !this.notebook.expanded;
 	}
 }
