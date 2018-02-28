@@ -15,12 +15,12 @@ export class SectionRenderStrategy implements ExpandableNodeRenderStrategy {
 	
 	element(): JSX.Element {
 		return (
-			<div className={this.isSelected() ? 'picker-selectedItem' : ''} title={this.section.name}>
-				<div className='picker-icon-left'>
+			<div className={this.isSelected() ? 'picker-selectedItem section' : 'section'} title={this.section.name}>
+				<div className='picker-icon'>
 					<SectionIconSvg/>
 				</div>
-				<div>
-					<label className='ms-fontSize-sPlus'>{this.section.name}</label>
+				<div className='picker-label'>
+					<label>{this.section.name}</label>
 				</div>
 			</div>
 		);

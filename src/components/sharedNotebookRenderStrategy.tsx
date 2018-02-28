@@ -22,19 +22,17 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 
 	element(): JSX.Element {
 		return (
-			<div className={this.isSelected() ? 'picker-selectedItem' : ''} title={this.breadcrumbs() + '/' + this.notebook.name}>
-				<div className='picker-icon-left'>
+			<div className={this.isSelected() ? 'picker-selectedItem shared-notebook' : 'shared-notebook'} title={this.breadcrumbs() + '/' + this.notebook.name}>
+				<div className='picker-icon'>
 					{this.isExpanded() ? <NotebookOpenedIconSvg/> : <NotebookClosedIconSvg/>}
 				</div>
-				<div>
+				<div className='picker-label'>
 					<label>{this.notebook.name}</label>
 					<label className='breadcrumbs'>{this.breadcrumbs()}</label>
 				</div>
-				<div className='picker-icon-right'>
+				<div className='picker-shared-icon'>
 					<span aria-hidden='true'>{Strings.get('Shared', this.globals.strings)}</span>
-					<img
-						src={require('../images/shared_icon.png')}
-						alt={Strings.get('Shared', this.globals.strings)}/>
+					<i className='ms-Icon ms-Icon--People'/>
 				</div>
 			</div>);
 	}

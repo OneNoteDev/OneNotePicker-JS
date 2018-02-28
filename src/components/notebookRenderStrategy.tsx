@@ -18,12 +18,12 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	
 	element(): JSX.Element {
 		return (
-			<div className={this.isSelected() ? 'picker-selectedItem' : ''} title={this.notebook.name}>
-				<div className='picker-icon-left'>
+			<div className={this.isSelected() ? 'picker-selectedItem notebook' : 'notebook'} title={this.notebook.name}>
+				<div className='picker-icon'>
 					{this.isExpanded() ? <NotebookOpenedIconSvg/> : <NotebookClosedIconSvg />}
 				</div>
-				<div>
-					<label className='ms-fontSize-sPlus'>{this.notebook.name}</label>
+				<div className='picker-label'>
+					<label>{this.notebook.name}</label>
 				</div>
 			</div>);
 	}

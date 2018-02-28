@@ -16,12 +16,12 @@ export class SectionGroupRenderStrategy implements ExpandableNodeRenderStrategy 
 	
 	element(): JSX.Element {
 		return (
-			<div title={this.sectionGroup.name}>
-				<div className='picker-icon-left'>
+			<div className='section-group' title={this.sectionGroup.name}>
+				<div className='picker-icon'>
 					<SectionGroupIconSvg />
 				</div>
-				<div>
-					<label className='ms-fontSize-sPlus'>{this.sectionGroup.name}</label>
+				<div className='picker-label'>
+					<label>{this.sectionGroup.name}</label>
 				</div>
 			</div>);
 	}

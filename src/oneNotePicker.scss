@@ -6,14 +6,90 @@
 	user-select: none;
 }
 
-[dir=rtl] .picker-icon-left img {
-	transform: scaleX(-1);
+svg.spinner {
+	animation: spin 1.3s infinite cubic-bezier(0.53,0.21,0.29,0.67)
 }
 
+
 .onenote-picker {
+	$primary-text-color: #000;
+	$secondary-text-color: #666;
+
+	color: $primary-text-color;
+	max-width: 100%;
+
+	[dir=rtl] {
+		direction: rtl;
+	}
+
+	svg {
+		width: 1rem;
+		height: 1rem;
+	}
+
 	ul {
 		list-style: none;
 		padding: 0;
+	}
+
+	.notebook, .section-group, .section, .shared-notebook {
+		display: flex;
+		align-items: center;
+		line-height: 1rem;
+		padding: 0.5rem;
+
+		.picker-label, .picker-icon, .picker-shared-icon {
+			padding: 0.25rem;
+			order: 3;
+		}
+
+		.picker-label {
+			flex: 1 1 auto;
+			overflow: hidden;
+			text-overflow: ellipsis;
+
+			[dir=rtl] {
+				order: 2;
+			}
+
+			label {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+
+				color: $primary-text-color;
+				margin-bottom: 0;
+				font-weight: normal;
+			}
+
+			.breadcrumbs {
+				color: $secondary-text-color;
+				font-size: 0.8rem;
+			}
+		}
+
+		.picker-shared-icon {
+			color: $secondary-text-color;
+			font-size: 0.8rem;
+			align-self: flex-end;
+
+			[dir=rtl] {
+				order: 1;
+			}
+
+			img {
+				height: 0.8rem;
+				width: 0.8rem;
+			}
+
+			span {
+				display: none;
+			}
+		}
+
+		&:hover {
+			background-color: #F4F4F4;
+		}
 	}
 
 	.menu-list a {
@@ -22,78 +98,9 @@
 	}
 
 	.menu-list li ul {
-		margin-top: 0;
-		margin-bottom: 0;
-		margin-right: 0;
+		margin: 0;
 		border-left: none;
-		padding-left: 5vmin;
-	}
-
-	.menu-list li > a > div {
-		width: 100%;
-		padding-top: 1.2vmin;
-		padding-bottom: 1.2vmin;
-
-		&:hover {
-			background-color: #F4F4F4;
-		}
-	}
-
-	.menu-list li a div {
-		display: inline-block;
-		vertical-align: middle;
-	}
-
-	.menu-list label {
-		display: block;
-		color: black;
-		width: 40vmax;
-		font-size: 2.8vmin;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-
-		&.breadcrumbs {
-			color: #666666;
-			font-size: 2.2vmin;
-			width: 45vmax;
-		}
-	}
-
-	.picker-list-header {
-		overflow-x: hidden;
-		margin-top: 0;
-		margin-bottom: 0;
-		margin-right: 0;
-	}
-
-	.picker-icon-left {
-		margin-left: 2.4vmin;
-		margin-right: 1vmin;
-
-		img {
-			display: block;
-			width: 4.8vmin;
-			height: 4.8vmin;
-		}
-	}
-
-	.picker-icon-right {
-		margin-top: 8px;
-		float: right;
-		margin-right: 2vmin;
-		color: #666666;
-
-		span {
-			display: inline-block;
-			font-size: 2.8vmin
-		}
-
-		img {
-			display: inline-block;
-			width: 4.8vmin;
-			height: 4.8vmin;
-		}
+		padding-left: 1.5rem;
 	}
 
 	.picker-selectedItem {
@@ -101,23 +108,15 @@
 		background-color: #D0D0D0 !important;
 	}
 
-	.progress-row {
-		padding-top: 1.5vmin;
-		padding-bottom: 1.5vmin;
-		margin-left: 3.5vmin;
-		word-wrap: break-word;
-		font-size: 2.8vmin;
-
-		svg {
-			animation: spin 1.3s infinite cubic-bezier(.53,.21,.29,.67);
-			width: 4.8vmin;
-			height: 4.8vmin;
-		}
-	}
-
 	.picker-row {
 		// We need this to ensure there's enough space for a focus border
 		margin: 1px;
+	}
+
+	.progress-row {
+		line-height: 1rem;
+		text-align: center;
+		padding: 0.25rem;
 	}
 }
 
