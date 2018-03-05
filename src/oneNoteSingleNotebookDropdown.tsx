@@ -13,11 +13,16 @@ export interface OneNoteSingleNotebookDropdownProps extends OneNoteSingleNoteboo
 }
 
 export class OneNoteSingleNotebookDropdown extends React.Component<OneNoteSingleNotebookDropdownProps, OneNoteSingleNotebookDropdownState> {
+	private wrapperRef: Node;
+
 	constructor() {
 		super();
 		this.state = {
 			popupVisible: false
 		};
+
+		this.setWrapperRef = this.setWrapperRef.bind(this);
+		this.handleClickOutside = this.handleClickOutside.bind(this);
 	}
 
 	onClick() {
@@ -30,6 +35,26 @@ export class OneNoteSingleNotebookDropdown extends React.Component<OneNoteSingle
 		this.setState({
 			popupVisible: false
 		});
+	}
+
+	private setWrapperRef(node) {
+		this.wrapperRef = node as Node;
+	}
+
+	private handleClickOutside(event) {
+		if (this.wrapperRef && !this.wrapperRef.contains(event.target) && this.state.popupVisible) {
+			this.setState({
+				popupVisible: false
+			});
+		}
+	}
+
+	componentDidMount() {
+		document.addEventListener('mousedown', this.handleClickOutside);
+	}
+
+	componentWillUnmount() {
+		document.removeEventListener('mousedown', this.handleClickOutside);
 	}
 
 	render() {
@@ -55,7 +80,7 @@ export class OneNoteSingleNotebookDropdown extends React.Component<OneNoteSingle
 		newProps.globals.callbacks = newCallbacks;
 
 		return (
-			<div className='picker-dropdown'>
+			<div className='picker-dropdown' ref={this.setWrapperRef}>
 				<div className='picker-dropdown-padding'>
 					<a className='picker-dropdown-toggle' onClick={this.onClick.bind(this)}>
 						<div className='dropdown-arrow-container'>

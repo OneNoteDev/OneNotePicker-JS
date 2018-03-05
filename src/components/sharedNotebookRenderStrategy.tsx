@@ -105,7 +105,9 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 			onNotebookSelected(this.notebook, OneNoteItemUtils.getAncestry(this.notebook));
 		}
 
-		this.notebook.expanded = !this.notebook.expanded;
+		if (this.globals.callbacks.onSectionSelected || this.globals.callbacks.onPageSelected) {
+			this.notebook.expanded = !this.notebook.expanded;
+		}
 	}
 
 	private onExpand() {
