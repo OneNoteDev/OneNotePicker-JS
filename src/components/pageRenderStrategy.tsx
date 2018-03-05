@@ -15,7 +15,7 @@ export class PageRenderStrategy implements NodeRenderStrategy {
 		// TODO image is a placeholder as we don't support pages yet
 		return (
 			<div className={this.isSelected() ? 'picker-selectedItem' : ''} title={this.page.name}>
-				<div className='picker-icon-left'>
+				<div className='picker-icon'>
 					<img
 						src={require('../images/section_icon.png')}
 						alt={Strings.get('Accessibility.PageIcon', this.globals.strings)}/>
