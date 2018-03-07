@@ -10,6 +10,7 @@ import { OneNoteItemUtils } from '../oneNoteDataStructures/oneNoteItemUtils';
 import { InnerGlobals } from '../props/globalProps';
 import { NotebookOpenedIconSvg } from './icons/notebookOpenedIcon.svg';
 import { NotebookClosedIconSvg } from './icons/notebookClosedIcon.svg';
+import { ChevronSvg} from './icons/chevron.svg';
 
 export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	onClickBinded = this.onClick.bind(this);
@@ -19,6 +20,9 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	element(): JSX.Element {
 		return (
 			<div className={this.isSelected() ? 'picker-selectedItem notebook' : 'notebook'} title={this.notebook.name}>
+				<div className={this.isExpanded() ? 'chevron-icon opened' : 'chevron-icon closed'}>
+					<ChevronSvg />
+				</div>
 				<div className='picker-icon'>
 					{this.isExpanded() ? <NotebookOpenedIconSvg/> : <NotebookClosedIconSvg />}
 				</div>

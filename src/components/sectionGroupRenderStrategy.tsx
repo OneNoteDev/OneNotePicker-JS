@@ -8,6 +8,7 @@ import { Constants } from '../constants';
 import { SectionGroup } from '../oneNoteDataStructures/sectionGroup';
 import { InnerGlobals } from '../props/globalProps';
 import { SectionGroupIconSvg } from './icons/sectionGroupIcon.svg';
+import { ChevronSvg} from './icons/chevron.svg';
 
 export class SectionGroupRenderStrategy implements ExpandableNodeRenderStrategy {
 	onClickBinded = this.onClick.bind(this);
@@ -17,6 +18,9 @@ export class SectionGroupRenderStrategy implements ExpandableNodeRenderStrategy 
 	element(): JSX.Element {
 		return (
 			<div className='section-group' title={this.sectionGroup.name}>
+				<div className={this.isExpanded() ? 'chevron-icon opened' : 'chevron-icon closed'}>
+					<ChevronSvg />
+				</div>
 				<div className='picker-icon'>
 					<SectionGroupIconSvg />
 				</div>
@@ -71,5 +75,6 @@ export class SectionGroupRenderStrategy implements ExpandableNodeRenderStrategy 
 
 	private onClick() {
 		// No additional functionality
+		this.sectionGroup.expanded = !this.sectionGroup.expanded;
 	}
 }

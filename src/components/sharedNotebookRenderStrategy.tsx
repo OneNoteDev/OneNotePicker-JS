@@ -13,6 +13,7 @@ import { OneNoteItemUtils } from '../oneNoteDataStructures/oneNoteItemUtils';
 import { NotebookOpenedIconSvg } from './icons/notebookOpenedIcon.svg';
 import { NotebookClosedIconSvg } from './icons/notebookClosedIcon.svg';
 import { SpinnerIconSvg} from './icons/spinnerIcon.svg';
+import {ChevronSvg} from './icons/chevron.svg';
 
 export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	onClickBinded = this.onClick.bind(this);
@@ -23,6 +24,9 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 	element(): JSX.Element {
 		return (
 			<div className={this.isSelected() ? 'picker-selectedItem shared-notebook' : 'shared-notebook'} title={this.breadcrumbs() + '/' + this.notebook.name}>
+				<div className={this.isExpanded() ? 'chevron-icon opened' : 'chevron-icon closed'}>
+					<ChevronSvg />
+				</div>
 				<div className='picker-icon'>
 					{this.isExpanded() ? <NotebookOpenedIconSvg/> : <NotebookClosedIconSvg/>}
 				</div>
