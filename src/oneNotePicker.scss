@@ -12,8 +12,9 @@ svg.spinner {
 
 
 .onenote-picker {
-	$primary-text-color: #000;
+	$primary-text-color: #737373;
 	$secondary-text-color: #666;
+	$highlighted-text-color: #000;
 
 	color: $primary-text-color;
 	max-width: 100%;
@@ -38,9 +39,30 @@ svg.spinner {
 		line-height: 1rem;
 		padding: 0.5rem;
 
-		.picker-label, .picker-icon, .picker-shared-icon {
+		.chevron-icon, .picker-label, .picker-icon, .picker-shared-icon {
 			padding: 0.25rem;
-			order: 3;
+			order: 4;
+
+			svg {
+				padding: 0;
+			}
+		}
+
+		.chevron-icon {
+			transition-duration: 0.3s;
+			transition-property: transform;
+
+			svg {
+				width: 0.5rem;
+			}
+
+			[dir=rtl] {
+				order: 2;
+			}
+
+			&.closed svg {
+				transform: rotate(180deg);
+			}
 		}
 
 		.picker-label {
@@ -49,13 +71,14 @@ svg.spinner {
 			text-overflow: ellipsis;
 
 			[dir=rtl] {
-				order: 2;
+				order: 3;
 			}
 
 			label {
 				overflow: hidden;
 				text-overflow: ellipsis;
 				white-space: nowrap;
+				line-height: 1.3rem;
 
 				color: $primary-text-color;
 				margin-bottom: 0;
@@ -88,7 +111,7 @@ svg.spinner {
 		}
 
 		&:hover {
-			background-color: #F4F4F4;
+			background-color: #F9F9F9;
 		}
 	}
 
@@ -97,7 +120,7 @@ svg.spinner {
 		margin-bottom: 10px;
 
 		a {
-			color: #4a4a4a;
+			color: #737373;
 			display: block;
 		}
 
@@ -110,7 +133,11 @@ svg.spinner {
 
 	.picker-selectedItem {
 		// Office UI Fabric specifies a hover which has more priority this, hence the !important
-		background-color: #D0D0D0 !important;
+		background-color: #F3F3F3 !important;
+
+		.picker-label label {
+			color: $highlighted-text-color !important;
+		}
 	}
 
 	.picker-row {
