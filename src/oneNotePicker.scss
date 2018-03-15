@@ -199,3 +199,40 @@ svg.spinner {
 		fill: #444545;
 	}
 }
+
+// Default Icon Colors
+svg.chevron-icon {
+	color: #444;
+}
+
+svg.notebook-closed-icon {
+	color: #444;
+}
+
+svg.notebook-opened-icon {
+	color: #444;
+}
+
+svg.section-group-icon {
+	.primary-section-outline {
+		color: #444;
+	}
+
+	.secondary-section-outline {
+		color:#444545
+	}
+}
+
+svg.section-icon {
+	color: #444;
+}
+
+svg.spinner {
+	.spinner-circle {
+		color: #C7E0F4;
+	}
+
+	.spinner-progress {
+		color: #0078D7;
+	}
+}
