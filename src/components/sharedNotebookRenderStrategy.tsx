@@ -116,11 +116,12 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 
 	private onExpand() {
 		if (this.isExpandable()) {
-			if (!this.notebook.apiProperties && !this.notebook.startedLoading) {
+			if (!this.notebook.apiProperties && !this.notebook.startedLoading && this.globals.oneNoteDataProvider) {
 				// This notebook was made known to us by GetRecentNotebooks, but we haven't
 				// fetched any metadata or children info
 				this.notebook.startedLoading = true;
 				const depth = this.globals.notebookExpandDepth || 5;
+
 				this.globals.oneNoteDataProvider.getSpNotebookProperties(this.notebook, depth, true).then((apiProperties) => {
 					if (!apiProperties) {
 						this.notebook.apiHttpErrorCode = 404;
