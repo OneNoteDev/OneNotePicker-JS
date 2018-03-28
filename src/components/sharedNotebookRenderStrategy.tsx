@@ -115,37 +115,37 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 	}
 
 	private onExpand() {
-		if (this.isExpandable()) {
-			if (!this.notebook.apiProperties && !this.notebook.startedLoading && this.globals.oneNoteDataProvider) {
-				// This notebook was made known to us by GetRecentNotebooks, but we haven't
-				// fetched any metadata or children info
-				this.notebook.startedLoading = true;
-				const depth = this.globals.notebookExpandDepth || 5;
+		// Check if the picker is expandable
+		if ((this.globals.callbacks.onSectionSelected || !!this.globals.callbacks.onPageSelected) &&
+			!this.notebook.apiProperties && !this.notebook.startedLoading && this.globals.oneNoteDataProvider) {
+			// This notebook was made known to us by GetRecentNotebooks, but we haven't
+			// fetched any metadata or children info
+			this.notebook.startedLoading = true;
+			const depth = this.globals.notebookExpandDepth || 5;
 
-				this.globals.oneNoteDataProvider.getSpNotebookProperties(this.notebook, depth, true).then((apiProperties) => {
-					if (!apiProperties) {
-						this.notebook.apiHttpErrorCode = 404;
-						return;
-					}
+			this.globals.oneNoteDataProvider.getSpNotebookProperties(this.notebook, depth, true).then((apiProperties) => {
+				if (!apiProperties) {
+					this.notebook.apiHttpErrorCode = 404;
+					return;
+				}
 
-					this.notebook.apiProperties = apiProperties;
+				this.notebook.apiProperties = apiProperties;
 
-					if (this.globals.notebookListUpdater) {
-						this.globals.notebookListUpdater.updateNotebookList([this.notebook]);
-					}
-				}).catch((xhrs: XMLHttpRequest[]) => {
-					let max = 0;
-					for (let i = 0; i < xhrs.length; i++) {
-						max = Math.max(xhrs[i].status, max);
-					}
-					this.notebook.apiHttpErrorCode = max;
-				}).then(() => {
-					let { onSharedNotebookInfoReturned } = this.globals.callbacks;
-					if (!!onSharedNotebookInfoReturned) {
-						onSharedNotebookInfoReturned(this.notebook);
-					}
-				});
-			}
+				if (this.globals.notebookListUpdater) {
+					this.globals.notebookListUpdater.updateNotebookList([this.notebook]);
+				}
+			}).catch((xhrs: XMLHttpRequest[]) => {
+				let max = 0;
+				for (let i = 0; i < xhrs.length; i++) {
+					max = Math.max(xhrs[i].status, max);
+				}
+				this.notebook.apiHttpErrorCode = max;
+			}).then(() => {
+				let { onSharedNotebookInfoReturned } = this.globals.callbacks;
+				if (!!onSharedNotebookInfoReturned) {
+					onSharedNotebookInfoReturned(this.notebook);
+				}
+			});
 		}
 	}
 
@@ -153,9 +153,5 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 		let url = this.notebook.webUrl;
 		let split = url.split('/');
 		return split.slice(3, -1).map(decodeURIComponent).join('/');
-	}
-
-	private isExpandable(): boolean {
-		return !!this.globals.callbacks.onSectionSelected || !!this.globals.callbacks.onPageSelected;
 	}
 }
