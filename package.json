@@ -1,6 +1,6 @@
 {
   "name": "onenotepicker",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "files": [
     "dist/**/*"
   ],
@@ -64,8 +64,9 @@
     "typescript": "^2.3.4",
     "url-loader": "^0.5.8",
     "wallaby-webpack": "0.0.38",
-    "webpack": "^2.6.1",
+    "webpack": "^3.1.0",
     "webpack-bundle-analyzer": "^2.8.2",
+    "webpack-cli": "^2.0.14",
     "webpack-dev-server": "^2.4.5",
     "webpack-merge": "^4.1.0"
   },

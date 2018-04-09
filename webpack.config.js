@@ -32,7 +32,12 @@ const base = {
 		path: OUT_DIR,
 		publicPath: '/dist/',
 		filename: '[name].js',
-		library: ["[name]"]
+		library: {
+			root: 'OneNotePicker',
+			amd: 'OneNotePicker',
+			commonjs: 'OneNotePicker'
+		},
+		libraryTarget: 'umd'
 	},
 	target: 'web',
 	resolve: {
