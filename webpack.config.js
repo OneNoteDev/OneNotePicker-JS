@@ -32,12 +32,9 @@ const base = {
 		path: OUT_DIR,
 		publicPath: '/dist/',
 		filename: '[name].js',
-		library: {
-			root: 'OneNotePicker',
-			amd: 'OneNotePicker',
-			commonjs: 'OneNotePicker'
-		},
-		libraryTarget: 'umd'
+		library: 'OneNotePicker',
+		libraryTarget: 'umd',
+		umdNamedDefine: true
 	},
 	target: 'web',
 	resolve: {
@@ -165,8 +162,8 @@ const prod = {
 		})
 	],
 	externals: {
-		'react': 'React',
-		'react-dom': 'ReactDOM',
+		'react': { root: 'React', amd: 'react', commonjs2: 'react', commonjs: 'react' },
+		'react-dom': { root: 'ReactDOM', amd: 'react-dom', commonjs2: 'react-dom', commonjs: 'react-dom' }
 	}
 };
 
