@@ -1,8 +1,8 @@
-import {Notebook} from '../oneNoteDataStructures/notebook';
-import {Section} from '../oneNoteDataStructures/section';
-import {SharedNotebookApiProperties} from '../oneNoteDataStructures/sharedNotebook';
-import {Page} from '../oneNoteDataStructures/page';
-import {SharedNotebook} from '../oneNoteDataStructures/sharedNotebook';
+import { Notebook } from '../oneNoteDataStructures/notebook';
+import { Section } from '../oneNoteDataStructures/section';
+import { SharedNotebookApiProperties } from '../oneNoteDataStructures/sharedNotebook';
+import { Page } from '../oneNoteDataStructures/page';
+import { SharedNotebook } from '../oneNoteDataStructures/sharedNotebook';
 
 /**
  * Exposes calls to fetch OneNote data structures.

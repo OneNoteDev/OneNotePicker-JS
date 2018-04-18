@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import {CommonNodeProps} from './commonNodeProps';
-import {NodeRenderStrategy} from './nodeRenderStrategy';
-import {TreeViewNavigationUtils} from './treeViewNavigationUtils';
+import { CommonNodeProps } from './commonNodeProps';
+import { NodeRenderStrategy } from './nodeRenderStrategy';
+import { TreeViewNavigationUtils } from './treeViewNavigationUtils';
 
 export interface LeafNodeProps extends CommonNodeProps {
 	node: NodeRenderStrategy;
@@ -25,9 +25,9 @@ export class LeafNode extends React.Component<LeafNodeProps, {}> {
 	}
 
 	componentDidMount() {
-		let { focusOnMount, id } = this.props;
+		const { focusOnMount, id } = this.props;
 		if (focusOnMount) {
-			let self = document.querySelector(`[data-id='${id}']`) as HTMLElement;
+			const self = document.querySelector(`[data-id='${id}']`) as HTMLElement;
 			self.focus();
 		}
 	}

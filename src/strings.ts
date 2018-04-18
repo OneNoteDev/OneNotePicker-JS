@@ -17,7 +17,7 @@ export class Strings {
 	}
 
 	static getError(responseCode: number, overrides?: {}) {
-		let responseStr = responseCode + '';
+		const responseStr = responseCode + '';
 		if (responseStr.indexOf('4') === 0) {
 			return this.get('Error.4XX', overrides);
 		}

@@ -2,9 +2,9 @@ import * as React from 'react';
 
 import './oneNotePicker.scss';
 
-import {Constants} from './constants';
-import {Strings} from './strings';
-import {GlobalProps} from './props/globalProps';
+import { Constants } from './constants';
+import { Strings } from './strings';
+import { GlobalProps } from './props/globalProps';
 
 export abstract class OneNotePickerBase<TState extends GlobalProps, TProps> extends React.Component<TState, TProps> {
 	protected get treeViewId() {

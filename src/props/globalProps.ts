@@ -1,6 +1,6 @@
-import {OneNotePickerCallbacks} from './oneNotePickerCallbacks';
-import {OneNoteDataProvider} from '../providers/oneNoteDataProvider';
-import {NotebookListUpdater} from '../oneNoteDataStructures/notebookListUpdater';
+import { OneNotePickerCallbacks } from './oneNotePickerCallbacks';
+import { OneNoteDataProvider } from '../providers/oneNoteDataProvider';
+import { NotebookListUpdater } from '../oneNoteDataStructures/notebookListUpdater';
 
 /**
  * Props accessible by all components in the project. We expose a single

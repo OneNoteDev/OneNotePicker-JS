@@ -14,7 +14,7 @@ const WebpackMerge = require('webpack-merge');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const DtsBundlePlugin = require('./dtsBundlePlugin');
 
-let cssFileName = IS_PROD_MIN ? "[name].min.css" : "[name].css";
+const cssFileName = IS_PROD_MIN ? "[name].min.css" : "[name].css";
 
 const extractSass = new ExtractTextPlugin({
 	filename: cssFileName,
@@ -186,7 +186,7 @@ const analyze = {
 	]
 };
 
-let webpackConfiguration = base;
+const webpackConfiguration = base;
 
 if (IS_PROD) {
 	webpackConfiguration = WebpackMerge(webpackConfiguration, prod);

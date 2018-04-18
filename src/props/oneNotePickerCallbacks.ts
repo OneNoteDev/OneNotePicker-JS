@@ -1,8 +1,8 @@
-import {OneNoteItem} from '../oneNoteDataStructures/oneNoteItem';
-import {Notebook} from '../oneNoteDataStructures/notebook';
-import {Section} from '../oneNoteDataStructures/section';
-import {SharedNotebook} from '../oneNoteDataStructures/sharedNotebook';
-import {Page} from '../oneNoteDataStructures/page';
+import { OneNoteItem } from '../oneNoteDataStructures/oneNoteItem';
+import { Notebook } from '../oneNoteDataStructures/notebook';
+import { Section } from '../oneNoteDataStructures/section';
+import { SharedNotebook } from '../oneNoteDataStructures/sharedNotebook';
+import { Page } from '../oneNoteDataStructures/page';
 
 /**
  * Represents a set of callbacks that the application can register to be
@@ -26,7 +26,7 @@ export interface OneNotePickerCallbacks {
 	onNotebookSelected?: (notebook: Notebook, breadcrumbs: OneNoteItem[]) => void;
 	onSectionSelected?: (section: Section, breadcrumbs: OneNoteItem[]) => void;
 	onPageSelected?: (page: Page, breadcrumbs: OneNoteItem[]) => void;
-	
+
 	// Accessibility callbacks
 	onAccessibleSelection: (selectedItemId: string) => void;
 }

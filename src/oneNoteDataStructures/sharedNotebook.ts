@@ -1,6 +1,6 @@
-import {Notebook} from './notebook';
-import {Section} from './section';
-import {SectionGroup} from './sectionGroup';
+import { Notebook } from './notebook';
+import { Section } from './section';
+import { SectionGroup } from './sectionGroup';
 
 /**
  * Represents a notebook that has been made known through

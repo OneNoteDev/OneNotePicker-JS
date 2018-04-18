@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import {CommonNodeProps} from './commonNodeProps';
-import {ExpandableNodeRenderStrategy} from './expandableNodeRenderStrategy';
-import {TreeViewNavigationUtils} from './treeViewNavigationUtils';
+import { CommonNodeProps } from './commonNodeProps';
+import { ExpandableNodeRenderStrategy } from './expandableNodeRenderStrategy';
+import { TreeViewNavigationUtils } from './treeViewNavigationUtils';
 
 export interface ExpandableNodeProps extends CommonNodeProps {
 	expanded: boolean;
@@ -26,8 +26,8 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 	}
 
 	onClick() {
-		let { node } = this.props;
-		let nextExpandState = !this.state.expanded;
+		const { node } = this.props;
+		const nextExpandState = !this.state.expanded;
 
 		this.setState({ expanded: nextExpandState });
 
@@ -66,9 +66,9 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 	}
 
 	componentDidMount() {
-		let { focusOnMount, id } = this.props;
+		const { focusOnMount, id } = this.props;
 		if (focusOnMount) {
-			let self = document.querySelector(`[data-id='${id}']`) as HTMLElement;
+			const self = document.querySelector(`[data-id='${id}']`) as HTMLElement;
 			self.focus();
 		}
 	}

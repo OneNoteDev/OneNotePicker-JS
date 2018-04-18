@@ -1,7 +1,9 @@
-import {Notebook} from './notebook';
-import {SectionGroup} from './sectionGroup';
-import {Section} from './section';
-import {Page} from './page';
+import * as OneNoteApi from '../../node_modules/onenoteapi/target/oneNoteApi';
+
+import { Notebook } from './notebook';
+import { SectionGroup } from './sectionGroup';
+import { Section } from './section';
+import { Page } from './page';
 
 /**
  * Provides methods to transform data structures to equivalent data
@@ -23,6 +25,7 @@ export class OneNoteApiResponseTransformer {
 			sectionGroups: [],
 			sections: [],
 			apiUrl: notebook.self,
+			// tslint:disable-next-line:no-any
 			webUrl: (notebook.links as any).oneNoteWebUrl.href
 		};
 
@@ -51,6 +54,7 @@ export class OneNoteApiResponseTransformer {
 
 	transformSection(section: OneNoteApi.Section, parent: Notebook | SectionGroup): Section {
 		// Pages may be undefined (e.g., in the getNotebooks call)
+		// tslint:disable-next-line:no-any
 		var sectionAsAny = section as any;
 		var transformed: Section = {
 			parent: parent,

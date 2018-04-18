@@ -10,13 +10,13 @@ import { OneNoteItemUtils } from '../oneNoteDataStructures/oneNoteItemUtils';
 import { InnerGlobals } from '../props/globalProps';
 import { NotebookOpenedIconSvg } from './icons/notebookOpenedIcon.svg';
 import { NotebookClosedIconSvg } from './icons/notebookClosedIcon.svg';
-import { ChevronSvg} from './icons/chevron.svg';
+import { ChevronSvg } from './icons/chevron.svg';
 
 export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	onClickBinded = this.onClick.bind(this);
 
 	constructor(private notebook: Notebook, private globals: InnerGlobals) { }
-	
+
 	element(): JSX.Element {
 		return (
 			<div className={this.isSelected() ? 'picker-selectedItem notebook' : 'notebook'} title={this.notebook.name}>
@@ -24,7 +24,7 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 					<ChevronSvg />
 				</div>
 				<div className='picker-icon'>
-					{this.isExpanded() ? <NotebookOpenedIconSvg/> : <NotebookClosedIconSvg />}
+					{this.isExpanded() ? <NotebookOpenedIconSvg /> : <NotebookClosedIconSvg />}
 				</div>
 				<div className='picker-label'>
 					<label>{this.notebook.name}</label>
@@ -41,18 +41,18 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	}
 
 	getChildren(childrenLevel: number): JSX.Element[] {
-		let sectionGroupRenderStrategies = this.notebook.sectionGroups.map(sectionGroup => new SectionGroupRenderStrategy(sectionGroup, this.globals));
-		let sectionGroups = sectionGroupRenderStrategies.map(renderStrategy =>
+		const sectionGroupRenderStrategies = this.notebook.sectionGroups.map(sectionGroup => new SectionGroupRenderStrategy(sectionGroup, this.globals));
+		const sectionGroups = sectionGroupRenderStrategies.map(renderStrategy =>
 			!!this.globals.callbacks.onSectionSelected || !!this.globals.callbacks.onPageSelected ?
 				<ExpandableNode
 					expanded={renderStrategy.isExpanded()} node={renderStrategy} globals={this.globals}
 					treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
-					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()}/> :
+					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} /> :
 				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} globals={this.globals}
 					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} />);
 
-		let sectionRenderStrategies = this.notebook.sections.map(section => new SectionRenderStrategy(section, this.globals));
-		let sections = sectionRenderStrategies.map(renderStrategy =>
+		const sectionRenderStrategies = this.notebook.sections.map(section => new SectionRenderStrategy(section, this.globals));
+		const sections = sectionRenderStrategies.map(renderStrategy =>
 			!!this.globals.callbacks.onPageSelected ?
 				<ExpandableNode
 					expanded={renderStrategy.isExpanded()} node={renderStrategy} globals={this.globals}
@@ -77,13 +77,13 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	}
 
 	private onClick() {
-		let onNotebookSelected = this.globals.callbacks.onNotebookSelected;
+		const onNotebookSelected = this.globals.callbacks.onNotebookSelected;
 		if (!!onNotebookSelected) {
 			onNotebookSelected(this.notebook, OneNoteItemUtils.getAncestry(this.notebook));
 		}
 
 		if (this.globals.callbacks.onSectionSelected || this.globals.callbacks.onPageSelected) {
 			this.notebook.expanded = !this.notebook.expanded;
-		}	
+		}
 	}
 }

@@ -1,5 +1,5 @@
-import {OneNoteItem} from './oneNoteItem';
-import {Section} from './section';
+import { OneNoteItem } from './oneNoteItem';
+import { Section } from './section';
 
 export interface SectionGroup extends OneNoteItem {
 	expanded: boolean;

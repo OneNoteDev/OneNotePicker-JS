@@ -35,9 +35,9 @@ export class SectionRenderStrategy implements ExpandableNodeRenderStrategy {
 	}
 
 	getChildren(childrenLevel: number): JSX.Element[] {
-		let pageRenderStrategies: PageRenderStrategy[] | undefined =
+		const pageRenderStrategies: PageRenderStrategy[] | undefined =
 			this.section.pages && this.section.pages.map(page => new PageRenderStrategy(page, this.globals));
-		let pages = pageRenderStrategies && pageRenderStrategies.map(renderStrategy =>
+		const pages = pageRenderStrategies && pageRenderStrategies.map(renderStrategy =>
 			<LeafNode treeViewId={Constants.TreeView.id} node={renderStrategy} globals={this.globals}
 				id={renderStrategy.getId()} level={childrenLevel}
 				ariaSelected={renderStrategy.isAriaSelected()} />);
@@ -58,7 +58,7 @@ export class SectionRenderStrategy implements ExpandableNodeRenderStrategy {
 	}
 
 	private onClick() {
-		let onSectionSelected = this.globals.callbacks.onSectionSelected;
+		const onSectionSelected = this.globals.callbacks.onSectionSelected;
 		if (!!onSectionSelected) {
 			onSectionSelected(this.section, OneNoteItemUtils.getAncestry(this.section));
 		}

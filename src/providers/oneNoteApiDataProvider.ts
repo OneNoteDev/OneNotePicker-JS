@@ -1,10 +1,12 @@
-import {OneNoteDataProvider} from './oneNoteDataProvider';
-import {Notebook} from '../oneNoteDataStructures/notebook';
-import {OneNoteApiResponseTransformer} from '../oneNoteDataStructures/oneNoteApiResponseTransformer';
-import {Section} from '../oneNoteDataStructures/section';
-import {SharedNotebookApiProperties} from '../oneNoteDataStructures/sharedNotebook';
-import {Page} from '../oneNoteDataStructures/page';
-import {SharedNotebook} from '../oneNoteDataStructures/sharedNotebook';
+import * as OneNoteApi from '../../node_modules/onenoteapi/target/oneNoteApi';
+
+import { OneNoteDataProvider } from './oneNoteDataProvider';
+import { Notebook } from '../oneNoteDataStructures/notebook';
+import { OneNoteApiResponseTransformer } from '../oneNoteDataStructures/oneNoteApiResponseTransformer';
+import { Section } from '../oneNoteDataStructures/section';
+import { SharedNotebookApiProperties } from '../oneNoteDataStructures/sharedNotebook';
+import { Page } from '../oneNoteDataStructures/page';
+import { SharedNotebook } from '../oneNoteDataStructures/sharedNotebook';
 
 /**
  * Implements OneNoteDataProvider with external calls to OneNote's API.
@@ -19,13 +21,15 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 	}
 
 	getNotebooks(expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<Notebook[]> {
+		// tslint:disable-next-line:no-any
 		return this.api.getNotebooksWithExpandedSections(expands, excludeReadOnlyNotebooks).then((responsePackage: OneNoteApi.ResponsePackage<any>) => {
 			return Promise.resolve(this.responseTransformer.transformNotebooks(responsePackage.parsedResponse.value));
 		});
 	}
 
 	getPages(section: Section): Promise<Page[]> {
-		return this.api.getPages({sectionId: section.id}).then((responsePackage: OneNoteApi.ResponsePackage<any>) => {
+		// tslint:disable-next-line:no-any
+		return this.api.getPages({ sectionId: section.id }).then((responsePackage: OneNoteApi.ResponsePackage<any>) => {
 			return Promise.resolve(this.responseTransformer.transformPages(responsePackage.parsedResponse.value, section));
 		});
 	}
@@ -35,14 +39,16 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 	getSpNotebooks(): Promise<SharedNotebook[]> {
 		// TODO (machiam) move this to OneNoteApi project
 		return this.http('GET', `https://www.onenote.com/api/v1.0/me/notes/notebooks/getrecentnotebooks(includePersonalNotebooks=false)`, this.authHeader, this.headers).then((xhr: XMLHttpRequest) => {
-			let parsedResponse: any = xhr.response && JSON.parse(xhr.response);
+			// tslint:disable-next-line:no-any
+			const parsedResponse: any = xhr.response && JSON.parse(xhr.response);
 			if (xhr.status !== 200 || !parsedResponse || !parsedResponse.value) {
 				return Promise.resolve([]);
 			}
 
-			let serviceSharedNotebooks: any[] = parsedResponse.value;
+			// tslint:disable-next-line:no-any
+			const serviceSharedNotebooks: any[] = parsedResponse.value;
 
-			let sharedNotebooks: SharedNotebook[] = [];
+			const sharedNotebooks: SharedNotebook[] = [];
 			for (let i = 0; i < serviceSharedNotebooks.length; i++) {
 				if (this.isOdbNotebook(serviceSharedNotebooks[i])) {
 					sharedNotebooks.push({
@@ -75,16 +81,17 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 		});
 	}
 
+	// tslint:disable-next-line:no-any
 	private isOdbNotebook(notebook: any): boolean {
 		if (notebook.sourceService === 'OneDriveForBusiness') {
 			return true;
 		}
 		if (notebook.sourceService === 'Unknown') {
-			let webUrl: string = notebook.links.oneNoteWebUrl.href;
-			let segments = webUrl.split('/');
+			const webUrl: string = notebook.links.oneNoteWebUrl.href;
+			const segments = webUrl.split('/');
 			if (segments.length > 2) {
 				// This is somewhat naive, but we want to filter out ppe and live
-				let domain = segments[2];
+				const domain = segments[2];
 				return domain.indexOf('.spoppe.') < 0 && domain !== 'd.docs.live.net';
 			}
 		}
@@ -93,7 +100,7 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 
 	private getSharedNotebookName(sharedNotebook): string {
 		let name: string = sharedNotebook.name;
-		let webUrl: string = sharedNotebook.links && sharedNotebook.links.oneNoteWebUrl && sharedNotebook.links.oneNoteWebUrl.href;
+		const webUrl: string = sharedNotebook.links && sharedNotebook.links.oneNoteWebUrl && sharedNotebook.links.oneNoteWebUrl.href;
 
 		if (!name && !webUrl) {
 			return '';
@@ -111,14 +118,14 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 			}
 		}
 
-		let trimmedName = name && name.trim();
+		const trimmedName = name && name.trim();
 		if (trimmedName) {
 			return trimmedName;
 		}
 
 		// We guess that the last url part is the name
-		let splitUrl = webUrl.split('/');
-		let last = splitUrl[splitUrl.length - 1];
+		const splitUrl = webUrl.split('/');
+		const last = splitUrl[splitUrl.length - 1];
 		return decodeURIComponent(last);
 	}
 
@@ -126,10 +133,10 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 		return new Promise<SharedNotebookApiProperties>((resolve, reject) => {
 			this.getNotebookSelfUrlFromSpUrl(spNotebook.webUrl).then((selfUrl) => {
 				this.http('GET', selfUrl + '?' + this.getExpands(expands), this.authHeader, this.headers).then((xhr) => {
-					let notebook: OneNoteApi.Notebook = xhr.response && JSON.parse(xhr.response);
+					const notebook: OneNoteApi.Notebook = xhr.response && JSON.parse(xhr.response);
 					if (notebook) {
-						let spSections = notebook.sections.map(section => this.responseTransformer.transformSection(section, spNotebook));
-						let spSectionGroups = notebook.sectionGroups.map(sectionGroup => this.responseTransformer.transformSectionGroup(sectionGroup, spNotebook));
+						const spSections = notebook.sections.map(section => this.responseTransformer.transformSection(section, spNotebook));
+						const spSectionGroups = notebook.sectionGroups.map(sectionGroup => this.responseTransformer.transformSectionGroup(sectionGroup, spNotebook));
 						resolve({
 							id: notebook.id,
 							spSectionGroups: spSectionGroups,
@@ -146,8 +153,8 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 	}
 
 	private getNotebookSelfUrlFromSpUrl(spNotebookUrl: string): Promise<string> {
-		let url = `https://www.onenote.com/api/beta/me/notes/notebooks/GetNotebooksFromWebUrls()`;
-		let headers = {};
+		const url = `https://www.onenote.com/api/beta/me/notes/notebooks/GetNotebooksFromWebUrls()`;
+		const headers = {};
 
 		if (this.headers) {
 			for (let key in this.headers) {
@@ -160,10 +167,10 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 
 		return new Promise<string>((resolve, reject) => {
 			this.http('POST', url, this.authHeader, headers, JSON.stringify({ webUrls: [spNotebookUrl] })).then((xhr) => {
-				let responseJson = xhr.response && JSON.parse(xhr.response);
+				const responseJson = xhr.response && JSON.parse(xhr.response);
 				if (responseJson && responseJson.value) {
-					let notebooks = responseJson.value;
-					let notebook: OneNoteApi.Notebook = notebooks[0].Notebook;
+					const notebooks = responseJson.value;
+					const notebook: OneNoteApi.Notebook = notebooks[0].Notebook;
 					if (notebook && notebook.self) {
 						resolve(notebook.self);
 						return;
@@ -180,13 +187,14 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 		if (!expands || expands <= 0) {
 			return '';
 		}
-		let s = '$expand=sections,sectionGroups';
+		const s = '$expand=sections,sectionGroups';
 		return expands === 1 ? s : `${s}(${this.getExpands(expands - 1)})`;
 	}
 
+	// tslint:disable-next-line:no-any
 	private http(method: string, url: string, authHeader: string, headers?: { [key: string]: string }, body?: any): Promise<XMLHttpRequest> {
 		return new Promise<XMLHttpRequest>((resolve, reject) => {
-			let xhr = new XMLHttpRequest();
+			const xhr = new XMLHttpRequest();
 			xhr.open(method, url);
 
 			xhr.onload = () => {
@@ -206,7 +214,7 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 			};
 
 			xhr.setRequestHeader('Authorization', this.authHeader);
-			
+
 			if (headers) {
 				for (let key in headers) {
 					if (headers.hasOwnProperty(key)) {
