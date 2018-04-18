@@ -1,7 +1,7 @@
-import {Notebook} from './notebook';
-import {SectionGroup} from './sectionGroup';
-import {Section} from './section';
-import {Page} from './page';
+import { Notebook } from './notebook';
+import { SectionGroup } from './sectionGroup';
+import { Section } from './section';
+import { Page } from './page';
 
 type SectionParent = Notebook | SectionGroup;
 
@@ -32,7 +32,7 @@ export class NotebookListUpdater {
 	 * @param apiNotebooks The API notebooks to update the internal notebooks with.
 	 */
 	updateNotebookList(newNotebooks: Notebook[]) {
-		let oldNotebooks = this.notebooks;
+		const oldNotebooks = this.notebooks;
 		this.notebooks = newNotebooks;
 
 		if (oldNotebooks.length === 0) {
@@ -41,7 +41,7 @@ export class NotebookListUpdater {
 
 		// TODO (machiam) cut down on repeat code after we have UTs
 		for (let newNotebook of newNotebooks) {
-			let originalNotebook = oldNotebooks.find(notebook => notebook.id === newNotebook.id);
+			const originalNotebook = oldNotebooks.find(notebook => notebook.id === newNotebook.id);
 			if (!!originalNotebook) {
 				this.preserveSectionParent(originalNotebook, newNotebook);
 			}
@@ -54,7 +54,7 @@ export class NotebookListUpdater {
 
 		// ... then recurse through the children
 		for (let newSectionGroup of next.sectionGroups) {
-			let originalSectionGroup = original.sectionGroups.find(sg => sg.id === newSectionGroup.id);
+			const originalSectionGroup = original.sectionGroups.find(sg => sg.id === newSectionGroup.id);
 			if (!!originalSectionGroup) {
 				this.preserveSectionParent(originalSectionGroup, newSectionGroup);
 			}
@@ -62,7 +62,7 @@ export class NotebookListUpdater {
 
 		// TODO (machiam) cut down on repeat code after we have UTs
 		for (let newSection of next.sections) {
-			let originalSection = original.sections.find(section => section.id === newSection.id);
+			const originalSection = original.sections.find(section => section.id === newSection.id);
 			if (!!originalSection) {
 				newSection.expanded = originalSection.expanded;
 			}
@@ -80,7 +80,7 @@ export class NotebookListUpdater {
 			return;
 		}
 
-		let sectionRef = this.getSectionRefFromNotebooks(parentSectionId, this.notebooks);
+		const sectionRef = this.getSectionRefFromNotebooks(parentSectionId, this.notebooks);
 		if (!sectionRef) {
 			return;
 		}
@@ -90,7 +90,7 @@ export class NotebookListUpdater {
 
 	private getSectionRefFromNotebooks(sectionId: string, notebooks: Notebook[]): Section | undefined {
 		for (let notebook of notebooks) {
-			let sectionRef = this.getSectionRefFromSectionParent(sectionId, notebook);
+			const sectionRef = this.getSectionRefFromSectionParent(sectionId, notebook);
 			if (!!sectionRef) {
 				return sectionRef;
 			}
@@ -110,7 +110,7 @@ export class NotebookListUpdater {
 
 		// ... then recurse through section groups
 		for (let childSectionParent of sectionParent.sectionGroups) {
-			let sectionRef = this.getSectionRefFromSectionParent(sectionId, childSectionParent);
+			const sectionRef = this.getSectionRefFromSectionParent(sectionId, childSectionParent);
 			if (!!sectionRef) {
 				return sectionRef;
 			}

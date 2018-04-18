@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import {Strings} from '../strings';
-import {NodeRenderStrategy} from './treeView/nodeRenderStrategy';
-import {Page} from '../oneNoteDataStructures/page';
-import {OneNoteItemUtils} from '../oneNoteDataStructures/oneNoteItemUtils';
-import {InnerGlobals} from '../props/globalProps';
+import { Strings } from '../strings';
+import { NodeRenderStrategy } from './treeView/nodeRenderStrategy';
+import { Page } from '../oneNoteDataStructures/page';
+import { OneNoteItemUtils } from '../oneNoteDataStructures/oneNoteItemUtils';
+import { InnerGlobals } from '../props/globalProps';
 
 export class PageRenderStrategy implements NodeRenderStrategy {
 	onClickBinded = this.onClick.bind(this);
@@ -18,12 +18,12 @@ export class PageRenderStrategy implements NodeRenderStrategy {
 				<div className='picker-icon'>
 					<img
 						src={require('../images/section_icon.png')}
-						alt={Strings.get('Accessibility.PageIcon', this.globals.strings)}/>
+						alt={Strings.get('Accessibility.PageIcon', this.globals.strings)} />
 				</div>
 				<div>
 					<label className='ms-fontSize-sPlus'>{this.page.name}</label>
 				</div>
-			</div>	
+			</div>
 		);
 	}
 
@@ -44,7 +44,7 @@ export class PageRenderStrategy implements NodeRenderStrategy {
 	}
 
 	private onClick() {
-		let onPageSelected = this.globals.callbacks.onPageSelected;
+		const onPageSelected = this.globals.callbacks.onPageSelected;
 		if (!!onPageSelected) {
 			onPageSelected(this.page, OneNoteItemUtils.getAncestry(this.page));
 		}

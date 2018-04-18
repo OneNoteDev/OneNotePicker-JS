@@ -61,7 +61,7 @@ export class TreeViewNavigationUtils {
 				break;
 		}
 		if (elem) {
-			let id = elem.getAttribute('data-id');
+			const id = elem.getAttribute('data-id');
 			if (id) {
 				onAccessibleSelected(id);
 			}
@@ -78,14 +78,14 @@ export class TreeViewNavigationUtils {
 			return undefined;
 		}
 
-		let navigatables = TreeViewNavigationUtils.getAllNavigatables(treeViewId);
+		const navigatables = TreeViewNavigationUtils.getAllNavigatables(treeViewId);
 
 		// Depending on the offset, we don't have to check all elements. For example, if we're going
 		// backwards by n, we don't need to check the first n elements etc.
-		let startIndex = offset < 0 ? 0 - offset : 0;
-		let endIndex = offset > 0 ? navigatables.length - offset : navigatables.length;
+		const startIndex = offset < 0 ? 0 - offset : 0;
+		const endIndex = offset > 0 ? navigatables.length - offset : navigatables.length;
 		for (let i = startIndex; i < endIndex; i++) {
-			let currentElem = navigatables[i];
+			const currentElem = navigatables[i];
 			if (currentElem.getAttribute('data-id') === thisId) {
 				return navigatables[i + offset];
 			}

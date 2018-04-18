@@ -1,4 +1,4 @@
-import {InnerGlobals} from '../../props/globalProps';
+import { InnerGlobals } from '../../props/globalProps';
 
 export interface CommonNodeProps {
 	// This id lets us scope keyboard navigation to elements with the same id

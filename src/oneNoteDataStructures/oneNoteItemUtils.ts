@@ -1,8 +1,8 @@
-import {Notebook} from './notebook';
-import {OneNoteItem} from './oneNoteItem';
-import {Section} from './section';
-import {SectionGroup} from './sectionGroup';
-import {Polyfills} from '../polyfills';
+import { Notebook } from './notebook';
+import { OneNoteItem } from './oneNoteItem';
+import { Section } from './section';
+import { SectionGroup } from './sectionGroup';
+import { Polyfills } from '../polyfills';
 
 Polyfills.find();
 
@@ -44,7 +44,7 @@ export class OneNoteItemUtils {
 		}
 
 		for (let i = 0; i < sections.length; i++) {
-			let pages = sections[i].pages;
+			const pages = sections[i].pages;
 			if (!!pages) {
 				findResult = pages.find(predicate);
 				if (!!findResult) {
@@ -61,16 +61,16 @@ export class OneNoteItemUtils {
 	 * satisfies the predicate if it exists in the hierarchy.
 	 */
 	static expandTo(notebooks: Notebook[], predicate: (item: OneNoteItem) => boolean) {
-		let item = OneNoteItemUtils.find(notebooks, predicate);
+		const item = OneNoteItemUtils.find(notebooks, predicate);
 		if (!!item) {
-			let ancestry = OneNoteItemUtils.getAncestry(item);
+			const ancestry = OneNoteItemUtils.getAncestry(item);
 			for (let i = 0; i < ancestry.length - 1; i++) {
 				// We know everything until the last item has to be one of these three types, regardless
 				// of the item itself, as they have to be parents
-				let expandable = ancestry[i] as Notebook | SectionGroup | Section;
+				const expandable = ancestry[i] as Notebook | SectionGroup | Section;
 				expandable.expanded = true;
 			}
-		}	
+		}
 	}
 
 	/**
@@ -90,7 +90,7 @@ export class OneNoteItemUtils {
 	static getAncestry(item: OneNoteItem): OneNoteItem[] {
 		let current = item;
 
-		let ancestry = [current];
+		const ancestry = [current];
 		while (!!current.parent) {
 			current = current.parent;
 			ancestry.unshift(current);

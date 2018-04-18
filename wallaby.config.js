@@ -1,12 +1,12 @@
-let wallabyWebpack = require('wallaby-webpack');
+const wallabyWebpack = require('wallaby-webpack');
 
-let webpackConfig = {};
+const webpackConfig = {};
 webpackConfig.externals = webpackConfig.externals || {};
 webpackConfig.externals['react/lib/ExecutionEnvironment'] = true;
 webpackConfig.externals['react/lib/ReactContext'] = true;
 webpackConfig.externals['react/addons'] = true;
 
-let wallabyPostprocessor = wallabyWebpack(webpackConfig);
+const wallabyPostprocessor = wallabyWebpack(webpackConfig);
 
 module.exports = function (wallaby) {
 	return {

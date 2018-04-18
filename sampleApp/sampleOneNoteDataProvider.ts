@@ -1,14 +1,16 @@
 import '../node_modules/onenoteapi/target/oneNoteApi';
+import * as OneNoteApi from '../node_modules/onenoteapi/target/oneNoteApi';
 
-import {OneNoteDataProvider} from '../src/providers/oneNoteDataProvider';
-import {Notebook} from '../src/oneNoteDataStructures/notebook';
-import {Section} from '../src/oneNoteDataStructures/section';
-import {SharedNotebookApiProperties} from '../src/oneNoteDataStructures/sharedNotebook';
-import {Page} from '../src/oneNoteDataStructures/page';
-import {SharedNotebook} from '../src/oneNoteDataStructures/sharedNotebook';
-import {OneNoteApiResponseTransformer} from '../src/oneNoteDataStructures/oneNoteApiResponseTransformer';
+import { OneNoteDataProvider } from '../src/providers/oneNoteDataProvider';
+import { Notebook } from '../src/oneNoteDataStructures/notebook';
+import { Section } from '../src/oneNoteDataStructures/section';
+import { SharedNotebookApiProperties } from '../src/oneNoteDataStructures/sharedNotebook';
+import { Page } from '../src/oneNoteDataStructures/page';
+import { SharedNotebook } from '../src/oneNoteDataStructures/sharedNotebook';
+import { OneNoteApiResponseTransformer } from '../src/oneNoteDataStructures/oneNoteApiResponseTransformer';
 
-let mockResponse: OneNoteApi.ResponsePackage<any> = {
+// tslint:disable-next-line:no-any
+const mockResponse: OneNoteApi.ResponsePackage<any> = {
 	parsedResponse: JSON.parse(`{
 	"@odata.context":"https://www.onenote.com/api/v1.0/$metadata#me/notes/notebooks","value":[
 		{
@@ -193,14 +195,14 @@ let mockResponse: OneNoteApi.ResponsePackage<any> = {
 
 export class SampleOneNoteDataProvider implements OneNoteDataProvider {
 	getNotebooks(expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<Notebook[]> {
-		let responseTransformer = new OneNoteApiResponseTransformer();
-		let notebooks = responseTransformer.transformNotebooks(mockResponse.parsedResponse.value);
+		const responseTransformer = new OneNoteApiResponseTransformer();
+		const notebooks = responseTransformer.transformNotebooks(mockResponse.parsedResponse.value);
 		return Promise.resolve(notebooks);
 	}
 
 	getPages(section: Section): Promise<Page[]> {
-		let id = '' + (Math.floor(Math.random() * 500000));
-		let pages = [{parent: section, id: id, name: 'Page:' + id, apiUrl: '', webUrl: ''}];
+		const id = '' + (Math.floor(Math.random() * 500000));
+		const pages = [{ parent: section, id: id, name: 'Page:' + id, apiUrl: '', webUrl: '' }];
 		return Promise.resolve(pages);
 	}
 

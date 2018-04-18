@@ -12,8 +12,8 @@ import { InnerGlobals } from '../props/globalProps';
 import { OneNoteItemUtils } from '../oneNoteDataStructures/oneNoteItemUtils';
 import { NotebookOpenedIconSvg } from './icons/notebookOpenedIcon.svg';
 import { NotebookClosedIconSvg } from './icons/notebookClosedIcon.svg';
-import { SpinnerIconSvg} from './icons/spinnerIcon.svg';
-import {ChevronSvg} from './icons/chevron.svg';
+import { SpinnerIconSvg } from './icons/spinnerIcon.svg';
+import { ChevronSvg } from './icons/chevron.svg';
 
 export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	onClickBinded = this.onClick.bind(this);
@@ -28,7 +28,7 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 					<ChevronSvg />
 				</div>
 				<div className='picker-icon'>
-					{this.isExpanded() ? <NotebookOpenedIconSvg/> : <NotebookClosedIconSvg/>}
+					{this.isExpanded() ? <NotebookOpenedIconSvg /> : <NotebookClosedIconSvg />}
 				</div>
 				<div className='picker-label'>
 					<label>{this.notebook.name}</label>
@@ -36,7 +36,7 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 				</div>
 				<div className='picker-shared-icon'>
 					<span aria-hidden='true'>{Strings.get('Shared', this.globals.strings)}</span>
-					<i className='ms-Icon ms-Icon--People'/>
+					<i className='ms-Icon ms-Icon--People' />
 				</div>
 			</div>);
 	}
@@ -50,8 +50,8 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 	}
 
 	getChildren(childrenLevel: number): JSX.Element[] {
-		if (typeof(this.notebook.apiHttpErrorCode) === 'number') {
-			let errorString = Strings.getError(this.notebook.apiHttpErrorCode, this.globals.strings);
+		if (typeof (this.notebook.apiHttpErrorCode) === 'number') {
+			const errorString = Strings.getError(this.notebook.apiHttpErrorCode, this.globals.strings);
 			return [
 				<li role='status' aria-live='polite' aria-label={errorString} className='progress-row'>
 					<div>{errorString}</div>
@@ -67,8 +67,8 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 			];
 		}
 
-		let sectionGroupRenderStrategies = this.notebook.apiProperties.spSectionGroups.map(sectionGroup => new SectionGroupRenderStrategy(sectionGroup, this.globals));
-		let sectionGroups = sectionGroupRenderStrategies.map(renderStrategy =>
+		const sectionGroupRenderStrategies = this.notebook.apiProperties.spSectionGroups.map(sectionGroup => new SectionGroupRenderStrategy(sectionGroup, this.globals));
+		const sectionGroups = sectionGroupRenderStrategies.map(renderStrategy =>
 			!!this.globals.callbacks.onSectionSelected || !!this.globals.callbacks.onPageSelected ?
 				<ExpandableNode
 					expanded={renderStrategy.isExpanded()} node={renderStrategy} globals={this.globals}
@@ -77,12 +77,12 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} globals={this.globals}
 					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} />);
 
-		let sectionRenderStrategies = this.notebook.apiProperties.spSections.map(section => new SectionRenderStrategy(section, this.globals));
-		let sections = sectionRenderStrategies.map(renderStrategy =>
+		const sectionRenderStrategies = this.notebook.apiProperties.spSections.map(section => new SectionRenderStrategy(section, this.globals));
+		const sections = sectionRenderStrategies.map(renderStrategy =>
 			!!this.globals.callbacks.onPageSelected ?
 				<ExpandableNode
 					expanded={renderStrategy.isExpanded()} node={renderStrategy} globals={this.globals}
-					treeViewId={Constants.TreeView.id} key={renderStrategy.getId() }
+					treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
 					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} /> :
 				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} globals={this.globals}
 					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} />);
@@ -103,7 +103,7 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 	}
 
 	private onClick() {
-		let { onNotebookSelected } = this.globals.callbacks;
+		const { onNotebookSelected } = this.globals.callbacks;
 
 		if (!!onNotebookSelected) {
 			onNotebookSelected(this.notebook, OneNoteItemUtils.getAncestry(this.notebook));
@@ -141,7 +141,7 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 				}
 				this.notebook.apiHttpErrorCode = max;
 			}).then(() => {
-				let { onSharedNotebookInfoReturned } = this.globals.callbacks;
+				const { onSharedNotebookInfoReturned } = this.globals.callbacks;
 				if (!!onSharedNotebookInfoReturned) {
 					onSharedNotebookInfoReturned(this.notebook);
 				}
@@ -150,8 +150,8 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 	}
 
 	private breadcrumbs(): string {
-		let url = this.notebook.webUrl;
-		let split = url.split('/');
+		const url = this.notebook.webUrl;
+		const split = url.split('/');
 		return split.slice(3, -1).map(decodeURIComponent).join('/');
 	}
 }
