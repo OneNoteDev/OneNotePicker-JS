@@ -18,7 +18,7 @@ export interface OneNoteSingleNotebookPickerProps extends GlobalProps {
 }
 
 export class OneNoteSingleNotebookPicker extends OneNotePickerBase<OneNoteSingleNotebookPickerProps, {}> {
-	protected get rootNodes(): JSX.Element[] {
+	protected rootNodes(): JSX.Element[] {
 		const { sectionGroups, sections, globals } = this.props;
 		const { focusOnMount, ariaSelectedId } = globals;
 
@@ -32,18 +32,18 @@ export class OneNoteSingleNotebookPicker extends OneNotePickerBase<OneNoteSingle
 
 		const sectionGroupNodes = sectionGroupRenderStrategies.map((renderStrategy, i) =>
 			<ExpandableNode globals={this.props.globals} expanded={renderStrategy.isExpanded()} node={renderStrategy}
-				treeViewId={this.treeViewId} key={renderStrategy.getId()}
+				treeViewId={this.treeViewId()} key={renderStrategy.getId()}
 				id={renderStrategy.getId()} tabbable={i === 0} focusOnMount={focusOnMount && i === 0}
 				ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : i === 0}></ExpandableNode>);
 
 		const sectionNodes = sectionRenderStrategies.map((renderStrategy, i) =>
 			!!this.props.globals.callbacks.onPageSelected ?
 				<ExpandableNode globals={this.props.globals} expanded={renderStrategy.isExpanded()} node={renderStrategy}
-					treeViewId={this.treeViewId} key={renderStrategy.getId()}
+					treeViewId={this.treeViewId()} key={renderStrategy.getId()}
 					id={renderStrategy.getId()} tabbable={noSectionGroups && i === 0}
 					focusOnMount={focusOnMount && noSectionGroups && i === 0}
 					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : noSectionGroups && i === 0}></ExpandableNode> :
-				<LeafNode globals={this.props.globals} node={renderStrategy} treeViewId={this.treeViewId} key={renderStrategy.getId()}
+				<LeafNode globals={this.props.globals} node={renderStrategy} treeViewId={this.treeViewId()} key={renderStrategy.getId()}
 					id={renderStrategy.getId()} tabbable={noSectionGroups && i === 0}
 					focusOnMount={focusOnMount && noSectionGroups && i === 0}
 					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : noSectionGroups && i === 0}></LeafNode>);

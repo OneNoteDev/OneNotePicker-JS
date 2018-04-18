@@ -32,18 +32,18 @@ export class LeafNode extends React.Component<LeafNodeProps, {}> {
 		}
 	}
 
-	private get level() {
+	private level() {
 		return this.props.level || 1;
 	}
 
-	private get descendentId() {
+	private descendentId() {
 		return this.props.treeViewId + this.props.id;
 	}
 
 	render() {
 		return (
-			<li aria-labelledby={this.descendentId} role='treeitem' aria-level={this.level} aria-checked={this.props.node.isSelected()}
-				id={this.descendentId} aria-selected={this.props.ariaSelected}>
+			<li aria-labelledby={this.descendentId()} role='treeitem' aria-level={this.level()} aria-checked={this.props.node.isSelected()}
+				id={this.descendentId()} aria-selected={this.props.ariaSelected}>
 				<a className='picker-row' onClick={this.props.node.onClickBinded} onKeyDown={this.onKeyDown.bind(this)}
 					data-treeviewid={this.props.treeViewId} data-id={this.props.id} tabIndex={this.props.tabbable ? 0 : -1}
 					role='presentation'>

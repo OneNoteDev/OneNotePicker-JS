@@ -18,7 +18,7 @@ export interface OneNotePickerProps extends GlobalProps {
 }
 
 export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, {}> {
-	protected get rootNodes(): JSX.Element[] {
+	protected rootNodes(): JSX.Element[] {
 		const { notebooks, sharedNotebooks, globals } = this.props;
 		const { focusOnMount, ariaSelectedId } = globals;
 
@@ -33,21 +33,21 @@ export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, {}> {
 		const notebookNodes = notebookRenderStrategies.map((renderStrategy, i) =>
 			!!this.props.globals.callbacks.onSectionSelected || !!this.props.globals.callbacks.onPageSelected ?
 				<ExpandableNode globals={this.props.globals} expanded={renderStrategy.isExpanded()} node={renderStrategy}
-					treeViewId={this.treeViewId} key={renderStrategy.getId()}
+					treeViewId={this.treeViewId()} key={renderStrategy.getId()}
 					id={renderStrategy.getId()} tabbable={i === 0} focusOnMount={focusOnMount && i === 0}
 					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : i === 0}></ExpandableNode> :
-				<LeafNode globals={this.props.globals} node={renderStrategy} treeViewId={this.treeViewId} key={renderStrategy.getId()}
+				<LeafNode globals={this.props.globals} node={renderStrategy} treeViewId={this.treeViewId()} key={renderStrategy.getId()}
 					id={renderStrategy.getId()} tabbable={i === 0} focusOnMount={focusOnMount && i === 0}
 					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : i === 0}></LeafNode>);
 
 		const sharedNotebookNodes = sharedNotebookRenderStrategies.map((renderStrategy, i) =>
 			!!this.props.globals.callbacks.onSectionSelected || !!this.props.globals.callbacks.onPageSelected ?
 				<ExpandableNode globals={this.props.globals} expanded={renderStrategy.isExpanded()} node={renderStrategy}
-					treeViewId={this.treeViewId} key={renderStrategy.getId()}
+					treeViewId={this.treeViewId()} key={renderStrategy.getId()}
 					id={renderStrategy.getId()} tabbable={noPersonalNotebooks && i === 0}
 					focusOnMount={focusOnMount && noPersonalNotebooks && i === 0}
 					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : noPersonalNotebooks && i === 0}></ExpandableNode> :
-				<LeafNode globals={this.props.globals} node={renderStrategy} treeViewId={this.treeViewId} key={renderStrategy.getId()}
+				<LeafNode globals={this.props.globals} node={renderStrategy} treeViewId={this.treeViewId()} key={renderStrategy.getId()}
 					id={renderStrategy.getId()} tabbable={noPersonalNotebooks && i === 0}
 					focusOnMount={focusOnMount && noPersonalNotebooks && i === 0}
 					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : noPersonalNotebooks && i === 0}></LeafNode>);
