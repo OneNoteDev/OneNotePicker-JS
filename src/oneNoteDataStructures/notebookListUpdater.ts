@@ -2,6 +2,7 @@ import { Notebook } from './notebook';
 import { SectionGroup } from './sectionGroup';
 import { Section } from './section';
 import { Page } from './page';
+import { OneNoteItemUtils } from './oneNoteItemUtils';
 
 type SectionParent = Notebook | SectionGroup;
 
@@ -45,6 +46,22 @@ export class NotebookListUpdater {
 			if (!!originalNotebook) {
 				this.preserveSectionParent(originalNotebook, newNotebook);
 			}
+		}
+	}
+
+	addNotebook(newNotebook: Notebook) {
+		// Always prepend
+		const newNotebooks = [newNotebook, ...this.notebooks];
+		this.notebooks = newNotebooks;
+	}
+
+	addSection(newSection: Section) {
+		const loneParent = newSection.parent!;
+		const parentInHierarchy = OneNoteItemUtils.find(this.notebooks, item => item.id === loneParent.id) as SectionParent | undefined;
+		if (parentInHierarchy) {
+			// Establish two-way reference
+			parentInHierarchy.sections = [newSection, ...parentInHierarchy.sections];
+			newSection.parent = parentInHierarchy;
 		}
 	}
 

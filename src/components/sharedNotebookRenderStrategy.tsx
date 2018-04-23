@@ -87,7 +87,7 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} globals={this.globals}
 					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} />);
 
-		return sectionGroups.concat(sections);
+		return [...sectionGroups, ...sections];
 	}
 
 	isExpanded(): boolean {

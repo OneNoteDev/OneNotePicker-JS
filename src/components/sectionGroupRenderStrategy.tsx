@@ -9,6 +9,7 @@ import { SectionGroup } from '../oneNoteDataStructures/sectionGroup';
 import { InnerGlobals } from '../props/globalProps';
 import { SectionGroupIconSvg } from './icons/sectionGroupIcon.svg';
 import { ChevronSvg } from './icons/chevron.svg';
+import { CreateNewSectionNode } from './createNewSection/createNewSectionNode';
 
 export class SectionGroupRenderStrategy implements ExpandableNodeRenderStrategy {
 	onClickBinded = this.onClick.bind(this);
@@ -39,6 +40,18 @@ export class SectionGroupRenderStrategy implements ExpandableNodeRenderStrategy 
 	}
 
 	getChildren(childrenLevel: number): JSX.Element[] {
+		const createNewSection = this.globals.callbacks.onSectionCreated ?
+			[<CreateNewSectionNode
+				key={this.sectionGroup.id + 'createnewsectionnode'}
+				{...this.globals}
+				parent={this.sectionGroup}
+				parentIsNotebook={false}
+				level={childrenLevel}
+				focusOnMount={false}
+				tabbable={false}>
+			</CreateNewSectionNode>] :
+			[];
+
 		const sectionGroupRenderStrategies = this.sectionGroup.sectionGroups.map(sectionGroup => new SectionGroupRenderStrategy(sectionGroup, this.globals));
 		const sectionGroups = sectionGroupRenderStrategies.map(renderStrategy =>
 			!!this.globals.callbacks.onSectionSelected || !!this.globals.callbacks.onPageSelected ?
@@ -58,7 +71,7 @@ export class SectionGroupRenderStrategy implements ExpandableNodeRenderStrategy 
 				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} globals={this.globals}
 					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} />);
 
-		return sections.concat(sectionGroups);
+		return [...createNewSection, ...sections, ...sectionGroups];
 	}
 
 	isExpanded(): boolean {
