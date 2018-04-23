@@ -53,7 +53,6 @@ export class CreateNewSectionNode extends React.Component<CreateNewSectionNodePr
 	}
 
 	private createSection(name: string): Promise<void> {
-		// TODO (machiam) We need different api calls for notebook vs sectiongroup parent
 		const createSectionPromise = this.props.parentIsNotebook ?
 			this.props.oneNoteDataProvider!.createSectionUnderNotebook(this.props.parent as Notebook, name) :
 			this.props.oneNoteDataProvider!.createSectionUnderSectionGroup(this.props.parent as SectionGroup, name);
