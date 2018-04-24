@@ -20,14 +20,17 @@ const render = (globalProps: GlobalProps, notebooks: Notebook[]) => {
 	);
 };
 
-const renderDropdown = (globalProps: GlobalProps, notebooks: Notebook[], label: string, popupVisible: boolean) => {
+const renderDropdown = (globalProps: GlobalProps, notebooks: Notebook[]) => {	
+	const dropdownLabel = !globalProps.globals.selectedId ?
+		'Select Section' :
+		findItemName(globalProps.globals.notebookListUpdater!.get(), globalProps.globals.selectedId);
+
 	ReactDOM.render(
-		<OneNotePickerDropdown globals={globalProps.globals} notebooks={notebooks} dropdownLabel={label} popupDirection={'bottom'} popupVisible={popupVisible}/>,
+		<OneNotePickerDropdown globals={globalProps.globals} notebooks={notebooks} dropdownLabel={dropdownLabel} popupDirection={'bottom'} />,
 		document.getElementById('oneNotePickerDropdown') as HTMLElement
 	);
 };
 
-export let defaultDropdownLabel = "";
 
 oneNoteDataProvider.getNotebooks().then((notebooks) => {
 	for (let i = 0; i < notebooks.length; i++) {
@@ -38,6 +41,7 @@ oneNoteDataProvider.getNotebooks().then((notebooks) => {
 
 	const initialSelectedId = '0-752C1AAF7737895C!515';
 	OneNoteItemUtils.expandTo(notebooks, item => item.id === initialSelectedId);
+	let dropdownLabel = '';
 
 	const globalProps: GlobalProps = {
 		globals: {
@@ -46,39 +50,34 @@ oneNoteDataProvider.getNotebooks().then((notebooks) => {
 			notebookListUpdater: updater,
 			callbacks: {
 				onNotebookHierarchyUpdated: (newNotebookHierarchy) => {
-					let latestNotebook = newNotebookHierarchy[newNotebookHierarchy.length - 1].name;
-					if(defaultDropdownLabel === "")
-						defaultDropdownLabel = latestNotebook; 
+				
 					render(globalProps, newNotebookHierarchy);
-					renderDropdown(globalProps, newNotebookHierarchy, defaultDropdownLabel, true);
+					renderDropdown(globalProps, newNotebookHierarchy);
 				},
 				onSectionSelected: (section, breadcrumbs) => {
 					globalProps.globals.selectedId = section.id;
-					defaultDropdownLabel = section.name; 
+			
 					// tslint:disable-next-line:no-console
 					console.log(breadcrumbs.map(x => x.name).join(' > '));
 
 					render(globalProps, globalProps.globals.notebookListUpdater!.get());
-					renderDropdown(globalProps, globalProps.globals.notebookListUpdater!.get(),  defaultDropdownLabel, false);
+					renderDropdown(globalProps, globalProps.globals.notebookListUpdater!.get());
 				},
 				onPageSelected: (page, breadcrumbs) => {
 					globalProps.globals.selectedId = page.id;
-					defaultDropdownLabel = page.name;
+
 					// tslint:disable-next-line:no-console
 					console.log(breadcrumbs.map(x => x.name).join(' > '));
-					console.log(breadcrumbs[breadcrumbs.length -1].name)
 
 					render(globalProps, globalProps.globals.notebookListUpdater!.get());
-					renderDropdown(globalProps, globalProps.globals.notebookListUpdater!.get(), defaultDropdownLabel, false);
+					renderDropdown(globalProps, globalProps.globals.notebookListUpdater!.get());
 				},
 				onAccessibleSelection: (selectedItemId: string) => {
 					globalProps.globals.ariaSelectedId = selectedItemId;
-					let notebookName = findNotebook(notebooks, selectedItemId);
-					if (defaultDropdownLabel === "")
-						defaultDropdownLabel = notebookName;
+
 					// todo this changes the label but you can't click to make a selection?
 					render(globalProps, globalProps.globals.notebookListUpdater!.get());
-					renderDropdown(globalProps, globalProps.globals.notebookListUpdater!.get(), defaultDropdownLabel, true);
+					renderDropdown(globalProps, globalProps.globals.notebookListUpdater!.get());
 				},
 				onNotebookCreated: (notebook: Notebook) => {
 					// Allow max one creation
@@ -111,15 +110,14 @@ oneNoteDataProvider.getNotebooks().then((notebooks) => {
 			ariaSelectedId: initialSelectedId
 		}
 	};
-	let notebookName = findNotebook(notebooks, initialSelectedId)
 	render(globalProps, notebooks);
-	renderDropdown(globalProps, notebooks, notebookName, false);
+	renderDropdown(globalProps, notebooks);
 }).catch((value) => {
 	// tslint:disable-next-line:no-console
 	console.error(value);
 });
 
-export function findNotebook(notebooks, itemid) {
+export function findItemName(notebooks, itemid) {
 	let notebook = OneNoteItemUtils.find(notebooks, item => item.id === itemid);
-	return notebook ? notebook.name : "";
+	return notebook ? notebook.name : '';
 }

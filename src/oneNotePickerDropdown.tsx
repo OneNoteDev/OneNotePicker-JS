@@ -8,9 +8,7 @@ export interface OneNotePickerDropdownState {
 	popupVisible: boolean;
 }
 
-
 export interface PickerProperties extends GlobalProps {
-	popupVisible: boolean;
 	dropdownLabel: string;
 	popupDirection: 'bottom' | 'top';
 	popupContentOverride?: JSX.Element;
@@ -22,16 +20,10 @@ export abstract class GenericOneNotePickerDropdown<T extends PickerProperties> e
 	constructor(props: T) {
 		super(props);
 		this.state = {
-			popupVisible: props.popupVisible
+			popupVisible: false
 		};
 		this.handleClickOutside = this.handleClickOutside.bind(this);
 		this.setWrapperRef = this.setWrapperRef.bind(this);
-	}
-
-	componentWillReceiveProps(nextProps: T) {
-		this.state = {
-			popupVisible: nextProps.popupVisible 
-		}
 	}
 
 	onClick() {
@@ -65,7 +57,6 @@ export abstract class GenericOneNotePickerDropdown<T extends PickerProperties> e
 	componentWillUnmount() {
 		document.removeEventListener('mousedown', this.handleClickOutside);
 	}
-
 
 	abstract createTag(arg: T): JSX.Element;
 
@@ -112,10 +103,7 @@ export abstract class GenericOneNotePickerDropdown<T extends PickerProperties> e
 					undefined}
 			</div>
 		);
-
-
 	}
-
 }
 
 export class OneNotePickerDropdown extends GenericOneNotePickerDropdown<OneNotePickerProps & PickerProperties> {
