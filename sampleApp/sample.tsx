@@ -31,7 +31,6 @@ const renderDropdown = (globalProps: GlobalProps, notebooks: Notebook[]) => {
 	);
 };
 
-
 oneNoteDataProvider.getNotebooks().then((notebooks) => {
 	for (let i = 0; i < notebooks.length; i++) {
 		OneNoteItemUtils.prune(notebooks[i]);
@@ -41,7 +40,6 @@ oneNoteDataProvider.getNotebooks().then((notebooks) => {
 
 	const initialSelectedId = '0-752C1AAF7737895C!515';
 	OneNoteItemUtils.expandTo(notebooks, item => item.id === initialSelectedId);
-	let dropdownLabel = '';
 
 	const globalProps: GlobalProps = {
 		globals: {
