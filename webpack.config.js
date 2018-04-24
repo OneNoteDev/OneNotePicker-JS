@@ -186,7 +186,7 @@ const analyze = {
 	]
 };
 
-const webpackConfiguration = base;
+let webpackConfiguration = base;
 
 if (IS_PROD) {
 	webpackConfiguration = WebpackMerge(webpackConfiguration, prod);

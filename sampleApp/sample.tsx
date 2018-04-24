@@ -5,6 +5,7 @@ import { OneNotePicker } from '../src/oneNotePicker';
 import { GlobalProps } from '../src/props/globalProps';
 import { OneNoteDataProvider } from '../src/providers/oneNoteDataProvider';
 import { Notebook } from '../src/oneNoteDataStructures/notebook';
+import { Section } from '../src/oneNoteDataStructures/section';
 import { OneNoteItemUtils } from '../src/oneNoteDataStructures/oneNoteItemUtils';
 import { NotebookListUpdater } from '../src/oneNoteDataStructures/notebookListUpdater';
 import { SampleOneNoteDataProvider } from './sampleOneNoteDataProvider';
@@ -73,11 +74,37 @@ oneNoteDataProvider.getNotebooks().then((notebooks) => {
 				onAccessibleSelection: (selectedItemId: string) => {
 					globalProps.globals.ariaSelectedId = selectedItemId;
 					let notebookName = findNotebook(notebooks, selectedItemId);
-					if(defaultDropdownLabel === "")
-						defaultDropdownLabel = notebookName; 
+					if (defaultDropdownLabel === "")
+						defaultDropdownLabel = notebookName;
 					// todo this changes the label but you can't click to make a selection?
 					render(globalProps, globalProps.globals.notebookListUpdater!.get());
 					renderDropdown(globalProps, globalProps.globals.notebookListUpdater!.get(), defaultDropdownLabel, true);
+				},
+				onNotebookCreated: (notebook: Notebook) => {
+					// Allow max one creation
+					globalProps.globals.callbacks.onNotebookCreated = undefined;
+
+					if (globalProps.globals.notebookListUpdater) {
+						globalProps.globals.notebookListUpdater.addNotebook(notebook);
+						globalProps.globals.selectedId = notebook.id;
+					}
+
+					// tslint:disable-next-line:no-console
+					console.log(`Notebook created: ${notebook.name}`);
+
+					render(globalProps, globalProps.globals.notebookListUpdater!.get());
+				},
+				onSectionCreated: (section: Section) => {
+					// TODO (machiam) Introduce a way of only allowing max one section creation per parent
+					// tslint:disable-next-line:no-console
+					console.log(`Section created: ${section.name}`);
+
+					if (globalProps.globals.notebookListUpdater) {
+						globalProps.globals.notebookListUpdater!.addSection(section);
+						globalProps.globals.selectedId = section.id;
+					}
+
+					render(globalProps, globalProps.globals.notebookListUpdater!.get());
 				}
 			},
 			selectedId: initialSelectedId,

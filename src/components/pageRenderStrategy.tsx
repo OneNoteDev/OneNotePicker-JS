@@ -18,7 +18,7 @@ export class PageRenderStrategy implements NodeRenderStrategy {
 				<div className='picker-icon'>
 					<img
 						src={require('../images/section_icon.png')}
-						alt={Strings.get('Accessibility.PageIcon', this.globals.strings)} />
+						alt={Strings.get('Accessibility.PageIcon')} />
 				</div>
 				<div>
 					<label className='ms-fontSize-sPlus'>{this.page.name}</label>

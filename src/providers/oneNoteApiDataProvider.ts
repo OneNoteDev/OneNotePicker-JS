@@ -4,6 +4,7 @@ import { OneNoteDataProvider } from './oneNoteDataProvider';
 import { Notebook } from '../oneNoteDataStructures/notebook';
 import { OneNoteApiResponseTransformer } from '../oneNoteDataStructures/oneNoteApiResponseTransformer';
 import { Section } from '../oneNoteDataStructures/section';
+import { SectionGroup } from '../oneNoteDataStructures/sectionGroup';
 import { SharedNotebookApiProperties } from '../oneNoteDataStructures/sharedNotebook';
 import { Page } from '../oneNoteDataStructures/page';
 import { SharedNotebook } from '../oneNoteDataStructures/sharedNotebook';
@@ -18,6 +19,27 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 	constructor(private authHeader: string, private timeout?: number, private headers?: { [key: string]: string }) {
 		this.api = new OneNoteApi.OneNoteApi(authHeader, timeout, headers);
 		this.responseTransformer = new OneNoteApiResponseTransformer();
+	}
+
+	createNotebook(name: string): Promise<Notebook> {
+		// tslint:disable-next-line:no-any
+		return this.api.createNotebook(name).then((responsePackage: OneNoteApi.ResponsePackage<any>) => {
+			return Promise.resolve(this.responseTransformer.transformNotebook(responsePackage.parsedResponse));
+		});
+	}
+
+	createSectionUnderNotebook(parent: Notebook, name: string): Promise<Section> {
+		// tslint:disable-next-line:no-any
+		return this.api.createSection(parent.id, name).then((responsePackage: OneNoteApi.ResponsePackage<any>) => {
+			return Promise.resolve(this.responseTransformer.transformSection(responsePackage.parsedResponse, parent));
+		});
+	}
+
+	createSectionUnderSectionGroup(parent: SectionGroup, name: string): Promise<Section> {
+		// tslint:disable-next-line:no-any
+		return this.api.createSection(parent.id, name).then((responsePackage: OneNoteApi.ResponsePackage<any>) => {
+			return Promise.resolve(this.responseTransformer.transformSection(responsePackage.parsedResponse, parent));
+		});
 	}
 
 	getNotebooks(expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<Notebook[]> {

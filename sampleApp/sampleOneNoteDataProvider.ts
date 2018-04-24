@@ -3,6 +3,7 @@ import * as OneNoteApi from '../node_modules/onenoteapi/target/oneNoteApi';
 
 import { OneNoteDataProvider } from '../src/providers/oneNoteDataProvider';
 import { Notebook } from '../src/oneNoteDataStructures/notebook';
+import { SectionGroup } from '../src/oneNoteDataStructures/sectionGroup';
 import { Section } from '../src/oneNoteDataStructures/section';
 import { SharedNotebookApiProperties } from '../src/oneNoteDataStructures/sharedNotebook';
 import { Page } from '../src/oneNoteDataStructures/page';
@@ -194,6 +195,41 @@ const mockResponse: OneNoteApi.ResponsePackage<any> = {
 };
 
 export class SampleOneNoteDataProvider implements OneNoteDataProvider {
+	createNotebook(name: string): Promise<Notebook> {
+		const notebook: Notebook = {
+			expanded: false,
+			sectionGroups: [],
+			sections: [],
+			webUrl: '',
+			apiUrl: '',
+			parent: undefined,
+			id: '' + Math.random(),
+			name: name
+		};
+		return Promise.resolve(notebook);
+	}
+
+	createSectionUnderNotebook(parent: Notebook, name: string): Promise<Section> {
+		return Promise.resolve(this.createSection(parent, name));
+	}
+
+	createSectionUnderSectionGroup(parent: SectionGroup, name: string): Promise<Section> {
+		return Promise.resolve(this.createSection(parent, name));
+	}
+
+	private createSection(parent: Notebook | SectionGroup, name: string): Section {
+		return {
+			expanded: false,
+			pages: undefined,
+			apiUrl: '',
+			webUrl: '',
+			clientUrl: '',
+			parent: parent,
+			id: '' + Math.random(),
+			name: name
+		};
+	}
+
 	getNotebooks(expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<Notebook[]> {
 		const responseTransformer = new OneNoteApiResponseTransformer();
 		const notebooks = responseTransformer.transformNotebooks(mockResponse.parsedResponse.value);

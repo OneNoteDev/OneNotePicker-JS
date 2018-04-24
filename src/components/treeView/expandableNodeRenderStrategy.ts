@@ -1,4 +1,4 @@
-import {NodeRenderStrategy} from './nodeRenderStrategy';
+import { NodeRenderStrategy } from './nodeRenderStrategy';
 
 /**
  * Defines the design and interactability of a TreeView node that

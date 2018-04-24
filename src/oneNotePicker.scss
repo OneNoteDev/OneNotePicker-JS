@@ -10,6 +10,18 @@ svg.spinner {
 	animation: spin 1.3s infinite cubic-bezier(0.53,0.21,0.29,0.67)
 }
 
+@-moz-keyframes spin {
+	from { -moz-transform: rotate(0deg); }
+	to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+	from { -webkit-transform: rotate(0deg); }
+	to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+	from {transform:rotate(0deg);}
+	to {transform:rotate(360deg);}
+}
 
 .onenote-picker {
 	$primary-text-color: #737373;
@@ -39,7 +51,7 @@ svg.spinner {
 		line-height: 1rem;
 		padding: 0.5rem;
 
-		.chevron-icon, .picker-label, .picker-icon, .picker-shared-icon {
+		.chevron-icon, .picker-label, .picker-icon, .picker-shared-icon, .error-info-icon {
 			padding: 0.25rem;
 			order: 4;
 
@@ -74,7 +86,7 @@ svg.spinner {
 				order: 3;
 			}
 
-			label {
+			label, input {
 				overflow: hidden;
 				text-overflow: ellipsis;
 				white-space: nowrap;
@@ -88,6 +100,10 @@ svg.spinner {
 			.breadcrumbs {
 				color: $secondary-text-color;
 				font-size: 0.8rem;
+			}
+
+			.create-label {
+				color: #0078D7;
 			}
 		}
 
@@ -108,6 +124,10 @@ svg.spinner {
 			span {
 				display: none;
 			}
+		}
+
+		.error-info-icon {
+			float: right;
 		}
 
 		&:hover {
@@ -149,6 +169,18 @@ svg.spinner {
 		line-height: 1rem;
 		text-align: center;
 		padding: 0.25rem;
+	}
+
+	.create-input {
+		border: 0;
+		padding: 0;
+		margin: 0;
+		width: 100%;
+		font: inherit;
+	}
+
+	.create-spinner {
+		float: right;
 	}
 }
 

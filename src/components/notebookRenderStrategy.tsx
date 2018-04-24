@@ -11,6 +11,7 @@ import { InnerGlobals } from '../props/globalProps';
 import { NotebookOpenedIconSvg } from './icons/notebookOpenedIcon.svg';
 import { NotebookClosedIconSvg } from './icons/notebookClosedIcon.svg';
 import { ChevronSvg } from './icons/chevron.svg';
+import { CreateNewSectionNode } from './createNewSection/createNewSectionNode';
 
 export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	onClickBinded = this.onClick.bind(this);
@@ -41,6 +42,20 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	}
 
 	getChildren(childrenLevel: number): JSX.Element[] {
+		const createNewSection = this.globals.callbacks.onSectionCreated ?
+			[<CreateNewSectionNode
+				key={this.notebook.id + 'createnewsectionnode'}
+				{...this.globals}
+				parent={this.notebook}
+				parentIsNotebook={true}
+				level={childrenLevel}
+				// TODO (machiam) focusOnMount and tabbable logic will need to be reworked in the single notebook picker,
+				// for now we assume this is not top-level
+				focusOnMount={false}
+				tabbable={false}>
+			</CreateNewSectionNode>] :
+			[];
+
 		const sectionGroupRenderStrategies = this.notebook.sectionGroups.map(sectionGroup => new SectionGroupRenderStrategy(sectionGroup, this.globals));
 		const sectionGroups = sectionGroupRenderStrategies.map(renderStrategy =>
 			!!this.globals.callbacks.onSectionSelected || !!this.globals.callbacks.onPageSelected ?
@@ -61,7 +76,7 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} globals={this.globals}
 					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} />);
 
-		return sections.concat(sectionGroups);
+		return [...createNewSection, ...sections, ...sectionGroups];
 	}
 
 	isExpanded(): boolean {

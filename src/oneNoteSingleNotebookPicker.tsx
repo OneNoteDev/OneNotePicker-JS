@@ -48,6 +48,6 @@ export class OneNoteSingleNotebookPicker extends OneNotePickerBase<OneNoteSingle
 					focusOnMount={focusOnMount && noSectionGroups && i === 0}
 					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : noSectionGroups && i === 0}></LeafNode>);
 
-		return sectionNodes.concat(sectionGroupNodes);
+		return [...sectionNodes, ...sectionGroupNodes];
 	}
 }
