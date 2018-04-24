@@ -16,6 +16,7 @@ export interface GlobalProps {
 export interface InnerGlobals {
 	focusOnMount: boolean;
 
+
 	oneNoteDataProvider: OneNoteDataProvider | undefined;
 	notebookListUpdater: NotebookListUpdater | undefined;
 	callbacks: OneNotePickerCallbacks;
