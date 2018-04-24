@@ -64,28 +64,29 @@ export class CreateEntityNode extends React.Component<CreateEntityNodeProps, Cre
 	}
 
 	private handleEnterInput() {
-		if (NameValidator.validateNotebookName(this.state.nameInputValue)) {
+		if (!this.state.nameInputValue) {
+			// User aborted action by clicking out when the input box is empty/whitespace
+			this.resetAndFocus();
+		}
+
+		const trimmedName = this.state.nameInputValue.trim();
+		if (!trimmedName || NameValidator.validateNotebookName(trimmedName)) {
 			// Don't fire off request or change state if user attempts to submit invalid name
 			return;
 		}
 
-		// Check for whitespace
-		if (this.state.nameInputValue && this.state.nameInputValue.trim()) {
-			this.setState({ status: 'InProgress' });
+		this.setState({ status: 'InProgress' });
 
-			this.props.createEntity(this.state.nameInputValue).then(() => {
-				if (this.componentIsMounted) {
-					this.setState(this.defaultState());
-				}
-			}).catch((error) => {
-				this.setState({
-					status: 'CreateError'
-				});
+		this.props.createEntity(trimmedName).then(() => {
+			if (this.componentIsMounted) {
+				this.setState(this.defaultState());
+			}
+		}).catch((error) => {
+			// TODO (machiam) Add means to show error to the user
+			this.setState({
+				status: 'CreateError'
 			});
-		} else {
-			// User aborted action by clicking out when the input box is empty/whitespace
-			this.resetAndFocus();
-		}
+		});
 	}
 
 	private resetAndFocus() {

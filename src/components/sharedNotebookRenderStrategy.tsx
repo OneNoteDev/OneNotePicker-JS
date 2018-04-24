@@ -35,7 +35,7 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 					<label className='breadcrumbs'>{this.breadcrumbs()}</label>
 				</div>
 				<div className='picker-shared-icon'>
-					<span aria-hidden='true'>{Strings.get('Shared', this.globals.strings)}</span>
+					<span aria-hidden='true'>{Strings.get('Shared')}</span>
 					<i className='ms-Icon ms-Icon--People' />
 				</div>
 			</div>);
@@ -51,7 +51,7 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 
 	getChildren(childrenLevel: number): JSX.Element[] {
 		if (typeof (this.notebook.apiHttpErrorCode) === 'number') {
-			const errorString = Strings.getError(this.notebook.apiHttpErrorCode, this.globals.strings);
+			const errorString = Strings.getError(this.notebook.apiHttpErrorCode);
 			return [
 				<li role='status' aria-live='polite' aria-label={errorString} className='progress-row'>
 					<div>{errorString}</div>

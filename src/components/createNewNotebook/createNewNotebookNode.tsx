@@ -4,7 +4,7 @@ import { NodeRenderStrategy } from '../treeView/nodeRenderStrategy';
 import { CreateNewNotebookNotStartedRenderStrategy } from './createNewNotebookNotStartedRenderStrategy';
 import { CreateNewNotebookInputRenderStrategy } from './createNewNotebookInputRenderStrategy';
 import { CreateNewNotebookInProgressRenderStrategy } from './createNewNotebookInProgressRenderStrategy';
-import { CreateNewNotebookCreateErrorRenderStrategy } from './createNewNotebookCreateErrorRenderStrategy';
+import { CreateNewNotebookErrorRenderStrategy } from './createNewNotebookErrorRenderStrategy';
 import { InnerGlobals } from '../../props/globalProps';
 import { CreateEntityNode } from '../treeView/createEntityNode';
 
@@ -41,7 +41,7 @@ export class CreateNewNotebookNode extends React.Component<CreateNewNotebookNode
 	}
 
 	private createErrorRenderStrategy(inputValue: string, onInputChange: (evt: React.ChangeEvent<HTMLInputElement>) => void): NodeRenderStrategy {
-		return new CreateNewNotebookCreateErrorRenderStrategy(inputValue, onInputChange);
+		return new CreateNewNotebookErrorRenderStrategy(inputValue, onInputChange);
 	}
 
 	private inProgressRenderStrategy(inputValue: string): NodeRenderStrategy {

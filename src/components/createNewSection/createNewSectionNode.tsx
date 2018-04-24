@@ -6,7 +6,7 @@ import { NodeRenderStrategy } from '../treeView/nodeRenderStrategy';
 import { CreateNewSectionNotStartedRenderStrategy } from './createNewSectionNotStartedRenderStrategy';
 import { CreateNewSectionInputRenderStrategy } from './createNewSectionInputRenderStrategy';
 import { CreateNewSectionInProgressRenderStrategy } from './createNewSectionInProgressRenderStrategy';
-import { CreateNewSectionCreateErrorRenderStrategy } from './createNewSectionCreateErrorRenderStrategy';
+import { CreateNewSectionErrorRenderStrategy } from './createNewSectionErrorRenderStrategy';
 import { InnerGlobals } from '../../props/globalProps';
 import { CreateEntityNode } from '../treeView/createEntityNode';
 
@@ -45,7 +45,7 @@ export class CreateNewSectionNode extends React.Component<CreateNewSectionNodePr
 	}
 
 	private createErrorRenderStrategy(inputValue: string, onInputChange: (evt: React.ChangeEvent<HTMLInputElement>) => void): NodeRenderStrategy {
-		return new CreateNewSectionCreateErrorRenderStrategy(this.props.parent.id, inputValue, onInputChange);
+		return new CreateNewSectionErrorRenderStrategy(this.props.parent.id, inputValue, onInputChange);
 	}
 
 	private inProgressRenderStrategy(inputValue: string): NodeRenderStrategy {
