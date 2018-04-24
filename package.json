@@ -1,12 +1,12 @@
 {
   "name": "onenotepicker",
-  "version": "2.3.5",
+  "version": "2.4.0",
   "files": [
     "dist/**/*"
   ],
   "dependencies": {
     "bulma": "^0.4.2",
-    "onenoteapi": "2.0.5",
+    "onenoteapi": "2.0.6",
     "react": "^15.6.2",
     "react-dom": "^15.6.2"
   },

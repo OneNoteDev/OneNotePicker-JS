@@ -29,4 +29,10 @@ export interface OneNotePickerCallbacks {
 
 	// Accessibility callbacks
 	onAccessibleSelection: (selectedItemId: string) => void;
+	
+	// Create entity callbacks
+	// TODO (machiam) Disallowing creating a notebook after the first one is easy. With sections,
+	// since they are disallowed on a per-notebook basis, is more difficult
+	onNotebookCreated?: (notebook: Notebook) => void;
+	onSectionCreated?: (section: Section) => void;
 }
