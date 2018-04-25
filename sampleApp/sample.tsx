@@ -53,6 +53,7 @@ oneNoteDataProvider.getNotebooks().then((notebooks) => {
 				},
 				onSectionSelected: (section, breadcrumbs) => {
 					globalProps.globals.selectedId = section.id;
+					
 					// tslint:disable-next-line:no-console
 					console.log(breadcrumbs.map(x => x.name).join(' > '));
 
@@ -61,6 +62,7 @@ oneNoteDataProvider.getNotebooks().then((notebooks) => {
 				},
 				onPageSelected: (page, breadcrumbs) => {
 					globalProps.globals.selectedId = page.id;
+
 					// tslint:disable-next-line:no-console
 					console.log(breadcrumbs.map(x => x.name).join(' > '));
 
