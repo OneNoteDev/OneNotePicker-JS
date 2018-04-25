@@ -44,8 +44,8 @@ export class CreateNewSectionNode extends React.Component<CreateNewSectionNodePr
 		return new CreateNewSectionInputRenderStrategy(this.props.parent.id, inputValue, onEnter, onInputChange, setInputRefAndFocus);
 	}
 
-	private createErrorRenderStrategy(inputValue: string, onInputChange: (evt: React.ChangeEvent<HTMLInputElement>) => void): NodeRenderStrategy {
-		return new CreateNewSectionErrorRenderStrategy(this.props.parent.id, inputValue, onInputChange);
+	private createErrorRenderStrategy(errorMessage: string, inputValue: string, onInputChange: (evt: React.ChangeEvent<HTMLInputElement>) => void): NodeRenderStrategy {
+		return new CreateNewSectionErrorRenderStrategy(this.props.parent.id, errorMessage, inputValue, onInputChange);
 	}
 
 	private inProgressRenderStrategy(inputValue: string): NodeRenderStrategy {

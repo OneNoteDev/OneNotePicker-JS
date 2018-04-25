@@ -1,11 +1,11 @@
 import * as React from 'react';
 
 import { NodeRenderStrategy } from '../treeView/nodeRenderStrategy';
-import { ErrorInfoIconSvg } from '../icons/errorInfoIcon.svg';
 import { Strings } from '../../strings';
 import { NameValidator } from '../../nameValidator';
 import { CreateNewNotebookCommonProperties } from './createNewNotebookCommonProperties';
 import { CreateNewNotebookRowTemplate } from './createNewNotebookRowTemplate';
+import { ErrorIconWithPopover } from '../errorIconWithPopover';
 
 export class CreateNewNotebookInputRenderStrategy extends CreateNewNotebookCommonProperties implements NodeRenderStrategy {
 	onClickBinded = () => { };
@@ -19,7 +19,6 @@ export class CreateNewNotebookInputRenderStrategy extends CreateNewNotebookCommo
 	}
 
 	element(): JSX.Element {
-		// TODO (machiam) error info should have a popover as per redlines
 		return (
 			<CreateNewNotebookRowTemplate>
 				<div className='picker-label'>
@@ -34,15 +33,13 @@ export class CreateNewNotebookInputRenderStrategy extends CreateNewNotebookCommo
 						onKeyPress={this.onKeyPress.bind(this)}
 						onChange={this.onChangeBinded} />
 				</div>
-				<div className='error-info-icon' style={this.showError() ? { } : { visibility: 'hidden' }}>
-					<ErrorInfoIconSvg />
-				</div>
+				<ErrorIconWithPopover errorMessage={this.errorIfExists()}></ErrorIconWithPopover>
 			</CreateNewNotebookRowTemplate>
 		);
 	}
 
-	private showError(): boolean {
-		return !!NameValidator.validateNotebookName(this.notebookNameInputValue);
+	private errorIfExists(): string | undefined {
+		return NameValidator.validateNotebookName(this.notebookNameInputValue);
 	}
 
 	private onKeyPress(event): void {

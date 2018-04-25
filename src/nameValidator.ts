@@ -9,21 +9,48 @@ export class NameValidator {
 	) + '?*\\/:<>|"#%' + ']');
 
 	static validateNotebookName(name: string): string | undefined {
-		if (/^\./.test(name) || /\.$/.test(name)) {
+		if (NameValidator.startsOrEndsWithDot(name)) {
 			return Strings.get('Error.ValidateNotebookName.NotebookNameDotMessage');
 		}
 
-		if (name.length > NameValidator.maxNotebookNameLength) {
+		if (NameValidator.nameTooLong(name)) {
 			const message = Strings.get('Error.ValidateNotebookName.LengthLimitMessage');
 			return message.replace('{0}', '' + NameValidator.maxNotebookNameLength);
 		}
 
-		let matchesArray = name.match(this.InvalidNotebookNameCharactersRegex);
+		const matchesArray = name.match(this.InvalidNotebookNameCharactersRegex);
 		if (matchesArray && matchesArray.length > 0) {
 			const message = Strings.get('Error.ValidateNotebookName.ContainsInvalidCharacterMessage');
 			return message.replace('{0}', matchesArray[0]);
 		}
 
 		return undefined;
+	}
+
+	static validateSectionName(name: string): string | undefined {
+		if (/^\./.test(name) || /\.$/.test(name)) {
+			return Strings.get('Error.ValidateSectionName.SectionNameDotMessage');
+		}
+
+		if (name.length > NameValidator.maxNotebookNameLength) {
+			const message = Strings.get('Error.ValidateSectionName.LengthLimitMessage');
+			return message.replace('{0}', '' + NameValidator.maxNotebookNameLength);
+		}
+
+		const matchesArray = name.match(this.InvalidNotebookNameCharactersRegex);
+		if (matchesArray && matchesArray.length > 0) {
+			const message = Strings.get('Error.ValidateSectionName.ContainsInvalidCharacterMessage');
+			return message.replace('{0}', matchesArray[0]);
+		}
+
+		return undefined;
+	}
+
+	private static startsOrEndsWithDot(name: string): boolean {
+		return /^\./.test(name) || /\.$/.test(name);
+	}
+
+	private static nameTooLong(name: string): boolean {
+		return name.length > NameValidator.maxNotebookNameLength;
 	}
 }
