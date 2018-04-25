@@ -15,7 +15,7 @@ export interface CreateEntityNodeProps extends InnerGlobals {
 			onEnter: () => void,
 			onInputChange: (evt: React.ChangeEvent<HTMLInputElement>) => void,
 			setInputRefAndFocus: (node: HTMLInputElement) => void) => NodeRenderStrategy;
-	createErrorRenderStrategy: (inputValue: string, onInputChange: (evt: React.ChangeEvent<HTMLInputElement>) => void) => NodeRenderStrategy;
+	createErrorRenderStrategy: (errorMessage: string, inputValue: string, onInputChange: (evt: React.ChangeEvent<HTMLInputElement>) => void) => NodeRenderStrategy;
 	inProgressRenderStrategy: (inputValue: string) => NodeRenderStrategy;
 	createEntity: (name: string) => Promise<void>;
 }
@@ -23,6 +23,9 @@ export interface CreateEntityNodeProps extends InnerGlobals {
 export interface CreateEntityNodeState {
 	status: 'NotStarted' | 'Input' | 'CreateError' | 'InProgress';
 	nameInputValue: string;
+	// TODO (machiam) Use the API error in a smarter way to display its message
+	// tslint:disable-next-line:no-any
+	lastError?: any;
 }
 
 /**
@@ -82,9 +85,9 @@ export class CreateEntityNode extends React.Component<CreateEntityNodeProps, Cre
 				this.setState(this.defaultState());
 			}
 		}).catch((error) => {
-			// TODO (machiam) Add means to show error to the user
 			this.setState({
-				status: 'CreateError'
+				status: 'CreateError',
+				lastError: error
 			});
 		});
 	}
@@ -113,7 +116,8 @@ export class CreateEntityNode extends React.Component<CreateEntityNodeProps, Cre
 				renderStrategy = this.props.inputRenderStrategy(this.state.nameInputValue, this.handleEnterInput, this.onInputChange, this.setInputRefAndFocus);
 				break;
 			case 'CreateError':
-				renderStrategy = this.props.createErrorRenderStrategy(this.state.nameInputValue, this.onInputChange);
+				// TODO (machiam) Don't use JSON.stringify; parse out API error instead, or map it to a localized error
+				renderStrategy = this.props.createErrorRenderStrategy(this.state.lastError ? JSON.stringify(this.state.lastError) : '', this.state.nameInputValue, this.onInputChange);
 				break;
 			case 'InProgress':
 				renderStrategy = this.props.inProgressRenderStrategy(this.state.nameInputValue);

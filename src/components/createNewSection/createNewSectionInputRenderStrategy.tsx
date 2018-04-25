@@ -1,11 +1,11 @@
 import * as React from 'react';
 
 import { NodeRenderStrategy } from '../treeView/nodeRenderStrategy';
-import { ErrorInfoIconSvg } from '../icons/errorInfoIcon.svg';
 import { Strings } from '../../strings';
 import { NameValidator } from '../../nameValidator';
 import { CreateNewSectionCommonProperties } from './createNewSectionCommonProperties';
 import { CreateNewSectionRowTemplate } from './createNewSectionRowTemplate';
+import { ErrorIconWithPopover } from '../errorIconWithPopover';
 
 export class CreateNewSectionInputRenderStrategy extends CreateNewSectionCommonProperties implements NodeRenderStrategy {
 	onClickBinded = () => { };
@@ -20,7 +20,6 @@ export class CreateNewSectionInputRenderStrategy extends CreateNewSectionCommonP
 	}
 
 	element(): JSX.Element {
-		// TODO (machiam) error info should have a popover as per redlines
 		return (
 			<CreateNewSectionRowTemplate>
 				<div className='picker-label'>
@@ -34,15 +33,13 @@ export class CreateNewSectionInputRenderStrategy extends CreateNewSectionCommonP
 						onKeyPress={this.onKeyPress.bind(this)}
 						onChange={this.onChangeBinded} />
 				</div>
-				<div className='error-info-icon' style={this.showError() ? { } : { visibility: 'hidden' }}>
-					<ErrorInfoIconSvg />
-				</div>
+				<ErrorIconWithPopover errorMessage={this.errorIfExists()}></ErrorIconWithPopover>
 			</CreateNewSectionRowTemplate>
 		);
 	}
 
-	private showError(): boolean {
-		return !!NameValidator.validateNotebookName(this.notebookNameInputValue);
+	private errorIfExists(): string | undefined {
+		return NameValidator.validateSectionName(this.notebookNameInputValue);
 	}
 
 	private onKeyPress(event): void {

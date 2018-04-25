@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 import { NodeRenderStrategy } from '../treeView/nodeRenderStrategy';
-import { ErrorInfoIconSvg } from '../icons/errorInfoIcon.svg';
 import { Strings } from '../../strings';
 import { CreateNewNotebookCommonProperties } from './createNewNotebookCommonProperties';
 import { CreateNewNotebookRowTemplate } from './createNewNotebookRowTemplate';
+import { ErrorIconWithPopover } from '../errorIconWithPopover';
 
 export class CreateNewNotebookErrorRenderStrategy extends CreateNewNotebookCommonProperties implements NodeRenderStrategy {
 	onClickBinded = () => { };
@@ -12,13 +12,13 @@ export class CreateNewNotebookErrorRenderStrategy extends CreateNewNotebookCommo
 	// We don't listen for enter as we assume that we want the user to change the name before
 	// re-attempting the create
 	constructor(
+		private errorMessage: string,
 		private notebookNameInputValue: string,
 		private onChangeBinded: (event: React.ChangeEvent<HTMLInputElement>) => void) {
 		super();
 	}
 
 	element(): JSX.Element {
-		// TODO (machiam) error info should have a popover as per redlines
 		return (
 			<CreateNewNotebookRowTemplate>
 				<div className='picker-label'>
@@ -30,9 +30,7 @@ export class CreateNewNotebookErrorRenderStrategy extends CreateNewNotebookCommo
 						value={this.notebookNameInputValue}
 						onChange={this.onChangeBinded} />
 				</div>
-				<div className='error-info-icon'>
-					<ErrorInfoIconSvg />
-				</div>
+				<ErrorIconWithPopover errorMessage={this.errorMessage}></ErrorIconWithPopover>
 			</CreateNewNotebookRowTemplate>
 		);
 	}

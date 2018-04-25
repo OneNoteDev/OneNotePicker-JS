@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 import { NodeRenderStrategy } from '../treeView/nodeRenderStrategy';
-import { ErrorInfoIconSvg } from '../icons/errorInfoIcon.svg';
 import { Strings } from '../../strings';
 import { CreateNewSectionCommonProperties } from './createNewSectionCommonProperties';
 import { CreateNewSectionRowTemplate } from './createNewSectionRowTemplate';
+import { ErrorIconWithPopover } from '../errorIconWithPopover';
 
 export class CreateNewSectionErrorRenderStrategy extends CreateNewSectionCommonProperties implements NodeRenderStrategy {
 	onClickBinded = () => { };
@@ -13,13 +13,13 @@ export class CreateNewSectionErrorRenderStrategy extends CreateNewSectionCommonP
 	// re-attempting the create
 	constructor(
 		parentId: string,
+		private errorMessage: string,
 		private sectionNameInputValue: string,
 		private onChangeBinded: (event: React.ChangeEvent<HTMLInputElement>) => void) {
 		super(parentId);
 	}
 
 	element(): JSX.Element {
-		// TODO (machiam) error info should have a popover as per redlines
 		return (
 			<CreateNewSectionRowTemplate>
 				<div className='picker-label'>
@@ -31,9 +31,7 @@ export class CreateNewSectionErrorRenderStrategy extends CreateNewSectionCommonP
 						value={this.sectionNameInputValue}
 						onChange={this.onChangeBinded} />
 				</div>
-				<div className='error-info-icon'>
-					<ErrorInfoIconSvg />
-				</div>
+				<ErrorIconWithPopover errorMessage={this.errorMessage}></ErrorIconWithPopover>
 			</CreateNewSectionRowTemplate>
 		);
 	}

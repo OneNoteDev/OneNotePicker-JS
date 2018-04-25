@@ -40,8 +40,8 @@ export class CreateNewNotebookNode extends React.Component<CreateNewNotebookNode
 		return new CreateNewNotebookInputRenderStrategy(inputValue, onEnter, onInputChange, setInputRefAndFocus);
 	}
 
-	private createErrorRenderStrategy(inputValue: string, onInputChange: (evt: React.ChangeEvent<HTMLInputElement>) => void): NodeRenderStrategy {
-		return new CreateNewNotebookErrorRenderStrategy(inputValue, onInputChange);
+	private createErrorRenderStrategy(errorMessage: string, inputValue: string, onInputChange: (evt: React.ChangeEvent<HTMLInputElement>) => void): NodeRenderStrategy {
+		return new CreateNewNotebookErrorRenderStrategy(errorMessage, inputValue, onInputChange);
 	}
 
 	private inProgressRenderStrategy(inputValue: string): NodeRenderStrategy {
