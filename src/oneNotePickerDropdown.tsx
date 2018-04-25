@@ -58,7 +58,7 @@ export abstract class GenericOneNotePickerDropdown<T extends PickerProperties> e
 		document.removeEventListener('mousedown', this.handleClickOutside);
 	}
 
-	abstract createTag(arg: T): JSX.Element;
+	abstract getPickerElement(arg: T): JSX.Element;
 
 	render() {
 		// TODO (machiam/jane) We should not modify props. We should copy to new object before passing it down.
@@ -98,7 +98,7 @@ export abstract class GenericOneNotePickerDropdown<T extends PickerProperties> e
 				</div>
 				{this.state.popupVisible ?
 					<div className={'picker-popup ' + (this.props.popupDirection === 'top' ? 'popup-upwards' : '')}>
-						{this.props.popupContentOverride ? this.props.popupContentOverride : this.createTag(this.props)}
+						{this.props.popupContentOverride ? this.props.popupContentOverride : this.getPickerElement(this.props)}
 					</div> :
 					undefined}
 			</div>
@@ -107,13 +107,13 @@ export abstract class GenericOneNotePickerDropdown<T extends PickerProperties> e
 }
 
 export class OneNotePickerDropdown extends GenericOneNotePickerDropdown<OneNotePickerProps & PickerProperties> {
-	createTag(args: OneNotePickerProps) {
+	getPickerElement(args: OneNotePickerProps) {
 		return <OneNotePicker {...args} />;
 	}
 }
 
 export class OneNoteSingleNotebookDropdown extends GenericOneNotePickerDropdown<OneNoteSingleNotebookPickerProps & PickerProperties> {
-	createTag(args: OneNoteSingleNotebookPickerProps) {
+	getPickerElement(args: OneNoteSingleNotebookPickerProps) {
 		return <OneNoteSingleNotebookPicker {...args} />;
 	}
 }

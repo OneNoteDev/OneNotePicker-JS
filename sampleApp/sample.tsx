@@ -48,13 +48,11 @@ oneNoteDataProvider.getNotebooks().then((notebooks) => {
 			notebookListUpdater: updater,
 			callbacks: {
 				onNotebookHierarchyUpdated: (newNotebookHierarchy) => {
-				
 					render(globalProps, newNotebookHierarchy);
 					renderDropdown(globalProps, newNotebookHierarchy);
 				},
 				onSectionSelected: (section, breadcrumbs) => {
 					globalProps.globals.selectedId = section.id;
-			
 					// tslint:disable-next-line:no-console
 					console.log(breadcrumbs.map(x => x.name).join(' > '));
 
@@ -63,7 +61,6 @@ oneNoteDataProvider.getNotebooks().then((notebooks) => {
 				},
 				onPageSelected: (page, breadcrumbs) => {
 					globalProps.globals.selectedId = page.id;
-
 					// tslint:disable-next-line:no-console
 					console.log(breadcrumbs.map(x => x.name).join(' > '));
 
@@ -73,7 +70,6 @@ oneNoteDataProvider.getNotebooks().then((notebooks) => {
 				onAccessibleSelection: (selectedItemId: string) => {
 					globalProps.globals.ariaSelectedId = selectedItemId;
 
-					// todo this changes the label but you can't click to make a selection?
 					render(globalProps, globalProps.globals.notebookListUpdater!.get());
 					renderDropdown(globalProps, globalProps.globals.notebookListUpdater!.get());
 				},
@@ -115,7 +111,7 @@ oneNoteDataProvider.getNotebooks().then((notebooks) => {
 	console.error(value);
 });
 
-export function findItemName(notebooks, itemid) {
-	let notebook = OneNoteItemUtils.find(notebooks, item => item.id === itemid);
+export function findItemName(notebooks, itemId) {
+	const notebook = OneNoteItemUtils.find(notebooks, item => item.id === itemId);
 	return notebook ? notebook.name : '';
 }
