@@ -9,6 +9,7 @@ import { Section } from '../src/oneNoteDataStructures/section';
 import { OneNoteItemUtils } from '../src/oneNoteDataStructures/oneNoteItemUtils';
 import { NotebookListUpdater } from '../src/oneNoteDataStructures/notebookListUpdater';
 import { SampleOneNoteDataProvider } from './sampleOneNoteDataProvider';
+import { OneNotePickerDropdown } from '../src/oneNotePickerDropdown';
 
 const oneNoteDataProvider: OneNoteDataProvider = new SampleOneNoteDataProvider();
 
@@ -16,6 +17,17 @@ const render = (globalProps: GlobalProps, notebooks: Notebook[]) => {
 	ReactDOM.render(
 		<OneNotePicker globals={globalProps.globals} notebooks={notebooks} />,
 		document.getElementById('oneNotePicker') as HTMLElement
+	);
+};
+
+const renderDropdown = (globalProps: GlobalProps, notebooks: Notebook[]) => {	
+	const dropdownLabel = !globalProps.globals.selectedId ?
+		'Select Section' :
+		findItemName(globalProps.globals.notebookListUpdater!.get(), globalProps.globals.selectedId);
+
+	ReactDOM.render(
+		<OneNotePickerDropdown globals={globalProps.globals} notebooks={notebooks} dropdownLabel={dropdownLabel} popupDirection={'bottom'} />,
+		document.getElementById('oneNotePickerDropdown') as HTMLElement
 	);
 };
 
@@ -37,14 +49,16 @@ oneNoteDataProvider.getNotebooks().then((notebooks) => {
 			callbacks: {
 				onNotebookHierarchyUpdated: (newNotebookHierarchy) => {
 					render(globalProps, newNotebookHierarchy);
+					renderDropdown(globalProps, newNotebookHierarchy);
 				},
 				onSectionSelected: (section, breadcrumbs) => {
 					globalProps.globals.selectedId = section.id;
-
+					
 					// tslint:disable-next-line:no-console
 					console.log(breadcrumbs.map(x => x.name).join(' > '));
 
 					render(globalProps, globalProps.globals.notebookListUpdater!.get());
+					renderDropdown(globalProps, globalProps.globals.notebookListUpdater!.get());
 				},
 				onPageSelected: (page, breadcrumbs) => {
 					globalProps.globals.selectedId = page.id;
@@ -53,11 +67,13 @@ oneNoteDataProvider.getNotebooks().then((notebooks) => {
 					console.log(breadcrumbs.map(x => x.name).join(' > '));
 
 					render(globalProps, globalProps.globals.notebookListUpdater!.get());
+					renderDropdown(globalProps, globalProps.globals.notebookListUpdater!.get());
 				},
 				onAccessibleSelection: (selectedItemId: string) => {
 					globalProps.globals.ariaSelectedId = selectedItemId;
 
 					render(globalProps, globalProps.globals.notebookListUpdater!.get());
+					renderDropdown(globalProps, globalProps.globals.notebookListUpdater!.get());
 				},
 				onNotebookCreated: (notebook: Notebook) => {
 					// Allow max one creation
@@ -91,7 +107,13 @@ oneNoteDataProvider.getNotebooks().then((notebooks) => {
 		}
 	};
 	render(globalProps, notebooks);
+	renderDropdown(globalProps, notebooks);
 }).catch((value) => {
 	// tslint:disable-next-line:no-console
 	console.error(value);
 });
+
+export function findItemName(notebooks, itemId) {
+	const notebook = OneNoteItemUtils.find(notebooks, item => item.id === itemId);
+	return notebook ? notebook.name : '';
+}
