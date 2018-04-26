@@ -158,6 +158,7 @@ const prod = {
 			out: `${path.resolve(__dirname)}/dist/OneNoteItemUtils.d.ts`,
 			removeSource: false,
 			outputAsModuleFolder: true,
+			emitOnIncludedFileNotFound: true,
 			headerText: "TypeScript Definition for OneNoteItemUtils"
 		})
 	],
