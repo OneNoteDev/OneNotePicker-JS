@@ -6,6 +6,8 @@ import { Polyfills } from '../polyfills';
 
 Polyfills.find();
 
+export type noteBookOrSectionGroup = Notebook | SectionGroup;
+
 export class OneNoteItemUtils {
 	/**
 	 * Given the id of the OneNoteItem, and a notebook or sectionGroup list, returns
@@ -97,6 +99,38 @@ export class OneNoteItemUtils {
 		}
 
 		return ancestry;
+	}
+	
+	/**
+	 * Finds the maximum depth of notebooks list, including sections
+	 */
+	getDepthOfNotebooks(notebooks: Notebook[]): number {
+		if (!notebooks || notebooks.length === 0) {
+			return 0;
+		}
+		return notebooks.map((notebook) => this.getDepthOfParent(notebook)).reduce((d1, d2) => Math.max(d1, d2));
+	}
+
+	/** 
+	 * Finds the maximum depth of SectionGroup or Notebook, 
+	 * includes the number of sections below it 
+	 */
+	getDepthOfParent(parent: noteBookOrSectionGroup ): number {
+		if (!parent) {
+			return 0;
+		}
+
+		let containsAtLeastOneSection = parent.sections && parent.sections.length > 0;
+		let maxDepth = containsAtLeastOneSection ? 1 : 0;
+
+		if (parent.sectionGroups) {
+			for (let i = 0; i < parent.sections.length; i++) {
+				maxDepth = Math.max(this.getDepthOfParent(parent.sectionGroups[i]), maxDepth);
+			}
+		}
+
+		// Include the parent itself
+		return maxDepth + 1;
 	}
 }
 
