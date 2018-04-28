@@ -1,9 +1,82 @@
 import { Notebook } from '../../src/oneNoteDataStructures/notebook';
 import { OneNoteItem } from '../../src/oneNoteDataStructures/oneNoteItem';
+import { SectionGroup } from '../../src/oneNoteDataStructures/sectionGroup';
 import { OneNoteItemUtils } from '../../src/oneNoteDataStructures/oneNoteItemUtils';
 import { Section } from '../../src/oneNoteDataStructures/section';
 
 describe('OneNoteItemUtils', () => {
+	const notebook1: Notebook = {
+		parent: undefined,
+		id: 'notebook',
+		name: 'Notebook',
+		expanded: false,
+		sectionGroups: [],
+		sections: [],
+		apiUrl: '',
+		webUrl: '',
+	};
+
+	const notebook2: Notebook = {
+		parent: undefined,
+		id: 'notebook',
+		name: 'Notebook',
+		expanded: false,
+		sectionGroups: [],
+		sections: [],
+		apiUrl: '',
+		webUrl: '',
+	};
+
+	const section1: Section = {
+		parent: undefined,
+		id: 'child',
+		name: 'Child',
+		expanded: false,
+		pages: undefined,
+		apiUrl: '',
+	};
+
+	const section2: Section = {
+		parent: undefined,
+		id: 'child',
+		name: 'Child',
+		expanded: false,
+		pages: undefined,
+		apiUrl: '',
+	};
+
+	const sectionGroup: SectionGroup = {
+		parent: notebook2,
+		id: 'child',
+		name: 'Child',
+		expanded: false,
+		sectionGroups: [],
+		sections: [],
+		apiUrl: ''
+	};
+
+	const sectionGroupWithTwoSections: SectionGroup = {
+		parent: notebook2,
+		id: 'child',
+		name: 'Child',
+		expanded: false,
+		sectionGroups: [],
+		sections: [],
+		apiUrl: ''
+	};
+	sectionGroupWithTwoSections.sections.push(section1, section2);		
+
+	const stackedSectionGroup: SectionGroup = {
+		parent: notebook2,
+		id: 'child',
+		name: 'Child',
+		expanded: false,
+		sectionGroups: [],
+		sections: [],
+		apiUrl: ''
+	};
+	stackedSectionGroup.sectionGroups.push(sectionGroup);
+
 	it('find should return the item that matches the predicate if it is found early in the hierarchy', () => {
 		const notebook: Notebook = {
 			parent: undefined,
@@ -217,4 +290,57 @@ describe('OneNoteItemUtils', () => {
 		const ancestry = OneNoteItemUtils.getAncestry(item);
 		expect(ancestry).toEqual([grandparent, parent, item]);
 	});
+
+	it('getDepthOfNotebooks should return a max depth of 1 if there is one notebook with no other children', () => {
+		const depthOfNotebooks = OneNoteItemUtils.getDepthOfNotebooks([notebook1]);
+		expect(depthOfNotebooks).toEqual(1);
+	});
+
+	it('getDepthOfNotebooks should return a max depth of 1 if there are two notebooks with no other children', () => {
+		const depthOfNotebooks = OneNoteItemUtils.getDepthOfNotebooks([notebook1, notebook2]);
+		expect(depthOfNotebooks).toEqual(1);
+	});
+
+	it('getDepthOfNotebooks returns a max depth of 2 when there are two notebooks where one has sections', () => {
+		section1.parent = notebook1;
+		notebook1.sections.push(section1); 
+		
+		const depthOfNotebooks = OneNoteItemUtils.getDepthOfNotebooks([notebook1, notebook2]);
+		expect(depthOfNotebooks).toEqual(2);
+	});
+
+	it('getDepthOfNotebook should return a max depth of 2 when there are two notebooks where one has an empty section group', () => {
+		notebook1.sectionGroups.push(sectionGroup);
+
+		const depthOfNotebooks = OneNoteItemUtils.getDepthOfNotebooks([notebook1, notebook2]);
+		expect(depthOfNotebooks).toEqual(2);
+	});
+
+	it('getDepthOfNotebooks returns a max depth of 3 when there are two notebooks where one has a section group with a section', () => {
+		sectionGroup.sections.push(section1);
+		notebook1.sectionGroups.push(sectionGroup);
+
+		const depthOfNotebooks = OneNoteItemUtils.getDepthOfNotebooks([notebook1, notebook2]);
+		expect(depthOfNotebooks).toEqual(3);
+	});
+
+	it('getDepthOfNotebooks returns a max depth of three when there are two notebooks where one has a section group with multiple sections', () => {
+		notebook1.sectionGroups.push(sectionGroupWithTwoSections);
+
+		const depthOfNotebooks = OneNoteItemUtils.getDepthOfNotebooks([notebook1, notebook2]);
+		expect(depthOfNotebooks).toEqual(3);
+	});
+
+	it('getDepthOfNotebooks returns the correct depth when there are two notebooks with a more complicated tree structure', () => {
+		notebook1.sectionGroups.push(sectionGroupWithTwoSections);
+		notebook2.sectionGroups.push(stackedSectionGroup);
+
+		const depthOfNotebooks = OneNoteItemUtils.getDepthOfNotebooks([notebook1, notebook2]);
+		expect(depthOfNotebooks).toEqual(3);
+	});
+
+	it('getDepthOfNotebooks returns a max depth of 0 if it is given an empty array of Notebooks', () => {
+		expect(OneNoteItemUtils.getDepthOfNotebooks([])).toEqual(0);
+	});
+
 });

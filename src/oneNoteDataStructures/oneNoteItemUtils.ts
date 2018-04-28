@@ -6,7 +6,7 @@ import { Polyfills } from '../polyfills';
 
 Polyfills.find();
 
-export type noteBookOrSectionGroup = Notebook | SectionGroup;
+export type notebookOrSectionGroup = Notebook | SectionGroup;
 
 export class OneNoteItemUtils {
 	/**
@@ -104,7 +104,7 @@ export class OneNoteItemUtils {
 	/**
 	 * Finds the maximum depth of notebooks list, including sections
 	 */
-	getDepthOfNotebooks(notebooks: Notebook[]): number {
+	static getDepthOfNotebooks(notebooks: Notebook[]): number {
 		if (!notebooks || notebooks.length === 0) {
 			return 0;
 		}
@@ -115,7 +115,7 @@ export class OneNoteItemUtils {
 	 * Finds the maximum depth of SectionGroup or Notebook, 
 	 * includes the number of sections below it 
 	 */
-	getDepthOfParent(parent: noteBookOrSectionGroup ): number {
+	private static getDepthOfParent(parent: notebookOrSectionGroup ): number {
 		if (!parent) {
 			return 0;
 		}
