@@ -7,6 +7,7 @@ import { Polyfills } from '../polyfills';
 Polyfills.find();
 
 export type notebookOrSectionGroup = Notebook | SectionGroup;
+export type SectionPathElement = notebookOrSectionGroup | Section;
 
 export class OneNoteItemUtils {
 	/**
@@ -131,6 +132,58 @@ export class OneNoteItemUtils {
 
 		// Include the parent itself
 		return maxDepth + 1;
+	}
+
+	/**
+	 * Retrieves the path starting from the notebook to the first ancestor section found that
+	 * meets a given criteria.
+	 */
+	static getPathFromNotebooksToSection(notebooks: Notebook[], filter: (s: Section) => boolean): SectionPathElement[] | undefined {
+		if (!notebooks || !filter) {
+			return undefined;
+		}
+
+		for (let i = 0; i < notebooks.length; i++) {
+			let notebook = notebooks[i];
+			let notebookSearchResult = this.getPathFromParentToSection(notebook, filter);
+			if (notebookSearchResult) {
+				return notebookSearchResult;
+			}
+		}
+
+		return undefined;
+	}
+
+	/**
+	 * Recursively retrieves the path starting from the specified parent to the first ancestor
+	 * section found that meets a given criteria.
+	 */
+	static getPathFromParentToSection(parent: notebookOrSectionGroup, filter: (s: Section) => boolean): SectionPathElement[] | undefined{
+		if (!parent || !filter) {
+			return undefined;
+		}
+
+		if (parent.sections) {
+			for (let i = 0; i < parent.sections.length; i++) {
+				let section = parent.sections[i];
+				if (filter(section)) {
+					return [parent, section];
+				}
+			}
+		}
+
+		if (parent.sectionGroups) {
+			for (let i = 0; i < parent.sectionGroups.length; i++) {
+				let sectionGroup = parent.sectionGroups[i];
+				let sectionGroupSearchResult = this.getPathFromParentToSection(sectionGroup, filter);
+				if (sectionGroupSearchResult) {
+					sectionGroupSearchResult.unshift(parent);
+					return sectionGroupSearchResult;
+				}
+			}
+		}
+
+		return undefined;
 	}
 }
 
