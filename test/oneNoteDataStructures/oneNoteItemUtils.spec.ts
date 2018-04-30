@@ -27,6 +27,17 @@ describe('OneNoteItemUtils', () => {
 		webUrl: '',
 	};
 
+	const expandedNotebook: Notebook = {
+		parent: undefined,
+		id: 'notebook2',
+		name: 'Notebook2',
+		expanded: false,
+		sectionGroups: [],
+		sections: [],
+		apiUrl: '',
+		webUrl: '',
+	};
+
 	const section1: Section = {
 		parent: undefined,
 		id: 'section1',
@@ -41,15 +52,6 @@ describe('OneNoteItemUtils', () => {
 		id: 'section1',
 		name: 'Section1',
 		expanded: false,
-		pages: undefined,
-		apiUrl: '',
-	};
-	
-	const expandedSection: Section = {
-		parent: undefined,
-		id: 'expandedSection',
-		name: 'ExpandedSection',
-		expanded: true,
 		pages: undefined,
 		apiUrl: '',
 	};
@@ -85,14 +87,6 @@ describe('OneNoteItemUtils', () => {
 		apiUrl: ''
 	};
 	stackedSectionGroup.sectionGroups.push(sectionGroup);
-
-	const idPath = (path: SectionPathElement[] | undefined): string => {
-		if (path === undefined) {
-			return '';
-		} else {
-			return path.map((elem) => elem.id).join();
-		}
-	};
 
 	it('find should return the item that matches the predicate if it is found early in the hierarchy', () => {
 		const notebook: Notebook = {
@@ -352,64 +346,12 @@ describe('OneNoteItemUtils', () => {
 		notebook1.sectionGroups.push(sectionGroupWithTwoSections);
 		notebook2.sectionGroups.push(stackedSectionGroup);
 
-		const depthOfNotebooks = OneNoteItemUtils.getDepthOfNotebooks([notebook1, notebook2]);
+		const depthOfNotebooks = OneNoteItemUtils.getDepthOfNotebooks([notebook1, expandedNotebook]);
 		expect(depthOfNotebooks).toEqual(3);
 	});
 
 	it('getDepthOfNotebooks returns a max depth of 0 if it is given an empty array of Notebooks', () => {
 		expect(OneNoteItemUtils.getDepthOfNotebooks([])).toEqual(0);
-	});
-
-	it('getPathFromNotebooksToSection generates the correct path when there is one notebook and one section', () => {
-		notebook1.sections.push(expandedSection);
-
-		const path = OneNoteItemUtils.getPathFromNotebooksToSection([notebook1], s => s.expanded);
-		expect(idPath(path)).toEqual('notebook1,expandedSection');
-	});
-
-	it('getPathFromNotebooksToSection generates correct path when there is one notebook, one section group and one section', () => {
-		sectionGroup.sections.push(expandedSection);
-		notebook1.sectionGroups.push(sectionGroup);
-
-		const path = OneNoteItemUtils.getPathFromNotebooksToSection([notebook1], s => s.expanded);
-		expect(idPath(path)).toEqual('notebook1,sectionGroup,expandedSection');
-	});
-
-	it('getPathFromNotebooksToSection generates correct path when there is one notebook, one section group, and one section that is not in the group', () => {
-		notebook1.sectionGroups.push(sectionGroup);
-		notebook1.sections.push(expandedSection);
-
-		const path = OneNoteItemUtils.getPathFromNotebooksToSection([notebook1], s => s.expanded);
-		expect(idPath(path)).toEqual('notebook1,expandedSection');
-	});
-
-	it('getPathFromNotebooksToSection generates correct path when the section is in a section group that is in another section group and in a notebook', () => {
-		const sgInside: SectionGroup = {
-			parent: notebook2,
-			id: 'sgInside',
-			name: 'SgInside',
-			expanded: false,
-			sectionGroups: [],
-			sections: [],
-			apiUrl: ''
-		};
-		sgInside.sections.push(expandedSection);
-
-		const sgOutside: SectionGroup = {
-			parent: notebook2,
-			id: 'sgOutside',
-			name: 'sgOutside',
-			expanded: false,
-			sectionGroups: [],
-			sections: [],
-			apiUrl: ''
-		};
-		sgOutside.sectionGroups.push(sgInside);
-
-		notebook1.sectionGroups.push(sgOutside);
-
-		const path = OneNoteItemUtils.getPathFromNotebooksToSection([notebook1], s => s.expanded);
-		expect(idPath(path)).toEqual('notebook1,sgOutside,sgInside,expandedSection');
 	});
 
 });
