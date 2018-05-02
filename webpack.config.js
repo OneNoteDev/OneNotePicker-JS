@@ -21,13 +21,44 @@ const extractSass = new ExtractTextPlugin({
 	allChunks: true
 });
 
+const ENTRYPOINTS = {
+	OneNotePicker: `exports/oneNotePicker.Index`,
+	OneNoteApiDataProvider: `exports/oneNoteApiDataProvider.Index`,
+	OneNoteItemUtils: `exports/oneNoteItemUtils.Index`,
+}
+
+function generateWebpackEntries() {
+	const entries = {};
+
+	for(const key of Object.keys(ENTRYPOINTS)) {
+		entries[key] = `${path.resolve(__dirname)}/${ENTRYPOINTS[key]}`;
+	}
+
+	return entries;
+}
+
+function generateDtsBundlePlugins() {
+	const entries = [];
+
+	for(const key of Object.keys(ENTRYPOINTS)) {
+		const plugin = new DtsBundlePlugin({
+			name: key,
+			main: `${path.resolve(__dirname)}/dist/types/${ENTRYPOINTS[key]}.d.ts`,
+			out: `${path.resolve(__dirname)}/dist/${key}.d.ts`,
+			removeSource: false,
+			outputAsModuleFolder: true,
+			emitOnIncludedFileNotFound: true,
+			headerText: `TypeScript Definition for ${key}`
+		});
+
+		entries.push(plugin)
+	}
+
+	return entries;
+}
+
 const base = {
-	entry: {
-		sample: './sampleApp/sample',
-		OneNotePicker: './src/oneNotePicker',
-		OneNoteApiDataProvider: './src/providers/oneNoteApiDataProvider',
-		OneNoteItemUtils: './src/oneNoteDataStructures/oneNoteItemUtils'
-	},
+	entry: generateWebpackEntries(),
 	output: {
 		path: OUT_DIR,
 		publicPath: '/dist/',
@@ -136,31 +167,7 @@ const prod = {
 				'NODE_ENV': JSON.stringify('production')
 			}
 		}),
-		new DtsBundlePlugin({
-			name: 'OneNotePicker',
-			main: `${path.resolve(__dirname)}/dist/types/src/OneNotePicker.d.ts`,
-			out: `${path.resolve(__dirname)}/dist/OneNotePicker.d.ts`,
-			removeSource: false,
-			outputAsModuleFolder: true,
-			headerText: "TypeScript Definition for OneNotePicker"
-		}),
-		new DtsBundlePlugin({
-			name: 'OneNotePickerApiDataProvider',
-			main: `${path.resolve(__dirname)}/dist/types/src/providers/OneNoteApiDataProvider.d.ts`,
-			out: `${path.resolve(__dirname)}/dist/OneNoteApiDataProvider.d.ts`,
-			removeSource: false,
-			outputAsModuleFolder: true,
-			headerText: "TypeScript Definition for OneNoteApiDataProvider"
-		}),
-		new DtsBundlePlugin({
-			name: 'OneNoteItemUtils',
-			main: `${path.resolve(__dirname)}/dist/types/src/oneNoteDataStructures/OneNoteItemUtils.d.ts`,
-			out: `${path.resolve(__dirname)}/dist/OneNoteItemUtils.d.ts`,
-			removeSource: false,
-			outputAsModuleFolder: true,
-			emitOnIncludedFileNotFound: true,
-			headerText: "TypeScript Definition for OneNoteItemUtils"
-		})
+		...generateDtsBundlePlugins()
 	],
 	externals: {
 		'react': { root: 'React', amd: 'react', commonjs2: 'react', commonjs: 'react' },
