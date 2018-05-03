@@ -22,9 +22,9 @@ const extractSass = new ExtractTextPlugin({
 });
 
 const ENTRYPOINTS = {
-	OneNotePicker: `exports/oneNotePicker.Index`,
-	OneNoteApiDataProvider: `exports/oneNoteApiDataProvider.Index`,
-	OneNoteItemUtils: `exports/oneNoteItemUtils.Index`,
+	OneNotePicker: `exports/oneNotePicker.index`,
+	OneNoteApiDataProvider: `exports/oneNoteApiDataProvider.index`,
+	OneNoteItemUtils: `exports/oneNoteItemUtils.index`,
 }
 
 function generateWebpackEntries() {
