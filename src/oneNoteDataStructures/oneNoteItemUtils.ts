@@ -100,4 +100,3 @@ export class OneNoteItemUtils {
 	}
 }
 
-export * from './oneNoteApiResponseTransformer';

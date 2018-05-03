@@ -63,6 +63,4 @@ export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, {}> {
 	}
 }
 
-export * from './oneNoteSingleNotebookPicker';
-export * from './oneNotePickerDropdown';
-export * from './oneNoteDataStructures/notebookListUpdater';
+
