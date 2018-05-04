@@ -151,12 +151,13 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 		return decodeURIComponent(last);
 	}
 
-	getSpNotebookProperties(spNotebook: SharedNotebook, expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<SharedNotebookApiProperties | undefined> {
+	getSpNotebookProperties(spNotebook: SharedNotebook, expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<SharedNotebookApiProperties> {
 		return new Promise<SharedNotebookApiProperties>((resolve, reject) => {
 			this.getNotebookSelfUrlFromSpUrl(spNotebook.webUrl).then((selfUrl) => {
 				this.http('GET', selfUrl + '?' + this.getExpands(expands), this.authHeader, this.headers).then((xhr) => {
 					const notebook: OneNoteApi.Notebook = xhr.response && JSON.parse(xhr.response);
 					if (notebook) {
+						spNotebook.apiUrl = notebook.self;
 						const spSections = notebook.sections.map(section => this.responseTransformer.transformSection(section, spNotebook));
 						const spSectionGroups = notebook.sectionGroups.map(sectionGroup => this.responseTransformer.transformSectionGroup(sectionGroup, spNotebook));
 						resolve({
