@@ -62,5 +62,3 @@ export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, {}> {
 		return [...createNewNotebook, ...notebookNodes, ...sharedNotebookNodes];
 	}
 }
-
-
