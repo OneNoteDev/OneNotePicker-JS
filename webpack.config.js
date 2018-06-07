@@ -9,17 +9,12 @@ const IS_ANALYZE = process.env.NODE_ENV === "analyze";
 const OUT_DIR = path.join(__dirname, './dist');
 
 // plugins
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WebpackMerge = require('webpack-merge');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const DtsBundlePlugin = require('./dtsBundlePlugin');
-
-const cssFileName = IS_PROD_MIN ? "[name].min.css" : "[name].css";
-
-const extractSass = new ExtractTextPlugin({
-	filename: cssFileName,
-	allChunks: true
-});
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const ENTRYPOINTS = {
 	OneNotePicker: `exports/oneNotePicker.index`,
@@ -69,11 +64,11 @@ const base = {
 	},
 	target: 'web',
 	resolve: {
-		extensions: ['.js', '.ts', '.tsx'],
+		extensions: ['.tsx', '.ts', '.js'],
 	},
 	devtool: 'cheap-module-eval-source-map',
 	module: {
-		loaders: [
+		rules: [
 			// .ts, .tsx
 			{
 				test: /\.tsx?$/,
@@ -81,51 +76,38 @@ const base = {
 			},
 			{
 				test: /\.css/,
-				use: extractSass.extract({
-					use: [
-						{
-							loader: `css-loader?importLoaders=1&minimize=${IS_PROD_MIN}!postcss-loader`
-						}
-					],
-					fallback: 'style-loader'
-				})
+				use: [
+					!IS_PROD ? 'style-loader' : MiniCssExtractPlugin.loader,
+					{
+						loader: 'css-loader',
+						options: { importLoaders: 1 }
+					},
+					'postcss-loader'
+				]
 			},
 			{
 				test: /\.sass$/,
-				use: extractSass.extract({
-					use: [
-						{
-							loader: `css-loader?importLoaders=1&minimize=${IS_PROD_MIN}!postcss-loader`
-						},
-						{
-							loader: 'sass-loader',
-							options: {
-								outputStyle: 'expanded',
-								indentedSyntax: true,
-								includePaths: [path.join(__dirname, 'node-modules')]
-							}
-						}
-					],
-					fallback: 'style-loader'
-				})
+				use: [
+					!IS_PROD ? 'style-loader' : MiniCssExtractPlugin.loader,
+					{
+						loader: 'css-loader',
+						options: { importLoaders: 1 }
+					},
+					'postcss-loader',
+					'sass-loader',
+				]
 			},
 			{
 				test: /\.scss$/,
-				use: extractSass.extract({
-					use: [
-						{
-							loader: `css-loader?importLoaders=1&minimize=${IS_PROD_MIN}!postcss-loader`
-						},
-						{
-							loader: 'sass-loader',
-							options: {
-								outputStyle: 'expanded',
-								includePaths: [path.join(__dirname, 'node-modules')]
-							}
-						}
-					],
-					fallback: 'style-loader'
-				})
+				use: [
+					!IS_PROD ? 'style-loader' : MiniCssExtractPlugin.loader,
+					{
+						loader: 'css-loader',
+						options: { importLoaders: 1 }
+					},
+					'postcss-loader',
+					'sass-loader',
+				]
 			},
 			// static assets
 			{test: /\.html$/, use: 'html-loader'},
@@ -138,10 +120,13 @@ const base = {
 			Promise: 'es6-promise'
 		}),
 		new webpack.optimize.AggressiveMergingPlugin(),
-		extractSass
+		new MiniCssExtractPlugin({
+			filename: '[name].css',
+		})
 	],
 	devServer: {
-		contentBase: './sampleApp',
+		contentBase: path.join(__dirname, './sampleApp'),
+		publicPath: '../dist/',
 		hot: true,
 		stats: {
 			warnings: false
@@ -157,11 +142,8 @@ const base = {
 
 const prod = {
 	devtool: 'source-map',
+	mode: 'production',
 	plugins: [
-		new webpack.LoaderOptionsPlugin({
-			minimize: true,
-			debug: false
-		}),
 		new webpack.DefinePlugin({
 			'process.env': {
 				'NODE_ENV': JSON.stringify('production')
@@ -179,9 +161,19 @@ const prodMinified = {
 	output: {
 		filename: '[name].min.js'
 	},
+	optimization: {
+		minimizer: [
+			new UglifyJsPlugin({
+				cache: true,
+				parallel: true,
+				sourceMap: true // set to true if you want JS source maps
+			}),
+			new OptimizeCSSAssetsPlugin({})
+		],
+	},
 	plugins: [
-		new webpack.optimize.UglifyJsPlugin({
-			sourceMap: true,
+		new MiniCssExtractPlugin({
+			filename: '[name].min.css',
 		}),
 	]
 };
