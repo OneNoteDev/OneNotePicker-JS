@@ -1,13 +1,13 @@
 import * as OneNoteApi from '../../node_modules/onenoteapi/target/oneNoteApi';
-import { OrderBy } from '../../node_modules/onenoteapi/target/oneNoteApi';
 
 import { OneNoteDataProvider } from './oneNoteDataProvider';
 import { Notebook } from '../oneNoteDataStructures/notebook';
 import { OneNoteApiResponseTransformer } from '../oneNoteDataStructures/oneNoteApiResponseTransformer';
 import { Section } from '../oneNoteDataStructures/section';
 import { SectionGroup } from '../oneNoteDataStructures/sectionGroup';
-import { SharedNotebook, SharedNotebookApiProperties } from '../oneNoteDataStructures/sharedNotebook';
+import { SharedNotebookApiProperties } from '../oneNoteDataStructures/sharedNotebook';
 import { Page } from '../oneNoteDataStructures/page';
+import { SharedNotebook } from '../oneNoteDataStructures/sharedNotebook';
 
 /**
  * Implements OneNoteDataProvider with external calls to OneNote's API.
@@ -42,16 +42,16 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 		});
 	}
 
-	getNotebooks(expands?: number, excludeReadOnlyNotebooks?: boolean, orderBy?: OrderBy): Promise<Notebook[]> {
+	getNotebooks(expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<Notebook[]> {
 		// tslint:disable-next-line:no-any
-		return this.api.getNotebooksWithExpandedSections(expands, excludeReadOnlyNotebooks, orderBy).then((responsePackage: OneNoteApi.ResponsePackage<any>) => {
+		return this.api.getNotebooksWithExpandedSections(expands, excludeReadOnlyNotebooks).then((responsePackage: OneNoteApi.ResponsePackage<any>) => {
 			return Promise.resolve(this.responseTransformer.transformNotebooks(responsePackage.parsedResponse.value));
 		});
 	}
 
 	getPages(section: Section): Promise<Page[]> {
 		// tslint:disable-next-line:no-any
-		return this.api.getPages({sectionId: section.id}).then((responsePackage: OneNoteApi.ResponsePackage<any>) => {
+		return this.api.getPages({ sectionId: section.id }).then((responsePackage: OneNoteApi.ResponsePackage<any>) => {
 			return Promise.resolve(this.responseTransformer.transformPages(responsePackage.parsedResponse.value, section));
 		});
 	}
@@ -88,8 +88,8 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 			}
 
 			sharedNotebooks.sort((a, b) => {
-				let nameA = a.name.toUpperCase();
-				let nameB = b.name.toUpperCase();
+				var nameA = a.name.toUpperCase();
+				var nameB = b.name.toUpperCase();
 				if (nameA < nameB) {
 					return -1;
 				}
@@ -100,30 +100,6 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 			});
 
 			return Promise.resolve(sharedNotebooks);
-		});
-	}
-
-	getSpNotebookProperties(spNotebook: SharedNotebook, expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<SharedNotebookApiProperties> {
-		return new Promise<SharedNotebookApiProperties>((resolve, reject) => {
-			this.getNotebookSelfUrlFromSpUrl(spNotebook.webUrl).then((selfUrl) => {
-				this.http('GET', selfUrl + '?' + this.getExpands(expands), this.authHeader, this.headers).then((xhr) => {
-					const notebook: OneNoteApi.Notebook = xhr.response && JSON.parse(xhr.response);
-					if (notebook) {
-						spNotebook.apiUrl = notebook.self;
-						const spSections = notebook.sections.map(section => this.responseTransformer.transformSection(section, spNotebook));
-						const spSectionGroups = notebook.sectionGroups.map(sectionGroup => this.responseTransformer.transformSectionGroup(sectionGroup, spNotebook));
-						resolve({
-							id: notebook.id,
-							spSectionGroups: spSectionGroups,
-							spSections: spSections
-						});
-						return;
-					}
-					reject(xhr);
-				});
-			}).catch((xhr) => {
-				reject(xhr);
-			});
 		});
 	}
 
@@ -175,6 +151,30 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 		return decodeURIComponent(last);
 	}
 
+	getSpNotebookProperties(spNotebook: SharedNotebook, expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<SharedNotebookApiProperties> {
+		return new Promise<SharedNotebookApiProperties>((resolve, reject) => {
+			this.getNotebookSelfUrlFromSpUrl(spNotebook.webUrl).then((selfUrl) => {
+				this.http('GET', selfUrl + '?' + this.getExpands(expands), this.authHeader, this.headers).then((xhr) => {
+					const notebook: OneNoteApi.Notebook = xhr.response && JSON.parse(xhr.response);
+					if (notebook) {
+						spNotebook.apiUrl = notebook.self;
+						const spSections = notebook.sections.map(section => this.responseTransformer.transformSection(section, spNotebook));
+						const spSectionGroups = notebook.sectionGroups.map(sectionGroup => this.responseTransformer.transformSectionGroup(sectionGroup, spNotebook));
+						resolve({
+							id: notebook.id,
+							spSectionGroups: spSectionGroups,
+							spSections: spSections
+						});
+						return;
+					}
+					reject(xhr);
+				});
+			}).catch((xhr) => {
+				reject(xhr);
+			});
+		});
+	}
+
 	private getNotebookSelfUrlFromSpUrl(spNotebookUrl: string): Promise<string> {
 		const url = `https://www.onenote.com/api/beta/me/notes/notebooks/GetNotebooksFromWebUrls()`;
 		const headers = {};
@@ -189,7 +189,7 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 		headers['Content-Type'] = 'application/json';
 
 		return new Promise<string>((resolve, reject) => {
-			this.http('POST', url, this.authHeader, headers, JSON.stringify({webUrls: [spNotebookUrl]})).then((xhr) => {
+			this.http('POST', url, this.authHeader, headers, JSON.stringify({ webUrls: [spNotebookUrl] })).then((xhr) => {
 				const responseJson = xhr.response && JSON.parse(xhr.response);
 				if (responseJson && responseJson.value) {
 					const notebooks = responseJson.value;
