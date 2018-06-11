@@ -63,6 +63,7 @@ svg.spinner {
 		.chevron-icon {
 			transition-duration: 0.3s;
 			transition-property: transform;
+			transform: rotate(180deg);
 
 			svg {
 				width: 0.5rem;
@@ -73,7 +74,7 @@ svg.spinner {
 			}
 
 			&.closed svg {
-				transform: rotate(180deg);
+				transform: rotate(90deg);
 			}
 		}
 
@@ -188,6 +189,8 @@ svg.spinner {
 
 	.create-spinner {
 		float: right;
+		order: 4;
+		margin-right: 5px;
 	}
 }
 

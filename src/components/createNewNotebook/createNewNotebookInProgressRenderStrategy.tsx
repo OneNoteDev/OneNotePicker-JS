@@ -17,9 +17,9 @@ export class CreateNewNotebookInProgressRenderStrategy extends CreateNewNotebook
 			<CreateNewNotebookRowTemplate>
 				<div className='picker-label'>
 					<label>{this.name}</label>
-					<div className='create-spinner'>
-						<SpinnerIconSvg />
-					</div>
+				</div>
+				<div className='create-spinner'>
+					<SpinnerIconSvg />
 				</div>
 			</CreateNewNotebookRowTemplate>
 		);
