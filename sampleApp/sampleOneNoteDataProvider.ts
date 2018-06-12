@@ -1,5 +1,5 @@
 import '../node_modules/onenoteapi/target/oneNoteApi';
-import * as OneNoteApi from 'onenoteapi';
+import * as OneNoteApi from '../node_modules/onenoteapi/target/oneNoteApi';
 
 import { OneNoteDataProvider } from '../src/providers/oneNoteDataProvider';
 import { Notebook } from '../src/oneNoteDataStructures/notebook';
