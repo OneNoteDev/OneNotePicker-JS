@@ -7,7 +7,7 @@
   "dependencies": {
     "bulma": "^0.4.2",
     "mini-css-extract-plugin": "^0.4.0",
-    "onenoteapi": "2.0.6",
+    "onenoteapi": "2.0.7",
     "react": "^15.6.2",
     "react-dom": "^15.6.2"
   },
