@@ -63,9 +63,9 @@ svg.spinner {
 		.chevron-icon {
 			transition-duration: 0.3s;
 			transition-property: transform;
-			transform: rotate(180deg);
 
 			svg {
+				transform: rotate(180deg);
 				width: 0.5rem;
 			}
 

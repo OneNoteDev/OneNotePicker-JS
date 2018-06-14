@@ -18,8 +18,8 @@ export interface CreateNewNotebookNodeProps extends InnerGlobals {
  * UI.
  */
 export class CreateNewNotebookNode extends React.Component<CreateNewNotebookNodeProps, {}> {
-	constructor() {
-		super();
+	constructor(props: CreateNewNotebookNodeProps) {
+		super(props);
 
 		this.notStartedRenderStrategy = this.notStartedRenderStrategy.bind(this);
 		this.inputRenderStrategy = this.inputRenderStrategy.bind(this);
