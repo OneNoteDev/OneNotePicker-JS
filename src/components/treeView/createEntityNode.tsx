@@ -37,8 +37,8 @@ export class CreateEntityNode extends React.Component<CreateEntityNodeProps, Cre
 	private inputRef: HTMLInputElement;
 	private componentIsMounted: boolean;
 
-	constructor() {
-		super();
+	constructor(props: CreateEntityNodeProps) {
+		super(props);
 		this.state = this.defaultState();
 
 		this.setWrapperRef = this.setWrapperRef.bind(this);

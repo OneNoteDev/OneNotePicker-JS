@@ -17,8 +17,8 @@ export interface OneNoteSingleNotebookDropdownProps extends OneNoteSingleNoteboo
 export class OneNoteSingleNotebookDropdown extends React.Component<OneNoteSingleNotebookDropdownProps, OneNoteSingleNotebookDropdownState> {
 	private wrapperRef: Node;
 
-	constructor() {
-		super();
+	constructor(props: OneNoteSingleNotebookDropdownProps) {
+		super(props);
 		this.state = {
 			popupVisible: false
 		};

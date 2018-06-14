@@ -22,8 +22,8 @@ export interface CreateNewSectionNodeProps extends InnerGlobals {
  * UI.
  */
 export class CreateNewSectionNode extends React.Component<CreateNewSectionNodeProps, {}> {
-	constructor() {
-		super();
+	constructor(props: CreateNewSectionNodeProps) {
+		super(props);
 
 		this.notStartedRenderStrategy = this.notStartedRenderStrategy.bind(this);
 		this.inputRenderStrategy = this.inputRenderStrategy.bind(this);

@@ -19,9 +19,9 @@ export class CreateNewSectionInProgressRenderStrategy extends CreateNewSectionCo
 			<CreateNewSectionRowTemplate>
 				<div className='picker-label'>
 					<label>{this.name}</label>
-					<div className='create-spinner'>
-						<SpinnerIconSvg />
-					</div>
+				</div>
+				<div className='create-spinner'>
+					<SpinnerIconSvg />
 				</div>
 			</CreateNewSectionRowTemplate>
 		);
