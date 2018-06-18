@@ -7,6 +7,14 @@ export class TreeViewNavigationUtils {
 	 * the scrolling effect on non-tab key presses.
 	 */
 	static normalizeKeyboardEventBehaviour(event: KeyboardEvent) {
+		console.error('normalizeKeyboardEventBehaviour', {
+			event,
+			preventDefaultExist: !!event.preventDefault,
+			keyCode: event.keyCode,
+			target: event.target,
+			tagName: (event.target as HTMLElement).tagName.toUpperCase()
+		});
+
 		// Don't block input on inputs
 		if (event.target && (event.target as HTMLElement).tagName.toUpperCase() === 'INPUT') {
 			return;
@@ -18,6 +26,7 @@ export class TreeViewNavigationUtils {
 		}
 
 		if (event.keyCode !== 9) {
+			console.error("normalizeKeyboardEventBehaviour: preventDefault");
 			// Allow tabbing out
 			event.preventDefault();
 		}

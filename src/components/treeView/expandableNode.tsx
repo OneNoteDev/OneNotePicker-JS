@@ -40,6 +40,7 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 	}
 
 	onKeyDown(event: KeyboardEvent) {
+		event.preventDefault();
 		TreeViewNavigationUtils.normalizeKeyboardEventBehaviour(event);
 
 		TreeViewNavigationUtils.handleMovementKeyboardEvent(this.props.id, this.props.treeViewId, event, this.props.globals.callbacks.onAccessibleSelection);

@@ -19,6 +19,7 @@ export class Strings {
 		'Accessibility.PageIcon': 'Page Icon',
 		'Label.CreateNotebook': 'Create New Notebook',
 		'Label.CreateSection': 'Create New Section',
+		'Label.RecentSections': 'Recent Sections',
 		'Input.CreateNotebookPlaceholder': 'Untitled Notebook',
 		'Input.CreateSectionPlaceholder': 'Untitled Section'
 	};
