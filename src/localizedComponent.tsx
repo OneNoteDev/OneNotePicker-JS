@@ -11,7 +11,7 @@ export interface LocalizedComponentProps {
  */
 export class LocalizedComponent extends React.Component<LocalizedComponentProps, {}> {
 	constructor(props: LocalizedComponentProps) {
-		super();
+		super(props);
 		Strings.setOverrides(props.stringOverrides);
 	}
 
