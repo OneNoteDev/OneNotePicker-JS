@@ -26,10 +26,11 @@ export class RecentSectionHeaderRenderStrategy extends RecentSectionsCommonPrope
 
 	getChildren(childrenLevel: number): JSX.Element[] {
 		const recentSectionRenderStrategies: RecentSectionRenderStrategy[] = this.globals.sections ?
-			this.globals.sections.map((section, i) => new RecentSectionRenderStrategy(section, this.globals, i)) : [];
+			this.globals.sections.map(section => new RecentSectionRenderStrategy(section, this.globals)) : [];
 		const sections = recentSectionRenderStrategies.map((renderStrategy, i) =>
 			<LeafNode globals={this.globals} node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
-					id={renderStrategy.getId()} ariaSelected={this.globals.ariaSelectedId ? renderStrategy.isAriaSelected() : i === 0}></LeafNode>);
+					id={renderStrategy.getId()} ariaSelected={this.globals.ariaSelectedId ? renderStrategy.isAriaSelected() : i === 0}
+					  level={childrenLevel}></LeafNode>);
 
 		return [...sections];
 	}
@@ -43,7 +44,12 @@ export class RecentSectionHeaderRenderStrategy extends RecentSectionsCommonPrope
 	}
 
 	isAriaSelected(): boolean {
+		console.error(this.globals.ariaSelectedId);
 		return this.globals.ariaSelectedId ? this.globals.ariaSelectedId === this.getId() : false;
+	}
+
+	getId() {
+		return Constants.TreeView.recentSectionsId;
 	}
 
 	private onClick() {

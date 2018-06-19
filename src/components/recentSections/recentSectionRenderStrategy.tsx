@@ -8,8 +8,7 @@ import { NodeRenderStrategy } from '../treeView/nodeRenderStrategy';
 export class RecentSectionRenderStrategy implements NodeRenderStrategy {
 	onClickBinded = this.onClick.bind(this);
 
-	constructor(private section: Section, private globals: InnerGlobals, private index: number) {
-		this.index = index;
+	constructor(private section: Section, private globals: InnerGlobals) {
 	}
 
 	element(): JSX.Element {
@@ -31,7 +30,7 @@ export class RecentSectionRenderStrategy implements NodeRenderStrategy {
 	}
 
 	getId(): string {
-		return this.section.apiUrl;
+		return this.section.id;
 	}
 
 	isSelected(): boolean {
