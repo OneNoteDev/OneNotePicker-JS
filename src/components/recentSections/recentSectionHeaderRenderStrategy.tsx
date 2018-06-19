@@ -5,6 +5,9 @@ import { Constants } from '../../constants';
 import { RecentSectionRenderStrategy } from './recentSectionRenderStrategy';
 import { ExpandableNodeRenderStrategy } from '../treeView/expandableNodeRenderStrategy';
 import { RecentSectionsNodeProps } from './recentSectionsNode';
+import { ChevronSvg } from '../icons/chevron.svg';
+import { NotebookOpenedIconSvg } from '../icons/notebookOpenedIcon.svg';
+import { NotebookClosedIconSvg } from '../icons/notebookClosedIcon.svg';
 
 export class RecentSectionHeaderRenderStrategy extends RecentSectionsCommonProperties implements ExpandableNodeRenderStrategy {
 	onClickBinded = this.onClick.bind(this);
@@ -16,12 +19,17 @@ export class RecentSectionHeaderRenderStrategy extends RecentSectionsCommonPrope
 
 	element(): JSX.Element {
 		return (
-			<div className={this.isSelected() ? 'picker-selectedItem recentHeader' : 'recentHeader'} title='recent-sections'>
-				<div className='recent-sections'>
+			<div className={this.isSelected() ? 'picker-selectedItem recent-sections' : 'recent-sections'} title='recent-sections'>
+				<div className={this.isExpanded() ? 'chevron-icon opened' : 'chevron-icon closed'}>
+					<ChevronSvg />
+				</div>
+				<div className='picker-icon'>
+					{this.isExpanded() ? <NotebookOpenedIconSvg /> : <NotebookClosedIconSvg />}
+				</div>
+				<div className='picker-label'>
 					<label>{this.getName()}</label>
 				</div>
-			</div>
-		);
+			</div>);
 	}
 
 	getChildren(childrenLevel: number): JSX.Element[] {
@@ -44,7 +52,6 @@ export class RecentSectionHeaderRenderStrategy extends RecentSectionsCommonPrope
 	}
 
 	isAriaSelected(): boolean {
-		console.error(this.globals.ariaSelectedId);
 		return this.globals.ariaSelectedId ? this.globals.ariaSelectedId === this.getId() : false;
 	}
 
@@ -53,9 +60,6 @@ export class RecentSectionHeaderRenderStrategy extends RecentSectionsCommonPrope
 	}
 
 	private onClick() {
-		// const onRecentHeaderSelected = this.globals.callbacks.onRecentHeaderSelected;
-		// if (!!onRecentHeaderSelected) {
-		// 	onRecentHeaderSelected(this.section, OneNoteItemUtils.getAncestry(this.section));
-		// }
+		this.expanded = !this.expanded;
 	}
 }
