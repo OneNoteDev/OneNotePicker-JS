@@ -1,35 +1,44 @@
 import * as React from 'react';
-
-import { InnerGlobals } from '../../props/globalProps';
 import { ExpandableNode } from '../treeView/expandableNode';
-import { RecentSectionHeaderRenderStrategy } from './recentSectionHeaderRenderStrategy';
 import { Section } from '../../oneNoteDataStructures/section';
+import { RecentSectionHeaderComponent } from './recentSectionHeaderComponent';
+import { CommonNodeProps } from '../treeView/commonNodeProps';
+import { ExpandableNodeRenderStrategy } from '../treeView/expandableNodeRenderStrategy';
 
-export interface RecentSectionsNodeProps extends InnerGlobals {
+export interface RecentSectionsNodeProps extends CommonNodeProps {
 	sections: Section[];
-	level: number;
-	tabbable: boolean;
-	treeViewId: string;
+	expanded?: boolean;
+	node: ExpandableNodeRenderStrategy;
 }
 
 /**
  * Presentation component that extends the 'Create' UX with notebook-specific
  * UI.
  */
-export class RecentSectionsNode extends React.Component<RecentSectionsNodeProps, {}> {
+export class RecentSectionsNode extends React.Component<RecentSectionsNodeProps, { expanded: boolean }> {
 	constructor(props: RecentSectionsNodeProps) {
 		super(props);
+		this.state = {
+			expanded: !!this.props.expanded
+		};
 	}
 
 	render() {
-		let headerRenderStrategy = new RecentSectionHeaderRenderStrategy(this.props);
-
 		return (
 			<ExpandableNode
-				globals={this.props} expanded={headerRenderStrategy.isExpanded()} node={headerRenderStrategy}
-				treeViewId={this.props.treeViewId} key={headerRenderStrategy.getId()}
-				id={headerRenderStrategy.getId()} tabbable={this.props.tabbable} focusOnMount={this.props.focusOnMount}
-				ariaSelected={headerRenderStrategy.isAriaSelected()}>
+				onExpand={(expanded) => {
+					this.setState({expanded});
+				}}
+				globals={this.props.globals}
+				expanded={this.state.expanded}
+				node={this.props.node}
+				treeViewId={this.props.treeViewId}
+				id={this.props.id}
+				tabbable={this.props.tabbable}
+				focusOnMount={this.props.focusOnMount}
+				ariaSelected={this.props.ariaSelected}>
+				<RecentSectionHeaderComponent selected={this.props.node.isSelected()} expanded={this.state.expanded}
+											  name={this.props.node.getName()} {...this.props}/>
 			</ExpandableNode>
 		);
 	}

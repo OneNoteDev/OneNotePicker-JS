@@ -14,6 +14,7 @@ import { SharedNotebook } from './oneNoteDataStructures/sharedNotebook';
 import { CreateNewNotebookNode } from './components/createNewNotebook/createNewNotebookNode';
 import { Section } from './oneNoteDataStructures/section';
 import { RecentSectionsNode } from './components/recentSections/recentSectionsNode';
+import { RecentSectionHeaderRenderStrategy } from './components/recentSections/recentSectionHeaderRenderStrategy';
 
 export interface OneNotePickerProps extends GlobalProps {
 	notebooks: Notebook[];
@@ -40,12 +41,19 @@ export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, {}> {
 			[<CreateNewNotebookNode key='createnewnotebooknode' {...this.props.globals} level={1} tabbable={true} focusOnMount={focusOnMount}></CreateNewNotebookNode>] :
 			[];
 
-		const recentSectionsExists = this.props.recentSections && this.props.recentSections.length > 0;
+		let recentSectionRenderStrategy, recentSectionsExists = false;
 
-		const recentSectionNodes = recentSectionsExists ?
-			[<RecentSectionsNode key='recentsectionsnode' {...this.props.globals} level={1} tabbable={true}
+		if (recentSections && recentSections.length > 0) {
+			recentSectionRenderStrategy = new RecentSectionHeaderRenderStrategy(recentSections, true, globals);
+			recentSectionsExists = true;
+		}
+
+		const recentSectionNodes = recentSectionRenderStrategy ?
+			[<RecentSectionsNode key={recentSectionRenderStrategy.getId()} globals={this.props.globals} level={1} tabbable={true}
 								 focusOnMount={!createNewNotebookExists && focusOnMount} sections={recentSections || []}
-								 treeViewId={this.treeViewId()}></RecentSectionsNode>] : [];
+								 treeViewId={this.treeViewId()} id={recentSectionRenderStrategy.getId()}
+								 ariaSelected={ariaSelectedId ? recentSectionRenderStrategy.isAriaSelected() : true}
+								 node={recentSectionRenderStrategy}></RecentSectionsNode>] : [];
 		
 		const notebookNodes = notebookRenderStrategies.map((renderStrategy, i) =>
 			!!this.props.globals.callbacks.onSectionSelected || !!this.props.globals.callbacks.onPageSelected ?

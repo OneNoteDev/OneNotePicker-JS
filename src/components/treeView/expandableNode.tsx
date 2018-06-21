@@ -7,6 +7,7 @@ import { TreeViewNavigationUtils } from './treeViewNavigationUtils';
 export interface ExpandableNodeProps extends CommonNodeProps {
 	expanded: boolean;
 	node: ExpandableNodeRenderStrategy;
+	onExpand?: (expanded: boolean) => void;
 }
 
 export interface ExpandableNodeState {
@@ -22,14 +23,14 @@ export interface ExpandableNodeState {
 export class ExpandableNode extends React.Component<ExpandableNodeProps, ExpandableNodeState> {
 	constructor(props: ExpandableNodeProps) {
 		super(props);
-		this.state = { expanded: props.expanded };
+		this.state = {expanded: props.expanded};
 	}
 
 	onClick() {
-		const { node } = this.props;
+		const {node} = this.props;
 		const nextExpandState = !this.state.expanded;
 
-		this.setState({ expanded: nextExpandState });
+		this.updateExpandedState(nextExpandState);
 
 		if (nextExpandState && node.onExpandBinded) {
 			node.onExpandBinded();
@@ -52,14 +53,14 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 				break;
 			case 37:
 				// Left arrow
-				this.setState({ expanded: false });
+				this.updateExpandedState(false);
 				break;
 			case 39:
 				// Right arrow
 				if (this.props.node.onExpandBinded) {
 					this.props.node.onExpandBinded();
 				}
-				this.setState({ expanded: true });
+				this.updateExpandedState(true);
 				break;
 			default:
 				break;
@@ -67,10 +68,18 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 	}
 
 	componentDidMount() {
-		const { focusOnMount, id } = this.props;
+		const {focusOnMount, id} = this.props;
 		if (focusOnMount) {
 			const self = document.querySelector(`[data-id='${id}']`) as HTMLElement;
 			self.focus();
+		}
+	}
+
+	private updateExpandedState(expanded: boolean) {
+		this.setState({expanded});
+
+		if (this.props.onExpand) {
+			this.props.onExpand(expanded);
 		}
 	}
 
@@ -84,12 +93,14 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 
 	render() {
 		return (
-			<li aria-labelledby={this.descendentId()} aria-expanded={this.state.expanded} role='treeitem' aria-level={this.level()} aria-checked={this.props.node.isSelected()}
+			<li aria-labelledby={this.descendentId()} aria-expanded={this.state.expanded} role='treeitem'
+				aria-level={this.level()} aria-checked={this.props.node.isSelected()}
 				id={this.descendentId()} aria-selected={this.props.ariaSelected}>
 				<a className='picker-row' onClick={this.onClick.bind(this)} onKeyDown={this.onKeyDown.bind(this)}
-					data-treeviewid={this.props.treeViewId} data-id={this.props.id} tabIndex={this.props.tabbable ? 0 : -1}
-					role='presentation'>
-					{this.props.node.element()}
+				   data-treeviewid={this.props.treeViewId} data-id={this.props.id}
+				   tabIndex={this.props.tabbable ? 0 : -1}
+				   role='presentation'>
+					{this.props.children || this.props.node.element()}
 				</a>
 				{this.state.expanded ?
 					<ul role='group'>
