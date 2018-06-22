@@ -12,15 +12,19 @@ import { GlobalProps } from './props/globalProps';
 import { Notebook } from './oneNoteDataStructures/notebook';
 import { SharedNotebook } from './oneNoteDataStructures/sharedNotebook';
 import { CreateNewNotebookNode } from './components/createNewNotebook/createNewNotebookNode';
+import { Section } from './oneNoteDataStructures/section';
+import { RecentSectionsNode } from './components/recentSections/recentSectionsNode';
+import { RecentSectionHeaderRenderStrategy } from './components/recentSections/recentSectionHeaderRenderStrategy';
 
 export interface OneNotePickerProps extends GlobalProps {
 	notebooks: Notebook[];
 	sharedNotebooks?: SharedNotebook[];
+	recentSections?: Section[];
 }
 
 export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, {}> {
 	protected rootNodes(): JSX.Element[] {
-		const { notebooks, sharedNotebooks, globals } = this.props;
+		const { notebooks, sharedNotebooks, recentSections, globals } = this.props;
 		const { focusOnMount, ariaSelectedId } = globals;
 
 		const notebookRenderStrategies: ExpandableNodeRenderStrategy[] =
@@ -36,15 +40,29 @@ export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, {}> {
 		const createNewNotebook = createNewNotebookExists ?
 			[<CreateNewNotebookNode key='createnewnotebooknode' {...this.props.globals} level={1} tabbable={true} focusOnMount={focusOnMount}></CreateNewNotebookNode>] :
 			[];
+
+		let recentSectionRenderStrategy, recentSectionsExists = false;
+
+		if (recentSections && recentSections.length > 0) {
+			recentSectionRenderStrategy = new RecentSectionHeaderRenderStrategy(recentSections, true, globals);
+			recentSectionsExists = true;
+		}
+
+		const recentSectionNodes = recentSectionRenderStrategy ?
+			[<RecentSectionsNode key={recentSectionRenderStrategy.getId()} globals={this.props.globals} level={1} tabbable={true}
+								 focusOnMount={!createNewNotebookExists && focusOnMount} sections={recentSections || []}
+								 treeViewId={this.treeViewId()} id={recentSectionRenderStrategy.getId()}
+								 ariaSelected={ariaSelectedId ? recentSectionRenderStrategy.isAriaSelected() : true}
+								 node={recentSectionRenderStrategy}></RecentSectionsNode>] : [];
 		
 		const notebookNodes = notebookRenderStrategies.map((renderStrategy, i) =>
 			!!this.props.globals.callbacks.onSectionSelected || !!this.props.globals.callbacks.onPageSelected ?
 				<ExpandableNode globals={this.props.globals} expanded={renderStrategy.isExpanded()} node={renderStrategy}
 					treeViewId={this.treeViewId()} key={renderStrategy.getId()}
-					id={renderStrategy.getId()} tabbable={!createNewNotebookExists && i === 0} focusOnMount={!createNewNotebookExists && focusOnMount && i === 0}
+					id={renderStrategy.getId()} tabbable={!createNewNotebookExists && !recentSectionsExists && i === 0} focusOnMount={!createNewNotebookExists && !recentSectionsExists && focusOnMount && i === 0}
 					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : i === 0}></ExpandableNode> :
 				<LeafNode globals={this.props.globals} node={renderStrategy} treeViewId={this.treeViewId()} key={renderStrategy.getId()}
-					id={renderStrategy.getId()} tabbable={!createNewNotebookExists && i === 0} focusOnMount={!createNewNotebookExists && focusOnMount && i === 0}
+					id={renderStrategy.getId()} tabbable={!createNewNotebookExists && i === 0} focusOnMount={!createNewNotebookExists && !recentSectionsExists && focusOnMount && i === 0}
 					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : i === 0}></LeafNode>);
 
 		const sharedNotebookNodes = sharedNotebookRenderStrategies.map((renderStrategy, i) =>
@@ -52,13 +70,13 @@ export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, {}> {
 				<ExpandableNode globals={this.props.globals} expanded={renderStrategy.isExpanded()} node={renderStrategy}
 					treeViewId={this.treeViewId()} key={renderStrategy.getId()}
 					id={renderStrategy.getId()} tabbable={!createNewNotebookExists && noPersonalNotebooks && i === 0}
-					focusOnMount={!createNewNotebookExists && focusOnMount && noPersonalNotebooks && i === 0}
+					focusOnMount={!createNewNotebookExists && !recentSectionsExists && focusOnMount && noPersonalNotebooks && i === 0}
 					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : noPersonalNotebooks && i === 0}></ExpandableNode> :
 				<LeafNode globals={this.props.globals} node={renderStrategy} treeViewId={this.treeViewId()} key={renderStrategy.getId()}
 					id={renderStrategy.getId()} tabbable={!createNewNotebookExists && noPersonalNotebooks && i === 0}
-					focusOnMount={!createNewNotebookExists && focusOnMount && noPersonalNotebooks && i === 0}
+					focusOnMount={!createNewNotebookExists && !recentSectionsExists && focusOnMount && noPersonalNotebooks && i === 0}
 					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : noPersonalNotebooks && i === 0}></LeafNode>);
 
-		return [...createNewNotebook, ...notebookNodes, ...sharedNotebookNodes];
+		return [...recentSectionNodes, ...createNewNotebook, ...notebookNodes, ...sharedNotebookNodes];
 	}
 }
