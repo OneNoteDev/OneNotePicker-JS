@@ -18,8 +18,8 @@ export class SectionGroupRenderStrategy implements ExpandableNodeRenderStrategy 
 
 	element(): JSX.Element {
 		return (
-			<div className='section-group' title={this.sectionGroup.name}>
-				<div className={this.isExpanded() ? 'chevron-icon opened' : 'chevron-icon closed'}>
+			<div className='section-group' title={this.sectionGroup.name} onClick={this.onClick.bind(this)}>
+				<div className={this.isExpanded() ? 'chevron-icon opened' : 'chevron-icon closed'} onClick={this.onClick.bind(this)}>
 					<ChevronSvg />
 				</div>
 				<div className='picker-icon'>
@@ -86,8 +86,16 @@ export class SectionGroupRenderStrategy implements ExpandableNodeRenderStrategy 
 		return this.globals.ariaSelectedId ? this.globals.ariaSelectedId === this.getId() : false;
 	}
 
+	expandNode(shouldExpand?: boolean) {
+		this.sectionGroup.expanded = shouldExpand == undefined ? !this.sectionGroup.expanded : shouldExpand;
+	}
+
+	selectNode() {
+		this.expandNode()
+	}
+
 	private onClick() {
 		// No additional functionality
-		this.sectionGroup.expanded = !this.sectionGroup.expanded;
+		this.expandNode()
 	}
 }

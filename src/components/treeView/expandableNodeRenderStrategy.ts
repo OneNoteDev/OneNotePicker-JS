@@ -7,4 +7,6 @@ import { NodeRenderStrategy } from './nodeRenderStrategy';
 export interface ExpandableNodeRenderStrategy extends NodeRenderStrategy {
 	getChildren(childrenLevel: number): JSX.Element[];
 	isExpanded(): boolean;
+	expandNode?(shouldExpand?: boolean): void;
+	selectNode?(): void;
 }

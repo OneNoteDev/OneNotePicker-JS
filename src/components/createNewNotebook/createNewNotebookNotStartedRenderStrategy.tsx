@@ -5,11 +5,14 @@ import { AddIconSvg } from '../icons/addIcon.svg';
 import { ChevronSvg } from '../icons/chevron.svg';
 import { Strings } from '../../strings';
 import { CreateNewNotebookCommonProperties } from './createNewNotebookCommonProperties';
+import { OneNotePickerCallbacks } from '../../props/oneNotePickerCallbacks';
 
 export class CreateNewNotebookNotStartedRenderStrategy extends CreateNewNotebookCommonProperties implements NodeRenderStrategy {
-	onClickBinded = this.onClick;
+	onClickBinded = this.onClickNotebookInput.bind(this);
 
-	constructor(private onClick: () => void) {
+	constructor(
+		private onClick: () => void,
+		private callbacks: OneNotePickerCallbacks) {
 		super();
 	}
 
@@ -27,5 +30,13 @@ export class CreateNewNotebookNotStartedRenderStrategy extends CreateNewNotebook
 				</div>
 			</div>
 		);
+	}
+
+	private onClickNotebookInput(): void {
+		const onNotebookInputSelected = this.callbacks.onNotebookInputSelected;
+		if (!!onNotebookInputSelected) {
+			onNotebookInputSelected();
+		}
+		this.onClick()
 	}
 }

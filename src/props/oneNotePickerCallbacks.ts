@@ -35,4 +35,7 @@ export interface OneNotePickerCallbacks {
 	// since they are disallowed on a per-notebook basis, is more difficult
 	onNotebookCreated?: (notebook: Notebook) => void;
 	onSectionCreated?: (section: Section) => void;
+
+	onNotebookInputValueChanged?: (name: string) => void;
+	onNotebookInputSelected?: () => void;
 }
