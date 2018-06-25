@@ -50,10 +50,18 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 			case 32:
 				// Space
 				this.onClick();
+
+				if (this.props.node.selectNode) {
+					this.props.node.selectNode()
+				}
 				break;
 			case 37:
 				// Left arrow
 				this.updateExpandedState(false);
+
+				if (this.props.node.expandNode) {
+					this.props.node.expandNode(false)
+				}
 				break;
 			case 39:
 				// Right arrow
@@ -61,6 +69,10 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 					this.props.node.onExpandBinded();
 				}
 				this.updateExpandedState(true);
+				
+				if (this.props.node.expandNode) {
+					this.props.node.expandNode(true)
+				}
 				break;
 			default:
 				break;
@@ -93,7 +105,7 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 
 	render() {
 		return (
-			<li aria-labelledby={this.descendentId()} aria-expanded={this.state.expanded} role='treeitem'
+			<li aria-labelledby={this.descendentId()} aria-expanded={this.props.node.isExpanded()} role='treeitem'
 				aria-level={this.level()} aria-checked={this.props.node.isSelected()}
 				id={this.descendentId()} aria-selected={this.props.ariaSelected}>
 				<a className='picker-row' onClick={this.onClick.bind(this)} onKeyDown={this.onKeyDown.bind(this)}
@@ -102,7 +114,7 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 				   role='presentation'>
 					{this.props.children || this.props.node.element()}
 				</a>
-				{this.state.expanded ?
+				{this.props.node.isExpanded() ?
 					<ul role='group'>
 						{this.props.node.getChildren(this.level() + 1)}
 					</ul> : undefined}

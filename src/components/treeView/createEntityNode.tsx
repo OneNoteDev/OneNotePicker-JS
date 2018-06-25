@@ -17,7 +17,7 @@ export interface CreateEntityNodeProps extends InnerGlobals {
 			setInputRefAndFocus: (node: HTMLInputElement) => void) => NodeRenderStrategy;
 	createErrorRenderStrategy: (errorMessage: string, inputValue: string, onInputChange: (evt: React.ChangeEvent<HTMLInputElement>) => void) => NodeRenderStrategy;
 	inProgressRenderStrategy: (inputValue: string) => NodeRenderStrategy;
-	createEntity: (name: string) => Promise<void>;
+	createEntity?: (name: string) => Promise<void>;
 }
 
 export interface CreateEntityNodeState {
@@ -70,6 +70,10 @@ export class CreateEntityNode extends React.Component<CreateEntityNodeProps, Cre
 		if (!this.state.nameInputValue) {
 			// User aborted action by clicking out when the input box is empty/whitespace
 			this.resetAndFocus();
+		}
+
+		if (!this.props.createEntity) {
+			return
 		}
 
 		const trimmedName = this.state.nameInputValue.trim();

@@ -14,14 +14,14 @@ import { ChevronSvg } from './icons/chevron.svg';
 import { CreateNewSectionNode } from './createNewSection/createNewSectionNode';
 
 export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
-	onClickBinded = this.onClick.bind(this);
+	onClickBinded = () => {};
 
 	constructor(private notebook: Notebook, private globals: InnerGlobals) { }
 
 	element(): JSX.Element {
 		return (
-			<div className={this.isSelected() ? 'picker-selectedItem notebook' : 'notebook'} title={this.notebook.name}>
-				<div className={this.isExpanded() ? 'chevron-icon opened' : 'chevron-icon closed'}>
+			<div className={this.isSelected() ? 'picker-selectedItem notebook' : 'notebook'} title={this.notebook.name} onClick={this.onClick.bind(this)}>
+				<div className={this.isExpanded() ? 'chevron-icon opened' : 'chevron-icon closed'} onClick={this.onChevronClick.bind(this)}>
 					<ChevronSvg />
 				</div>
 				<div className='picker-icon'>
@@ -91,14 +91,24 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 		return this.globals.ariaSelectedId ? this.globals.ariaSelectedId === this.getId() : false;
 	}
 
-	private onClick() {
+	expandNode(shouldExpand?: boolean) {
+		if (this.globals.callbacks.onSectionSelected || this.globals.callbacks.onPageSelected) {
+			this.notebook.expanded = shouldExpand == undefined ? !this.notebook.expanded : shouldExpand;
+		}
+	}
+
+	selectNode() {
 		const onNotebookSelected = this.globals.callbacks.onNotebookSelected;
 		if (!!onNotebookSelected) {
 			onNotebookSelected(this.notebook, OneNoteItemUtils.getAncestry(this.notebook));
 		}
+	}
 
-		if (this.globals.callbacks.onSectionSelected || this.globals.callbacks.onPageSelected) {
-			this.notebook.expanded = !this.notebook.expanded;
-		}
+	private onClick() {
+		this.selectNode()
+	}
+
+	private onChevronClick() {
+		this.expandNode()
 	}
 }

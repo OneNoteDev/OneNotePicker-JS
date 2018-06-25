@@ -16,15 +16,15 @@ import { SpinnerIconSvg } from './icons/spinnerIcon.svg';
 import { ChevronSvg } from './icons/chevron.svg';
 
 export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrategy {
-	onClickBinded = this.onClick.bind(this);
+	onClickBinded = () => {};
 	onExpandBinded = this.onExpand.bind(this);
 
 	constructor(private notebook: SharedNotebook, private globals: InnerGlobals) { }
 
 	element(): JSX.Element {
 		return (
-			<div className={this.isSelected() ? 'picker-selectedItem shared-notebook' : 'shared-notebook'} title={this.breadcrumbs() + '/' + this.notebook.name}>
-				<div className={this.isExpanded() ? 'chevron-icon opened' : 'chevron-icon closed'}>
+			<div className={this.isSelected() ? 'picker-selectedItem shared-notebook' : 'shared-notebook'} title={this.breadcrumbs() + '/' + this.notebook.name} onClick={this.onClick.bind(this)}>
+				<div className={this.isExpanded() ? 'chevron-icon opened' : 'chevron-icon closed'} onClick={this.onChevronClick.bind(this)}>
 					<ChevronSvg />
 				</div>
 				<div className='picker-icon'>
@@ -95,23 +95,33 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 	}
 
 	isSelected(): boolean {
-		return this.notebook.apiProperties ? this.globals.selectedId === this.notebook.apiProperties.id : false;
+		return this.globals.selectedId === this.notebook.webUrl;
 	}
 
 	isAriaSelected(): boolean {
 		return this.globals.ariaSelectedId ? this.globals.ariaSelectedId === this.getId() : false;
 	}
 
-	private onClick() {
+	expandNode(shouldExpand?: boolean) {
+		if (this.globals.callbacks.onSectionSelected || this.globals.callbacks.onPageSelected) {
+			this.notebook.expanded = shouldExpand == undefined ? !this.notebook.expanded : shouldExpand;
+		}
+	}
+
+	selectNode() {
 		const { onNotebookSelected } = this.globals.callbacks;
 
 		if (!!onNotebookSelected) {
 			onNotebookSelected(this.notebook, OneNoteItemUtils.getAncestry(this.notebook));
 		}
+	}
 
-		if (this.globals.callbacks.onSectionSelected || this.globals.callbacks.onPageSelected) {
-			this.notebook.expanded = !this.notebook.expanded;
-		}
+	private onClick() {
+		this.selectNode()
+	}
+
+	private onChevronClick() {
+		this.expandNode()
 	}
 
 	private onExpand() {

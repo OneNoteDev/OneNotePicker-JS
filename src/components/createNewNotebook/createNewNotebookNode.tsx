@@ -18,18 +18,21 @@ export interface CreateNewNotebookNodeProps extends InnerGlobals {
  * UI.
  */
 export class CreateNewNotebookNode extends React.Component<CreateNewNotebookNodeProps, {}> {
+	private nodeProps: CreateNewNotebookNodeProps;
+
 	constructor(props: CreateNewNotebookNodeProps) {
 		super(props);
+		
+		this.nodeProps = props;
 
 		this.notStartedRenderStrategy = this.notStartedRenderStrategy.bind(this);
 		this.inputRenderStrategy = this.inputRenderStrategy.bind(this);
 		this.createErrorRenderStrategy = this.createErrorRenderStrategy.bind(this);
 		this.inProgressRenderStrategy = this.inProgressRenderStrategy.bind(this);
-		this.createNotebook = this.createNotebook.bind(this);
 	}
 
 	private notStartedRenderStrategy(onClick: () => void): NodeRenderStrategy {
-		return new CreateNewNotebookNotStartedRenderStrategy(onClick);
+		return new CreateNewNotebookNotStartedRenderStrategy(onClick, this.nodeProps.callbacks);
 	}
 
 	private inputRenderStrategy(
@@ -37,7 +40,7 @@ export class CreateNewNotebookNode extends React.Component<CreateNewNotebookNode
 		onEnter: () => void,
 		onInputChange: (evt: React.ChangeEvent<HTMLInputElement>) => void,
 		setInputRefAndFocus: (node: HTMLInputElement) => void): NodeRenderStrategy {
-		return new CreateNewNotebookInputRenderStrategy(inputValue, onEnter, onInputChange, setInputRefAndFocus);
+		return new CreateNewNotebookInputRenderStrategy(inputValue, onEnter, onInputChange, setInputRefAndFocus, this.nodeProps.callbacks);
 	}
 
 	private createErrorRenderStrategy(errorMessage: string, inputValue: string, onInputChange: (evt: React.ChangeEvent<HTMLInputElement>) => void): NodeRenderStrategy {
@@ -48,12 +51,6 @@ export class CreateNewNotebookNode extends React.Component<CreateNewNotebookNode
 		return new CreateNewNotebookInProgressRenderStrategy(inputValue);
 	}
 
-	private createNotebook(name: string): Promise<void> {
-		return this.props.oneNoteDataProvider!.createNotebook(name).then((notebook) => {
-			return this.props.callbacks.onNotebookCreated!(notebook);
-		});
-	}
-
 	render() {
 		return (
 			<CreateEntityNode
@@ -61,8 +58,7 @@ export class CreateNewNotebookNode extends React.Component<CreateNewNotebookNode
 				notStartedRenderStrategy={this.notStartedRenderStrategy}
 				inputRenderStrategy={this.inputRenderStrategy}
 				createErrorRenderStrategy={this.createErrorRenderStrategy}
-				inProgressRenderStrategy={this.inProgressRenderStrategy}
-				createEntity={this.createNotebook}>
+				inProgressRenderStrategy={this.inProgressRenderStrategy}>
 			</CreateEntityNode>
 		);
 	}

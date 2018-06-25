@@ -6,15 +6,17 @@ import { NameValidator } from '../../nameValidator';
 import { CreateNewNotebookCommonProperties } from './createNewNotebookCommonProperties';
 import { CreateNewNotebookRowTemplate } from './createNewNotebookRowTemplate';
 import { ErrorIconWithPopover } from '../errorIconWithPopover';
+import { OneNotePickerCallbacks } from '../../props/oneNotePickerCallbacks';
 
 export class CreateNewNotebookInputRenderStrategy extends CreateNewNotebookCommonProperties implements NodeRenderStrategy {
-	onClickBinded = () => { };
+	onClickBinded = this.onClick.bind(this);
 
 	constructor(
 		private notebookNameInputValue: string,
 		private onEnterBinded: (event) => void,
 		private onChangeBinded: (event: React.ChangeEvent<HTMLInputElement>) => void,
-		private inputRefBinded: (node: HTMLInputElement) => void) {
+		private inputRefBinded: (node: HTMLInputElement) => void,
+		private callbacks: OneNotePickerCallbacks) {
 		super();
 	}
 
@@ -31,7 +33,7 @@ export class CreateNewNotebookInputRenderStrategy extends CreateNewNotebookCommo
 						autoComplete='off'
 						value={this.notebookNameInputValue}
 						onKeyPress={this.onKeyPress.bind(this)}
-						onChange={this.onChangeBinded} />
+						onChange={this.onInputChange.bind(this)} />
 				</div>
 				<ErrorIconWithPopover errorMessage={this.errorIfExists()}></ErrorIconWithPopover>
 			</CreateNewNotebookRowTemplate>
@@ -45,6 +47,22 @@ export class CreateNewNotebookInputRenderStrategy extends CreateNewNotebookCommo
 	private onKeyPress(event): void {
 		if (event.key === 'Enter') {
 			this.onEnterBinded(event);
+		}
+	}
+
+	private onInputChange(event): void {
+		const notebookName = (event.target as HTMLInputElement).value;
+		const onNotebookInputValueChanged = this.callbacks.onNotebookInputValueChanged;
+		if (!!onNotebookInputValueChanged) {
+			onNotebookInputValueChanged(notebookName);
+		}
+		this.onChangeBinded(event);
+	}
+
+	private onClick(): void {
+		const onNotebookInputSelected = this.callbacks.onNotebookInputSelected;
+		if (!!onNotebookInputSelected) {
+			onNotebookInputSelected();
 		}
 	}
 }
