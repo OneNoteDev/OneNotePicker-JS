@@ -27,8 +27,8 @@ export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, {}> {
 		const { notebooks, sharedNotebooks, recentSections, globals } = this.props;
 		const { focusOnMount, ariaSelectedId } = globals;
 
-		const notebookRenderStrategies: ExpandableNodeRenderStrategy[] =
-			notebooks.map(notebook => new NotebookRenderStrategy(notebook, globals));
+		const notebookRenderStrategies: ExpandableNodeRenderStrategy[] = notebooks ?
+			notebooks.map(notebook => new NotebookRenderStrategy(notebook, globals)) : [];
 
 		const sharedNotebookRenderStrategies: ExpandableNodeRenderStrategy[] = sharedNotebooks ?
 			sharedNotebooks.map(sharedNotebook => new SharedNotebookRenderStrategy(sharedNotebook, globals)) : [];
