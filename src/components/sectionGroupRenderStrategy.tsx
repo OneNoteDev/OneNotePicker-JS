@@ -40,7 +40,7 @@ export class SectionGroupRenderStrategy implements ExpandableNodeRenderStrategy 
 	}
 
 	getChildren(childrenLevel: number): JSX.Element[] {
-		const createNewSection = this.globals.callbacks.onSectionCreated ?
+		const createNewSection = this.globals.callbacks.onSectionCreated || this.globals.shouldShowCreateEntityInputs ?
 			[<CreateNewSectionNode
 				key={this.sectionGroup.id + 'createnewsectionnode'}
 				{...this.globals}

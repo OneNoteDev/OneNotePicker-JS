@@ -3,6 +3,7 @@ import { Notebook } from '../oneNoteDataStructures/notebook';
 import { Section } from '../oneNoteDataStructures/section';
 import { SharedNotebook } from '../oneNoteDataStructures/sharedNotebook';
 import { Page } from '../oneNoteDataStructures/page';
+import { SectionGroup } from '../oneNoteDataStructures/sectionGroup';
 
 /**
  * Represents a set of callbacks that the application can register to be
@@ -38,4 +39,6 @@ export interface OneNotePickerCallbacks {
 
 	onNotebookInputValueChanged?: (name: string) => void;
 	onNotebookInputSelected?: () => void;
+	onSectionInputValueChanged?: (name: string) => void;
+	onSectionInputSelected?: (parent: Notebook | SectionGroup, parentIsNotebook: boolean, name: string) => void;
 }

@@ -42,7 +42,7 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	}
 
 	getChildren(childrenLevel: number): JSX.Element[] {
-		const createNewSection = this.globals.callbacks.onSectionCreated ?
+		const createNewSection = this.globals.callbacks.onSectionCreated || this.globals.shouldShowCreateEntityInputs ?
 			[<CreateNewSectionNode
 				key={this.notebook.id + 'createnewsectionnode'}
 				{...this.globals}

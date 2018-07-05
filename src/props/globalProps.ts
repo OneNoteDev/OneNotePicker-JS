@@ -30,4 +30,6 @@ export interface InnerGlobals {
 	ariaSelectedId?: string;
 
 	notebookExpandDepth?: number;
+
+	shouldShowCreateEntityInputs?: boolean;
 }
