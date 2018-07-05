@@ -4,13 +4,15 @@ import { NodeRenderStrategy } from '../treeView/nodeRenderStrategy';
 import { AddIconSvg } from '../icons/addIcon.svg';
 import { Strings } from '../../strings';
 import { CreateNewSectionCommonProperties } from './createNewSectionCommonProperties';
+import { CreateNewSectionNodeProps } from './createNewSectionNode';
 
 export class CreateNewSectionNotStartedRenderStrategy extends CreateNewSectionCommonProperties implements NodeRenderStrategy {
-	onClickBinded = this.onClick;
+	onClickBinded = this.onClickSectionInput.bind(this);
 
 	constructor(
 		parentId: string,
-		private onClick: () => void) {
+		private onClick: () => void,
+		private props: CreateNewSectionNodeProps) {
 		super(parentId);
 	}
 
@@ -25,5 +27,13 @@ export class CreateNewSectionNotStartedRenderStrategy extends CreateNewSectionCo
 				</div>
 			</div>
 		);
+	}
+
+	private onClickSectionInput(): void {
+		const onSectionInputSelected = this.props.callbacks.onSectionInputSelected;
+		if (!!onSectionInputSelected) {
+			onSectionInputSelected(this.props.parent, this.props.parentIsNotebook, '');
+		}
+		this.onClick()
 	}
 }

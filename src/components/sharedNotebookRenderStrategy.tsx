@@ -14,6 +14,7 @@ import { NotebookOpenedIconSvg } from './icons/notebookOpenedIcon.svg';
 import { NotebookClosedIconSvg } from './icons/notebookClosedIcon.svg';
 import { SpinnerIconSvg } from './icons/spinnerIcon.svg';
 import { ChevronSvg } from './icons/chevron.svg';
+import { CreateNewSectionNode } from './createNewSection/createNewSectionNode';
 
 export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	onClickBinded = () => {};
@@ -42,7 +43,7 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 	}
 
 	getId(): string {
-		return this.notebook.webUrl;
+		return this.notebook.id;
 	}
 
 	getName(): string {
@@ -67,6 +68,20 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 			];
 		}
 
+		const createNewSection = this.globals.callbacks.onSectionCreated || this.globals.shouldShowCreateEntityInputs ?
+			[<CreateNewSectionNode
+				key={this.notebook.id + 'createnewsectionnode'}
+				{...this.globals}
+				parent={this.notebook}
+				parentIsNotebook={true}
+				level={childrenLevel}
+				// TODO (machiam) focusOnMount and tabbable logic will need to be reworked in the single notebook picker,
+				// for now we assume this is not top-level
+				focusOnMount={false}
+				tabbable={false}>
+			</CreateNewSectionNode>] :
+			[];
+
 		const sectionRenderStrategies = this.notebook.apiProperties.spSections.map(section => new SectionRenderStrategy(section, this.globals));
 		const sections = sectionRenderStrategies.map(renderStrategy =>
 			!!this.globals.callbacks.onPageSelected ?
@@ -87,7 +102,7 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} globals={this.globals}
 					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} />);
 
-		return [...sections, ...sectionGroups];
+		return [...createNewSection, ...sections, ...sectionGroups];
 	}
 
 	isExpanded(): boolean {
@@ -99,7 +114,7 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 	}
 
 	isAriaSelected(): boolean {
-		return this.globals.ariaSelectedId ? this.globals.ariaSelectedId === this.getId() : false;
+		return this.globals.ariaSelectedId ? this.globals.ariaSelectedId === this.notebook.webUrl : false;
 	}
 
 	expandNode(shouldExpand?: boolean) {

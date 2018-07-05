@@ -22,8 +22,12 @@ export interface CreateNewSectionNodeProps extends InnerGlobals {
  * UI.
  */
 export class CreateNewSectionNode extends React.Component<CreateNewSectionNodeProps, {}> {
+	private nodeProps: CreateNewSectionNodeProps;
+
 	constructor(props: CreateNewSectionNodeProps) {
 		super(props);
+
+		this.nodeProps = props;
 
 		this.notStartedRenderStrategy = this.notStartedRenderStrategy.bind(this);
 		this.inputRenderStrategy = this.inputRenderStrategy.bind(this);
@@ -33,7 +37,7 @@ export class CreateNewSectionNode extends React.Component<CreateNewSectionNodePr
 	}
 
 	private notStartedRenderStrategy(onClick: () => void): NodeRenderStrategy {
-		return new CreateNewSectionNotStartedRenderStrategy(this.props.parent.id, onClick);
+		return new CreateNewSectionNotStartedRenderStrategy(this.props.parent.id, onClick, this.nodeProps);
 	}
 
 	private inputRenderStrategy(
@@ -41,7 +45,7 @@ export class CreateNewSectionNode extends React.Component<CreateNewSectionNodePr
 		onEnter: () => void,
 		onInputChange: (evt: React.ChangeEvent<HTMLInputElement>) => void,
 		setInputRefAndFocus: (node: HTMLInputElement) => void): NodeRenderStrategy {
-		return new CreateNewSectionInputRenderStrategy(this.props.parent.id, inputValue, onEnter, onInputChange, setInputRefAndFocus);
+		return new CreateNewSectionInputRenderStrategy(this.props.parent.id, inputValue, onEnter, onInputChange, setInputRefAndFocus, this.nodeProps);
 	}
 
 	private createErrorRenderStrategy(errorMessage: string, inputValue: string, onInputChange: (evt: React.ChangeEvent<HTMLInputElement>) => void): NodeRenderStrategy {
@@ -70,7 +74,7 @@ export class CreateNewSectionNode extends React.Component<CreateNewSectionNodePr
 				inputRenderStrategy={this.inputRenderStrategy}
 				createErrorRenderStrategy={this.createErrorRenderStrategy}
 				inProgressRenderStrategy={this.inProgressRenderStrategy}
-				createEntity={this.createSection}>
+				createEntity={this.props.callbacks.onSectionCreated ? this.createSection : undefined}>
 			</CreateEntityNode>
 		);
 	}

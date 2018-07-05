@@ -51,6 +51,12 @@ export class CreateNewNotebookNode extends React.Component<CreateNewNotebookNode
 		return new CreateNewNotebookInProgressRenderStrategy(inputValue);
 	}
 
+	private createNotebook(name: string): Promise<void> {
+		return this.props.oneNoteDataProvider!.createNotebook(name).then((notebook) => {
+			return this.props.callbacks.onNotebookCreated!(notebook);
+		});
+	}
+
 	render() {
 		return (
 			<CreateEntityNode
@@ -58,7 +64,8 @@ export class CreateNewNotebookNode extends React.Component<CreateNewNotebookNode
 				notStartedRenderStrategy={this.notStartedRenderStrategy}
 				inputRenderStrategy={this.inputRenderStrategy}
 				createErrorRenderStrategy={this.createErrorRenderStrategy}
-				inProgressRenderStrategy={this.inProgressRenderStrategy}>
+				inProgressRenderStrategy={this.inProgressRenderStrategy}
+				createEntity={this.props.callbacks.onNotebookCreated ? this.createNotebook : undefined}>
 			</CreateEntityNode>
 		);
 	}

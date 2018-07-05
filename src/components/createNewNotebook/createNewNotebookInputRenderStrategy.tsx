@@ -56,6 +56,10 @@ export class CreateNewNotebookInputRenderStrategy extends CreateNewNotebookCommo
 		if (!!onNotebookInputValueChanged) {
 			onNotebookInputValueChanged(notebookName);
 		}
+		const onNotebookInputSelected = this.callbacks.onNotebookInputSelected;
+		if (!!onNotebookInputSelected) {
+			onNotebookInputSelected();
+		}
 		this.onChangeBinded(event);
 	}
 

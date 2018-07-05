@@ -36,7 +36,7 @@ export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, {}> {
 		const noPersonalNotebooks = notebookRenderStrategies.length === 0;
 
 		// The key here is guaranteed to be unique as there is only one max 'Create notebook' affordance
-		const createNewNotebookExists = this.props.globals.callbacks.onNotebookCreated;
+		const createNewNotebookExists = this.props.globals.callbacks.onNotebookCreated || this.props.globals.shouldShowCreateEntityInputs;
 		const createNewNotebook = createNewNotebookExists ?
 			[<CreateNewNotebookNode key='createnewnotebooknode' {...this.props.globals} level={1} tabbable={true} focusOnMount={focusOnMount}></CreateNewNotebookNode>] :
 			[];
@@ -54,7 +54,7 @@ export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, {}> {
 								 treeViewId={this.treeViewId()} id={recentSectionRenderStrategy.getId()}
 								 ariaSelected={ariaSelectedId ? recentSectionRenderStrategy.isAriaSelected() : true}
 								 node={recentSectionRenderStrategy}></RecentSectionsNode>] : [];
-		
+
 		const notebookNodes = notebookRenderStrategies.map((renderStrategy, i) =>
 			!!this.props.globals.callbacks.onSectionSelected || !!this.props.globals.callbacks.onPageSelected ?
 				<ExpandableNode globals={this.props.globals} expanded={renderStrategy.isExpanded()} node={renderStrategy}
