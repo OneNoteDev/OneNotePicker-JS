@@ -98,10 +98,6 @@ export class CreateEntityNode extends React.Component<CreateEntityNodeProps, Cre
 
 	private resetAndFocus() {
 		this.setState(this.defaultState());
-		const tabRef = this.wrapperRef.getElementsByTagName('a')[0];
-		if (tabRef) {
-			tabRef.focus();
-		}
 	}
 
 	private defaultState(): CreateEntityNodeState {

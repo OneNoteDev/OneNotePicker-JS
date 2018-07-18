@@ -18,12 +18,8 @@ export interface CreateNewNotebookNodeProps extends InnerGlobals {
  * UI.
  */
 export class CreateNewNotebookNode extends React.Component<CreateNewNotebookNodeProps, {}> {
-	private nodeProps: CreateNewNotebookNodeProps;
-
 	constructor(props: CreateNewNotebookNodeProps) {
 		super(props);
-		
-		this.nodeProps = props;
 
 		this.notStartedRenderStrategy = this.notStartedRenderStrategy.bind(this);
 		this.inputRenderStrategy = this.inputRenderStrategy.bind(this);
@@ -32,7 +28,7 @@ export class CreateNewNotebookNode extends React.Component<CreateNewNotebookNode
 	}
 
 	private notStartedRenderStrategy(onClick: () => void): NodeRenderStrategy {
-		return new CreateNewNotebookNotStartedRenderStrategy(onClick, this.nodeProps.callbacks);
+		return new CreateNewNotebookNotStartedRenderStrategy(onClick, this.props.callbacks);
 	}
 
 	private inputRenderStrategy(
@@ -40,7 +36,7 @@ export class CreateNewNotebookNode extends React.Component<CreateNewNotebookNode
 		onEnter: () => void,
 		onInputChange: (evt: React.ChangeEvent<HTMLInputElement>) => void,
 		setInputRefAndFocus: (node: HTMLInputElement) => void): NodeRenderStrategy {
-		return new CreateNewNotebookInputRenderStrategy(inputValue, onEnter, onInputChange, setInputRefAndFocus, this.nodeProps.callbacks);
+		return new CreateNewNotebookInputRenderStrategy(inputValue, this.props, onEnter, onInputChange, setInputRefAndFocus);
 	}
 
 	private createErrorRenderStrategy(errorMessage: string, inputValue: string, onInputChange: (evt: React.ChangeEvent<HTMLInputElement>) => void): NodeRenderStrategy {
