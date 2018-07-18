@@ -43,7 +43,7 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 	}
 
 	getId(): string {
-		return this.notebook.id;
+		return this.notebook.webUrl;
 	}
 
 	getName(): string {
