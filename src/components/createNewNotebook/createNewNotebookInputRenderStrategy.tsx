@@ -6,23 +6,23 @@ import { NameValidator } from '../../nameValidator';
 import { CreateNewNotebookCommonProperties } from './createNewNotebookCommonProperties';
 import { CreateNewNotebookRowTemplate } from './createNewNotebookRowTemplate';
 import { ErrorIconWithPopover } from '../errorIconWithPopover';
-import { OneNotePickerCallbacks } from '../../props/oneNotePickerCallbacks';
+import { CreateNewNotebookNodeProps } from './createNewNotebookNode';
 
 export class CreateNewNotebookInputRenderStrategy extends CreateNewNotebookCommonProperties implements NodeRenderStrategy {
 	onClickBinded = this.onClick.bind(this);
 
 	constructor(
 		private notebookNameInputValue: string,
+		private props: CreateNewNotebookNodeProps,
 		private onEnterBinded: (event) => void,
 		private onChangeBinded: (event: React.ChangeEvent<HTMLInputElement>) => void,
-		private inputRefBinded: (node: HTMLInputElement) => void,
-		private callbacks: OneNotePickerCallbacks) {
+		private inputRefBinded: (node: HTMLInputElement) => void) {
 		super();
 	}
 
 	element(): JSX.Element {
 		return (
-			<CreateNewNotebookRowTemplate>
+			<CreateNewNotebookRowTemplate isSelected={this.isSelected()}>
 				<div className='picker-label'>
 					<input
 						className='create-input'
@@ -52,11 +52,11 @@ export class CreateNewNotebookInputRenderStrategy extends CreateNewNotebookCommo
 
 	private onInputChange(event): void {
 		const notebookName = (event.target as HTMLInputElement).value;
-		const onNotebookInputValueChanged = this.callbacks.onNotebookInputValueChanged;
+		const onNotebookInputValueChanged = this.props.callbacks.onNotebookInputValueChanged;
 		if (!!onNotebookInputValueChanged) {
 			onNotebookInputValueChanged(notebookName);
 		}
-		const onNotebookInputSelected = this.callbacks.onNotebookInputSelected;
+		const onNotebookInputSelected = this.props.callbacks.onNotebookInputSelected;
 		if (!!onNotebookInputSelected) {
 			onNotebookInputSelected();
 		}
@@ -64,9 +64,13 @@ export class CreateNewNotebookInputRenderStrategy extends CreateNewNotebookCommo
 	}
 
 	private onClick(): void {
-		const onNotebookInputSelected = this.callbacks.onNotebookInputSelected;
+		const onNotebookInputSelected = this.props.callbacks.onNotebookInputSelected;
 		if (!!onNotebookInputSelected) {
 			onNotebookInputSelected();
 		}
+	}
+
+	public isSelected(): boolean {
+		return !!this.props.selectedId && this.props.selectedId === "NotebookInputSelected"
 	}
 }

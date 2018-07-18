@@ -7,6 +7,7 @@ import { CreateNewSectionCommonProperties } from './createNewSectionCommonProper
 import { CreateNewSectionRowTemplate } from './createNewSectionRowTemplate';
 import { ErrorIconWithPopover } from '../errorIconWithPopover';
 import { CreateNewSectionNodeProps } from './createNewSectionNode';
+import { SharedNotebook } from '../../oneNoteDataStructures/sharedNotebook';
 
 export class CreateNewSectionInputRenderStrategy extends CreateNewSectionCommonProperties implements NodeRenderStrategy {
 	onClickBinded = this.onClick.bind(this);
@@ -14,16 +15,16 @@ export class CreateNewSectionInputRenderStrategy extends CreateNewSectionCommonP
 	constructor(
 		parentId: string,
 		private notebookNameInputValue: string,
+		private props: CreateNewSectionNodeProps,
 		private onEnterBinded: (event) => void,
 		private onChangeBinded: (event: React.ChangeEvent<HTMLInputElement>) => void,
-		private inputRefBinded: (node: HTMLInputElement) => void,
-		private props: CreateNewSectionNodeProps) {
+		private inputRefBinded: (node: HTMLInputElement) => void) {
 		super(parentId);
 	}
 
 	element(): JSX.Element {
 		return (
-			<CreateNewSectionRowTemplate>
+			<CreateNewSectionRowTemplate isSelected={this.isSelected()}>
 				<div className='picker-label'>
 					<input
 						className='create-input'
@@ -68,5 +69,11 @@ export class CreateNewSectionInputRenderStrategy extends CreateNewSectionCommonP
 		if (!!onSectionInputSelected) {
 			onSectionInputSelected(this.props.parent, this.props.parentIsNotebook, this.notebookNameInputValue);
 		}
+	}
+
+	public isSelected(): boolean {
+		const parentNotebook = this.props.parent as SharedNotebook;
+		const parentId = this.props.parentIsNotebook && parentNotebook.apiProperties ? parentNotebook.apiProperties.id : this.props.parent.id
+		return !!this.props.selectedId && this.props.selectedId === 'SectionInputSelected' + parentId
 	}
 }

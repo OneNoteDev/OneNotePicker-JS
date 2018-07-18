@@ -9,6 +9,7 @@ import { CreateNewSectionInProgressRenderStrategy } from './createNewSectionInPr
 import { CreateNewSectionErrorRenderStrategy } from './createNewSectionErrorRenderStrategy';
 import { InnerGlobals } from '../../props/globalProps';
 import { CreateEntityNode } from '../treeView/createEntityNode';
+import { SharedNotebook } from '../../oneNoteDataStructures/sharedNotebook';
 
 export interface CreateNewSectionNodeProps extends InnerGlobals {
 	level: number;
@@ -22,12 +23,8 @@ export interface CreateNewSectionNodeProps extends InnerGlobals {
  * UI.
  */
 export class CreateNewSectionNode extends React.Component<CreateNewSectionNodeProps, {}> {
-	private nodeProps: CreateNewSectionNodeProps;
-
 	constructor(props: CreateNewSectionNodeProps) {
 		super(props);
-
-		this.nodeProps = props;
 
 		this.notStartedRenderStrategy = this.notStartedRenderStrategy.bind(this);
 		this.inputRenderStrategy = this.inputRenderStrategy.bind(this);
@@ -37,7 +34,7 @@ export class CreateNewSectionNode extends React.Component<CreateNewSectionNodePr
 	}
 
 	private notStartedRenderStrategy(onClick: () => void): NodeRenderStrategy {
-		return new CreateNewSectionNotStartedRenderStrategy(this.props.parent.id, onClick, this.nodeProps);
+		return new CreateNewSectionNotStartedRenderStrategy(this.getParentId(), onClick, this.props);
 	}
 
 	private inputRenderStrategy(
@@ -45,15 +42,15 @@ export class CreateNewSectionNode extends React.Component<CreateNewSectionNodePr
 		onEnter: () => void,
 		onInputChange: (evt: React.ChangeEvent<HTMLInputElement>) => void,
 		setInputRefAndFocus: (node: HTMLInputElement) => void): NodeRenderStrategy {
-		return new CreateNewSectionInputRenderStrategy(this.props.parent.id, inputValue, onEnter, onInputChange, setInputRefAndFocus, this.nodeProps);
+		return new CreateNewSectionInputRenderStrategy(this.getParentId(), inputValue, this.props, onEnter, onInputChange, setInputRefAndFocus);
 	}
 
 	private createErrorRenderStrategy(errorMessage: string, inputValue: string, onInputChange: (evt: React.ChangeEvent<HTMLInputElement>) => void): NodeRenderStrategy {
-		return new CreateNewSectionErrorRenderStrategy(this.props.parent.id, errorMessage, inputValue, onInputChange);
+		return new CreateNewSectionErrorRenderStrategy(this.getParentId(), errorMessage, inputValue, onInputChange);
 	}
 
 	private inProgressRenderStrategy(inputValue: string): NodeRenderStrategy {
-		return new CreateNewSectionInProgressRenderStrategy(this.props.parent.id, inputValue);
+		return new CreateNewSectionInProgressRenderStrategy(this.getParentId(), inputValue);
 	}
 
 	private createSection(name: string): Promise<void> {
@@ -64,6 +61,11 @@ export class CreateNewSectionNode extends React.Component<CreateNewSectionNodePr
 		return createSectionPromise.then((section) => {
 			return this.props.callbacks.onSectionCreated!(section);
 		});
+	}
+
+	private getParentId(): string {
+		const parentSharedNotebook = this.props.parent as SharedNotebook;
+		return parentSharedNotebook.apiProperties ? parentSharedNotebook.apiProperties.id : this.props.parent.id;
 	}
 
 	render() {
