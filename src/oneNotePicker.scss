@@ -250,6 +250,10 @@ svg.spinner {
 
 $error-info-popover-color: #6264A7;
 
+.error-info-popover {
+	z-index: 1;
+}
+
 .error-info-popover div {
 	// The arrow color is styled using the bottom border runtime style
 	border-bottom-color: $error-info-popover-color !important;
