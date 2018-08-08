@@ -6,9 +6,13 @@ export class NameValidator {
 	private static InvalidNotebookNameCharactersRegex: RegExp = new RegExp('[' + String.fromCharCode(
 		0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
 		21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 127
-	) + '?*\\/:<>|"#%' + ']');
+	) + '?*\\\\/:<>|"#%' + ']');
 
 	static validateNotebookName(name: string): string | undefined {
+		if (NameValidator.emptyName(name)) {
+			return Strings.get('Error.ValidateNotebookName.EmptyNotebookNameMessage');
+		}
+
 		if (NameValidator.startsOrEndsWithDot(name)) {
 			return Strings.get('Error.ValidateNotebookName.NotebookNameDotMessage');
 		}
@@ -52,5 +56,9 @@ export class NameValidator {
 
 	private static nameTooLong(name: string): boolean {
 		return name.length > NameValidator.maxNotebookNameLength;
+	}
+
+	private static emptyName(name: string): boolean {
+		return name.length > 0 && name.trim().length === 0
 	}
 }

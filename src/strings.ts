@@ -6,6 +6,7 @@ export class Strings {
 		'Error.4XX': 'You no longer have access to this notebook.',
 		'Error.5XX': 'Something went wrong on our end.',
 		'Error.Fallback': 'Something went wrong.',
+		'Error.ValidateNotebookName.EmptyNotebookNameMessage': 'Notebook name must contain a value and cannot be whitespaces only.',
 		'Error.ValidateNotebookName.NotebookNameDotMessage': 'Notebook name cannot begin or end with a dot.',
 		'Error.ValidateNotebookName.LengthLimitMessage': 'Notebook name must be less than {0} characters.',
 		'Error.ValidateNotebookName.ContainsInvalidCharacterMessage': 'Notebook name contains invalid character: {0}',

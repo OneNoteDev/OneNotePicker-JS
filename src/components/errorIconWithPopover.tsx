@@ -45,12 +45,6 @@ export class ErrorIconWithPopover extends React.Component<ErrorIconWithPopoverPr
 		window.removeEventListener('scroll', this.scrollHandler, true);
 	}
 
-	componentWillReceiveProps() {
-		this.setState({
-			popoverIsOpen: false
-		});
-	}
-
 	private handleClickOutside(event) {
 		if (this.wrapperRef && !this.wrapperRef.contains(event.target) && this.state.popoverIsOpen) {
 			this.setState({
@@ -108,11 +102,10 @@ export class ErrorIconWithPopover extends React.Component<ErrorIconWithPopoverPr
 								enabled: true
 							}
 						}}
+						style={this.shouldShowPopover() ? {} : { visibility: 'hidden' }}
 						className='error-info-popover popper'
 						eventsEnabled={true}>
-						<div
-							className='error-info-popover-content'
-							style={this.shouldShowPopover() ? {} : { visibility: 'hidden' }}>
+						<div className='error-info-popover-content'>
 							{this.props.errorMessage}
 						</div>
 						<Arrow className='popper__arrow' />
