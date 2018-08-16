@@ -15,7 +15,7 @@ export class SectionRenderStrategy implements ExpandableNodeRenderStrategy {
 	
 	element(): JSX.Element {
 		return (
-			<div className={this.isSelected() ? 'picker-selectedItem section' : 'section'} title={this.section.name}>
+			<div className={this.isSelected() ? 'picker-selectedItem picker-item section' : 'picker-item section'} title={this.section.name}>
 				<div className='picker-icon'>
 					<SectionIconSvg/>
 				</div>

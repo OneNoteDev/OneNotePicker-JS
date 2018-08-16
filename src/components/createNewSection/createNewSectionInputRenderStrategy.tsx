@@ -7,7 +7,6 @@ import { CreateNewSectionCommonProperties } from './createNewSectionCommonProper
 import { CreateNewSectionRowTemplate } from './createNewSectionRowTemplate';
 import { ErrorIconWithPopover } from '../errorIconWithPopover';
 import { CreateNewSectionNodeProps } from './createNewSectionNode';
-import { SharedNotebook } from '../../oneNoteDataStructures/sharedNotebook';
 
 export class CreateNewSectionInputRenderStrategy extends CreateNewSectionCommonProperties implements NodeRenderStrategy {
 	onClickBinded = this.onClick.bind(this);
@@ -18,13 +17,14 @@ export class CreateNewSectionInputRenderStrategy extends CreateNewSectionCommonP
 		private props: CreateNewSectionNodeProps,
 		private onEnterBinded: (event) => void,
 		private onChangeBinded: (event: React.ChangeEvent<HTMLInputElement>) => void,
-		private inputRefBinded: (node: HTMLInputElement) => void) {
+		private inputRefBinded: (node: HTMLInputElement) => void,
+		private setInputToNotStarted: () => void) {
 		super(parentId);
 	}
 
 	element(): JSX.Element {
 		return (
-			<CreateNewSectionRowTemplate isSelected={this.isSelected()}>
+			<CreateNewSectionRowTemplate>
 				<div className='picker-label'>
 					<input
 						className='create-input'
@@ -36,6 +36,7 @@ export class CreateNewSectionInputRenderStrategy extends CreateNewSectionCommonP
 						onKeyPress={this.onKeyPress.bind(this)}
 						onChange={this.onInputChange.bind(this)} />
 				</div>
+				<i className='picker-input-x ms-Icon ms-Icon--Clear' onClick={this.setInputToNotStarted}></i>
 				<ErrorIconWithPopover errorMessage={this.errorIfExists()}></ErrorIconWithPopover>
 			</CreateNewSectionRowTemplate>
 		);
@@ -69,11 +70,5 @@ export class CreateNewSectionInputRenderStrategy extends CreateNewSectionCommonP
 		if (!!onSectionInputSelected) {
 			onSectionInputSelected(this.props.parent, this.props.parentIsNotebook, this.notebookNameInputValue);
 		}
-	}
-
-	public isSelected(): boolean {
-		const parentNotebook = this.props.parent as SharedNotebook;
-		const parentId = this.props.parentIsNotebook && parentNotebook.apiProperties ? parentNotebook.apiProperties.id : this.props.parent.id
-		return !!this.props.selectedId && this.props.selectedId === 'SectionInputSelected' + parentId
 	}
 }

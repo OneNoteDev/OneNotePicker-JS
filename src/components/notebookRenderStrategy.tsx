@@ -20,7 +20,7 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 
 	element(): JSX.Element {
 		return (
-			<div className={this.isSelected() ? 'picker-selectedItem notebook' : 'notebook'} title={this.notebook.name} onClick={this.onClick.bind(this)}>
+			<div className={this.isSelected() ? 'picker-selectedItem picker-item notebook' : 'picker-item notebook'} title={this.notebook.name} onClick={this.onClick.bind(this)}>
 				<div className={this.isExpanded() ? 'chevron-icon opened' : 'chevron-icon closed'} onClick={this.onChevronClick.bind(this)}>
 					<ChevronSvg />
 				</div>

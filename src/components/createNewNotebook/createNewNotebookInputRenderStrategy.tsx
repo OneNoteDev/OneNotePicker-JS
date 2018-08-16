@@ -16,13 +16,14 @@ export class CreateNewNotebookInputRenderStrategy extends CreateNewNotebookCommo
 		private props: CreateNewNotebookNodeProps,
 		private onEnterBinded: (event) => void,
 		private onChangeBinded: (event: React.ChangeEvent<HTMLInputElement>) => void,
-		private inputRefBinded: (node: HTMLInputElement) => void) {
+		private inputRefBinded: (node: HTMLInputElement) => void,
+		private setInputToNotStarted: () => void) {
 		super();
 	}
 
 	element(): JSX.Element {
 		return (
-			<CreateNewNotebookRowTemplate isSelected={this.isSelected()}>
+			<CreateNewNotebookRowTemplate>
 				<div className='picker-label'>
 					<input
 						className='create-input'
@@ -35,6 +36,7 @@ export class CreateNewNotebookInputRenderStrategy extends CreateNewNotebookCommo
 						onKeyPress={this.onKeyPress.bind(this)}
 						onChange={this.onInputChange.bind(this)} />
 				</div>
+				<i className='picker-input-x ms-Icon ms-Icon--Clear' onClick={this.setInputToNotStarted}></i>
 				<ErrorIconWithPopover errorMessage={this.errorIfExists()}></ErrorIconWithPopover>
 			</CreateNewNotebookRowTemplate>
 		);
@@ -68,9 +70,5 @@ export class CreateNewNotebookInputRenderStrategy extends CreateNewNotebookCommo
 		if (!!onNotebookInputSelected) {
 			onNotebookInputSelected();
 		}
-	}
-
-	public isSelected(): boolean {
-		return !!this.props.selectedId && this.props.selectedId === "NotebookInputSelected"
 	}
 }

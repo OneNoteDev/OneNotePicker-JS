@@ -18,7 +18,7 @@ export class SectionGroupRenderStrategy implements ExpandableNodeRenderStrategy 
 
 	element(): JSX.Element {
 		return (
-			<div className='section-group' title={this.sectionGroup.name} onClick={this.onClick.bind(this)}>
+			<div className='picker-item section-group' title={this.sectionGroup.name} onClick={this.onClick.bind(this)}>
 				<div className={this.isExpanded() ? 'chevron-icon opened' : 'chevron-icon closed'} onClick={this.onClick.bind(this)}>
 					<ChevronSvg />
 				</div>

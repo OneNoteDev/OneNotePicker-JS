@@ -15,7 +15,8 @@ export class CreateNewSectionErrorRenderStrategy extends CreateNewSectionCommonP
 		parentId: string,
 		private errorMessage: string,
 		private sectionNameInputValue: string,
-		private onChangeBinded: (event: React.ChangeEvent<HTMLInputElement>) => void) {
+		private onChangeBinded: (event: React.ChangeEvent<HTMLInputElement>) => void,
+		private setInputToNotStarted: () => void) {
 		super(parentId);
 	}
 
@@ -31,6 +32,7 @@ export class CreateNewSectionErrorRenderStrategy extends CreateNewSectionCommonP
 						value={this.sectionNameInputValue}
 						onChange={this.onChangeBinded} />
 				</div>
+				<i className='picker-input-x ms-Icon ms-Icon--Clear' onClick={this.setInputToNotStarted}></i>
 				<ErrorIconWithPopover errorMessage={this.errorMessage}></ErrorIconWithPopover>
 			</CreateNewSectionRowTemplate>
 		);

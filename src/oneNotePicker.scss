@@ -139,6 +139,16 @@ svg.spinner {
 			}
 		}
 
+		.picker-input-x {
+			font-size: 10px;
+			float: right;
+			order: 4;
+		}
+
+		.picker-input-x:hover {
+			cursor: pointer;
+		}
+
 		&:hover {
 			background-color: #F9F9F9;
 		}

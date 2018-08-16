@@ -24,7 +24,7 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 
 	element(): JSX.Element {
 		return (
-			<div className={this.isSelected() ? 'picker-selectedItem shared-notebook' : 'shared-notebook'} title={this.breadcrumbs() + '/' + this.notebook.name} onClick={this.onClick.bind(this)}>
+			<div className={this.isSelected() ? 'picker-selectedItem picker-item shared-notebook' : 'picker-item shared-notebook'} title={this.breadcrumbs() + '/' + this.notebook.name} onClick={this.onClick.bind(this)}>
 				<div className={this.isExpanded() ? 'chevron-icon opened' : 'chevron-icon closed'} onClick={this.onChevronClick.bind(this)}>
 					<ChevronSvg />
 				</div>
@@ -43,7 +43,7 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 	}
 
 	getId(): string {
-		return this.notebook.webUrl;
+		return this.notebook.id ? this.notebook.id : this.notebook.webUrl;
 	}
 
 	getName(): string {
@@ -110,11 +110,11 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 	}
 
 	isSelected(): boolean {
-		return this.globals.selectedId === this.notebook.webUrl;
+		return this.globals.selectedId == this.getId();
 	}
 
 	isAriaSelected(): boolean {
-		return this.globals.ariaSelectedId ? this.globals.ariaSelectedId === this.notebook.webUrl : false;
+		return this.globals.ariaSelectedId ? this.globals.ariaSelectedId == this.getId() : false;
 	}
 
 	expandNode(shouldExpand?: boolean) {

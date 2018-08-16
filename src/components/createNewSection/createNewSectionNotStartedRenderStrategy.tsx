@@ -18,7 +18,7 @@ export class CreateNewSectionNotStartedRenderStrategy extends CreateNewSectionCo
 
 	element(): JSX.Element {
 		return (
-			<div className='section'>
+			<div className='section input-not-started'>
 				<div className='picker-icon'>
 					<AddIconSvg />
 				</div>

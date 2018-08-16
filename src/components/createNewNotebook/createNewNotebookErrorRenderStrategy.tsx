@@ -14,7 +14,8 @@ export class CreateNewNotebookErrorRenderStrategy extends CreateNewNotebookCommo
 	constructor(
 		private errorMessage: string,
 		private notebookNameInputValue: string,
-		private onChangeBinded: (event: React.ChangeEvent<HTMLInputElement>) => void) {
+		private onChangeBinded: (event: React.ChangeEvent<HTMLInputElement>) => void,
+		private setInputToNotStarted: () => void) {
 		super();
 	}
 
@@ -30,6 +31,7 @@ export class CreateNewNotebookErrorRenderStrategy extends CreateNewNotebookCommo
 						value={this.notebookNameInputValue}
 						onChange={this.onChangeBinded} />
 				</div>
+				<i className='picker-input-x ms-Icon ms-Icon--Clear' onClick={this.setInputToNotStarted}></i>
 				<ErrorIconWithPopover errorMessage={this.errorMessage}></ErrorIconWithPopover>
 			</CreateNewNotebookRowTemplate>
 		);
