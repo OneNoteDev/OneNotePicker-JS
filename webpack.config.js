@@ -2,8 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 
 // variables
-const IS_PROD_MIN = process.env.NODE_ENV === "minify";
-const IS_PROD = process.env.NODE_ENV === "production" || IS_PROD_MIN;
+const IS_PROD = process.env.NODE_ENV === "production";
 
 const IS_ANALYZE = process.env.NODE_ENV === "analyze";
 const OUT_DIR = path.join(__dirname, './dist');
@@ -13,8 +12,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WebpackMerge = require('webpack-merge');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const DtsBundlePlugin = require('./dtsBundlePlugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const ENTRYPOINTS = {
 	OneNotePicker: `exports/oneNotePicker.index`,
@@ -141,41 +138,14 @@ const base = {
 };
 
 const prod = {
-	devtool: 'source-map',
-	mode: 'production',
+	mode: 'none',
 	plugins: [
-		new webpack.DefinePlugin({
-			'process.env': {
-				'NODE_ENV': JSON.stringify('production')
-			}
-		}),
 		...generateDtsBundlePlugins()
 	],
 	externals: {
 		'react': { root: 'React', amd: 'react', commonjs2: 'react', commonjs: 'react' },
 		'react-dom': { root: 'ReactDOM', amd: 'react-dom', commonjs2: 'react-dom', commonjs: 'react-dom' }
 	}
-};
-
-const prodMinified = {
-	output: {
-		filename: '[name].min.js'
-	},
-	optimization: {
-		minimizer: [
-			new UglifyJsPlugin({
-				cache: true,
-				parallel: true,
-				sourceMap: true // set to true if you want JS source maps
-			}),
-			new OptimizeCSSAssetsPlugin({})
-		],
-	},
-	plugins: [
-		new MiniCssExtractPlugin({
-			filename: '[name].min.css',
-		}),
-	]
 };
 
 const analyze = {
@@ -190,10 +160,6 @@ let webpackConfiguration = base;
 
 if (IS_PROD) {
 	webpackConfiguration = WebpackMerge(webpackConfiguration, prod);
-}
-
-if (IS_PROD_MIN) {
-	webpackConfiguration = WebpackMerge(webpackConfiguration, prodMinified);
 }
 
 if (IS_ANALYZE) {
