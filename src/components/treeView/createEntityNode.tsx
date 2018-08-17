@@ -14,8 +14,13 @@ export interface CreateEntityNodeProps extends InnerGlobals {
 		(inputValue: string,
 			onEnter: () => void,
 			onInputChange: (evt: React.ChangeEvent<HTMLInputElement>) => void,
-			setInputRefAndFocus: (node: HTMLInputElement) => void) => NodeRenderStrategy;
-	createErrorRenderStrategy: (errorMessage: string, inputValue: string, onInputChange: (evt: React.ChangeEvent<HTMLInputElement>) => void) => NodeRenderStrategy;
+			setInputRefAndFocus: (node: HTMLInputElement) => void,
+			setInputToNotStarted: () => void) => NodeRenderStrategy;
+	createErrorRenderStrategy: (
+		errorMessage: string,
+		inputValue: string,
+		onInputChange: (evt: React.ChangeEvent<HTMLInputElement>) => void,
+		setInputToNotStarted: () => void) => NodeRenderStrategy;
 	inProgressRenderStrategy: (inputValue: string) => NodeRenderStrategy;
 	createEntity?: (name: string) => Promise<void>;
 }
@@ -48,6 +53,7 @@ export class CreateEntityNode extends React.Component<CreateEntityNodeProps, Cre
 		this.resetAndFocus = this.resetAndFocus.bind(this);
 		this.onInputChange = this.onInputChange.bind(this);
 		this.onClick = this.onClick.bind(this);
+		this.setInputToNotStarted = this.setInputToNotStarted.bind(this);
 	}
 
 	componentDidMount() {
@@ -113,11 +119,10 @@ export class CreateEntityNode extends React.Component<CreateEntityNodeProps, Cre
 		let renderStrategy: NodeRenderStrategy;
 		switch (this.state.status) {
 			case 'Input':
-				renderStrategy = this.props.inputRenderStrategy(this.state.nameInputValue, this.handleEnterInput, this.onInputChange, this.setInputRefAndFocus);
+				renderStrategy = this.props.inputRenderStrategy(this.state.nameInputValue, this.handleEnterInput, this.onInputChange, this.setInputRefAndFocus, this.setInputToNotStarted);
 				break;
 			case 'CreateError':
-				// TODO (machiam) Don't use JSON.stringify; parse out API error instead, or map it to a localized error
-				renderStrategy = this.props.createErrorRenderStrategy(this.state.lastError ? JSON.stringify(this.state.lastError) : '', this.state.nameInputValue, this.onInputChange);
+				renderStrategy = this.props.createErrorRenderStrategy(this.state.lastError ? JSON.parse(this.state.lastError.response).error.message : '', this.state.nameInputValue, this.onInputChange, this.setInputToNotStarted);
 				break;
 			case 'InProgress':
 				renderStrategy = this.props.inProgressRenderStrategy(this.state.nameInputValue);
@@ -139,7 +144,7 @@ export class CreateEntityNode extends React.Component<CreateEntityNodeProps, Cre
 			globals: this.props,
 		};
 		return (
-			<div ref={this.setWrapperRef}>
+			<div className='picker-input' ref={this.setWrapperRef}>
 				<LeafNode {...props}></LeafNode>
 			</div>
 		);
@@ -154,6 +159,15 @@ export class CreateEntityNode extends React.Component<CreateEntityNodeProps, Cre
 			this.setState({
 				status: 'Input'
 			});
+		}
+	}
+
+	private setInputToNotStarted() {
+		if (this.state.status === 'Input' || this.state.status === "CreateError") {
+			this.setState({
+				status: 'NotStarted',
+				nameInputValue: ''
+			})
 		}
 	}
 

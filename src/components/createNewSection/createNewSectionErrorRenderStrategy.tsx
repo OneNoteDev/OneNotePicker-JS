@@ -15,7 +15,8 @@ export class CreateNewSectionErrorRenderStrategy extends CreateNewSectionCommonP
 		parentId: string,
 		private errorMessage: string,
 		private sectionNameInputValue: string,
-		private onChangeBinded: (event: React.ChangeEvent<HTMLInputElement>) => void) {
+		private onChangeBinded: (event: React.ChangeEvent<HTMLInputElement>) => void,
+		private setInputToNotStarted: () => void) {
 		super(parentId);
 	}
 
@@ -23,15 +24,18 @@ export class CreateNewSectionErrorRenderStrategy extends CreateNewSectionCommonP
 		return (
 			<CreateNewSectionRowTemplate>
 				<div className='picker-label'>
-					<input
-						className='create-input'
-						type='text'
-						placeholder={Strings.get('Input.CreateSectionPlaceholder')}
-						autoComplete='off'
-						value={this.sectionNameInputValue}
-						onChange={this.onChangeBinded} />
+					<div className='picker-input-and-error'>
+						<input
+							className='create-input'
+							type='text'
+							placeholder={Strings.get('Input.CreateSectionPlaceholder')}
+							autoComplete='off'
+							value={this.sectionNameInputValue}
+							onChange={this.onChangeBinded} />
+						<ErrorIconWithPopover errorMessage={this.errorMessage}></ErrorIconWithPopover>
+					</div>
 				</div>
-				<ErrorIconWithPopover errorMessage={this.errorMessage}></ErrorIconWithPopover>
+				<i className='picker-input-x ms-Icon ms-Icon--Clear' onClick={this.setInputToNotStarted}></i>
 			</CreateNewSectionRowTemplate>
 		);
 	}

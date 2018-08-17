@@ -3,6 +3,7 @@ import { OneNoteItem } from './oneNoteItem';
 import { Section } from './section';
 import { SectionGroup } from './sectionGroup';
 import { Polyfills } from '../polyfills';
+import { SharedNotebook } from './sharedNotebook';
 
 Polyfills.find();
 
@@ -19,12 +20,26 @@ export class OneNoteItemUtils {
 		}
 
 		for (let i = 0; i < sectionParents.length; i++) {
-			findResult = OneNoteItemUtils.find(sectionParents[i].sectionGroups, predicate);
+			// For shared notebook we need to look at api properties
+			const sectionParent = sectionParents[i];
+			const sectionParentNotebook = sectionParent as SharedNotebook
+			let sectionGroups: SectionGroup[];
+			let sections: Section[];
+			if (sectionParentNotebook.apiProperties) {
+				sectionGroups = sectionParentNotebook.apiProperties.spSectionGroups;
+				sections = sectionParentNotebook.apiProperties.spSections;
+			}
+			else {
+				sectionGroups = sectionParent.sectionGroups;
+				sections = sectionParent.sections;
+			}
+			
+			findResult = OneNoteItemUtils.find(sectionGroups, predicate);
 			if (!!findResult) {
 				return findResult;
 			}
 
-			findResult = OneNoteItemUtils.findInSections(sectionParents[i].sections, predicate);
+			findResult = OneNoteItemUtils.findInSections(sections, predicate);
 			if (!!findResult) {
 				return findResult;
 			}

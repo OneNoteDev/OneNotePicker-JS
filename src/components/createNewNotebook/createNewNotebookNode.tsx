@@ -25,6 +25,7 @@ export class CreateNewNotebookNode extends React.Component<CreateNewNotebookNode
 		this.inputRenderStrategy = this.inputRenderStrategy.bind(this);
 		this.createErrorRenderStrategy = this.createErrorRenderStrategy.bind(this);
 		this.inProgressRenderStrategy = this.inProgressRenderStrategy.bind(this);
+		this.createNotebook = this.createNotebook.bind(this);
 	}
 
 	private notStartedRenderStrategy(onClick: () => void): NodeRenderStrategy {
@@ -35,12 +36,17 @@ export class CreateNewNotebookNode extends React.Component<CreateNewNotebookNode
 		inputValue: string,
 		onEnter: () => void,
 		onInputChange: (evt: React.ChangeEvent<HTMLInputElement>) => void,
-		setInputRefAndFocus: (node: HTMLInputElement) => void): NodeRenderStrategy {
-		return new CreateNewNotebookInputRenderStrategy(inputValue, this.props, onEnter, onInputChange, setInputRefAndFocus);
+		setInputRefAndFocus: (node: HTMLInputElement) => void,
+		setInputToNotStarted: () => void): NodeRenderStrategy {
+		return new CreateNewNotebookInputRenderStrategy(inputValue, this.props, onEnter, onInputChange, setInputRefAndFocus, setInputToNotStarted);
 	}
 
-	private createErrorRenderStrategy(errorMessage: string, inputValue: string, onInputChange: (evt: React.ChangeEvent<HTMLInputElement>) => void): NodeRenderStrategy {
-		return new CreateNewNotebookErrorRenderStrategy(errorMessage, inputValue, onInputChange);
+	private createErrorRenderStrategy(
+		errorMessage: string,
+		inputValue: string,
+		onInputChange: (evt: React.ChangeEvent<HTMLInputElement>) => void,
+		setInputToNotStarted: () => void): NodeRenderStrategy {
+		return new CreateNewNotebookErrorRenderStrategy(errorMessage, inputValue, onInputChange, setInputToNotStarted);
 	}
 
 	private inProgressRenderStrategy(inputValue: string): NodeRenderStrategy {

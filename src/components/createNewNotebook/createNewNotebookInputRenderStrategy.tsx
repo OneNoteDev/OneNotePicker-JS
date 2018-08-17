@@ -16,26 +16,30 @@ export class CreateNewNotebookInputRenderStrategy extends CreateNewNotebookCommo
 		private props: CreateNewNotebookNodeProps,
 		private onEnterBinded: (event) => void,
 		private onChangeBinded: (event: React.ChangeEvent<HTMLInputElement>) => void,
-		private inputRefBinded: (node: HTMLInputElement) => void) {
+		private inputRefBinded: (node: HTMLInputElement) => void,
+		private setInputToNotStarted: () => void) {
 		super();
 	}
 
 	element(): JSX.Element {
 		return (
-			<CreateNewNotebookRowTemplate isSelected={this.isSelected()}>
+			<CreateNewNotebookRowTemplate>
 				<div className='picker-label'>
-					<input
-						className='create-input'
-						ref={this.inputRefBinded}
-						type='text'
-						name='notebookName'
-						placeholder={Strings.get('Input.CreateNotebookPlaceholder')}
-						autoComplete='off'
-						value={this.notebookNameInputValue}
-						onKeyPress={this.onKeyPress.bind(this)}
-						onChange={this.onInputChange.bind(this)} />
+					<div className='picker-input-and-error'>
+						<input
+							className='create-input'
+							ref={this.inputRefBinded}
+							type='text'
+							name='notebookName'
+							placeholder={Strings.get('Input.CreateNotebookPlaceholder')}
+							autoComplete='off'
+							value={this.notebookNameInputValue}
+							onKeyPress={this.onKeyPress.bind(this)}
+							onChange={this.onInputChange.bind(this)} />
+						<ErrorIconWithPopover errorMessage={this.errorIfExists()}></ErrorIconWithPopover>
+					</div>
 				</div>
-				<ErrorIconWithPopover errorMessage={this.errorIfExists()}></ErrorIconWithPopover>
+				<i className='picker-input-x ms-Icon ms-Icon--Clear' onClick={this.setInputToNotStarted}></i>
 			</CreateNewNotebookRowTemplate>
 		);
 	}
@@ -68,9 +72,5 @@ export class CreateNewNotebookInputRenderStrategy extends CreateNewNotebookCommo
 		if (!!onNotebookInputSelected) {
 			onNotebookInputSelected();
 		}
-	}
-
-	public isSelected(): boolean {
-		return !!this.props.selectedId && this.props.selectedId === "NotebookInputSelected"
 	}
 }

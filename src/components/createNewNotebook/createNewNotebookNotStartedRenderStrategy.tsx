@@ -18,7 +18,7 @@ export class CreateNewNotebookNotStartedRenderStrategy extends CreateNewNotebook
 
 	element(): JSX.Element {
 		return (
-			<div className='notebook'>
+			<div className='notebook input-not-started'>
 				<div className='chevron-icon closed' style={{ visibility: 'hidden' }}>
 					<ChevronSvg />
 				</div>

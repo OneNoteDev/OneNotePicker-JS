@@ -1,14 +1,10 @@
 import * as React from 'react';
 import { SectionIconSvg } from '../icons/sectionIcon.svg';
 
-export interface CreateNewSectionRowTemplateProps {
-	isSelected?: boolean;
-}
-
-export class CreateNewSectionRowTemplate extends React.Component<CreateNewSectionRowTemplateProps, {}> {
+export class CreateNewSectionRowTemplate extends React.Component<{}, {}> {
 	render() {
 		return (
-			<div className={this.props.isSelected ? 'picker-selectedItem section' : 'section'}>
+			<div className='section'>
 				<div className='picker-icon'>
 					<SectionIconSvg />
 				</div>
