@@ -1,6 +1,6 @@
 {
   "name": "onenotepicker",
-  "version": "2.7.7",
+  "version": "2.7.8",
   "files": [
     "dist/**/*"
   ],
@@ -43,7 +43,6 @@
     "karma-spec-reporter": "0.0.31",
     "karma-typescript": "^3.0.3",
     "node-sass": "^4.5.3",
-    "optimize-css-assets-webpack-plugin": "^4.0.2",
     "path": "^0.12.7",
     "phantomjs-polyfill-find": "^0.0.1",
     "postcss-cssnext": "^3.1.0",
@@ -61,7 +60,6 @@
     "ts-loader": "^4.3.0",
     "tslint": "^5.4.3",
     "typescript": "2.5.2",
-    "uglifyjs-webpack-plugin": "^1.2.5",
     "url-loader": "^0.5.8",
     "wallaby-webpack": "0.0.38",
     "webpack": "^4.8.2",
@@ -74,7 +72,7 @@
     "test": "cross-env NODE_ENV=test karma start",
     "clean": "rimraf dist",
     "start": "webpack-dev-server --debug --output-pathinfo --history-api-fallback --hot --inline --progress --colors --port 3000 --open",
-    "build": "rimraf dist && cross-env NODE_ENV=production webpack --progress --colors && cross-env NODE_ENV=minify webpack --progress --colors && rimraf dist/types",
+    "build": "rimraf dist && cross-env NODE_ENV=production webpack --progress --colors && rimraf dist/types",
     "analyze": "cross-env NODE_ENV=analyze webpack --progress --colors",
     "static-content-serve": "node ./static-server.js",
     "static-content-build": "cross-env NODE_ENV=production webpack --progress --colors --watch"
