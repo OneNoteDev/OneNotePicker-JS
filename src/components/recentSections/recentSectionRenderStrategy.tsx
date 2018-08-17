@@ -42,9 +42,9 @@ export class RecentSectionRenderStrategy implements NodeRenderStrategy {
 	}
 
 	private onClick() {
-		const onSectionSelected = this.globals.callbacks.onSectionSelected;
-		if (!!onSectionSelected) {
-			onSectionSelected(this.section, OneNoteItemUtils.getAncestry(this.section));
+		const onRecentSectionSelected = this.globals.callbacks.onRecentSectionSelected;
+		if (!!onRecentSectionSelected) {
+			onRecentSectionSelected(this.section, OneNoteItemUtils.getAncestry(this.section));
 		}
 	}
 }

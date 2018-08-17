@@ -64,6 +64,14 @@ export abstract class GenericOneNotePickerDropdown<T extends PickerProperties> e
 		// TODO (machiam/jane) We should not modify props. We should copy to new object before passing it down.
 		const newCallbacks = { ...this.props.globals.callbacks };
 
+		if (newCallbacks.onRecentSectionSelected) {
+			const decorated = newCallbacks.onRecentSectionSelected;
+			newCallbacks.onRecentSectionSelected = (section, breadcrumbs) => {
+				this.onPickerItemClicked();
+				decorated(section, breadcrumbs);
+			};
+		}
+
 		if (newCallbacks.onSectionSelected) {
 			const decorated = newCallbacks.onSectionSelected;
 			newCallbacks.onSectionSelected = (section, breadcrumbs) => {
