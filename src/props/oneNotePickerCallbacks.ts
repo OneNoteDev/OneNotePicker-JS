@@ -25,6 +25,7 @@ export interface OneNotePickerCallbacks {
 
 	// Selection callbacks
 	onNotebookSelected?: (notebook: Notebook, breadcrumbs: OneNoteItem[]) => void;
+	onRecentSectionSelected?: (section: Section, breadcrumbs: OneNoteItem[]) => void;
 	onSectionSelected?: (section: Section, breadcrumbs: OneNoteItem[]) => void;
 	onPageSelected?: (page: Page, breadcrumbs: OneNoteItem[]) => void;
 

@@ -20,6 +20,7 @@ export class MockProps {
 					onNotebookHierarchyUpdated: () => { },
 					onNotebookSelected: () => { },
 					onSectionSelected: () => { },
+					onRecentSectionSelected: () => { },
 					onPageSelected: () => { },
 					onAccessibleSelection: () => { }
 				},
