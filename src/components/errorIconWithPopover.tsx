@@ -83,7 +83,7 @@ export class ErrorIconWithPopover extends React.Component<ErrorIconWithPopoverPr
 					<Target>
 						<div
 							tabIndex={0}
-							style={this.props.errorMessage ? {} : { visibility: 'hidden' }}
+							style={this.props.errorMessage ? {} : { display: 'none' }}
 							onClick={this.clickHandler}
 							onKeyUp={this.keyUpHandler}>
 							<ErrorInfoIconSvg/>

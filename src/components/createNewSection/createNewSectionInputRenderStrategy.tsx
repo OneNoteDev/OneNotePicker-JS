@@ -26,18 +26,20 @@ export class CreateNewSectionInputRenderStrategy extends CreateNewSectionCommonP
 		return (
 			<CreateNewSectionRowTemplate>
 				<div className='picker-label'>
-					<input
-						className='create-input'
-						ref={this.inputRefBinded}
-						type='text'
-						placeholder={Strings.get('Input.CreateSectionPlaceholder')}
-						autoComplete='off'
-						value={this.notebookNameInputValue}
-						onKeyPress={this.onKeyPress.bind(this)}
-						onChange={this.onInputChange.bind(this)} />
+					<div className='picker-input-and-error'>
+						<input
+							className='create-input'
+							ref={this.inputRefBinded}
+							type='text'
+							placeholder={Strings.get('Input.CreateSectionPlaceholder')}
+							autoComplete='off'
+							value={this.notebookNameInputValue}
+							onKeyPress={this.onKeyPress.bind(this)}
+							onChange={this.onInputChange.bind(this)} />
+						<ErrorIconWithPopover errorMessage={this.errorIfExists()}></ErrorIconWithPopover>
+					</div>
 				</div>
 				<i className='picker-input-x ms-Icon ms-Icon--Clear' onClick={this.setInputToNotStarted}></i>
-				<ErrorIconWithPopover errorMessage={this.errorIfExists()}></ErrorIconWithPopover>
 			</CreateNewSectionRowTemplate>
 		);
 	}
