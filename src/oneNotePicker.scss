@@ -161,7 +161,11 @@ svg.spinner {
 			background-color: #F9F9F9;
 		}
 
-		&:hover .picker-input-and-error,
+		&:hover .picker-input-and-error {
+			border-bottom: 1px solid #F3F3F3;
+			margin-bottom: -1px;
+		}
+
 		.picker-input-and-error:focus-within {
 			border-bottom: 1px solid #F3F3F3;
 			margin-bottom: -1px;
