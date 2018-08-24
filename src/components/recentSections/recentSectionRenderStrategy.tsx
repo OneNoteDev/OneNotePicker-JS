@@ -19,7 +19,7 @@ export class RecentSectionRenderStrategy implements NodeRenderStrategy {
 				</div>
 				<div className='picker-label'>
 					<label>{this.section.name}</label>
-					<label className='parent'>{this.section.parent}</label>
+					<label className='parent'>{this.section.parent ? this.section.parent.name : ''}</label>
 				</div>
 			</div>
 		);
