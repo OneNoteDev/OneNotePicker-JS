@@ -8,11 +8,12 @@ import { InnerGlobals } from '../../props/globalProps';
 import { Section } from '../../oneNoteDataStructures/section';
 
 export class RecentSectionHeaderRenderStrategy extends RecentSectionsCommonProperties implements ExpandableNodeRenderStrategy {
-	onClickBinded = this.onClick.bind(this);
+	onClickBinded = () => {};
 
-	constructor(private sections: Section[], private expanded: boolean, private props: InnerGlobals) {
+	constructor(private sections: Section[], private expanded: boolean, private props: InnerGlobals, private onRecentSectionsClick: () => void) {
 		super();
 		this.expanded = expanded;
+		this.onClickBinded = this.onRecentSectionsClick;
 	}
 
 	/*
@@ -21,7 +22,7 @@ export class RecentSectionHeaderRenderStrategy extends RecentSectionsCommonPrope
 	Expandable Node component. This allows the Expandable Node component to inform the Recent Sections component of a
 	click event through a callback so that the Recent Sections component can update its state properly. We will revisit
 	this quirk when we refactor the next time.
-	 */
+	*/
 	element(): JSX.Element {
 		return <span></span>;
 	}
@@ -53,9 +54,5 @@ export class RecentSectionHeaderRenderStrategy extends RecentSectionsCommonPrope
 
 	getId() {
 		return Constants.TreeView.recentSectionsId;
-	}
-
-	private onClick() {
-		this.expanded = !this.expanded;
 	}
 }

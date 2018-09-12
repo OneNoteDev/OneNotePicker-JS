@@ -15,31 +15,25 @@ export interface RecentSectionsNodeProps extends CommonNodeProps {
  * Presentation component that extends the 'Create' UX with notebook-specific
  * UI.
  */
-export class RecentSectionsNode extends React.Component<RecentSectionsNodeProps, { expanded: boolean }> {
-	constructor(props: RecentSectionsNodeProps) {
-		super(props);
-		this.state = {
-			expanded: !!this.props.expanded
-		};
-	}
-
+export class RecentSectionsNode extends React.Component<RecentSectionsNodeProps> {
 	render() {
 		return (
 			<ExpandableNode
-				onExpand={(expanded) => {
-					this.setState({expanded});
-				}}
 				globals={this.props.globals}
-				expanded={this.state.expanded}
+				expanded={this.isExpanded()}
 				node={this.props.node}
 				treeViewId={this.props.treeViewId}
 				id={this.props.id}
 				tabbable={this.props.tabbable}
 				focusOnMount={this.props.focusOnMount}
 				ariaSelected={this.props.ariaSelected}>
-				<RecentSectionHeaderComponent selected={this.props.node.isSelected()} expanded={this.state.expanded}
+				<RecentSectionHeaderComponent selected={this.props.node.isSelected()} expanded={this.isExpanded()}
 											  name={this.props.node.getName()} {...this.props}/>
 			</ExpandableNode>
 		);
+	}
+
+	isExpanded(): boolean {
+		return !!this.props.expanded;
 	}
 }

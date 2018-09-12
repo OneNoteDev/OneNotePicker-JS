@@ -22,10 +22,22 @@ export interface OneNotePickerProps extends GlobalProps {
 	recentSections?: Section[];
 }
 
-export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, {}> {
+export interface OneNotePickerState {
+	recentSectionsExpanded: boolean;
+}
+
+export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, OneNotePickerState> {
+	constructor(props: OneNotePickerProps) {
+		super(props);
+		this.state = {
+			recentSectionsExpanded: true
+		};
+	}
+
 	protected rootNodes(): JSX.Element[] {
 		const { notebooks, sharedNotebooks, recentSections, globals } = this.props;
 		const { focusOnMount, ariaSelectedId } = globals;
+		const { recentSectionsExpanded } = this.state;
 
 		const notebookRenderStrategies: ExpandableNodeRenderStrategy[] = notebooks ?
 			notebooks.map(notebook => new NotebookRenderStrategy(notebook, globals)) : [];
@@ -44,7 +56,7 @@ export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, {}> {
 		let recentSectionRenderStrategy, recentSectionsExists = false;
 
 		if (recentSections && recentSections.length > 0) {
-			recentSectionRenderStrategy = new RecentSectionHeaderRenderStrategy(recentSections, true, globals);
+			recentSectionRenderStrategy = new RecentSectionHeaderRenderStrategy(recentSections, recentSectionsExpanded, globals, this.onRecentSectionsClick.bind(this));
 			recentSectionsExists = true;
 		}
 
@@ -53,7 +65,7 @@ export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, {}> {
 								 focusOnMount={!createNewNotebookExists && focusOnMount} sections={recentSections || []}
 								 treeViewId={this.treeViewId()} id={recentSectionRenderStrategy.getId()}
 								 ariaSelected={ariaSelectedId ? recentSectionRenderStrategy.isAriaSelected() : true}
-								 node={recentSectionRenderStrategy}></RecentSectionsNode>] : [];
+								 node={recentSectionRenderStrategy} expanded={recentSectionRenderStrategy.isExpanded()}></RecentSectionsNode>] : [];
 
 		const notebookNodes = notebookRenderStrategies.map((renderStrategy, i) =>
 			!!this.props.globals.callbacks.onSectionSelected || !!this.props.globals.callbacks.onPageSelected ?
@@ -78,5 +90,11 @@ export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, {}> {
 					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : noPersonalNotebooks && i === 0}></LeafNode>);
 
 		return [...recentSectionNodes, ...createNewNotebook, ...notebookNodes, ...sharedNotebookNodes];
+	}
+
+	private onRecentSectionsClick() {
+		this.setState({
+			recentSectionsExpanded: !this.state.recentSectionsExpanded
+		});
 	}
 }
