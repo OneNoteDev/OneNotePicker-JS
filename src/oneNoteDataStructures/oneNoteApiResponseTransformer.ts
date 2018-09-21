@@ -26,7 +26,8 @@ export class OneNoteApiResponseTransformer {
 			sections: [],
 			apiUrl: notebook.self,
 			// tslint:disable-next-line:no-any
-			webUrl: (notebook.links as any).oneNoteWebUrl.href
+			webUrl: (notebook.links as any).oneNoteWebUrl.href,
+			lastModifiedTime: notebook.lastModifiedTime
 		};
 
 		transformed.sectionGroups = notebook.sectionGroups ? notebook.sectionGroups.map(sg => this.transformSectionGroup(sg, transformed)) : [];

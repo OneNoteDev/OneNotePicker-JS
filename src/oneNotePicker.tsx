@@ -7,7 +7,6 @@ import { NotebookRenderStrategy } from './components/notebookRenderStrategy';
 import { SharedNotebookRenderStrategy } from './components/sharedNotebookRenderStrategy';
 import { ExpandableNode } from './components/treeView/expandableNode';
 import { LeafNode } from './components/treeView/leafNode';
-import { ExpandableNodeRenderStrategy } from './components/treeView/expandableNodeRenderStrategy';
 import { GlobalProps } from './props/globalProps';
 import { Notebook } from './oneNoteDataStructures/notebook';
 import { SharedNotebook } from './oneNoteDataStructures/sharedNotebook';
@@ -39,13 +38,14 @@ export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, OneNote
 		const { focusOnMount, ariaSelectedId } = globals;
 		const { recentSectionsExpanded } = this.state;
 
-		const notebookRenderStrategies: ExpandableNodeRenderStrategy[] = notebooks ?
-			notebooks.map(notebook => new NotebookRenderStrategy(notebook, globals)) : [];
+		// Sort both personal and shared notebooks by last modified time (last accessed time for shared notebooks)
+		const allNotebooks: (Notebook | SharedNotebook)[] = notebooks;
+		if (sharedNotebooks) {
+			allNotebooks.concat(sharedNotebooks);
+		}
+		allNotebooks.sort(this.sortNotebooksByLastModifiedTime);
 
-		const sharedNotebookRenderStrategies: ExpandableNodeRenderStrategy[] = sharedNotebooks ?
-			sharedNotebooks.map(sharedNotebook => new SharedNotebookRenderStrategy(sharedNotebook, globals)) : [];
-
-		const noPersonalNotebooks = notebookRenderStrategies.length === 0;
+		const noPersonalNotebooks = notebooks.length === 0;
 
 		// The key here is guaranteed to be unique as there is only one max 'Create notebook' affordance
 		const createNewNotebookExists = this.props.globals.callbacks.onNotebookCreated || this.props.globals.shouldShowCreateEntityInputs;
@@ -67,18 +67,10 @@ export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, OneNote
 								 ariaSelected={ariaSelectedId ? recentSectionRenderStrategy.isAriaSelected() : true}
 								 node={recentSectionRenderStrategy} expanded={recentSectionRenderStrategy.isExpanded()}></RecentSectionsNode>] : [];
 
-		const notebookNodes = notebookRenderStrategies.map((renderStrategy, i) =>
-			!!this.props.globals.callbacks.onSectionSelected || !!this.props.globals.callbacks.onPageSelected ?
-				<ExpandableNode globals={this.props.globals} expanded={renderStrategy.isExpanded()} node={renderStrategy}
-					treeViewId={this.treeViewId()} key={renderStrategy.getId()}
-					id={renderStrategy.getId()} tabbable={!createNewNotebookExists && !recentSectionsExists && i === 0} focusOnMount={!createNewNotebookExists && !recentSectionsExists && focusOnMount && i === 0}
-					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : i === 0}></ExpandableNode> :
-				<LeafNode globals={this.props.globals} node={renderStrategy} treeViewId={this.treeViewId()} key={renderStrategy.getId()}
-					id={renderStrategy.getId()} tabbable={!createNewNotebookExists && i === 0} focusOnMount={!createNewNotebookExists && !recentSectionsExists && focusOnMount && i === 0}
-					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : i === 0}></LeafNode>);
-
-		const sharedNotebookNodes = sharedNotebookRenderStrategies.map((renderStrategy, i) =>
-			!!this.props.globals.callbacks.onSectionSelected || !!this.props.globals.callbacks.onPageSelected ?
+		const allNotebookNodes = allNotebooks.map((notebook, i) => {
+			if ((notebook as SharedNotebook).apiProperties) {
+				const renderStrategy = new SharedNotebookRenderStrategy(notebook as SharedNotebook, globals);
+				return !!this.props.globals.callbacks.onSectionSelected || !!this.props.globals.callbacks.onPageSelected ?
 				<ExpandableNode globals={this.props.globals} expanded={renderStrategy.isExpanded()} node={renderStrategy}
 					treeViewId={this.treeViewId()} key={renderStrategy.getId()}
 					id={renderStrategy.getId()} tabbable={!createNewNotebookExists && noPersonalNotebooks && i === 0}
@@ -87,14 +79,37 @@ export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, OneNote
 				<LeafNode globals={this.props.globals} node={renderStrategy} treeViewId={this.treeViewId()} key={renderStrategy.getId()}
 					id={renderStrategy.getId()} tabbable={!createNewNotebookExists && noPersonalNotebooks && i === 0}
 					focusOnMount={!createNewNotebookExists && !recentSectionsExists && focusOnMount && noPersonalNotebooks && i === 0}
-					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : noPersonalNotebooks && i === 0}></LeafNode>);
+					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : noPersonalNotebooks && i === 0}></LeafNode>;
+			} else {
+				const renderStrategy = new NotebookRenderStrategy(notebook, globals);
+				return !!this.props.globals.callbacks.onSectionSelected || !!this.props.globals.callbacks.onPageSelected ?
+				<ExpandableNode globals={this.props.globals} expanded={renderStrategy.isExpanded()} node={renderStrategy}
+					treeViewId={this.treeViewId()} key={renderStrategy.getId()}
+					id={renderStrategy.getId()} tabbable={!createNewNotebookExists && !recentSectionsExists && i === 0} focusOnMount={!createNewNotebookExists && !recentSectionsExists && focusOnMount && i === 0}
+					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : i === 0}></ExpandableNode> :
+				<LeafNode globals={this.props.globals} node={renderStrategy} treeViewId={this.treeViewId()} key={renderStrategy.getId()}
+					id={renderStrategy.getId()} tabbable={!createNewNotebookExists && i === 0} focusOnMount={!createNewNotebookExists && !recentSectionsExists && focusOnMount && i === 0}
+					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : i === 0}></LeafNode>;
+			}
+		})
 
-		return [...recentSectionNodes, ...createNewNotebook, ...notebookNodes, ...sharedNotebookNodes];
+		return [...recentSectionNodes, ...createNewNotebook, ...allNotebookNodes];
 	}
 
 	private onRecentSectionsClick() {
 		this.setState({
 			recentSectionsExpanded: !this.state.recentSectionsExpanded
 		});
+	}
+
+	private sortNotebooksByLastModifiedTime(notebook1: Notebook | SharedNotebook, notebook2: Notebook | SharedNotebook) {
+		if (notebook1.lastModifiedTime && notebook2.lastModifiedTime) {
+			if (notebook1.lastModifiedTime > notebook2.lastModifiedTime) {
+				return -1;
+			} else if (notebook2.lastModifiedTime > notebook1.lastModifiedTime) {
+				return 1;
+			}
+		}
+		return 0;
 	}
 }
