@@ -14,6 +14,7 @@ describe('OneNoteItemUtils', () => {
 			sections: [],
 			apiUrl: '',
 			webUrl: '',
+			lastModifiedTime: new Date(),
 		};
 
 		const section: Section = {
@@ -40,6 +41,7 @@ describe('OneNoteItemUtils', () => {
 			sections: [],
 			apiUrl: '',
 			webUrl: '',
+			lastModifiedTime: new Date(),
 		};
 
 		const section: Section = {
@@ -66,6 +68,7 @@ describe('OneNoteItemUtils', () => {
 			sections: [],
 			apiUrl: '',
 			webUrl: '',
+			lastModifiedTime: new Date(),
 		};
 
 		const section: Section = {
@@ -97,6 +100,7 @@ describe('OneNoteItemUtils', () => {
 			sections: [],
 			apiUrl: '',
 			webUrl: '',
+			lastModifiedTime: new Date(),
 		};
 
 		const section: Section = {
@@ -124,6 +128,7 @@ describe('OneNoteItemUtils', () => {
 			sections: [],
 			apiUrl: '',
 			webUrl: '',
+			lastModifiedTime: new Date(),
 		};
 
 		const section: Section = {
@@ -150,6 +155,7 @@ describe('OneNoteItemUtils', () => {
 			sections: [],
 			apiUrl: '',
 			webUrl: '',
+			lastModifiedTime: new Date(),
 		};
 
 		const section: Section = {

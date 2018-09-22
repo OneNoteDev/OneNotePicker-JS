@@ -7,6 +7,6 @@ export interface Notebook extends OneNoteItem {
 	sectionGroups: SectionGroup[];
 	sections: Section[];
 	webUrl: string;
-	apiUrl: string;
-	lastModifiedTime?: Date;
+	apiUrl?: string;
+	lastModifiedTime: Date;
 }
