@@ -204,7 +204,8 @@ export class SampleOneNoteDataProvider implements OneNoteDataProvider {
 			apiUrl: '',
 			parent: undefined,
 			id: '' + Math.random(),
-			name: name
+			name: name,
+			lastModifiedTime: new Date()
 		};
 		return Promise.resolve(notebook);
 	}

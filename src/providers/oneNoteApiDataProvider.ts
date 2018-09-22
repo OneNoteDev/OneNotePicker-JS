@@ -82,7 +82,8 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 						expanded: false,
 						sections: [],
 						sectionGroups: [],
-						apiUrl: ''
+						apiUrl: '',
+						lastModifiedTime: serviceSharedNotebooks[i].lastAccessedTime
 					});
 				}
 			}
