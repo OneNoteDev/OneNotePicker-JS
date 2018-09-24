@@ -39,9 +39,9 @@ export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, OneNote
 		const { recentSectionsExpanded } = this.state;
 
 		// Sort both personal and shared notebooks by last modified time (last accessed time for shared notebooks)
-		const allNotebooks: (Notebook | SharedNotebook)[] = notebooks;
+		let allNotebooks: (Notebook | SharedNotebook)[] = notebooks;
 		if (sharedNotebooks) {
-			allNotebooks.concat(sharedNotebooks);
+			allNotebooks = allNotebooks.concat(sharedNotebooks);
 		}
 		allNotebooks.sort(this.sortNotebooksByLastModifiedTime);
 
@@ -68,7 +68,7 @@ export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, OneNote
 								 node={recentSectionRenderStrategy} expanded={recentSectionRenderStrategy.isExpanded()}></RecentSectionsNode>] : [];
 
 		const allNotebookNodes = allNotebooks.map((notebook, i) => {
-			if ((notebook as SharedNotebook).apiProperties) {
+			if ((notebook as SharedNotebook).sourceService) {
 				const renderStrategy = new SharedNotebookRenderStrategy(notebook as SharedNotebook, globals);
 				return !!this.props.globals.callbacks.onSectionSelected || !!this.props.globals.callbacks.onPageSelected ?
 				<ExpandableNode globals={this.props.globals} expanded={renderStrategy.isExpanded()} node={renderStrategy}
