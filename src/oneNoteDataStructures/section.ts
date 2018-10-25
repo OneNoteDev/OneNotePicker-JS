@@ -8,4 +8,5 @@ export interface Section extends OneNoteItem {
 	webUrl?: string;
 	clientUrl?: string;
 	isRecentSection?: boolean;
+	parentNotebookName?: string;
 }
