@@ -47,13 +47,4 @@ export class RecentSectionRenderStrategy implements NodeRenderStrategy {
 			onRecentSectionSelected(this.section, OneNoteItemUtils.getAncestry(this.section));
 		}
 	}
-
-	// private getParentName(): string | undefined {
-    //
-	// 	const split = url.split('/');
-	// 	return split.slice(3, -1).map(decodeURIComponent).join('/');
-    //
-	// 	return this.section.webUrl;
-	// 	// "https://microsoft-my.sharepoint-df.com/personal/stefhan_microsoft_com/Documents/Stefanie%20@%20Microsoft?wd=target%28%2F%2FConnect%20Notes.one%7C%2F%29"
-	// }
 }
