@@ -19,7 +19,7 @@ export class RecentSectionRenderStrategy implements NodeRenderStrategy {
 				</div>
 				<div className='picker-label'>
 					<label>{this.section.name}</label>
-					<label className='parent'>{this.section.parent ? this.section.parent.name : ''}</label>
+					<label className='parent'>{this.section.parentNotebookName ? this.section.parentNotebookName : ''}</label>
 				</div>
 			</div>
 		);
@@ -47,4 +47,13 @@ export class RecentSectionRenderStrategy implements NodeRenderStrategy {
 			onRecentSectionSelected(this.section, OneNoteItemUtils.getAncestry(this.section));
 		}
 	}
+
+	// private getParentName(): string | undefined {
+    //
+	// 	const split = url.split('/');
+	// 	return split.slice(3, -1).map(decodeURIComponent).join('/');
+    //
+	// 	return this.section.webUrl;
+	// 	// "https://microsoft-my.sharepoint-df.com/personal/stefhan_microsoft_com/Documents/Stefanie%20@%20Microsoft?wd=target%28%2F%2FConnect%20Notes.one%7C%2F%29"
+	// }
 }
