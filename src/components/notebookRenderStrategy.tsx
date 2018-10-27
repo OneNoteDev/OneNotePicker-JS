@@ -20,7 +20,7 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 
 	element(): JSX.Element {
 		return (
-			<div className={this.isSelected() ? 'picker-selectedItem picker-item notebook' : 'picker-item notebook'} title={this.notebook.name} onClick={this.onClick.bind(this)}>
+			<div className={this.isSelected() ? 'picker-selectedItem picker-item notebook' : 'picker-item notebook'} title={this.breadcrumbs() + '/' + this.notebook.name} onClick={this.onClick.bind(this)}>
 				<div className={this.isExpanded() ? 'chevron-icon opened' : 'chevron-icon closed'} onClick={this.onChevronClick.bind(this)}>
 					<ChevronSvg />
 				</div>
@@ -102,6 +102,12 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 		if (!!onNotebookSelected) {
 			onNotebookSelected(this.notebook, OneNoteItemUtils.getAncestry(this.notebook));
 		}
+	}
+
+	private breadcrumbs(): string {
+		const url = this.notebook.webUrl;
+		const split = url.split('/');
+		return split.slice(3, -1).map(decodeURIComponent).join('/');
 	}
 
 	private onClick() {

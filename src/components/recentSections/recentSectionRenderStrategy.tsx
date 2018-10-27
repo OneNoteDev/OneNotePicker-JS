@@ -13,7 +13,7 @@ export class RecentSectionRenderStrategy implements NodeRenderStrategy {
 
 	element(): JSX.Element {
 		return (
-			<div className={this.isSelected() ? 'picker-selectedItem section' : 'section'} title={this.section.name}>
+			<div className={this.isSelected() ? 'picker-selectedItem section' : 'section'} title={this.breadcrumbs()}>
 				<div className='picker-icon'>
 					<SectionIconSvg/>
 				</div>
@@ -46,5 +46,15 @@ export class RecentSectionRenderStrategy implements NodeRenderStrategy {
 		if (!!onRecentSectionSelected) {
 			onRecentSectionSelected(this.section, OneNoteItemUtils.getAncestry(this.section));
 		}
+	}
+
+	private breadcrumbs(): string {
+		if (this.section.webUrl) {
+			const url = this.section.webUrl;
+			const split = url.split('/');
+			return split.slice(3, -1).map(decodeURIComponent).join('/') +
+				`${this.section.parentNotebookName ? '/' + this.section.parentNotebookName : ''}/${this.section.name}`;
+		}
+		return '';
 	}
 }
