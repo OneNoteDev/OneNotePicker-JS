@@ -45,7 +45,7 @@ export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, OneNote
 		}
 		allNotebooks.sort(this.sortNotebooksByLastModifiedTime);
 
-		const noPersonalNotebooks = notebooks.length === 0;
+		const noPersonalNotebooks = !notebooks || notebooks.length === 0;
 
 		// The key here is guaranteed to be unique as there is only one max 'Create notebook' affordance
 		const createNewNotebookExists = this.props.globals.callbacks.onNotebookCreated || this.props.globals.shouldShowCreateEntityInputs;
