@@ -39,7 +39,7 @@ export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, OneNote
 		const { recentSectionsExpanded } = this.state;
 
 		// Sort both personal and shared notebooks by last modified time (last accessed time for shared notebooks)
-		let allNotebooks: (Notebook | SharedNotebook)[] = [];
+		let allNotebooks: (Notebook | SharedNotebook)[] = notebooks || [];
 		if (notebooks) {
 			allNotebooks = notebooks;
 		}
