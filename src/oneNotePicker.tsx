@@ -40,9 +40,6 @@ export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, OneNote
 
 		// Sort both personal and shared notebooks by last modified time (last accessed time for shared notebooks)
 		let allNotebooks: (Notebook | SharedNotebook)[] = notebooks || [];
-		if (notebooks) {
-			allNotebooks = notebooks;
-		}
 		if (sharedNotebooks) {
 			allNotebooks = allNotebooks.concat(sharedNotebooks);
 		}
