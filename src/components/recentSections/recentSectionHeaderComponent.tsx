@@ -7,6 +7,7 @@ export interface RecentSectionHeaderProps extends RecentSectionsNodeProps {
 	selected: boolean;
 	expanded: boolean;
 	name: string;
+	onRecentSectionsClick: (expanded: boolean) => void;
 }
 
 export class RecentSectionHeaderComponent extends React.Component<RecentSectionHeaderProps, {}> {
@@ -18,7 +19,7 @@ export class RecentSectionHeaderComponent extends React.Component<RecentSectionH
 		return (
 			<div className={this.props.selected ? 'picker-selectedItem recent-sections' : 'recent-sections'}
 				 title='recent-sections'>
-				<div className={this.props.expanded ? 'chevron-icon opened' : 'chevron-icon closed'}>
+				<div className={this.props.expanded ? 'chevron-icon opened' : 'chevron-icon closed'} onClick={this.onChevronClick.bind(this)}>
 					<ChevronSvg/>
 				</div>
 				<div className='picker-icon'>
@@ -29,5 +30,9 @@ export class RecentSectionHeaderComponent extends React.Component<RecentSectionH
 				</div>
 			</div>
 		);
+	}
+
+	private onChevronClick() {
+		this.props.onRecentSectionsClick(!this.props.expanded);
 	}
 }
