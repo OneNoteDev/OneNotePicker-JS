@@ -45,14 +45,21 @@ svg.spinner {
 		padding: 0;
 	}
 
+	.section-group, .section, .recent-sections {
+		padding: 0.25rem;
+	}
+
+	.notebook, .shared-notebook {
+		padding: 0.5rem;
+	}
+
 	.notebook, .section-group, .section, .shared-notebook, .recent-sections {
 		display: flex;
 		align-items: center;
 		line-height: 1rem;
-		padding: 0.5rem;
 
 		.chevron-icon, .picker-label, .picker-icon, .picker-shared-icon {
-			padding: 0.25rem;
+			padding: 0.3rem;
 			order: 4;
 
 			svg {
