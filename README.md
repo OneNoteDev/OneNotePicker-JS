@@ -11,6 +11,7 @@ If you would like to test changes to the picker from within a consumer applicati
         * `"onenotepicker": "file:../OneNotePicker-JS"`
     * `npm install` / `yarn` from the consumer to source the local picker project.
 3. Create a symlink to your local picker package.
+    * Run `npm link` inside the picker project.
     * Navigate to the root of the consumer application.
     * Run `npm link <relative path to picker root>`
 4. Every time you make a change to the picker, you will need to build the picker (step 1).

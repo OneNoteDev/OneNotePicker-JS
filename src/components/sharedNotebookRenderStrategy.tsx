@@ -25,7 +25,7 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 	element(): JSX.Element {
 		return (
 			<div className={this.isSelected() ? 'picker-selectedItem picker-item shared-notebook' : 'picker-item shared-notebook'} title={this.breadcrumbs() + '/' + this.notebook.name} onClick={this.onClick.bind(this)}>
-				<div className={this.isExpanded() ? 'chevron-icon opened' : 'chevron-icon closed'} onClick={this.onChevronClick.bind(this)}>
+				<div className={this.isExpanded() ? 'chevron-icon opened' : 'chevron-icon closed'}>
 					<ChevronSvg />
 				</div>
 				<div className='picker-icon'>
@@ -110,16 +110,16 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 	}
 
 	isSelected(): boolean {
-		return this.globals.selectedId == this.getId();
+		return this.globals.selectedId === this.getId();
 	}
 
 	isAriaSelected(): boolean {
-		return this.globals.ariaSelectedId ? this.globals.ariaSelectedId == this.getId() : false;
+		return this.globals.ariaSelectedId ? this.globals.ariaSelectedId === this.getId() : false;
 	}
 
 	expandNode(shouldExpand?: boolean) {
 		if (this.globals.callbacks.onSectionSelected || this.globals.callbacks.onPageSelected) {
-			this.notebook.expanded = shouldExpand == undefined ? !this.notebook.expanded : shouldExpand;
+			this.notebook.expanded = shouldExpand === undefined ? !this.notebook.expanded : shouldExpand;
 		}
 	}
 
@@ -132,11 +132,8 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 	}
 
 	private onClick() {
-		this.selectNode()
-	}
-
-	private onChevronClick() {
-		this.expandNode()
+		this.selectNode();
+		this.expandNode();
 	}
 
 	private onExpand() {
