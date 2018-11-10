@@ -35,7 +35,7 @@ export class RecentSectionHeaderRenderStrategy extends RecentSectionsCommonPrope
 			this.sections.map(section => new RecentSectionRenderStrategy(section, this.props)) : [];
 		const sections = recentSectionRenderStrategies.map((renderStrategy, i) =>
 			<LeafNode globals={this.props} node={renderStrategy} treeViewId={Constants.TreeView.id}
-					  key={renderStrategy.getId()}
+					  key={renderStrategy.getId() + 'recent-section'}
 					  id={renderStrategy.getId()}
 					  ariaSelected={this.props.ariaSelectedId ? renderStrategy.isAriaSelected() : i === 0}
 					  level={childrenLevel}></LeafNode>);

@@ -93,7 +93,7 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 
 	expandNode(shouldExpand?: boolean) {
 		if (this.globals.callbacks.onSectionSelected || this.globals.callbacks.onPageSelected) {
-			this.notebook.expanded = shouldExpand == undefined ? !this.notebook.expanded : shouldExpand;
+			this.notebook.expanded = shouldExpand === undefined ? !this.notebook.expanded : shouldExpand;
 		}
 	}
 
@@ -111,10 +111,10 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	}
 
 	private onClick() {
-		this.selectNode()
+		this.selectNode();
 	}
 
 	private onChevronClick() {
-		this.expandNode()
+		this.expandNode();
 	}
 }

@@ -110,16 +110,16 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 	}
 
 	isSelected(): boolean {
-		return this.globals.selectedId == this.getId();
+		return this.globals.selectedId === this.getId();
 	}
 
 	isAriaSelected(): boolean {
-		return this.globals.ariaSelectedId ? this.globals.ariaSelectedId == this.getId() : false;
+		return this.globals.ariaSelectedId ? this.globals.ariaSelectedId === this.getId() : false;
 	}
 
 	expandNode(shouldExpand?: boolean) {
 		if (this.globals.callbacks.onSectionSelected || this.globals.callbacks.onPageSelected) {
-			this.notebook.expanded = shouldExpand == undefined ? !this.notebook.expanded : shouldExpand;
+			this.notebook.expanded = shouldExpand === undefined ? !this.notebook.expanded : shouldExpand;
 		}
 	}
 
@@ -132,11 +132,11 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 	}
 
 	private onClick() {
-		this.selectNode()
+		this.selectNode();
 	}
 
 	private onChevronClick() {
-		this.expandNode()
+		this.expandNode();
 	}
 
 	private onExpand() {

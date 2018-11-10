@@ -50,7 +50,7 @@ export class SectionRenderStrategy implements ExpandableNodeRenderStrategy {
 	}
 
 	isSelected(): boolean {
-		return this.globals.selectedId === this.section.id;
+		return this.globals.selectedId === this.section.id && this.section.isRecentSection === false;
 	}
 
 	isAriaSelected(): boolean {

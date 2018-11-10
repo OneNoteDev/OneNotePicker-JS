@@ -30,11 +30,11 @@ export class RecentSectionRenderStrategy implements NodeRenderStrategy {
 	}
 
 	getId(): string {
-		return this.section.id;
+		return this.section.id + 'recentSection';
 	}
 
 	isSelected(): boolean {
-		return this.globals.selectedId === this.getId();
+		return this.globals.selectedId === this.getId() && this.section.isRecentSection === true;
 	}
 
 	isAriaSelected(): boolean {
