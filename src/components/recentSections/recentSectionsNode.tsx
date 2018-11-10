@@ -9,6 +9,7 @@ export interface RecentSectionsNodeProps extends CommonNodeProps {
 	sections: Section[];
 	expanded?: boolean;
 	node: ExpandableNodeRenderStrategy;
+	onRecentSectionsClick: (expanded: boolean) => void;
 }
 
 /**
@@ -28,7 +29,7 @@ export class RecentSectionsNode extends React.Component<RecentSectionsNodeProps>
 				focusOnMount={this.props.focusOnMount}
 				ariaSelected={this.props.ariaSelected}>
 				<RecentSectionHeaderComponent selected={this.props.node.isSelected()} expanded={this.isExpanded()}
-											  name={this.props.node.getName()} {...this.props}/>
+					name={this.props.node.getName()} {...this.props} onRecentSectionsClick={this.props.onRecentSectionsClick}/>
 			</ExpandableNode>
 		);
 	}

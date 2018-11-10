@@ -28,15 +28,7 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 
 	onClick() {
 		const {node} = this.props;
-		const nextExpandState = !this.state.expanded;
-
-		this.updateExpandedState(nextExpandState);
-
-		if (nextExpandState && node.onExpandBinded) {
-			node.onExpandBinded();
-		}
 		node.onClickBinded();
-
 		this.props.globals.callbacks.onAccessibleSelection(node.getId());
 	}
 
@@ -57,6 +49,10 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 				break;
 			case 37:
 				// Left arrow
+				if (this.props.node.onCollapseBinded) {
+					this.props.node.onCollapseBinded();
+				}
+
 				this.updateExpandedState(false);
 
 				if (this.props.node.expandNode) {

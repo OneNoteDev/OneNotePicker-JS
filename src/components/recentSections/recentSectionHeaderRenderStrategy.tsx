@@ -9,11 +9,14 @@ import { Section } from '../../oneNoteDataStructures/section';
 
 export class RecentSectionHeaderRenderStrategy extends RecentSectionsCommonProperties implements ExpandableNodeRenderStrategy {
 	onClickBinded = () => {};
+	onExpandBinded = () => {};
+	onCollapseBinded = () => {};
 
-	constructor(private sections: Section[], private expanded: boolean, private props: InnerGlobals, private onRecentSectionsClick: () => void) {
+	constructor(private sections: Section[], private expanded: boolean, private props: InnerGlobals, private onRecentSectionsClick: (expanded: boolean) => void) {
 		super();
 		this.expanded = expanded;
-		this.onClickBinded = this.onRecentSectionsClick;
+		this.onExpandBinded = () => { this.onRecentSectionsClick(true); };
+		this.onCollapseBinded = () => { this.onRecentSectionsClick(false); };
 	}
 
 	/*

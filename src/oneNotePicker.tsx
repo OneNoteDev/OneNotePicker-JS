@@ -65,7 +65,8 @@ export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, OneNote
 								 focusOnMount={!createNewNotebookExists && focusOnMount} sections={recentSections || []}
 								 treeViewId={this.treeViewId()} id={recentSectionRenderStrategy.getId()}
 								 ariaSelected={ariaSelectedId ? recentSectionRenderStrategy.isAriaSelected() : true}
-								 node={recentSectionRenderStrategy} expanded={recentSectionRenderStrategy.isExpanded()}></RecentSectionsNode>] : [];
+								 node={recentSectionRenderStrategy} expanded={recentSectionRenderStrategy.isExpanded()}
+								 onRecentSectionsClick={this.onRecentSectionsClick.bind(this)}></RecentSectionsNode>] : [];
 
 		const allNotebookNodes = allNotebooks.map((notebook, i) => {
 			if ((notebook as SharedNotebook).sourceService) {
@@ -96,9 +97,9 @@ export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, OneNote
 		return [...recentSectionNodes, ...createNewNotebook, ...allNotebookNodes];
 	}
 
-	private onRecentSectionsClick() {
+	private onRecentSectionsClick(expanded: boolean) {
 		this.setState({
-			recentSectionsExpanded: !this.state.recentSectionsExpanded
+			recentSectionsExpanded: expanded
 		});
 	}
 

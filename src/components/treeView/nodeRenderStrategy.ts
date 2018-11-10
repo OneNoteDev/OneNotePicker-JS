@@ -5,6 +5,7 @@
 export interface NodeRenderStrategy {
 	onClickBinded: () => void;
 	onExpandBinded?: () => void;
+	onCollapseBinded?: () => void;
 	element(): JSX.Element;
 	getId(): string;
 	getName(): string;
