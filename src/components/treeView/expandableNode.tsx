@@ -28,7 +28,15 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 
 	onClick() {
 		const {node} = this.props;
+		const nextExpandState = !this.state.expanded;
+
+		this.updateExpandedState(nextExpandState);
+
+ 		if (nextExpandState && node.onExpandBinded) {
+			node.onExpandBinded();
+		}
 		node.onClickBinded();
+
 		this.props.globals.callbacks.onAccessibleSelection(node.getId());
 	}
 
