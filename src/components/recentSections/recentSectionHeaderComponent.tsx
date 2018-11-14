@@ -17,9 +17,9 @@ export class RecentSectionHeaderComponent extends React.Component<RecentSectionH
 
 	render() {
 		return (
-			<div className={this.props.selected ? 'picker-selectedItem recent-sections' : 'recent-sections'}
+			<div className={this.props.selected ? 'picker-selectedItem recent-sections' : 'recent-sections'} onClick={this.onClick.bind(this)}
 				 title='recent-sections'>
-				<div className={this.props.expanded ? 'chevron-icon opened' : 'chevron-icon closed'} onClick={this.onChevronClick.bind(this)}>
+				<div className={this.props.expanded ? 'chevron-icon opened' : 'chevron-icon closed'}>
 					<ChevronSvg/>
 				</div>
 				<div className='picker-icon'>
@@ -32,7 +32,7 @@ export class RecentSectionHeaderComponent extends React.Component<RecentSectionH
 		);
 	}
 
-	private onChevronClick() {
+	private onClick() {
 		this.props.onRecentSectionsClick(!this.props.expanded);
 	}
 }
