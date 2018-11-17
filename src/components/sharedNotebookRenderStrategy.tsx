@@ -159,12 +159,8 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 				if (this.globals.notebookListUpdater) {
 					this.globals.notebookListUpdater.updateNotebookList([this.notebook]);
 				}
-			}).catch((xhrs: XMLHttpRequest[]) => {
-				let max = 0;
-				for (let i = 0; i < xhrs.length; i++) {
-					max = Math.max(xhrs[i].status, max);
-				}
-				this.notebook.apiHttpErrorCode = max;
+			}).catch((xhr: XMLHttpRequest) => {
+				this.notebook.apiHttpErrorCode = xhr.status;
 			}).then(() => {
 				const { onSharedNotebookInfoReturned } = this.globals.callbacks;
 				if (!!onSharedNotebookInfoReturned) {

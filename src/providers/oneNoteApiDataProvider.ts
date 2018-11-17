@@ -157,6 +157,8 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 						return;
 					}
 					reject(xhr);
+				}).catch((xhr) => {
+					reject(xhr);
 				});
 			}).catch((xhr) => {
 				reject(xhr);
@@ -165,7 +167,7 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 	}
 
 	private getNotebookSelfUrlFromSpUrl(spNotebookUrl: string): Promise<string> {
-		const url = `https://www.onenote.com/api/beta/me/notes/notebooks/GetNotebooksFromWebUrls()`;
+		const url = `https://www.onenote.com/api/beta/me/notes/notebooks/GetNotebookFromWebUrl()`;
 		const headers = {};
 
 		if (this.headers) {
@@ -178,11 +180,10 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 		headers['Content-Type'] = 'application/json';
 
 		return new Promise<string>((resolve, reject) => {
-			this.http('POST', url, this.authHeader, headers, JSON.stringify({ webUrls: [spNotebookUrl] })).then((xhr) => {
+			this.http('POST', url, this.authHeader, headers, JSON.stringify({ webUrl: spNotebookUrl })).then((xhr) => {
 				const responseJson = xhr.response && JSON.parse(xhr.response);
-				if (responseJson && responseJson.value) {
-					const notebooks = responseJson.value;
-					const notebook: OneNoteApi.Notebook = notebooks[0].Notebook;
+				if (responseJson) {
+					const notebook: OneNoteApi.Notebook = responseJson;
 					if (notebook && notebook.self) {
 						resolve(notebook.self);
 						return;
