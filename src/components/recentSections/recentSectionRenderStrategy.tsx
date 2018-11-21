@@ -56,9 +56,18 @@ export class RecentSectionRenderStrategy implements NodeRenderStrategy {
 	private breadcrumbs(): string {
 		if (this.section.webUrl) {
 			const url = this.section.webUrl;
+
+			// Get section group breadcrumbs from webUrl by parsing wd=target
+			const target = decodeURIComponent(url).split('wd=target(//')[1];
+			let parentSectionGroupBreadcrumbs;
+			if (target) {
+				parentSectionGroupBreadcrumbs = target.split("|/").slice(0, -2).join('/');
+				parentSectionGroupBreadcrumbs = parentSectionGroupBreadcrumbs ? '/' + parentSectionGroupBreadcrumbs : ''
+			}
+
 			const split = url.split('/');
 			return split.slice(3, -1).map(decodeURIComponent).join('/') +
-				`${this.section.parentNotebookName ? '/' + this.section.parentNotebookName : ''}/${this.section.name}`;
+				`${this.section.parentNotebookName ? '/' + this.section.parentNotebookName : ''}${parentSectionGroupBreadcrumbs}/${this.section.name}`;
 		}
 		return '';
 	}
