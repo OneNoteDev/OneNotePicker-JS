@@ -52,24 +52,28 @@ export class SectionGroupRenderStrategy implements ExpandableNodeRenderStrategy 
 			</CreateNewSectionNode>] :
 			[];
 
+		const setsize = this.sectionGroup.sections.length + this.sectionGroup.sectionGroups.length;
+
 		const sectionGroupRenderStrategies = this.sectionGroup.sectionGroups.map(sectionGroup => new SectionGroupRenderStrategy(sectionGroup, this.globals));
-		const sectionGroups = sectionGroupRenderStrategies.map(renderStrategy =>
+		const sectionGroups = sectionGroupRenderStrategies.map((renderStrategy, i) =>
 			!!this.globals.callbacks.onSectionSelected || !!this.globals.callbacks.onPageSelected ?
 				<ExpandableNode
 					expanded={renderStrategy.isExpanded()} node={renderStrategy} globals={this.globals}
 					treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
-					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} /> :
+					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()}
+					setsize={setsize} posinset={this.sectionGroup.sections.length + i + 1} /> :
 				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} globals={this.globals}
 					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} />);
 
 		const sectionRenderStrategies = this.sectionGroup.sections.map(section => new SectionRenderStrategy(section, this.globals));
-		const sections = sectionRenderStrategies.map(renderStrategy =>
+		const sections = sectionRenderStrategies.map((renderStrategy, i) =>
 			!!this.globals.callbacks.onPageSelected ?
 				<ExpandableNode expanded={renderStrategy.isExpanded()} node={renderStrategy} globals={this.globals}
 					treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
 					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} /> :
 				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} globals={this.globals}
-					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} />);
+					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()}
+					setsize={setsize} posinset={i + 1} />);
 
 		return [...createNewSection, ...sections, ...sectionGroups];
 	}
