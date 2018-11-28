@@ -45,21 +45,13 @@ export class LeafNode extends React.Component<LeafNodeProps, {}> {
 		return this.props.treeViewId + this.props.id;
 	}
 
-	private setsize() {
-		return this.props.setsize;
-	}
-
-	private posinset() {
-		return this.props.posinset;
-	}
-
 	render() {
 		return (
 			<li>
 				<a id={this.descendentId()} className='picker-row' onClick={this.onClick.bind(this)} onKeyDown={this.onKeyDown.bind(this)}
 					data-treeviewid={this.props.treeViewId} data-id={this.props.id} tabIndex={this.props.tabbable ? 0 : -1}
 					role='treeitem' aria-labelledby={this.descendentId()} aria-level={this.level()}
-					aria-selected={this.props.ariaSelected} aria-setsize={this.setsize()} aria-posinset={this.posinset()}>
+					aria-selected={this.props.ariaSelected} aria-setsize={this.props.setsize} aria-posinset={this.props.posinset}>
 					{this.props.node.element()}
 				</a>
 			</li>);

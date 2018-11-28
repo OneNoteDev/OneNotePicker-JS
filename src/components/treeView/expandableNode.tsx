@@ -106,14 +106,6 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 		return this.props.treeViewId + this.props.id;
 	}
 
-	private setsize() {
-		return this.props.setsize;
-	}
-
-	private posinset() {
-		return this.props.posinset;
-	}
-
 	render() {
 		return (
 			<li>
@@ -121,7 +113,7 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 				   data-treeviewid={this.props.treeViewId} data-id={this.props.id}
 				   tabIndex={this.props.tabbable ? 0 : -1} role='treeitem' aria-labelledby={this.descendentId()} 
 				   aria-expanded={this.props.node.isExpanded()} aria-selected={this.props.ariaSelected}
-				   aria-level={this.level()} aria-setsize={this.setsize()} aria-posinset={this.posinset()}>
+				   aria-level={this.level()} aria-setsize={this.props.setsize} aria-posinset={this.props.posinset}>
 					{this.props.children || this.props.node.element()}
 				</a>
 				{this.props.node.isExpanded() ?
