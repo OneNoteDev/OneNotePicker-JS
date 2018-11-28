@@ -41,7 +41,6 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 	}
 
 	onKeyDown(event: KeyboardEvent) {
-		event.preventDefault();
 		TreeViewNavigationUtils.normalizeKeyboardEventBehaviour(event);
 
 		TreeViewNavigationUtils.handleMovementKeyboardEvent(this.props.id, this.props.treeViewId, event, this.props.globals.callbacks.onAccessibleSelection);
@@ -107,15 +106,22 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 		return this.props.treeViewId + this.props.id;
 	}
 
+	private setsize() {
+		return this.props.setsize;
+	}
+
+	private posinset() {
+		return this.props.posinset;
+	}
+
 	render() {
 		return (
-			<li aria-labelledby={this.descendentId()} aria-expanded={this.props.node.isExpanded()} role='treeitem'
-				aria-level={this.level()} aria-checked={this.props.node.isSelected()}
-				id={this.descendentId()} aria-selected={this.props.ariaSelected}>
-				<a className='picker-row' onClick={this.onClick.bind(this)} onKeyDown={this.onKeyDown.bind(this)}
+			<li>
+				<a id={this.descendentId()} className='picker-row' onClick={this.onClick.bind(this)} onKeyDown={this.onKeyDown.bind(this)}
 				   data-treeviewid={this.props.treeViewId} data-id={this.props.id}
-				   tabIndex={this.props.tabbable ? 0 : -1}
-				   role='presentation'>
+				   tabIndex={this.props.tabbable ? 0 : -1} role='treeitem' aria-labelledby={this.descendentId()} 
+				   aria-expanded={this.props.node.isExpanded()} aria-selected={this.props.ariaSelected}
+				   aria-level={this.level()} aria-setsize={this.setsize()} aria-posinset={this.posinset()}>
 					{this.props.children || this.props.node.element()}
 				</a>
 				{this.props.node.isExpanded() ?

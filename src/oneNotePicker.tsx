@@ -76,7 +76,8 @@ export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, OneNote
 					treeViewId={this.treeViewId()} key={renderStrategy.getId()}
 					id={renderStrategy.getId()} tabbable={!createNewNotebookExists && noPersonalNotebooks && i === 0}
 					focusOnMount={!createNewNotebookExists && !recentSectionsExists && focusOnMount && noPersonalNotebooks && i === 0}
-					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : noPersonalNotebooks && i === 0}></ExpandableNode> :
+					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : noPersonalNotebooks && i === 0}
+					setsize={allNotebooks.length} posinset={i + 1}></ExpandableNode> :
 				<LeafNode globals={this.props.globals} node={renderStrategy} treeViewId={this.treeViewId()} key={renderStrategy.getId()}
 					id={renderStrategy.getId()} tabbable={!createNewNotebookExists && noPersonalNotebooks && i === 0}
 					focusOnMount={!createNewNotebookExists && !recentSectionsExists && focusOnMount && noPersonalNotebooks && i === 0}
@@ -87,7 +88,8 @@ export class OneNotePicker extends OneNotePickerBase<OneNotePickerProps, OneNote
 				<ExpandableNode globals={this.props.globals} expanded={renderStrategy.isExpanded()} node={renderStrategy}
 					treeViewId={this.treeViewId()} key={renderStrategy.getId()}
 					id={renderStrategy.getId()} tabbable={!createNewNotebookExists && !recentSectionsExists && i === 0} focusOnMount={!createNewNotebookExists && !recentSectionsExists && focusOnMount && i === 0}
-					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : i === 0}></ExpandableNode> :
+					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : i === 0}
+					setsize={allNotebooks.length} posinset={i + 1}></ExpandableNode> :
 				<LeafNode globals={this.props.globals} node={renderStrategy} treeViewId={this.treeViewId()} key={renderStrategy.getId()}
 					id={renderStrategy.getId()} tabbable={!createNewNotebookExists && i === 0} focusOnMount={!createNewNotebookExists && !recentSectionsExists && focusOnMount && i === 0}
 					ariaSelected={ariaSelectedId ? renderStrategy.isAriaSelected() : i === 0}></LeafNode>;
