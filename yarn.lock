@@ -1433,9 +1433,10 @@ content-disposition@0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/content-disposition/-/content-disposition-0.5.2.tgz#0cf68bb9ddf5f2be7961c3a85178cb85dba78cb4"
 
-content-type@~1.0.4:
+content-type@^1.0.2, content-type@~1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/content-type/-/content-type-1.0.4.tgz#e138cc75e040c727b1966fe5e5f8c9aee256fe3b"
+  integrity sha512-hIP3EEPs8tB9AT1L+NUqtwOAps4mk2Zob89MWXMHjHWg9milF/j4osnnQLXBCBFBk/tvIG/tUc9mOUJiPBhPXA==
 
 convert-source-map@^1.5.0:
   version "1.5.1"
@@ -2184,6 +2185,11 @@ es6-iterator@~2.0.3:
 es6-promise@^4.0.3, es6-promise@^4.1.0:
   version "4.2.4"
   resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.2.4.tgz#dc4221c2b16518760bd8c39a52d8f356fc00ed29"
+
+es6-promise@^4.2.4:
+  version "4.2.5"
+  resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.2.5.tgz#da6d0d5692efb461e082c14817fe2427d8f5d054"
+  integrity sha512-n6wvpdE43VFtJq+lUDYDBFUwV8TZbuGXLV4D6wKafg13ldznKsyEvatubnmUe31zcvelSzOHF+XbaT+Bl9ObDg==
 
 es6-symbol@^3.1.1, es6-symbol@~3.1.1:
   version "3.1.1"
@@ -4775,9 +4781,13 @@ onecolor@^3.0.4:
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/onecolor/-/onecolor-3.0.5.tgz#36eff32201379efdf1180fb445e51a8e2425f9f6"
 
-onenoteapi@2.0.6:
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/onenoteapi/-/onenoteapi-2.0.6.tgz#8aa6354befdfa906618dec4fcfbb6c26804e6804"
+onenoteapi@^2.0.11:
+  version "2.0.12"
+  resolved "https://registry.yarnpkg.com/onenoteapi/-/onenoteapi-2.0.12.tgz#1a7b9e014bff27751f6987c8b481f18312b21f70"
+  integrity sha512-nx7tpPbiF6nSlobYWle1FQXtyJ1THWZVXbASJqclh470sfm40EY6mdGPbMjEaBQGoRtX8elsrdvl4HJC+Vz3kA==
+  dependencies:
+    content-type "^1.0.2"
+    es6-promise "^4.2.4"
 
 onetime@^2.0.0:
   version "2.0.1"
