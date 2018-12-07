@@ -1,0 +1,276 @@
+#oneNotePicker {
+	background: white;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+  }
+  svg.spinner {
+	animation: spin 1.3s infinite cubic-bezier(0.53, 0.21, 0.29, 0.67);
+  }
+  @-moz-keyframes spin {
+	from {
+	  -moz-transform: rotate(0deg);
+	}
+	to {
+	  -moz-transform: rotate(360deg);
+	}
+  }
+  @-webkit-keyframes spin {
+	from {
+	  -webkit-transform: rotate(0deg);
+	}
+	to {
+	  -webkit-transform: rotate(360deg);
+	}
+  }
+  @keyframes spin {
+	from {
+	  transform: rotate(0deg);
+	}
+	to {
+	  transform: rotate(360deg);
+	}
+  }
+  .onenote-picker {
+	color: #737373;
+	max-width: 100%;
+  }
+  .onenote-picker [dir=rtl] {
+	direction: rtl;
+  }
+  .onenote-picker svg {
+	width: 1rem;
+	height: 1rem;
+  }
+  .onenote-picker ul {
+	list-style: none;
+	padding: 0;
+  }
+  .onenote-picker .section-group, .onenote-picker .section {
+	padding: 0.25rem;
+  }
+  .onenote-picker .notebook, .onenote-picker .shared-notebook, .onenote-picker .recent-sections {
+	padding: 0.5rem;
+  }
+  .onenote-picker .notebook, .onenote-picker .section-group, .onenote-picker .section, .onenote-picker .shared-notebook, .onenote-picker .recent-sections {
+	display: flex;
+	align-items: center;
+	line-height: 1rem;
+  }
+  .onenote-picker .notebook .chevron-icon, .onenote-picker .section-group .chevron-icon, .onenote-picker .section .chevron-icon, .onenote-picker .shared-notebook .chevron-icon, .onenote-picker .recent-sections .chevron-icon, .onenote-picker .notebook .picker-label, .onenote-picker .section-group .picker-label, .onenote-picker .section .picker-label, .onenote-picker .shared-notebook .picker-label, .onenote-picker .recent-sections .picker-label, .onenote-picker .notebook .picker-icon, .onenote-picker .section-group .picker-icon, .onenote-picker .section .picker-icon, .onenote-picker .shared-notebook .picker-icon, .onenote-picker .recent-sections .picker-icon, .onenote-picker .notebook .picker-shared-icon, .onenote-picker .section-group .picker-shared-icon, .onenote-picker .section .picker-shared-icon, .onenote-picker .shared-notebook .picker-shared-icon, .onenote-picker .recent-sections .picker-shared-icon {
+	padding: 0.3rem;
+	order: 4;
+  }
+  .onenote-picker .notebook .chevron-icon svg, .onenote-picker .section-group .chevron-icon svg, .onenote-picker .section .chevron-icon svg, .onenote-picker .shared-notebook .chevron-icon svg, .onenote-picker .recent-sections .chevron-icon svg, .onenote-picker .notebook .picker-label svg, .onenote-picker .section-group .picker-label svg, .onenote-picker .section .picker-label svg, .onenote-picker .shared-notebook .picker-label svg, .onenote-picker .recent-sections .picker-label svg, .onenote-picker .notebook .picker-icon svg, .onenote-picker .section-group .picker-icon svg, .onenote-picker .section .picker-icon svg, .onenote-picker .shared-notebook .picker-icon svg, .onenote-picker .recent-sections .picker-icon svg, .onenote-picker .notebook .picker-shared-icon svg, .onenote-picker .section-group .picker-shared-icon svg, .onenote-picker .section .picker-shared-icon svg, .onenote-picker .shared-notebook .picker-shared-icon svg, .onenote-picker .recent-sections .picker-shared-icon svg {
+	padding: 0;
+  }
+  .onenote-picker .notebook .chevron-icon, .onenote-picker .section-group .chevron-icon, .onenote-picker .section .chevron-icon, .onenote-picker .shared-notebook .chevron-icon, .onenote-picker .recent-sections .chevron-icon {
+	transition-duration: 0.3s;
+	transition-property: transform;
+  }
+  .onenote-picker .notebook .chevron-icon svg, .onenote-picker .section-group .chevron-icon svg, .onenote-picker .section .chevron-icon svg, .onenote-picker .shared-notebook .chevron-icon svg, .onenote-picker .recent-sections .chevron-icon svg {
+	transform: rotate(180deg);
+	width: 0.5rem;
+  }
+  .onenote-picker .notebook .chevron-icon [dir=rtl], .onenote-picker .section-group .chevron-icon [dir=rtl], .onenote-picker .section .chevron-icon [dir=rtl], .onenote-picker .shared-notebook .chevron-icon [dir=rtl], .onenote-picker .recent-sections .chevron-icon [dir=rtl] {
+	order: 2;
+  }
+  .onenote-picker .notebook .chevron-icon.closed svg, .onenote-picker .section-group .chevron-icon.closed svg, .onenote-picker .section .chevron-icon.closed svg, .onenote-picker .shared-notebook .chevron-icon.closed svg, .onenote-picker .recent-sections .chevron-icon.closed svg {
+	transform: rotate(90deg);
+  }
+  .onenote-picker .notebook .picker-label, .onenote-picker .section-group .picker-label, .onenote-picker .section .picker-label, .onenote-picker .shared-notebook .picker-label, .onenote-picker .recent-sections .picker-label {
+	flex: 1 1 auto;
+	overflow: hidden;
+	text-overflow: ellipsis;
+  }
+  .onenote-picker .notebook .picker-label [dir=rtl], .onenote-picker .section-group .picker-label [dir=rtl], .onenote-picker .section .picker-label [dir=rtl], .onenote-picker .shared-notebook .picker-label [dir=rtl], .onenote-picker .recent-sections .picker-label [dir=rtl] {
+	order: 3;
+  }
+  .onenote-picker .notebook .picker-label label, .onenote-picker .section-group .picker-label label, .onenote-picker .section .picker-label label, .onenote-picker .shared-notebook .picker-label label, .onenote-picker .recent-sections .picker-label label, .onenote-picker .notebook .picker-label input, .onenote-picker .section-group .picker-label input, .onenote-picker .section .picker-label input, .onenote-picker .shared-notebook .picker-label input, .onenote-picker .recent-sections .picker-label input {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	line-height: 1.3rem;
+	color: #737373;
+	margin-bottom: 0;
+	font-weight: normal;
+  }
+  .onenote-picker .notebook .picker-label .breadcrumbs, .onenote-picker .section-group .picker-label .breadcrumbs, .onenote-picker .section .picker-label .breadcrumbs, .onenote-picker .shared-notebook .picker-label .breadcrumbs, .onenote-picker .recent-sections .picker-label .breadcrumbs {
+	color: #666;
+	font-size: 0.8rem;
+  }
+  .onenote-picker .notebook .picker-label .create-label, .onenote-picker .section-group .picker-label .create-label, .onenote-picker .section .picker-label .create-label, .onenote-picker .shared-notebook .picker-label .create-label, .onenote-picker .recent-sections .picker-label .create-label {
+	color: #0078d7;
+  }
+  .onenote-picker .notebook .picker-label .parent, .onenote-picker .section-group .picker-label .parent, .onenote-picker .section .picker-label .parent, .onenote-picker .shared-notebook .picker-label .parent, .onenote-picker .recent-sections .picker-label .parent {
+	font-size: 0.8rem;
+	display: block;
+  }
+  .onenote-picker .notebook .picker-shared-icon, .onenote-picker .section-group .picker-shared-icon, .onenote-picker .section .picker-shared-icon, .onenote-picker .shared-notebook .picker-shared-icon, .onenote-picker .recent-sections .picker-shared-icon {
+	color: #666;
+	font-size: 0.8rem;
+	align-self: flex-end;
+  }
+  .onenote-picker .notebook .picker-shared-icon [dir=rtl], .onenote-picker .section-group .picker-shared-icon [dir=rtl], .onenote-picker .section .picker-shared-icon [dir=rtl], .onenote-picker .shared-notebook .picker-shared-icon [dir=rtl], .onenote-picker .recent-sections .picker-shared-icon [dir=rtl] {
+	order: 1;
+  }
+  .onenote-picker .notebook .picker-shared-icon img, .onenote-picker .section-group .picker-shared-icon img, .onenote-picker .section .picker-shared-icon img, .onenote-picker .shared-notebook .picker-shared-icon img, .onenote-picker .recent-sections .picker-shared-icon img {
+	height: 0.8rem;
+	width: 0.8rem;
+  }
+  .onenote-picker .notebook .picker-shared-icon span, .onenote-picker .section-group .picker-shared-icon span, .onenote-picker .section .picker-shared-icon span, .onenote-picker .shared-notebook .picker-shared-icon span, .onenote-picker .recent-sections .picker-shared-icon span {
+	display: none;
+  }
+  .onenote-picker .notebook .picker-input-and-error, .onenote-picker .section-group .picker-input-and-error, .onenote-picker .section .picker-input-and-error, .onenote-picker .shared-notebook .picker-input-and-error, .onenote-picker .recent-sections .picker-input-and-error {
+	display: flex;
+  }
+  .onenote-picker .notebook .error-info-icon, .onenote-picker .section-group .error-info-icon, .onenote-picker .section .error-info-icon, .onenote-picker .shared-notebook .error-info-icon, .onenote-picker .recent-sections .error-info-icon {
+	float: right;
+  }
+  .onenote-picker .notebook .error-info-icon svg, .onenote-picker .section-group .error-info-icon svg, .onenote-picker .section .error-info-icon svg, .onenote-picker .shared-notebook .error-info-icon svg, .onenote-picker .recent-sections .error-info-icon svg {
+	cursor: pointer;
+  }
+  .onenote-picker .notebook .picker-input-x, .onenote-picker .section-group .picker-input-x, .onenote-picker .section .picker-input-x, .onenote-picker .shared-notebook .picker-input-x, .onenote-picker .recent-sections .picker-input-x {
+	font-size: 10px;
+	padding-left: 0.25rem;
+	padding-right: 0.5rem;
+	padding-bottom: 5px;
+	float: right;
+	order: 5;
+  }
+  .onenote-picker .notebook .picker-input-x:hover, .onenote-picker .section-group .picker-input-x:hover, .onenote-picker .section .picker-input-x:hover, .onenote-picker .shared-notebook .picker-input-x:hover, .onenote-picker .recent-sections .picker-input-x:hover {
+	cursor: pointer;
+  }
+  .onenote-picker .notebook.picker-item:hover, .onenote-picker .section-group.picker-item:hover, .onenote-picker .section.picker-item:hover, .onenote-picker .shared-notebook.picker-item:hover, .onenote-picker .recent-sections.picker-item:hover, .onenote-picker .notebook.input-not-started:hover, .onenote-picker .section-group.input-not-started:hover, .onenote-picker .section.input-not-started:hover, .onenote-picker .shared-notebook.input-not-started:hover, .onenote-picker .recent-sections.input-not-started:hover {
+	background-color: #f9f9f9;
+  }
+  .onenote-picker .notebook:hover .picker-input-and-error, .onenote-picker .section-group:hover .picker-input-and-error, .onenote-picker .section:hover .picker-input-and-error, .onenote-picker .shared-notebook:hover .picker-input-and-error, .onenote-picker .recent-sections:hover .picker-input-and-error {
+	border-bottom: 1px solid #f3f3f3;
+	margin-bottom: -1px;
+  }
+  .onenote-picker .notebook .picker-input-and-error:focus-within, .onenote-picker .section-group .picker-input-and-error:focus-within, .onenote-picker .section .picker-input-and-error:focus-within, .onenote-picker .shared-notebook .picker-input-and-error:focus-within, .onenote-picker .recent-sections .picker-input-and-error:focus-within {
+	border-bottom: 1px solid #f3f3f3;
+	margin-bottom: -1px;
+  }
+  .onenote-picker .menu-list {
+	margin-top: 0;
+	margin-bottom: 10px;
+  }
+  .onenote-picker .menu-list a {
+	color: #737373;
+	display: block;
+  }
+  .onenote-picker .menu-list li ul {
+	margin: 0;
+	border-left: none;
+	padding-left: 1.5rem;
+  }
+  .onenote-picker .picker-selectedItem {
+	background-color: #f3f3f3 !important;
+  }
+  .onenote-picker .picker-selectedItem .picker-label label {
+	color: #000 !important;
+  }
+  .onenote-picker .picker-row {
+	margin: 1px;
+  }
+  .onenote-picker .progress-row {
+	line-height: 1rem;
+	text-align: center;
+	padding: 0.25rem;
+	margin-right: 1.5rem;
+  }
+  .onenote-picker .create-input {
+	border: 0;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	font: inherit;
+	outline: none;
+  }
+  .onenote-picker .create-spinner {
+	float: right;
+	order: 4;
+	margin-right: 5px;
+  }
+  .picker-dropdown {
+	position: relative;
+	text-align: left;
+	cursor: pointer;
+	text-decoration: none;
+  }
+  .picker-dropdown .picker-dropdown-padding {
+	border: 1px solid rgba(22, 35, 58, 0.26);
+	padding: 5px;
+  }
+  .picker-dropdown .picker-popup {
+	position: absolute;
+	overflow-y: auto;
+	background-color: #fff;
+	border: 1px solid rgba(22, 35, 58, 0.26);
+	max-height: 280px;
+	width: 100%;
+  }
+  .picker-dropdown .popup-upwards {
+	bottom: 100%;
+  }
+  .picker-dropdown .dropdown-arrow-container {
+	height: 14px;
+	width: 18px;
+	float: right;
+	padding-right: 12px;
+  }
+  .picker-dropdown .dropdown-arrow-container svg {
+	height: auto;
+	width: 18px;
+  }
+  .picker-dropdown .picker-dropdown-toggle-label {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	padding: 1px 1px 1px 12px;
+  }
+  .picker-dropdown .dropdown-arrow-container svg polygon {
+	fill: #444545;
+  }
+  .error-info-popover {
+	z-index: 1;
+  }
+  .error-info-popover div {
+	border-bottom-color: #6264a7 !important;
+  }
+  .error-info-popover-content {
+	background-color: #6264a7;
+	font-size: 10px;
+	line-height: 16px;
+	max-width: 280px;
+	padding: 8px;
+	color: #fff;
+	border-radius: 4px;
+  }
+  svg.chevron-icon {
+	color: #444;
+  }
+  svg.notebook-closed-icon {
+	color: #444;
+  }
+  svg.notebook-opened-icon {
+	color: #444;
+  }
+  svg.section-group-icon .primary-section-outline {
+	color: #444;
+  }
+  svg.section-group-icon .secondary-section-outline {
+	color: #444545;
+  }
+  svg.section-icon {
+	color: #444;
+  }
+  svg.spinner .spinner-circle {
+	color: #c7e0f4;
+  }
+  svg.spinner .spinner-progress {
+	color: #0078d7;
+  }
+  

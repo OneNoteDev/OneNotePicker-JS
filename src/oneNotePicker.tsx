@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import './oneNotePicker.scss';
+import './index.css?raw';
 
 import { OneNotePickerBase } from './oneNotePickerBase';
 import { NotebookRenderStrategy } from './components/notebookRenderStrategy';
