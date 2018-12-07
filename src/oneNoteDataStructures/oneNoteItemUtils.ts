@@ -3,6 +3,9 @@ import { OneNoteItem } from './oneNoteItem';
 import { Section } from './section';
 import { SectionGroup } from './sectionGroup';
 import { SharedNotebook } from './sharedNotebook';
+import { Polyfills } from '../polyfills';
+
+Polyfills.find();
 
 export class OneNoteItemUtils {
 	/**
