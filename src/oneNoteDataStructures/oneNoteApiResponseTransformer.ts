@@ -1,4 +1,4 @@
-import * as OneNoteApi from '../../node_modules/onenoteapi/target/oneNoteApi';
+import * as OneNoteApi from 'onenoteapi';
 
 import { Notebook } from './notebook';
 import { SectionGroup } from './sectionGroup';
