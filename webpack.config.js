@@ -11,49 +11,14 @@ const OUT_DIR = path.join(__dirname, './dist');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WebpackMerge = require('webpack-merge');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const DtsBundlePlugin = require('./dtsBundlePlugin');
-
-const ENTRYPOINTS = {
-	OneNotePicker: `exports/oneNotePicker.index`,
-	OneNoteApiDataProvider: `exports/oneNoteApiDataProvider.index`,
-	OneNoteItemUtils: `exports/oneNoteItemUtils.index`,
-}
-
-function generateWebpackEntries() {
-	const entries = {};
-
-	for(const key of Object.keys(ENTRYPOINTS)) {
-		entries[key] = `${path.resolve(__dirname)}/${ENTRYPOINTS[key]}`;
-	}
-
-	return entries;
-}
-
-function generateDtsBundlePlugins() {
-	const entries = [];
-
-	for(const key of Object.keys(ENTRYPOINTS)) {
-		const plugin = new DtsBundlePlugin({
-			name: key,
-			main: `${path.resolve(__dirname)}/dist/types/${ENTRYPOINTS[key]}.d.ts`,
-			out: `${path.resolve(__dirname)}/dist/${key}.d.ts`,
-			removeSource: false,
-			outputAsModuleFolder: true,
-			emitOnIncludedFileNotFound: true,
-			headerText: `TypeScript Definition for ${key}`
-		});
-
-		entries.push(plugin)
-	}
-
-	return entries;
-}
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const base = {
-	entry: generateWebpackEntries(),
+	entry: {
+		index: './src/index.ts'
+	},
 	output: {
 		path: OUT_DIR,
-		publicPath: '/dist/',
 		filename: '[name].js',
 		library: 'OneNotePicker',
 		libraryTarget: 'umd',
@@ -83,18 +48,6 @@ const base = {
 				]
 			},
 			{
-				test: /\.sass$/,
-				use: [
-					!IS_PROD ? 'style-loader' : MiniCssExtractPlugin.loader,
-					{
-						loader: 'css-loader',
-						options: { importLoaders: 1 }
-					},
-					'postcss-loader',
-					'sass-loader',
-				]
-			},
-			{
 				test: /\.scss$/,
 				use: [
 					!IS_PROD ? 'style-loader' : MiniCssExtractPlugin.loader,
@@ -118,8 +71,14 @@ const base = {
 		}),
 		new webpack.optimize.AggressiveMergingPlugin(),
 		new MiniCssExtractPlugin({
-			filename: '[name].css',
-		})
+			filename: '[name].css'
+		}),
+		new CopyWebpackPlugin([{
+			// The js files compiled by tsc reference images in this folder and expect it in the output path
+			from: path.resolve(__dirname, './src/images'),
+			to: './images/[name].[ext]',
+			toType: 'template'
+		}]),
 	],
 	devServer: {
 		contentBase: path.join(__dirname, './sampleApp'),
@@ -140,7 +99,6 @@ const base = {
 const prod = {
 	mode: 'none',
 	plugins: [
-		...generateDtsBundlePlugins()
 	],
 	externals: {
 		'react': { root: 'React', amd: 'react', commonjs2: 'react', commonjs: 'react' },

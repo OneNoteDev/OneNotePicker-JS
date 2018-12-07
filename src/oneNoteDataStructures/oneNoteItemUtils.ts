@@ -2,8 +2,8 @@ import { Notebook } from './notebook';
 import { OneNoteItem } from './oneNoteItem';
 import { Section } from './section';
 import { SectionGroup } from './sectionGroup';
-import { Polyfills } from '../polyfills';
 import { SharedNotebook } from './sharedNotebook';
+import { Polyfills } from '../polyfills';
 
 Polyfills.find();
 
@@ -22,14 +22,13 @@ export class OneNoteItemUtils {
 		for (let i = 0; i < sectionParents.length; i++) {
 			// For shared notebook we need to look at api properties
 			const sectionParent = sectionParents[i];
-			const sectionParentNotebook = sectionParent as SharedNotebook
+			const sectionParentNotebook = sectionParent as SharedNotebook;
 			let sectionGroups: SectionGroup[];
 			let sections: Section[];
 			if (sectionParentNotebook.apiProperties) {
 				sectionGroups = sectionParentNotebook.apiProperties.spSectionGroups;
 				sections = sectionParentNotebook.apiProperties.spSections;
-			}
-			else {
+			} else {
 				sectionGroups = sectionParent.sectionGroups;
 				sections = sectionParent.sections;
 			}
@@ -114,4 +113,3 @@ export class OneNoteItemUtils {
 		return ancestry;
 	}
 }
-
