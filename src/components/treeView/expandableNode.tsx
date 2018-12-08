@@ -111,7 +111,7 @@ export class ExpandableNode extends React.Component<ExpandableNodeProps, Expanda
 			<li>
 				<a id={this.descendentId()} className='picker-row' onClick={this.onClick.bind(this)} onKeyDown={this.onKeyDown.bind(this)}
 				   data-treeviewid={this.props.treeViewId} data-id={this.props.id}
-				   tabIndex={this.props.tabbable ? 0 : -1} role='treeitem' aria-labelledby={this.descendentId()} 
+				   tabIndex={this.props.ariaSelected ? 0 : -1} role='treeitem' aria-labelledby={this.descendentId()} 
 				   aria-expanded={this.props.node.isExpanded()} aria-selected={this.props.ariaSelected}
 				   aria-level={this.level()} aria-setsize={this.props.setsize} aria-posinset={this.props.posinset}>
 					{this.props.children || this.props.node.element()}
