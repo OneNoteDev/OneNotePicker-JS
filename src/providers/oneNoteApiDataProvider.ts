@@ -13,11 +13,9 @@ import { SharedNotebook } from '../oneNoteDataStructures/sharedNotebook';
  * Implements OneNoteDataProvider with external calls to OneNote's API.
  */
 export class OneNoteApiDataProvider implements OneNoteDataProvider {
-	private api: OneNoteApi.OneNoteApi;
 	private responseTransformer: OneNoteApiResponseTransformer;
 
-	constructor(private authHeader: string, private timeout?: number, private headers?: { [key: string]: string }) {
-		this.api = new OneNoteApi.OneNoteApi(authHeader, timeout, headers);
+	constructor(private authHeader: string, private api: OneNoteApi.IOneNoteApi) {
 		this.responseTransformer = new OneNoteApiResponseTransformer();
 	}
 
