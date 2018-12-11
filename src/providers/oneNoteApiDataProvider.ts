@@ -149,9 +149,6 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 	}
 
 	private getNotebookSelfUrlFromSpUrl(spNotebookUrl: string): Promise<string> {
-		const additionalHeaders = {};
-		additionalHeaders['Content-Type'] = 'application/json';
-
 		return this.api.performApiCall(`https://www.onenote.com/api/beta/me/notes/notebooks/GetNotebookFromWebUrl()`, JSON.stringify({ webUrl: spNotebookUrl }) /* data */, 'application/json' /* content type */, 'POST' /* http method */, true /* isFullUrl */).then(response => {
 			const notebook: OneNoteApi.Notebook = response.parsedResponse;
 			if (notebook && notebook.self) {
