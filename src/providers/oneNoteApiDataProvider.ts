@@ -15,7 +15,7 @@ import { SharedNotebook } from '../oneNoteDataStructures/sharedNotebook';
 export class OneNoteApiDataProvider implements OneNoteDataProvider {
 	private responseTransformer: OneNoteApiResponseTransformer;
 
-	constructor(private authHeader: string, private api: OneNoteApi.IOneNoteApi) {
+	constructor(private api: OneNoteApi.OneNoteApi) {
 		this.responseTransformer = new OneNoteApiResponseTransformer();
 	}
 
@@ -54,19 +54,10 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 		});
 	}
 
-	// TODO (machiam) I added SharePoint functionality here so I won't have to implement in API project
-
 	getSpNotebooks(): Promise<SharedNotebook[]> {
-		// TODO (machiam) move this to OneNoteApi project
-		return this.http('GET', `https://www.onenote.com/api/v1.0/me/notes/notebooks/getrecentnotebooks(includePersonalNotebooks=false)`, this.authHeader, this.headers).then((xhr: XMLHttpRequest) => {
+		return this.api.performApiCall(`https://www.onenote.com/api/v1.0/me/notes/notebooks/getrecentnotebooks(includePersonalNotebooks=false)`, undefined /* data */, undefined /* content type */, 'GET' /* http method */, true /* isFullUrl */).then((response) => {
 			// tslint:disable-next-line:no-any
-			const parsedResponse: any = xhr.response && JSON.parse(xhr.response);
-			if (xhr.status !== 200 || !parsedResponse || !parsedResponse.value) {
-				return Promise.resolve([]);
-			}
-
-			// tslint:disable-next-line:no-any
-			const serviceSharedNotebooks: any[] = parsedResponse.value;
+			const serviceSharedNotebooks: any[] = response.parsedResponse.value;
 
 			const sharedNotebooks: SharedNotebook[] = [];
 			for (let i = 0; i < serviceSharedNotebooks.length; i++) {
@@ -86,7 +77,7 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 				}
 			}
 
-			return Promise.resolve(sharedNotebooks);
+			return sharedNotebooks;
 		});
 	}
 
@@ -139,58 +130,35 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 	}
 
 	getSpNotebookProperties(spNotebook: SharedNotebook, expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<SharedNotebookApiProperties> {
-		return new Promise<SharedNotebookApiProperties>((resolve, reject) => {
-			this.getNotebookSelfUrlFromSpUrl(spNotebook.webUrl).then((selfUrl) => {
-				this.http('GET', selfUrl + '?' + this.getExpands(expands), this.authHeader, this.headers).then((xhr) => {
-					const notebook: OneNoteApi.Notebook = xhr.response && JSON.parse(xhr.response);
-					if (notebook) {
-						spNotebook.apiUrl = notebook.self;
-						const spSections = notebook.sections.map(section => this.responseTransformer.transformSection(section, spNotebook));
-						const spSectionGroups = notebook.sectionGroups.map(sectionGroup => this.responseTransformer.transformSectionGroup(sectionGroup, spNotebook));
-						resolve({
-							id: notebook.id,
-							spSectionGroups: spSectionGroups,
-							spSections: spSections
-						});
-						return;
-					}
-					reject(xhr);
-				}).catch((xhr) => {
-					reject(xhr);
-				});
-			}).catch((xhr) => {
-				reject(xhr);
+		return this.getNotebookSelfUrlFromSpUrl(spNotebook.webUrl).then((selfUrl) => {
+			return this.api.performApiCall(selfUrl + '?' + this.getExpands(expands), undefined /* data */, undefined /* content type */, 'GET' /* http method */, true /* isFullUrl */).then(response => {
+				const notebook: OneNoteApi.Notebook = response.parsedResponse;
+				if (notebook) {
+					spNotebook.apiUrl = notebook.self;
+					const spSections = notebook.sections.map(section => this.responseTransformer.transformSection(section, spNotebook));
+					const spSectionGroups = notebook.sectionGroups.map(sectionGroup => this.responseTransformer.transformSectionGroup(sectionGroup, spNotebook));
+					return {
+						id: notebook.id,
+						spSectionGroups: spSectionGroups,
+						spSections: spSections
+					};
+				}
+				throw new Error('could not find notebook in get notebooks expands request');
 			});
 		});
 	}
 
 	private getNotebookSelfUrlFromSpUrl(spNotebookUrl: string): Promise<string> {
-		const url = `https://www.onenote.com/api/beta/me/notes/notebooks/GetNotebookFromWebUrl()`;
-		const headers = {};
+		const additionalHeaders = {};
+		additionalHeaders['Content-Type'] = 'application/json';
 
-		if (this.headers) {
-			for (let key in this.headers) {
-				if (this.headers.hasOwnProperty(key)) {
-					headers[key] = this.headers[key];
-				}
+		return this.api.performApiCall(`https://www.onenote.com/api/beta/me/notes/notebooks/GetNotebookFromWebUrl()`, JSON.stringify({ webUrl: spNotebookUrl }) /* data */, 'application/json' /* content type */, 'POST' /* http method */, true /* isFullUrl */).then(response => {
+			const notebook: OneNoteApi.Notebook = response.parsedResponse;
+			if (notebook && notebook.self) {
+				return notebook.self;
+			} else {
+				throw new Error('Could not find notebook in GetNotebookFromWebUrl response!');
 			}
-		}
-		headers['Content-Type'] = 'application/json';
-
-		return new Promise<string>((resolve, reject) => {
-			this.http('POST', url, this.authHeader, headers, JSON.stringify({ webUrl: spNotebookUrl })).then((xhr) => {
-				const responseJson = xhr.response && JSON.parse(xhr.response);
-				if (responseJson) {
-					const notebook: OneNoteApi.Notebook = responseJson;
-					if (notebook && notebook.self) {
-						resolve(notebook.self);
-						return;
-					}
-				}
-				reject(xhr);
-			}).catch((xhr) => {
-				reject(xhr);
-			});
 		});
 	}
 
@@ -200,45 +168,5 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 		}
 		const s = '$expand=sections,sectionGroups';
 		return expands === 1 ? s : `${s}(${this.getExpands(expands - 1)})`;
-	}
-
-	// tslint:disable-next-line:no-any
-	private http(method: string, url: string, authHeader: string, headers?: { [key: string]: string }, body?: any): Promise<XMLHttpRequest> {
-		return new Promise<XMLHttpRequest>((resolve, reject) => {
-			const xhr = new XMLHttpRequest();
-			xhr.open(method, url);
-
-			xhr.onload = () => {
-				if (xhr.status < 200 || xhr.status > 299) {
-					reject(xhr);
-					return;
-				}
-				resolve(xhr);
-			};
-
-			xhr.onerror = () => {
-				reject(xhr);
-			};
-
-			xhr.ontimeout = () => {
-				reject(xhr);
-			};
-
-			xhr.setRequestHeader('Authorization', this.authHeader);
-
-			if (headers) {
-				for (let key in headers) {
-					if (headers.hasOwnProperty(key)) {
-						xhr.setRequestHeader(key, headers[key]);
-					}
-				}
-			}
-
-			if (this.timeout) {
-				xhr.timeout = this.timeout;
-			}
-
-			xhr.send(body);
-		});
 	}
 }
