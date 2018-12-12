@@ -143,7 +143,7 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 						spSections: spSections
 					};
 				}
-				throw new Error('could not find notebook in get notebooks expands request');
+				throw new Error('Could not find notebook in get notebooks expands request');
 			});
 		});
 	}
@@ -154,7 +154,7 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 			if (notebook && notebook.self) {
 				return notebook.self;
 			} else {
-				throw new Error('Could not find notebook in GetNotebookFromWebUrl response!');
+				throw new Error('Could not find notebook in GetNotebookFromWebUrl response');
 			}
 		});
 	}
