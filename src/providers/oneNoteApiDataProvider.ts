@@ -129,9 +129,17 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 		return decodeURIComponent(last);
 	}
 
+	private addQueryParamComponent(originalUrl: string, queryParamComponent: string): string {
+		if (originalUrl.indexOf('?') === -1) {
+			return originalUrl + '?' + queryParamComponent;
+		} else {
+			return originalUrl + '&' + queryParamComponent;
+		}
+	}
+
 	getSpNotebookProperties(spNotebook: SharedNotebook, expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<SharedNotebookApiProperties> {
 		return this.getNotebookSelfUrlFromSpUrl(spNotebook.webUrl).then((selfUrl) => {
-			return this.api.performApiCall(selfUrl + '?' + this.getExpands(expands), undefined /* data */, undefined /* content type */, 'GET' /* http method */, true /* isFullUrl */).then(response => {
+			return this.api.performApiCall(this.addQueryParamComponent(selfUrl, this.getExpands(expands)), undefined /* data */, undefined /* content type */, 'GET' /* http method */, true /* isFullUrl */).then(response => {
 				const notebook: OneNoteApi.Notebook = response.parsedResponse;
 				if (notebook) {
 					spNotebook.apiUrl = notebook.self;
