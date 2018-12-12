@@ -4781,10 +4781,10 @@ onecolor@^3.0.4:
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/onecolor/-/onecolor-3.0.5.tgz#36eff32201379efdf1180fb445e51a8e2425f9f6"
 
-onenoteapi@^2.0.11:
-  version "2.0.12"
-  resolved "https://registry.yarnpkg.com/onenoteapi/-/onenoteapi-2.0.12.tgz#1a7b9e014bff27751f6987c8b481f18312b21f70"
-  integrity sha512-nx7tpPbiF6nSlobYWle1FQXtyJ1THWZVXbASJqclh470sfm40EY6mdGPbMjEaBQGoRtX8elsrdvl4HJC+Vz3kA==
+onenoteapi@^2.0.15:
+  version "2.0.15"
+  resolved "https://registry.yarnpkg.com/onenoteapi/-/onenoteapi-2.0.15.tgz#75fee4084f43bdea7bd489feca9b696992b747ce"
+  integrity sha512-s6LDSRzpKg0Z/35tv65+SmdqghLu70Pbl+bk+4Az5UjVL3F783doTUMgq2D6GfO5LR6WxJIXMUrf3omMdXar9w==
   dependencies:
     content-type "^1.0.2"
     es6-promise "^4.2.4"

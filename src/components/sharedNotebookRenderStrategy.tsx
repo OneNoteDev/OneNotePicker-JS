@@ -15,6 +15,7 @@ import { NotebookClosedIconSvg } from './icons/notebookClosedIcon.svg';
 import { SpinnerIconSvg } from './icons/spinnerIcon.svg';
 import { ChevronSvg } from './icons/chevron.svg';
 import { CreateNewSectionNode } from './createNewSection/createNewSectionNode';
+import * as OneNoteApi from 'onenoteapi';
 
 export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	onClickBinded = () => {};
@@ -163,8 +164,8 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 				if (this.globals.notebookListUpdater) {
 					this.globals.notebookListUpdater.updateNotebookList([this.notebook]);
 				}
-			}).catch((xhr: XMLHttpRequest) => {
-				this.notebook.apiHttpErrorCode = xhr.status;
+			}).catch((apiError: OneNoteApi.RequestError) => {
+				this.notebook.apiHttpErrorCode = apiError.statusCode;
 			}).then(() => {
 				const { onSharedNotebookInfoReturned } = this.globals.callbacks;
 				if (!!onSharedNotebookInfoReturned) {
