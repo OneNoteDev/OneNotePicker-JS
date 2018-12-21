@@ -12,7 +12,7 @@ export class TreeViewNavigationUtils {
 			return;
 		}
 
-		if (event.keyCode !== 13) {
+		if (event.keyCode !== 13 && event.keyCode !== 9) {
 			// The enter/esc keys are the only exception, as this is especially used to submit forms
 			event.stopPropagation();
 		}
