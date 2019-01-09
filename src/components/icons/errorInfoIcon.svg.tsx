@@ -3,7 +3,7 @@ import * as React from 'react';
 export class ErrorInfoIconSvg extends React.Component {
 	render() {
 		return (
-			<svg width='13' height='13' viewBox='0 0 13 13' xmlns='http://www.w3.org/2000/svg'>
+			<svg width='13' height='13' viewBox='0 0 13 13' xmlns='http://www.w3.org/2000/svg' focusable="false">
 				<g id='info' fill='none' fillRule='evenodd'>
 					<rect id='Rectangle' fill='#C4314B' x='6' y='3' width='1' height='1' />
 					<rect id='Rectangle-2' fill='#C4314B' x='6' y='5' width='1' height='5' />

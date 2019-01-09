@@ -95,7 +95,7 @@ export abstract class GenericOneNotePickerDropdown<T extends PickerProperties> e
 				<div className='picker-dropdown-padding'>
 					<a className='picker-dropdown-toggle' onClick={this.onClick.bind(this)}>
 						<div className='dropdown-arrow-container'>
-							<svg version='1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'>
+							<svg version='1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' focusable="false">
 								<polygon id='XMLID_10_' points='3.5,7 4.4,6.1 8,9.7 11.7,6.1 12.6,7 8,11.5' />
 							</svg>
 						</div>
