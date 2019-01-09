@@ -3,7 +3,7 @@ import * as React from 'react';
 export class RecentSectionsIconSvg extends React.Component {
 	render() {
 		return (
-			<svg width='24px' height='24px' viewBox='0 0 24 24' version='1.1' xmlns='http://www.w3.org/2000/svg'
+			<svg width='24px' height='24px' viewBox='0 0 24 24' version='1.1' xmlns='http://www.w3.org/2000/svg' focusable="false"
 				 xmlnsXlink='http://www.w3.org/1999/xlink'>
 				<g className='recents-icon' transform='translate(-66.000000, -94.000000)' fill='#000000'>
 					<path
