@@ -284,4 +284,21 @@
 	svg.spinner .spinner-progress {
 	color: #0078d7;
 	}
-	
+	@media screen and (-ms-high-contrast: active) {
+		.onenote-picker .picker-selectedItem {
+			background-color: blue !important;
+			color: #FFFFFF;
+		}
+	}
+	@media screen and (-ms-high-contrast: black-on-white) {
+		.onenote-picker .picker-selectedItem {
+			background-color: #38006F !important;
+			color: #FFFFFF;
+		}
+	}
+	@media screen and (-ms-high-contrast: white-on-black) {
+		.onenote-picker .picker-selectedItem {
+			background-color: #00FFFF !important;
+			color: #000000;
+		}
+	}
