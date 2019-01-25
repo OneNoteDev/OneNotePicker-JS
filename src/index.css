@@ -285,19 +285,19 @@
 	color: #0078d7;
 	}
 	@media screen and (-ms-high-contrast: active) {
-		.onenote-picker .picker-selectedItem {
+		.onenote-picker .picker-selectedItem, .onenote-picker .picker-item:hover {
 			background-color: blue !important;
 			color: #FFFFFF;
 		}
 	}
 	@media screen and (-ms-high-contrast: black-on-white) {
-		.onenote-picker .picker-selectedItem {
+		.onenote-picker .picker-selectedItem, .onenote-picker .picker-item:hover {
 			background-color: #38006F !important;
 			color: #FFFFFF;
 		}
 	}
 	@media screen and (-ms-high-contrast: white-on-black) {
-		.onenote-picker .picker-selectedItem {
+		.onenote-picker .picker-selectedItem, .onenote-picker .picker-item:hover {
 			background-color: #00FFFF !important;
 			color: #000000;
 		}
