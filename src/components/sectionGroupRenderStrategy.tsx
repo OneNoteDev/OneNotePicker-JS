@@ -60,7 +60,7 @@ export class SectionGroupRenderStrategy implements ExpandableNodeRenderStrategy 
 				<ExpandableNode
 					expanded={renderStrategy.isExpanded()} node={renderStrategy} globals={this.globals}
 					treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
-					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()}
+					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} selected={renderStrategy.isSelected()}
 					setsize={setsize} posinset={this.sectionGroup.sections.length + i + 1} /> :
 				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} globals={this.globals}
 					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} />);
@@ -72,7 +72,7 @@ export class SectionGroupRenderStrategy implements ExpandableNodeRenderStrategy 
 					treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
 					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} /> :
 				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} globals={this.globals}
-					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()}
+					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} selected={renderStrategy.isSelected()}
 					setsize={setsize} posinset={i + 1} />);
 
 		return [...createNewSection, ...sections, ...sectionGroups];

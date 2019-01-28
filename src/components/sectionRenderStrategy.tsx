@@ -40,7 +40,7 @@ export class SectionRenderStrategy implements ExpandableNodeRenderStrategy {
 		const pages = pageRenderStrategies && pageRenderStrategies.map(renderStrategy =>
 			<LeafNode treeViewId={Constants.TreeView.id} node={renderStrategy} globals={this.globals}
 				id={renderStrategy.getId()} level={childrenLevel}
-				ariaSelected={renderStrategy.isAriaSelected()} />);
+				ariaSelected={renderStrategy.isAriaSelected()} selected={renderStrategy.isSelected()}/>);
 
 		return pages || [] as JSX.Element[];
 	}
