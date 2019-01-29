@@ -38,6 +38,7 @@ export class RecentSectionHeaderRenderStrategy extends RecentSectionsCommonPrope
 					  key={renderStrategy.getId() + 'recent-section'}
 					  id={renderStrategy.getId()}
 					  ariaSelected={this.props.ariaSelectedId ? renderStrategy.isAriaSelected() : false}
+					  selected={renderStrategy.isSelected()}
 					  level={childrenLevel} setsize={this.sections.length} posinset={i + 1}></LeafNode>);
 
 		return [...sections];

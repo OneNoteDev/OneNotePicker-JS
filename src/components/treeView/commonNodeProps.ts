@@ -8,6 +8,8 @@ export interface CommonNodeProps {
 	setsize?: number;
 	posinset?: number;
 
+	selected?: boolean;
+
 	// For VoiceOver accessibility, there must always be one aria-selected item.
 	// If there's no actual selected item, this should be the first item.
 	ariaSelected: boolean;
