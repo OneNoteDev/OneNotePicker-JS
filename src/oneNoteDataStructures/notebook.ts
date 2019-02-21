@@ -4,7 +4,7 @@ import { SectionGroup } from './sectionGroup';
 
 export interface Notebook extends OneNoteItem {
 	// Properties that need to be loaded-on-demand
-	apiHttpErrorCode?: number;
+	apiHttpErrorMessage?: string;
 
 	expanded: boolean;
 	sectionGroups: SectionGroup[];

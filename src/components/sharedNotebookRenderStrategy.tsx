@@ -15,7 +15,6 @@ import { NotebookClosedIconSvg } from './icons/notebookClosedIcon.svg';
 import { SpinnerIconSvg } from './icons/spinnerIcon.svg';
 import { ChevronSvg } from './icons/chevron.svg';
 import { CreateNewSectionNode } from './createNewSection/createNewSectionNode';
-import * as OneNoteApi from 'onenoteapi';
 
 export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	onClickBinded = () => {};
@@ -52,8 +51,8 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 	}
 
 	getChildren(childrenLevel: number): JSX.Element[] {
-		if (typeof (this.notebook.apiHttpErrorCode) === 'number') {
-			const errorString = Strings.getError(this.notebook.apiHttpErrorCode);
+		if (this.notebook.apiHttpErrorMessage) {
+			const errorString = this.notebook.apiHttpErrorMessage;
 			return [
 				<li role='status' aria-live='polite' aria-label={errorString} className='progress-row'>
 					<div>{errorString}</div>
@@ -155,7 +154,7 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 
 			this.globals.oneNoteDataProvider.getSpNotebookProperties(this.notebook, depth, true).then((apiProperties) => {
 				if (!apiProperties) {
-					this.notebook.apiHttpErrorCode = 404;
+					this.notebook.apiHttpErrorMessage = Strings.getError(404);
 					return;
 				}
 
@@ -164,8 +163,12 @@ export class SharedNotebookRenderStrategy implements ExpandableNodeRenderStrateg
 				if (this.globals.notebookListUpdater) {
 					this.globals.notebookListUpdater.updateNotebookList([this.notebook]);
 				}
-			}).catch((apiError: OneNoteApi.RequestError) => {
-				this.notebook.apiHttpErrorCode = apiError.statusCode;
+			}).catch((apiError: any) => {
+				try {
+					this.notebook.apiHttpErrorMessage = JSON.parse(apiError.response).error.message
+				} catch (error) {
+					this.notebook.apiHttpErrorMessage = Strings.getError(apiError.statusCode);
+				}
 			}).then(() => {
 				const { onSharedNotebookInfoReturned } = this.globals.callbacks;
 				if (!!onSharedNotebookInfoReturned) {

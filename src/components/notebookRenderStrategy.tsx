@@ -12,7 +12,6 @@ import { NotebookOpenedIconSvg } from './icons/notebookOpenedIcon.svg';
 import { NotebookClosedIconSvg } from './icons/notebookClosedIcon.svg';
 import { ChevronSvg } from './icons/chevron.svg';
 import { CreateNewSectionNode } from './createNewSection/createNewSectionNode';
-import * as OneNoteApi from 'onenoteapi';
 import { SpinnerIconSvg } from './icons/spinnerIcon.svg';
 import { Strings } from '../strings';
 
@@ -46,8 +45,8 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	}
 
 	getChildren(childrenLevel: number): JSX.Element[] {
-		if (typeof (this.notebook.apiHttpErrorCode) === 'number') {
-			const errorString = Strings.getError(this.notebook.apiHttpErrorCode);
+		if (this.notebook.apiHttpErrorMessage) {
+			const errorString = this.notebook.apiHttpErrorMessage;
 			return [
 				<li role='status' aria-live='polite' aria-label={errorString} className='progress-row'>
 					<div>{errorString}</div>
@@ -144,15 +143,19 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	}
 
 	private onExpand() {
-		if (this.notebook.needsToFetchChildren && this.notebook.apiUrl && this.globals.oneNoteDataProvider && !!this.globals.callbacks.onNotebookInfoReturned) {
+		if (this.notebook.needsToFetchChildren && this.notebook.apiUrl && this.globals.oneNoteDataProvider) {
 			this.globals.oneNoteDataProvider.getNotebookBySelfUrl(this.notebook.apiUrl, 5).then((notebook) => {
 				this.notebook.sections = notebook.sections
 				this.notebook.sectionGroups = notebook.sectionGroups
-			}).catch((apiError: OneNoteApi.RequestError) => {
-				this.notebook.apiHttpErrorCode = apiError.statusCode;
+			}).catch((apiError: any) => {
+				try {
+					this.notebook.apiHttpErrorMessage = JSON.parse(apiError.response).error.message
+				} catch (error) {
+					this.notebook.apiHttpErrorMessage = Strings.getError(apiError.statusCode);
+				}
 			}).then(() => {
 				this.notebook.needsToFetchChildren = false;
-				if (!!this.globals.callbacks.onNotebookInfoReturned) {
+				if (this.globals.callbacks.onNotebookInfoReturned) {
 					this.globals.callbacks.onNotebookInfoReturned(this.notebook);
 				}
 			})
