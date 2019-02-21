@@ -54,7 +54,7 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 			];
 		}
 
-		if (this.notebook.needsToFetchChildren) {
+		if (!this.notebook.sections && !this.notebook.sectionGroups) {
 			return [
 				<li className='progress-row'>
 					<SpinnerIconSvg />
@@ -76,6 +76,10 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 			</CreateNewSectionNode>] :
 			[];
 
+		if (!this.notebook.sections || !this.notebook.sectionGroups) {
+			return [...createNewSection]
+		}
+
 		const setsize = this.notebook.sections.length + this.notebook.sectionGroups.length;
 
 		const sectionGroupRenderStrategies = this.notebook.sectionGroups.map(sectionGroup => new SectionGroupRenderStrategy(sectionGroup, this.globals));
@@ -85,7 +89,7 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 					expanded={renderStrategy.isExpanded()} node={renderStrategy} globals={this.globals}
 					treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
 					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} selected={renderStrategy.isSelected()}
-					setsize={setsize} posinset={this.notebook.sections.length + i + 1} /> :
+					setsize={setsize} posinset={this.notebook.sections ? this.notebook.sections.length + i + 1 : undefined} /> :
 				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} globals={this.globals}
 					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} />);
 
@@ -143,7 +147,7 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	}
 
 	private onExpand() {
-		if (this.notebook.needsToFetchChildren && this.notebook.apiUrl && this.globals.oneNoteDataProvider) {
+		if (!this.notebook.sections && !this.notebook.sectionGroups && this.notebook.apiUrl && this.globals.oneNoteDataProvider) {
 			this.globals.oneNoteDataProvider.getNotebookBySelfUrl(this.notebook.apiUrl, 5).then((notebook) => {
 				this.notebook.sections = notebook.sections
 				this.notebook.sectionGroups = notebook.sectionGroups
@@ -154,7 +158,6 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 					this.notebook.apiHttpErrorMessage = Strings.getError(apiError.statusCode);
 				}
 			}).then(() => {
-				this.notebook.needsToFetchChildren = false;
 				if (this.globals.callbacks.onNotebookInfoReturned) {
 					this.globals.callbacks.onNotebookInfoReturned(this.notebook);
 				}

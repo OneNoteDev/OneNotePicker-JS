@@ -29,6 +29,10 @@ export class OneNoteItemUtils {
 				sectionGroups = sectionParentNotebook.apiProperties.spSectionGroups;
 				sections = sectionParentNotebook.apiProperties.spSections;
 			} else {
+				if (!sectionParent.sections || !sectionParent.sectionGroups) {
+					continue;
+				}
+
 				sectionGroups = sectionParent.sectionGroups;
 				sections = sectionParent.sections;
 			}
@@ -93,6 +97,10 @@ export class OneNoteItemUtils {
 	 * one descendent section; false otherwise.
 	 */
 	static prune(root: Notebook | SectionGroup): boolean {
+		if (!root.sections || !root.sectionGroups) {
+			return false
+		}
+
 		root.sectionGroups = root.sectionGroups.filter(OneNoteItemUtils.prune);
 		return root.sectionGroups.length > 0 || root.sections.length > 0;
 	}

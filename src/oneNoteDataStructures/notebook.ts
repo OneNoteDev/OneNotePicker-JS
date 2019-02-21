@@ -7,10 +7,9 @@ export interface Notebook extends OneNoteItem {
 	apiHttpErrorMessage?: string;
 
 	expanded: boolean;
-	sectionGroups: SectionGroup[];
-	sections: Section[];
+	sectionGroups?: SectionGroup[];
+	sections?: Section[];
 	webUrl: string;
 	apiUrl?: string;
 	lastModifiedTime: Date;
-	needsToFetchChildren?: boolean
 }
