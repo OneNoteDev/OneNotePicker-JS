@@ -22,6 +22,7 @@ export interface OneNotePickerCallbacks {
 	// Shared notebooks have to be loaded on demand, as we only have their URLs and names
 	// to begin with. This is because getting sections for a shared notebook is expensive.
 	onSharedNotebookInfoReturned?: (sharedNotebook: SharedNotebook) => void;
+	onNotebookInfoReturned?: (notebook: Notebook) => void;
 
 	// Selection callbacks
 	onNotebookSelected?: (notebook: Notebook, breadcrumbs: OneNoteItem[]) => void;

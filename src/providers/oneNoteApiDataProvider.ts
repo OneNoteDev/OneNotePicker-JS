@@ -47,6 +47,12 @@ export class OneNoteApiDataProvider implements OneNoteDataProvider {
 		});
 	}
 
+	getNotebookBySelfUrl(selfUrl: string, expands?: number): Promise<Notebook> {
+		return this.api.getNotebookBySelfUrl(selfUrl, expands).then((response) => {
+			return this.responseTransformer.transformNotebook(response.parsedResponse);
+		});
+	}
+
 	getPages(section: Section): Promise<Page[]> {
 		// tslint:disable-next-line:no-any
 		return this.api.getPages({ sectionId: section.id }).then((responsePackage: OneNoteApi.ResponsePackage<any>) => {

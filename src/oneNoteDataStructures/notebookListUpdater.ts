@@ -58,7 +58,7 @@ export class NotebookListUpdater {
 	addSection(newSection: Section) {
 		const loneParent = newSection.parent!;
 		const parentInHierarchy = OneNoteItemUtils.find(this.notebooks, item => item.id === loneParent.id) as SectionParent | undefined;
-		if (parentInHierarchy) {
+		if (parentInHierarchy && parentInHierarchy.sections) {
 			// Establish two-way reference
 			parentInHierarchy.sections = [newSection, ...parentInHierarchy.sections];
 			newSection.parent = parentInHierarchy;
@@ -68,6 +68,11 @@ export class NotebookListUpdater {
 	private preserveSectionParent(original: SectionParent, next: SectionParent) {
 		// Preserve properties we want to keep from the original object ...
 		next.expanded = original.expanded;
+
+		if (!original.sections || !original.sectionGroups || 
+			!next.sections || !next.sectionGroups) {
+			return;
+		}
 
 		// ... then recurse through the children
 		for (let newSectionGroup of next.sectionGroups) {
@@ -118,6 +123,10 @@ export class NotebookListUpdater {
 	}
 
 	private getSectionRefFromSectionParent(sectionId: string, sectionParent: SectionParent): Section | undefined {
+		if (!sectionParent.sections || !sectionParent.sectionGroups) {
+			return undefined;
+		}
+		
 		// Search this parent's sections for the matching id ...
 		for (let childSection of sectionParent.sections) {
 			if (childSection.id === sectionId) {

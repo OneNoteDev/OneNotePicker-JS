@@ -12,9 +12,12 @@ import { NotebookOpenedIconSvg } from './icons/notebookOpenedIcon.svg';
 import { NotebookClosedIconSvg } from './icons/notebookClosedIcon.svg';
 import { ChevronSvg } from './icons/chevron.svg';
 import { CreateNewSectionNode } from './createNewSection/createNewSectionNode';
+import { SpinnerIconSvg } from './icons/spinnerIcon.svg';
+import { Strings } from '../strings';
 
 export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	onClickBinded = () => {};
+	onExpandBinded = this.onExpand.bind(this);
 
 	constructor(private notebook: Notebook, private globals: InnerGlobals) { }
 
@@ -42,6 +45,23 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 	}
 
 	getChildren(childrenLevel: number): JSX.Element[] {
+		if (this.notebook.apiHttpErrorMessage) {
+			const errorString = this.notebook.apiHttpErrorMessage;
+			return [
+				<li role='status' aria-live='polite' aria-label={errorString} className='progress-row'>
+					<div>{errorString}</div>
+				</li>
+			];
+		}
+
+		if (!this.notebook.sections && !this.notebook.sectionGroups) {
+			return [
+				<li className='progress-row'>
+					<SpinnerIconSvg />
+				</li>
+			];
+		}
+
 		const createNewSection = this.globals.callbacks.onSectionCreated || this.globals.shouldShowCreateEntityInputs ?
 			[<CreateNewSectionNode
 				key={this.notebook.id + 'createnewsectionnode'}
@@ -56,6 +76,10 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 			</CreateNewSectionNode>] :
 			[];
 
+		if (!this.notebook.sections || !this.notebook.sectionGroups) {
+			return [...createNewSection]
+		}
+
 		const setsize = this.notebook.sections.length + this.notebook.sectionGroups.length;
 
 		const sectionGroupRenderStrategies = this.notebook.sectionGroups.map(sectionGroup => new SectionGroupRenderStrategy(sectionGroup, this.globals));
@@ -65,7 +89,7 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 					expanded={renderStrategy.isExpanded()} node={renderStrategy} globals={this.globals}
 					treeViewId={Constants.TreeView.id} key={renderStrategy.getId()}
 					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} selected={renderStrategy.isSelected()}
-					setsize={setsize} posinset={this.notebook.sections.length + i + 1} /> :
+					setsize={setsize} posinset={this.notebook.sections ? this.notebook.sections.length + i + 1 : undefined} /> :
 				<LeafNode node={renderStrategy} treeViewId={Constants.TreeView.id} key={renderStrategy.getId()} globals={this.globals}
 					id={renderStrategy.getId()} level={childrenLevel} ariaSelected={renderStrategy.isAriaSelected()} />);
 
@@ -120,5 +144,24 @@ export class NotebookRenderStrategy implements ExpandableNodeRenderStrategy {
 
 	private onChevronClick() {
 		this.expandNode();
+	}
+
+	private onExpand() {
+		if (!this.notebook.sections && !this.notebook.sectionGroups && this.notebook.apiUrl && this.globals.oneNoteDataProvider) {
+			this.globals.oneNoteDataProvider.getNotebookBySelfUrl(this.notebook.apiUrl, 5).then((notebook) => {
+				this.notebook.sections = notebook.sections
+				this.notebook.sectionGroups = notebook.sectionGroups
+			}).catch((apiError: any) => {
+				try {
+					this.notebook.apiHttpErrorMessage = JSON.parse(apiError.response).error.message
+				} catch (error) {
+					this.notebook.apiHttpErrorMessage = Strings.getError(apiError.statusCode);
+				}
+			}).then(() => {
+				if (this.globals.callbacks.onNotebookInfoReturned) {
+					this.globals.callbacks.onNotebookInfoReturned(this.notebook);
+				}
+			})
+		}
 	}
 }

@@ -30,8 +30,8 @@ export class OneNoteApiResponseTransformer {
 			lastModifiedTime: notebook.lastModifiedTime
 		};
 
-		transformed.sectionGroups = notebook.sectionGroups ? notebook.sectionGroups.map(sg => this.transformSectionGroup(sg, transformed)) : [];
-		transformed.sections = notebook.sections ? notebook.sections.map(section => this.transformSection(section, transformed)) : [];
+		transformed.sectionGroups = notebook.sectionGroups ? notebook.sectionGroups.map(sg => this.transformSectionGroup(sg, transformed)) : undefined;
+		transformed.sections = notebook.sections ? notebook.sections.map(section => this.transformSection(section, transformed)) : undefined;
 
 		return transformed;
 	}
