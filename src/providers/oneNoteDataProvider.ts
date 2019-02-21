@@ -14,6 +14,7 @@ export interface OneNoteDataProvider {
 	createSectionUnderSectionGroup(parent: SectionGroup, name: string): Promise<Section>;
 
 	getNotebooks(expands?: number, excludeReadOnlyNotebooks?: boolean): Promise<Notebook[]>;
+	getNotebookBySelfUrl(selfUrl: string, expands?: number): Promise<Notebook>;
 	getPages(section: Section): Promise<Page[]>;
 
 	getSpNotebooks(): Promise<SharedNotebook[]>;

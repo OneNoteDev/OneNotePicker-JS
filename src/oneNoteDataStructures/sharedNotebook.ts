@@ -9,7 +9,6 @@ import { SectionGroup } from './sectionGroup';
 export interface SharedNotebook extends Notebook {
 	// Properties that need to be loaded-on-demand
 	apiProperties?: SharedNotebookApiProperties;
-	apiHttpErrorCode?: number;
 	startedLoading?: boolean;
 
 	// Properties returned from GetRecentNotebooks
