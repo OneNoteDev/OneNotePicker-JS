@@ -8,9 +8,9 @@ describe('NameValidator', () => {
 		expect(NameValidator.validateNotebookName('123')).toBeFalsy();
 	});
 
-	it('should not map to an error message with empty or whitespace names', () => {
-		expect(NameValidator.validateNotebookName('')).toBeFalsy();
-		expect(NameValidator.validateNotebookName('  ')).toBeFalsy();
+	it('should map to an error message with empty or whitespace names', () => {
+		expect(NameValidator.validateNotebookName('')).toBeTruthy();
+		expect(NameValidator.validateNotebookName('  ')).toBeTruthy();
 	});
 
 	it('should not allow names beginning or ending with period', () => {

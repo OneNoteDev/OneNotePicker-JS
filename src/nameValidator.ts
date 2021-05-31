@@ -59,6 +59,6 @@ export class NameValidator {
 	}
 
 	private static emptyName(name: string): boolean {
-		return name.length > 0 && name.trim().length === 0
+		return name.trim().length === 0;
 	}
 }

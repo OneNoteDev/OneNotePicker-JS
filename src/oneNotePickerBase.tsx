@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import './index.css?raw';
+import './index.css';
 
 import { Constants } from './constants';
 import { Strings } from './strings';
