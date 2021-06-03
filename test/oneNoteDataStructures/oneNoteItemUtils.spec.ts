@@ -1,9 +1,11 @@
 import { Notebook } from '../../src/oneNoteDataStructures/notebook';
 import { OneNoteItem } from '../../src/oneNoteDataStructures/oneNoteItem';
+import { SectionGroup } from '../../src/oneNoteDataStructures/sectionGroup';
 import { OneNoteItemUtils } from '../../src/oneNoteDataStructures/oneNoteItemUtils';
 import { Section } from '../../src/oneNoteDataStructures/section';
 
 describe('OneNoteItemUtils', () => {
+
 	it('find should return the item that matches the predicate if it is found early in the hierarchy', () => {
 		const notebook: Notebook = {
 			parent: undefined,
