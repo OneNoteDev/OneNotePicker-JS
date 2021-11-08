@@ -14,6 +14,10 @@
     "react": "16.4.2",
     "react-dom": "16.4.2"
   },
+  "repository": {	
+    "type": "git",
+    "url": "https://github.com/OneNoteDev/OneNotePicker-JS.git"
+  },
   "devDependencies": {
     "@types/classnames": "^2.2.0",
     "@types/enzyme": "^2.8.0",
